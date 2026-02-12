@@ -45,23 +45,10 @@ public class GamePanel extends JPanel {
         add(btnExitGame);
 
         JLabel lblMap = new JLabel("");
+
+        String imagePath = "DatingSimulatorGame/image/Map.png"; 
+        ImageIcon icon = new ImageIcon(imagePath);
         
-        try {
-            String imagePath = "image/Map.png"; 
-            
-            ImageIcon icon = new ImageIcon(imagePath);
-            
-            if (icon.getIconWidth() == -1) {
-                System.out.println("❌ โหลดรูปไม่สำเร็จ: เช็ค Path หรือ ชื่อไฟล์อีกที -> " + imagePath);
-            } else {
-                System.out.println("✅ โหลดรูปสำเร็จ!");
-                lblMap.setIcon(icon); 
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
         lblMap.setBounds(0, 0, 1540, 835);
         add(lblMap);
     }

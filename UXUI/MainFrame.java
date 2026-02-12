@@ -1,3 +1,7 @@
+package UXUI; 
+
+import Player.Player; 
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,6 +11,7 @@ import java.awt.Frame;
 public class MainFrame extends JFrame {
 
     private JPanel contentPane;
+    private Player player;
     
     // ประกาศตัวแปรหน้าต่างๆ ไว้ตรงนี้
     private MenuPanel menuPanel;
@@ -27,6 +32,7 @@ public class MainFrame extends JFrame {
     }
 
     public MainFrame() {
+        player = new Player(); // ตอนนี้ energy=100, money=500
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1540, 835);
@@ -74,4 +80,11 @@ public class MainFrame extends JFrame {
         optionPanel.setVisible(false);
         gamePanel.setVisible(true);
     }
+
+//--------getPlayer
+    public Player getPlayer() {
+        return player;
+    }
 }
+
+

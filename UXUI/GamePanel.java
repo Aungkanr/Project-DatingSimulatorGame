@@ -16,8 +16,8 @@ public class GamePanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         setLayout(null);
         
-        JButton btnExitGame = new JButton("ออกเกม");
-        btnExitGame.setBounds(20, 20, 100, 30);
+        JButton btnExitGame = new JButton("Return to Menu");
+        btnExitGame.setBounds(20, 20, 150, 30);
         btnExitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.showMenu(); // กลับไปหน้าเมนู

@@ -9,12 +9,19 @@ import java.awt.event.ActionListener;
 
 public class HomePanel extends JPanel {
     public HomePanel(MainFrame mainFrame) {
+        int buttonWidth = 150;
+        int buttonHeight = 50;
+        int gap = 20;
+
+        int centerX = (mainFrame.width - buttonWidth) / 2;
+        int totalContentHeight = (buttonHeight * 4) + (gap * 3); 
+        int currentY = (mainFrame.height - totalContentHeight) / 2;
         setLayout(null);
         setBackground(new Color(12, 51, 204));
 
         JButton btnchoice1 = new JButton("Sleep!");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice1.setBounds(720, 700, 150, 50);
+        btnchoice1.setBounds(centerX, currentY, buttonWidth, buttonHeight);
         btnchoice1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.showGame();

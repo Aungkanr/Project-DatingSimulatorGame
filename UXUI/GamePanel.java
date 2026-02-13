@@ -24,6 +24,14 @@ public class GamePanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         setLayout(null);
 
+        int buttonWidth = 200;
+        int buttonHeight = 60;
+        int gap = 20;
+
+        int centerX = (parent.width - buttonWidth) / 2;
+        int totalContentHeight = (buttonHeight * 4) + (gap * 3); 
+        int currentY = (parent.height - totalContentHeight) / 2;
+
 
 
         // --- ส่วนแสดงสถานะ (HUD) ---
@@ -51,16 +59,16 @@ public class GamePanel extends JPanel {
 
 //------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
         JButton btnSchool = new JButton("School");
-        btnSchool.setBounds(680, 180, 100, 30);
+        btnSchool.setBounds(centerX+20, currentY-40, buttonWidth-100, buttonHeight-30);
         add(btnSchool);
         JButton btnHome = new JButton("Home");
-        btnHome.setBounds(720, 520, 100, 30);
+        btnHome.setBounds(centerX+30, currentY+220, buttonWidth-100, buttonHeight-30);
         add(btnHome);
         JButton btnShop = new JButton("Shop");
-        btnShop.setBounds(420, 360, 100, 30);
+        btnShop.setBounds(centerX-240, currentY+100, buttonWidth-100, buttonHeight-30);
         add(btnShop);
         JButton btnOffice = new JButton("Office ");
-        btnOffice.setBounds(980, 340, 100, 30);
+        btnOffice.setBounds(centerX+300, currentY+100, buttonWidth-100, buttonHeight-30);
         add(btnOffice);
 
 

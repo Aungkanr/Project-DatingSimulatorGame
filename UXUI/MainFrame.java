@@ -22,7 +22,6 @@ import java.awt.Frame;
 
 
 public class MainFrame extends JFrame {
-
     private JPanel contentPane;
     private Player player;
 
@@ -40,7 +39,7 @@ public class MainFrame extends JFrame {
     public int height = (int) screenSize.getHeight();
     
     private Clip clip; //sound
-    public static String filePath = "Music\\Harvest Dawn.wav";
+    public static String filePath = "Music\\Harvest ";  
     public static File file = new File(filePath);
 
     public static void main(String[] args) {

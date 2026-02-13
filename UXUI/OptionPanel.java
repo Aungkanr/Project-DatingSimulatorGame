@@ -33,7 +33,7 @@ public class OptionPanel extends JPanel {
         
         chckbxMute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.toggleMute(chckbxMute.isSelected());
+                parent.toggleMute(chckbxMute.isSelected()); // true / false (checkbox)
             }
         });
         add(chckbxMute);

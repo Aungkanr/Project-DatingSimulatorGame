@@ -16,14 +16,24 @@ public class OptionPanel extends JPanel {
     public OptionPanel(MainFrame mainFrame) {
         this.parent = mainFrame;
         
+        int buttonWidth = 300;
+        int buttonHeight = 60;
+        int gap = 20; // ระยะห่างระหว่างแต่ละปุ่ม 
+
+        int centerX = (parent.width - buttonWidth) / 2;
+        int totalContentHeight = (buttonHeight * 4) + (gap * 3); 
+        int currentY = (parent.height - totalContentHeight) / 2; // จุดเริ่ม Y
+
         setBackground(new Color(0, 51, 204)); // สีน้ำเงิน
         setLayout(null);
 
         JCheckBox chckbxMute = new JCheckBox("Mute Music");
         chckbxMute.setHorizontalAlignment(SwingConstants.CENTER);
         chckbxMute.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        chckbxMute.setBounds(640, 257, 200, 63);
+        chckbxMute.setBounds(centerX, currentY, buttonWidth, buttonHeight+3);
         add(chckbxMute);
+
+        currentY += buttonHeight + gap; //เว้น auto
 
         JButton btnBack = new JButton("กลับเมนูหลัก");
         btnBack.addActionListener(new ActionListener() {
@@ -32,7 +42,7 @@ public class OptionPanel extends JPanel {
             }
         });
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        btnBack.setBounds(640, 377, 200, 40);
+        btnBack.setBounds(centerX, currentY, buttonWidth, buttonHeight-20);
         add(btnBack);
     }
 }

@@ -1,11 +1,12 @@
 package UXUI; 
 
 import Player.Player; 
-
+import java.awt.Dimension; 
+import java.awt.Toolkit;   
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
 import java.awt.Frame;
 
 public class MainFrame extends JFrame {
@@ -17,6 +18,10 @@ public class MainFrame extends JFrame {
     private MenuPanel menuPanel;
     private OptionPanel optionPanel;
     private GamePanel gamePanel;
+    //ดึงขนาดหน้าจอจริงของคอมพิวเตอร์มาใช้
+    public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    public int width = (int) screenSize.getWidth();
+    public int height = (int) screenSize.getHeight();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -33,30 +38,32 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         player = new Player(); // ตอนนี้ energy=100, money=500
+    
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1540, 835);
+        setBounds(100, 100, width, height);
+
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
         contentPane.setLayout(null);
+        setContentPane(contentPane);
+        
 
         // --- สร้างหน้าต่างๆ และส่ง 'this' (ตัวแม่) ไปให้ลูกๆ รู้จัก ---
         
         // 1. สร้างหน้า Menu
         menuPanel = new MenuPanel(this); 
-        menuPanel.setBounds(0, 0, 1540, 835);
+        menuPanel.setBounds(0, 0, width, height);
         contentPane.add(menuPanel); // โชว์หน้าเมนูก่อน
         
         // 2. สร้างหน้า Option (ซ่อนไว้ก่อน)
         optionPanel = new OptionPanel(this);
-        optionPanel.setBounds(0, 0, 1540, 835);
+        optionPanel.setBounds(0, 0, width, height);
         optionPanel.setVisible(false);
         contentPane.add(optionPanel);
         
         // 3. สร้างหน้า Game (ซ่อนไว้ก่อน)
         gamePanel = new GamePanel(this);
-        gamePanel.setBounds(0, 0, 1540, 835);
+        gamePanel.setBounds(0, 0, width, height);
         gamePanel.setVisible(false);
         contentPane.add(gamePanel);
     }

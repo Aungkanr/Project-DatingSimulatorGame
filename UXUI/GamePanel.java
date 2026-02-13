@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon; // เช็คว่า import ครบไหม
+import javax.swing.ImageIcon; 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,21 +18,21 @@ public class GamePanel extends JPanel {
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
-        
+                
         setBackground(Color.DARK_GRAY);
         setLayout(null);
-        
+
         // --- ส่วนแสดงสถานะ (HUD) ---
         lblEnergy = new JLabel("Energy: 0");
         lblEnergy.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblEnergy.setForeground(Color.WHITE);
-        lblEnergy.setBounds(20, 60, 200, 30);
+        lblEnergy.setBounds(20, 60, 300, 30);
         add(lblEnergy);
 
         lblMoney = new JLabel("Money: 0");
         lblMoney.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblMoney.setForeground(Color.YELLOW);
-        lblMoney.setBounds(20, 90, 200, 30);
+        lblMoney.setBounds(20, 90, 300, 30);
         add(lblMoney);
 
         JButton btnExitGame = new JButton("Return to Menu");
@@ -43,15 +43,24 @@ public class GamePanel extends JPanel {
             }
         });
         add(btnExitGame);
-
+//--------------------------image------------------
         JLabel lblMap = new JLabel("");
 
         String imagePath = "DatingSimulatorGame/image/Map.png"; 
-        ImageIcon icon = new ImageIcon(imagePath);
+        ImageIcon originalIcon = new ImageIcon(imagePath);
         
-        lblMap.setBounds(0, 0, 1540, 835);
+        if (originalIcon.getIconWidth() > 0) { 
+            java.awt.Image img = originalIcon.getImage();
+            java.awt.Image newImg = img.getScaledInstance(parent.width, parent.height, java.awt.Image.SCALE_SMOOTH);
+            lblMap.setIcon(new ImageIcon(newImg));
+        } else {
+             System.out.println("หาไฟล์รูปไม่เจอ หรือ Path ผิด");
+        }
+
+        lblMap.setBounds(0, 0, parent.width, parent.height);
         add(lblMap);
     }
+//--------------------------image------------------
     //update - ค่า
     @Override
     public void setVisible(boolean aFlag) {

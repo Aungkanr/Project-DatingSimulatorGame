@@ -3,18 +3,37 @@ package Utility;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-public class StdAuto { //standard Auto space  
+public class StdAuto { 
      
     public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public int width = (int) screenSize.getWidth();
     public int height = (int) screenSize.getHeight();
 
-    public int buttonWidth = 300;
-    public int buttonHeight = 60;
-    public int gap = 20;
-    //เว้น auto + center  
-    public int centerX = (width - buttonWidth) / 2;
-    public int totalContentHeight = (buttonHeight * 4) + (gap * 3); 
-    public int currentY = (height - totalContentHeight) / 2;
+    public int buttonWidth;
+    public int buttonHeight;
+    public int gap;
+    public int amount; // จำนวนปุ่ม/จำนวนแถว
 
+    public int centerX;
+    public int totalContentHeight;
+    public int currentY;
+
+    public void setBtnWHG(int buttonWidth, int buttonHeight, int gap, int amount) { 
+        this.buttonWidth = buttonWidth;
+        this.buttonHeight = buttonHeight; 
+        this.gap = gap;
+        this.amount = amount;
+
+        this.centerX = (width - buttonWidth) / 2;
+
+        // หาความสูงรวมของเนื้อหาทั้งหมด (ปุ่มทุกอัน + ช่องว่าง)
+        if (amount > 0) {
+            this.totalContentHeight = (buttonHeight * amount) + (gap * (amount - 1));
+        } else {
+            this.totalContentHeight = 0;
+        }
+        // หาจุดเริ่ม Y เพื่อให้เนื้อหาทั้งหมดอยู่กลางจอ (บน-ล่าง)
+        // สูตร: (ความสูงจอ - ความสูงเนื้อหารวม) / 2
+        this.currentY = (height - totalContentHeight) / 2;
+    }
 }

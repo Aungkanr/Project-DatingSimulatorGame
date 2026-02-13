@@ -20,7 +20,7 @@ public class OptionPanel extends JPanel {
         
         setBackground(new Color(0, 51, 204)); 
         setLayout(null);
-
+        stdScreen.setBtnWHG(300, 60, 20 ,2); //ขนาด ปุ่ม และ gap , แถว
         // --- CheckBox Mute ---
         JCheckBox chckbxMute = new JCheckBox("Mute Music");
         chckbxMute.setHorizontalAlignment(SwingConstants.CENTER);

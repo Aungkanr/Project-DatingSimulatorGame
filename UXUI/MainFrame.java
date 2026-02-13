@@ -56,6 +56,7 @@ public class MainFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        stdScreen.setBtnWHG(300, 60, 20 ,4); //ขนาด ปุ่ม และ gap ,แถว
 
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

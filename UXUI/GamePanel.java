@@ -53,20 +53,18 @@ public class GamePanel extends JPanel {
 
 //------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
         JButton btnSchool = new JButton("School");
-        btnSchool.setBounds(680, 180, 100, 30);
+        stdScreen.setBtnWHG(200, 30, 20,0); //ขนาด ปุ่ม และ gap ,แถว
+        btnSchool.setBounds(stdScreen.centerX+20, stdScreen.currentY-80, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnSchool);
         JButton btnHome = new JButton("Home");
-        btnHome.setBounds(720, 520, 100, 30);
+        btnHome.setBounds(stdScreen.centerX+30, stdScreen.currentY+240, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnHome);
         JButton btnShop = new JButton("Shop");
-        btnShop.setBounds(420, 360, 100, 30);
+        btnShop.setBounds(stdScreen.centerX-240, stdScreen.currentY+120, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnShop);
         JButton btnOffice = new JButton("Office ");
-        btnOffice.setBounds(980, 340, 100, 30);
+        btnOffice.setBounds(stdScreen.centerX+300, stdScreen.currentY+120, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnOffice);
-
-
-
 
         btnSchool.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

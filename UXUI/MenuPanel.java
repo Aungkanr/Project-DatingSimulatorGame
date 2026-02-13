@@ -18,7 +18,7 @@ public class MenuPanel extends JPanel {
         
         setBackground(new Color(173, 216, 230));
         setLayout(null);
-        
+        stdScreen.setBtnWHG(300, 60, 20, 4); //ขนาด ปุ่ม และ gap ,แถว
         // 1. Label
         JLabel lblHome = new JLabel("หน้าเมนูหลัก");
         lblHome.setFont(new Font("Tahoma", Font.BOLD, 24));

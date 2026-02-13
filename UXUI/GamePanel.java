@@ -8,8 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Image;
-
 
 public class GamePanel extends JPanel {
     private MainFrame parent;
@@ -23,7 +21,7 @@ public class GamePanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         setLayout(null);
 
-        // --- ส่วนแสดงสถานะ (HUD) ---
+// --------------- show status player ----------------
         lblEnergy = new JLabel("Energy: 0");
         lblEnergy.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblEnergy.setForeground(Color.WHITE);
@@ -45,7 +43,7 @@ public class GamePanel extends JPanel {
         });
         add(btnExitGame);
 
-        // ส่วนของปุ่มที่เเสดงบนเเมพ
+//------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
         JButton btnSchool = new JButton("School");
         btnSchool.setBounds(680, 180, 100, 30);
         add(btnSchool);
@@ -61,16 +59,14 @@ public class GamePanel extends JPanel {
 //--------------------------image------------------
         JLabel lblMap = new JLabel("");
 
-        String imagePath = "image\\Map.png";
+        String imagePath = "DatingSimulatorGame\\image\\Map.png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
         checkImageUtil.checkImage(originalIcon, lblMap, parent.width, parent.height);
 
         lblMap.setBounds(0, 0, parent.width, parent.height);
         add(lblMap);
-//--------------------------image------------------
     }
-
-
+//--------------------------image------------------
     //update - ค่า
     @Override
     public void setVisible(boolean aFlag) {

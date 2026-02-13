@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
 
-
 public class CheckImage {
     // method เช็คภาพ
     public void checkImage(ImageIcon originalIcon, JLabel lblMap, int w, int h) {

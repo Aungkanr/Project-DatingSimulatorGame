@@ -4,9 +4,7 @@ import UXUI.Scene.HomePanel;
 import UXUI.Scene.OfficePanel;
 import UXUI.Scene.SchoolPanel;
 import UXUI.Scene.ShopPanel;
-import Player.Player; 
-import java.awt.Dimension; 
-import java.awt.Toolkit;
+import Utility.StdAuto;
 import java.io.File;
 import java.awt.EventQueue;
 import java.awt.Frame;
@@ -17,9 +15,6 @@ import javax.sound.sampled.Clip; // แก้เป็น Clip
 import javax.sound.sampled.FloatControl; // เพิ่ม
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import java.awt.Frame;
-
 
 public class MainFrame extends JFrame {
 
@@ -34,10 +29,7 @@ public class MainFrame extends JFrame {
     private HomePanel home;
     private OfficePanel office;
     //ดึงขนาดหน้าจอจริงของคอมพิวเตอร์มาใช้
-
-    public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public int width = (int) screenSize.getWidth();
-    public int height = (int) screenSize.getHeight();
+    private StdAuto stdScreen = new StdAuto(); //Device screen
     
     private Clip clip; //sound
     public static String filePath = "Music\\Harvest Dawn.wav";
@@ -67,7 +59,7 @@ public class MainFrame extends JFrame {
 
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, width, height);
+        setBounds(100, 100, stdScreen.width, stdScreen.height);
 
         contentPane = new JPanel();
         contentPane.setLayout(null);
@@ -75,16 +67,16 @@ public class MainFrame extends JFrame {
         
         // ส่ง 'this' ไปให้ลูกๆ
         menuPanel = new MenuPanel(this); 
-        menuPanel.setBounds(0, 0, width, height);
+        menuPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         contentPane.add(menuPanel);
         
         optionPanel = new OptionPanel(this);
-        optionPanel.setBounds(0, 0, width, height);
+        optionPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         optionPanel.setVisible(false);
         contentPane.add(optionPanel);
         
         gamePanel = new GamePanel(this);
-        gamePanel.setBounds(0, 0, width, height);
+        gamePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         gamePanel.setVisible(false);
         contentPane.add(gamePanel);
 
@@ -92,28 +84,28 @@ public class MainFrame extends JFrame {
 
     public void createSchoolPanel() { // สร้าง object ของ schoolpanel
         school = new SchoolPanel(this);
-        school.setBounds(0, 0, width, height);
+        school.setBounds(0, 0, stdScreen.width, stdScreen.height);
         school.setVisible(false);
         add(school);
     }
     
     public void createShopPanel() { // สร้าง object ของ shoppanel
         shop = new ShopPanel(this);
-        shop.setBounds(0, 0, width, height);
+        shop.setBounds(0, 0, stdScreen.width, stdScreen.height);
         shop.setVisible(false);
         add(shop);
     }
 
     public void createHomePanel() { // สร้าง object ของ homepanel
         home = new HomePanel(this);
-        home.setBounds(0, 0, width, height);
+        home.setBounds(0, 0, stdScreen.width, stdScreen.height);
         home.setVisible(false);
         add(home);
     }
 
     public void createOfficePanel() { // สร้าง object ของ officepanel
         office = new OfficePanel(this);
-        office.setBounds(0, 0, width, height);
+        office.setBounds(0, 0, stdScreen.width, stdScreen.height);
         office.setVisible(false);
         add(office);
     }

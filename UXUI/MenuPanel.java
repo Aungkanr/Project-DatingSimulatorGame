@@ -6,9 +6,12 @@ import java.awt.event.ActionListener;
 import javax.sound.sampled.Clip; // import แค่นี้พอ
 import javax.swing.*;
 
+import Utility.StdAuto;
+
 public class MenuPanel extends JPanel {
     
     private MainFrame parent;
+    private StdAuto stdScreen = new StdAuto(); //Device screen
  
     public MenuPanel(MainFrame mainFrame) {
         this.parent = mainFrame;
@@ -16,22 +19,14 @@ public class MenuPanel extends JPanel {
         setBackground(new Color(173, 216, 230));
         setLayout(null);
         
-        int buttonWidth = 300;
-        int buttonHeight = 60;
-        int gap = 20; 
-        
-        int centerX = (parent.width - buttonWidth) / 2;
-        int totalContentHeight = (buttonHeight * 4) + (gap * 3);
-        int currentY = (parent.height - totalContentHeight) / 2; 
-        
         // 1. Label
         JLabel lblHome = new JLabel("หน้าเมนูหลัก");
         lblHome.setFont(new Font("Tahoma", Font.BOLD, 24));
         lblHome.setHorizontalAlignment(SwingConstants.CENTER);
-        lblHome.setBounds(centerX, currentY, buttonWidth, buttonHeight);
+        lblHome.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(lblHome);
         
-        currentY += buttonHeight + gap;
+        stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
         
         // 2. START Button
         JButton btnStart = new JButton("START");
@@ -49,10 +44,10 @@ public class MenuPanel extends JPanel {
             }
         });
         btnStart.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnStart.setBounds(centerX, currentY, buttonWidth, buttonHeight);
+        btnStart.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnStart);
         
-        currentY += buttonHeight + gap;
+        stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
         
         // 3. SETTING Button
         JButton btnSetting = new JButton("SETTING");
@@ -62,10 +57,10 @@ public class MenuPanel extends JPanel {
             }
         });
         btnSetting.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnSetting.setBounds(centerX, currentY, buttonWidth, buttonHeight);
+        btnSetting.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnSetting);
         
-        currentY += buttonHeight + gap;
+        stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
         
         // 4. EXIT Button
         JButton btnExit = new JButton("EXIT");
@@ -75,7 +70,7 @@ public class MenuPanel extends JPanel {
             }
         });
         btnExit.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnExit.setBounds(centerX, currentY, buttonWidth, buttonHeight);
+        btnExit.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnExit);
     }
 }

@@ -1,5 +1,7 @@
 package UXUI;
 import Player.Player;
+import Utility.StdAuto;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,13 +19,13 @@ public class GamePanel extends JPanel {
     private JLabel lblEnergy;
     private JLabel lblMoney;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    private StdAuto stdScreen = new StdAuto() ; //Device screen
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
 
         setBackground(Color.DARK_GRAY);
         setLayout(null);
-
 
 
         // --- ส่วนแสดงสถานะ (HUD) ---
@@ -100,9 +102,9 @@ public class GamePanel extends JPanel {
 
         String imagePath = "image\\Map.png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
-        checkImageUtil.checkImage(originalIcon, lblMap, parent.width, parent.height);
+        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
 
-        lblMap.setBounds(0, 0, parent.width, parent.height);
+        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
     }
 //--------------------------image------------------

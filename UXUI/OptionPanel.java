@@ -8,21 +8,16 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Utility.StdAuto;
+
 public class OptionPanel extends JPanel {
 
     private MainFrame parent;
+    private StdAuto stdScreen = new StdAuto(); //Device screen
     
     public OptionPanel(MainFrame mainFrame) {
         this.parent = mainFrame;
         
-        int buttonWidth = 300;
-        int buttonHeight = 60;
-        int gap = 20;
-
-        int centerX = (parent.width - buttonWidth) / 2;
-        int totalContentHeight = (buttonHeight * 4) + (gap * 3); 
-        int currentY = (parent.height - totalContentHeight) / 2;
-
         setBackground(new Color(0, 51, 204)); 
         setLayout(null);
 
@@ -30,7 +25,7 @@ public class OptionPanel extends JPanel {
         JCheckBox chckbxMute = new JCheckBox("Mute Music");
         chckbxMute.setHorizontalAlignment(SwingConstants.CENTER);
         chckbxMute.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        chckbxMute.setBounds(centerX, currentY, buttonWidth, buttonHeight+3);
+        chckbxMute.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight+3);
         
         chckbxMute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -39,7 +34,7 @@ public class OptionPanel extends JPanel {
         });
         add(chckbxMute);
 
-        currentY += buttonHeight + gap;
+        stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
 
         // --- Back Button ---
         JButton btnBack = new JButton("กลับเมนูหลัก");
@@ -49,7 +44,7 @@ public class OptionPanel extends JPanel {
             }
         });
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        btnBack.setBounds(centerX, currentY, buttonWidth, buttonHeight-20);
+        btnBack.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight-20);
         add(btnBack);
     }
 }

@@ -8,7 +8,6 @@ public class Player {
         this.energy = 100; // เริ่มต้น 100
         this.money = 500;  // เริ่มต้น 500 บาท
     }
-
     //------------------------ (Getters & Setter)------------------------
     public int getEnergy() {
         return energy;
@@ -31,7 +30,13 @@ public class Player {
     public void decreaseEnergy(int amount) {
         setEnergy(this.energy - amount);
     }
-    public void addMoney(int amount) {
+    public void increaseEnergy(int amount) {
+        setEnergy(this.energy + amount);
+    }
+    public void decreaseMoney(int amount) {
+        this.money -= amount;
+    }
+    public void increaseMoney(int amount) {
         this.money += amount;
     }
 }

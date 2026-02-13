@@ -1,4 +1,3 @@
-package UXUI; 
 
 import Player.Player; 
 import java.awt.Dimension; 

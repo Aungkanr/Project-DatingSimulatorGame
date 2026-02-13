@@ -1,4 +1,3 @@
-package UXUI;
 
 import Player.Player;
 import java.awt.Color;
@@ -9,16 +8,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Image;
+
 
 public class GamePanel extends JPanel {
-
     private MainFrame parent;
     private JLabel lblEnergy;
     private JLabel lblMoney;
+    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
-                
+
         setBackground(Color.DARK_GRAY);
         setLayout(null);
 
@@ -43,24 +44,33 @@ public class GamePanel extends JPanel {
             }
         });
         add(btnExitGame);
+
+        // ส่วนของปุ่มที่เเสดงบนเเมพ
+        JButton btnSchool = new JButton("School");
+        btnSchool.setBounds(680, 180, 100, 30);
+        add(btnSchool);
+        JButton btnHome = new JButton("Home");
+        btnHome.setBounds(720, 520, 100, 30);
+        add(btnHome);
+        JButton btnShop = new JButton("Shop");
+        btnShop.setBounds(420, 360, 100, 30);
+        add(btnShop);
+        JButton btnOffice = new JButton("Office ");
+        btnOffice.setBounds(980, 340, 100, 30);
+        add(btnOffice);
 //--------------------------image------------------
         JLabel lblMap = new JLabel("");
 
-        String imagePath = "DatingSimulatorGame/image/Map.png"; 
+        String imagePath = "image\\Map.png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
-        
-        if (originalIcon.getIconWidth() > 0) { 
-            java.awt.Image img = originalIcon.getImage();
-            java.awt.Image newImg = img.getScaledInstance(parent.width, parent.height, java.awt.Image.SCALE_SMOOTH);
-            lblMap.setIcon(new ImageIcon(newImg));
-        } else {
-             System.out.println("หาไฟล์รูปไม่เจอ หรือ Path ผิด");
-        }
+        checkImageUtil.checkImage(originalIcon, lblMap, parent.width, parent.height);
 
         lblMap.setBounds(0, 0, parent.width, parent.height);
         add(lblMap);
-    }
 //--------------------------image------------------
+    }
+
+
     //update - ค่า
     @Override
     public void setVisible(boolean aFlag) {

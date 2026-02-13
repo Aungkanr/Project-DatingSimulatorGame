@@ -1,4 +1,4 @@
-
+package UXUI;
 import Player.Player;
 import java.awt.Color;
 import java.awt.Font;
@@ -8,10 +8,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Image;
 
 
 public class GamePanel extends JPanel {
+
+
     private MainFrame parent;
     private JLabel lblEnergy;
     private JLabel lblMoney;
@@ -22,6 +23,8 @@ public class GamePanel extends JPanel {
 
         setBackground(Color.DARK_GRAY);
         setLayout(null);
+
+
 
         // --- ส่วนแสดงสถานะ (HUD) ---
         lblEnergy = new JLabel("Energy: 0");
@@ -58,6 +61,39 @@ public class GamePanel extends JPanel {
         JButton btnOffice = new JButton("Office ");
         btnOffice.setBounds(980, 340, 100, 30);
         add(btnOffice);
+
+
+
+
+        btnSchool.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.createSchoolPanel();
+                parent.showSchool();
+            }
+        });
+
+        btnHome.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.createHomePanel();
+                parent.showHome();
+            }
+        });
+
+        btnShop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.createShopPanel();
+                parent.showShop();
+            }
+        });
+
+        btnOffice.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.createOfficePanel();
+                parent.showOffice();
+            }
+        });
+
+
 //--------------------------image------------------
         JLabel lblMap = new JLabel("");
 

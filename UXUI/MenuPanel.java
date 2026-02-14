@@ -15,6 +15,11 @@ public class MenuPanel extends JPanel {
     
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
 
+    //-----------------สีปุ่ม-------------------
+    Color startBtnColor = new Color(255, 105, 180);        
+    Color settingBtnColor = new Color(138, 43, 226);       
+    Color exitBtnColor = new Color(70, 70, 90);           
+
     public MenuPanel(MainFrame mainFrame) {
         this.parent = mainFrame;
         
@@ -41,6 +46,9 @@ public class MenuPanel extends JPanel {
         });
         btnStart.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnStart.setBounds(stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnStart.setBackground(startBtnColor);
+        btnStart.setForeground(Color.WHITE);
+        Hovereffect.HoverEffect(btnStart, stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight, startBtnColor);
         add(btnStart);
         
         stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
@@ -54,6 +62,9 @@ public class MenuPanel extends JPanel {
         });
         btnSetting.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnSetting.setBounds(stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnSetting.setBackground(settingBtnColor);
+        btnSetting.setForeground(Color.WHITE);
+        Hovereffect.HoverEffect(btnSetting, stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight, settingBtnColor);
         add(btnSetting);
         
         stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
@@ -67,6 +78,9 @@ public class MenuPanel extends JPanel {
         });
         btnExit.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnExit.setBounds(stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnExit.setBackground(exitBtnColor);
+        btnExit.setForeground(Color.WHITE);
+        Hovereffect.HoverEffect(btnExit, stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight, exitBtnColor);
         add(btnExit);
 
         // Background 

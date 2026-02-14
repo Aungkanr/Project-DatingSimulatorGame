@@ -59,6 +59,7 @@ public class MainFrame extends JFrame {
         setResizable(false);      // <--- ห้ามย่อขยายหน้าต่าง
         setLocationRelativeTo(null); // ให้อยู่กลางจอเสมอ
         stdScreen.setBtnWHG(300, 60, 20 ,4); //ขนาด ปุ่ม และ gap ,แถว
+        setTitle("Dating Simulator Game"); // เพิ่ม title
 
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

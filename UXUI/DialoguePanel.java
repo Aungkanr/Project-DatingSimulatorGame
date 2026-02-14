@@ -46,7 +46,7 @@ public class DialoguePanel extends JPanel {
     private void initUI() {
         // 2. ป้ายชื่อ (ขยับลงมาให้อยู่ในกรอบ)
         nameLabel = new JLabel("Suzuka Ayaka");
-        nameLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        nameLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
         nameLabel.setForeground(Color.WHITE);
         
         // แก้: y จาก -25 เป็น 5 (เพื่อให้ตรงกับกรอบป้ายชื่อใหม่)
@@ -54,7 +54,7 @@ public class DialoguePanel extends JPanel {
 
         // 3. พื้นที่ข้อความ (ขยับลงตามกล่องหลัก)
         textArea = new JTextArea();
-        textArea.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        textArea.setFont(new Font("Tahoma", Font.PLAIN, 20));
         textArea.setForeground(Color.WHITE);
         textArea.setLineWrap(true); // ตัดบรรทัดอัตโนมัติ
         textArea.setWrapStyleWord(true);// ตัดเป็นคำๆ

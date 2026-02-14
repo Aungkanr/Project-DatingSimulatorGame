@@ -22,6 +22,14 @@ public class GamePanel extends JPanel {
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     private StdAuto stdScreen ; //Device screen
 
+    // ------------------ สีปุ่ม ---------------------
+    Color ExitGameColor = new Color(48, 25, 82);    
+    Color MoneyColor = new Color(255, 215, 0);
+    Color schoolColor = new Color(41, 128, 185);     
+    Color homeColor = new Color(230, 126, 34);        
+    Color shopColor = new Color(46, 204, 113);        
+    Color officeColor = new Color(142, 68, 173);      
+
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
         stdScreen = new StdAuto() ;
@@ -39,7 +47,7 @@ public class GamePanel extends JPanel {
 
         lblMoney = new JLabel("Money: 0");
         lblMoney.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblMoney.setForeground(Color.WHITE);
+        lblMoney.setForeground(MoneyColor);
         lblMoney.setBounds(20, 90, 300, 30);
         add(lblMoney);
 
@@ -57,6 +65,9 @@ public class GamePanel extends JPanel {
 
         JButton btnExitGame = new JButton("Return to Menu");
         btnExitGame.setBounds(20, 20, 150, 30);
+        Hovereffect.HoverEffect(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
+        add(btnExitGame);
+
         btnExitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.showMenu();
@@ -64,19 +75,42 @@ public class GamePanel extends JPanel {
         });
         add(btnExitGame);
 
-        //------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
-        stdScreen.setBtnWHG(200, 30, 20,0); //ขนาด ปุ่ม และ gap ,แถว
+//------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
+        // เพิ่ม Hover Effect ให้กับปุ่มแต่ละตัว (แทนที่โค้ดเดิมในส่วนปุ่ม)
+
+//------------------- ส่วนของปุ่มที่แสดงบนแมพ--------------
+        stdScreen.setBtnWHG(200, 30, 20, 0);
+
         JButton btnSchool = new JButton("School");
         btnSchool.setBounds(stdScreen.centerX-20, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnSchool.setBackground(schoolColor);
+        btnSchool.setForeground(Color.WHITE);
+        btnSchool.setFont(new Font("Tahoma", Font.BOLD, 14));
+        Hovereffect.HoverEffect(btnSchool, stdScreen.centerX-20, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight, schoolColor);
         add(btnSchool);
+
         JButton btnHome = new JButton("Home");
         btnHome.setBounds(stdScreen.centerX-20, stdScreen.currentY+140, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnHome.setBackground(homeColor);
+        btnHome.setForeground(Color.WHITE);
+        btnHome.setFont(new Font("Tahoma", Font.BOLD, 14));
+        Hovereffect.HoverEffect(btnHome, stdScreen.centerX-20, stdScreen.currentY+140, stdScreen.buttonWidth, stdScreen.buttonHeight, homeColor);
         add(btnHome);
+
         JButton btnShop = new JButton("Shop");
         btnShop.setBounds(stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnShop.setBackground(shopColor);
+        btnShop.setForeground(Color.WHITE);
+        btnShop.setFont(new Font("Tahoma", Font.BOLD, 14));
+        Hovereffect.HoverEffect(btnShop, stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
         add(btnShop);
-        JButton btnOffice = new JButton("Office ");
+
+        JButton btnOffice = new JButton("Office");
         btnOffice.setBounds(stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnOffice.setBackground(officeColor);
+        btnOffice.setForeground(Color.WHITE);
+        btnOffice.setFont(new Font("Tahoma", Font.BOLD, 14));
+        Hovereffect.HoverEffect(btnOffice, stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);
 
         btnSchool.addActionListener(new ActionListener() {

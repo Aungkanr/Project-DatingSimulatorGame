@@ -1,19 +1,25 @@
 package UXUI.Scene;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import UXUI.DialoguePanel;
+import UXUI.MainFrame;
+import Utility.StdAuto;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import UXUI.MainFrame;
-import Utility.StdAuto;
-
 public class SchoolPanel extends JPanel {
-    private StdAuto stdScreen;
+
+    private StdAuto stdScreen = new StdAuto() ;
+    DialoguePanel dialogueBox = new DialoguePanel();
+    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
 
     public SchoolPanel(MainFrame mainFrame) {
-        stdScreen = new StdAuto() ;
         stdScreen.setBtnWHG(200, 60, 20 ,0); //ขนาด ปุ่ม และ gap ,แถว
 
         setLayout(null);
@@ -37,5 +43,21 @@ public class SchoolPanel extends JPanel {
             }
         });
         add(btnchoice2);
+
+        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
+        add(dialogueBox);
+        dialogueBox.setText("Perseone", "เดินหัดดูทางบ้างซิยะ! ตาถั่วหรือไง มายืนขวางประตูหน้าตึกอยู่ได้!");
+
+
+        // Background หน้าร้าน
+        JLabel lblMap = new JLabel("");
+
+        String imagePath = "image\\Scene\\School\\Angryscene.png";
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
+
+        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(lblMap);
+
     }
 }

@@ -11,11 +11,12 @@ import Utility.StdAuto;
 public class MenuPanel extends JPanel {
     
     private MainFrame parent;
-    private StdAuto stdScreen = new StdAuto(); //Device screen
+    private StdAuto stdScreen ; //Device screen
     
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
 
     public MenuPanel(MainFrame mainFrame) {
+        stdScreen = new StdAuto() ;
         this.parent = mainFrame;
         
         setBackground(new Color(173, 216, 230));

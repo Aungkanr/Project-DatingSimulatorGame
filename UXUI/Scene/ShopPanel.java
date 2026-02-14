@@ -14,13 +14,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ShopPanel extends JPanel {
-    private StdAuto stdScreen = new StdAuto() ;
+    private StdAuto stdScreen;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     DialoguePanel dialogueBox = new DialoguePanel();
 
     public ShopPanel(MainFrame mainFrame) {
+        stdScreen = new StdAuto() ;
         stdScreen.setBtnWHG(250, 60, 20,0); //ขนาด ปุ่ม และ gap , แถว
-
+        
         setLayout(null);
         setBackground(new Color(12, 51, 204));
 

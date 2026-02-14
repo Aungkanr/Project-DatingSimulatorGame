@@ -10,8 +10,10 @@ import UXUI.MainFrame;
 import Utility.StdAuto;
 
 public class SchoolPanel extends JPanel {
-    private StdAuto stdScreen = new StdAuto() ;
+    private StdAuto stdScreen;
+
     public SchoolPanel(MainFrame mainFrame) {
+        stdScreen = new StdAuto() ;
         stdScreen.setBtnWHG(200, 60, 20 ,0); //ขนาด ปุ่ม และ gap ,แถว
 
         setLayout(null);

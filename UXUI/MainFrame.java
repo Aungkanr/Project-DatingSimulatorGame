@@ -15,10 +15,12 @@ import javax.sound.sampled.Clip; // แก้เป็น Clip
 import javax.sound.sampled.FloatControl; // เพิ่ม
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import Utility.GameTime;
 
 public class MainFrame extends JFrame {
     private JPanel contentPane;
     private Player player;
+    private GameTime gameTime ;
 
     private MenuPanel menuPanel;
     private OptionPanel optionPanel;
@@ -28,7 +30,7 @@ public class MainFrame extends JFrame {
     private HomePanel home;
     private OfficePanel office;
     //ดึงขนาดหน้าจอจริงของคอมพิวเตอร์มาใช้
-    private StdAuto stdScreen = new StdAuto(); //Device screen
+    private StdAuto stdScreen ; //Device screen
     
     private Clip clip; //sound
     public static String filePath = "Music\\Harvest Dawn.wav";  
@@ -45,9 +47,11 @@ public class MainFrame extends JFrame {
         });
     }
     
-    public MainFrame() { //con
-        player = new Player(); 
-        //---load soud
+    public MainFrame() { //-------------construct --------------
+        stdScreen = new StdAuto() ;
+        player = new Player() ; 
+        gameTime = new GameTime() ;
+        //---load sound 
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
@@ -83,7 +87,7 @@ public class MainFrame extends JFrame {
         gamePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         gamePanel.setVisible(false);
         contentPane.add(gamePanel);
-
+    //-----------------end construct -----------------
     }
 
     public void createSchoolPanel() { // สร้าง object ของ schoolpanel
@@ -137,6 +141,7 @@ public class MainFrame extends JFrame {
         menuPanel.setVisible(true);
         optionPanel.setVisible(false);
         gamePanel.setVisible(false);
+        
         // เช็คว่า != null ก่อนเรียกใช้
         if (school != null) school.setVisible(false);
         if (shop != null) shop.setVisible(false);
@@ -148,6 +153,7 @@ public class MainFrame extends JFrame {
         menuPanel.setVisible(false);
         optionPanel.setVisible(true);
         gamePanel.setVisible(false);
+        gamePanel.updateUI();
 
         if (school != null) school.setVisible(false);
         if (shop != null) shop.setVisible(false);
@@ -159,7 +165,7 @@ public class MainFrame extends JFrame {
         menuPanel.setVisible(false);
         optionPanel.setVisible(false);
         gamePanel.setVisible(true);
-
+        gamePanel.updateUI();
         // ซ่อน scene school, shop, home, office ถ้ามันเปิดอยู่
         if (school != null && school.isVisible()) {
             school.setVisible(false);
@@ -180,6 +186,7 @@ public class MainFrame extends JFrame {
         optionPanel.setVisible(false);
         gamePanel.setVisible(false);
         school.setVisible(true);
+        gamePanel.updateUI();
     }
 
     public void showShop() {
@@ -187,6 +194,7 @@ public class MainFrame extends JFrame {
         optionPanel.setVisible(false);
         gamePanel.setVisible(false);
         shop.setVisible(true);
+        gamePanel.updateUI();
     }
 
     public void showHome() {
@@ -194,6 +202,7 @@ public class MainFrame extends JFrame {
         optionPanel.setVisible(false);
         gamePanel.setVisible(false);
         home.setVisible(true);
+        gamePanel.updateUI();
     }
 
     public void showOffice() {
@@ -201,9 +210,16 @@ public class MainFrame extends JFrame {
         optionPanel.setVisible(false);
         gamePanel.setVisible(false);
         office.setVisible(true);
+        gamePanel.updateUI();
     }
 
     public Player getPlayer() {
         return player;
+    }
+    public GameTime getGameTime() {
+        return gameTime;
+    }
+    public GamePanel getGamePanel() {
+        return this.gamePanel; // Return the ACTUAL game panel you created
     }
 }

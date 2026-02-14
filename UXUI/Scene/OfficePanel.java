@@ -1,4 +1,5 @@
 package UXUI.Scene;
+import UXUI.GamePanel;
 import UXUI.MainFrame;
 import Utility.StdAuto;
 
@@ -9,10 +10,14 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OfficePanel extends JPanel {
-    private StdAuto stdScreen = new StdAuto() ;
 
+public class OfficePanel extends JPanel {
+    private StdAuto stdScreen ;
+    
     public OfficePanel(MainFrame mainFrame ) {
+        stdScreen = new StdAuto() ;
+        GamePanel realGamePanel = mainFrame.getGamePanel(); // ---update UI and doActivity
+
         stdScreen.setBtnWHG(200, 60, 20, 0); //ขนาด ปุ่ม และ gap ,แถว
         setLayout(null);
         setBackground(new Color(12, 51, 204));
@@ -23,6 +28,8 @@ public class OfficePanel extends JPanel {
         btnchoice1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.showGame();
+                
+                realGamePanel.doActivity(40);
             }
         });
         add(btnchoice1);

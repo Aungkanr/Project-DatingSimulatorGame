@@ -13,10 +13,11 @@ import Utility.StdAuto;
 public class OptionPanel extends JPanel {
 
     private MainFrame parent;
-    private StdAuto stdScreen = new StdAuto(); //Device screen
+    private StdAuto stdScreen ; //Device screen
     
-    public OptionPanel(MainFrame mainFrame) {
+    public OptionPanel(MainFrame mainFrame) { // -------- construct--------
         this.parent = mainFrame;
+        stdScreen = new StdAuto() ;
         
         setBackground(new Color(0, 51, 204)); 
         setLayout(null);
@@ -46,5 +47,5 @@ public class OptionPanel extends JPanel {
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
         btnBack.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight-20);
         add(btnBack);
-    }
+    }// --------end construct--------
 }

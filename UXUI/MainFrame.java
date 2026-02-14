@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainFrame extends JFrame {
-
     private JPanel contentPane;
     private Player player;
 
@@ -32,7 +31,7 @@ public class MainFrame extends JFrame {
     private StdAuto stdScreen = new StdAuto(); //Device screen
     
     private Clip clip; //sound
-    public static String filePath = "Music\\Harvest Dawn.wav";
+    public static String filePath = "Music\\Harvest ";  
     public static File file = new File(filePath);
 
     public static void main(String[] args) {
@@ -56,6 +55,9 @@ public class MainFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        setSize(1024, 768);       // กำหนดขนาดตายตัว
+        setResizable(false);      // <--- ห้ามย่อขยายหน้าต่าง
+        setLocationRelativeTo(null); // ให้อยู่กลางจอเสมอ
         stdScreen.setBtnWHG(300, 60, 20 ,4); //ขนาด ปุ่ม และ gap ,แถว
 
         setExtendedState(Frame.MAXIMIZED_BOTH);

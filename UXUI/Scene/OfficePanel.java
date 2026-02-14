@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 
 public class OfficePanel extends JPanel {
     private StdAuto stdScreen = new StdAuto() ;
-    public OfficePanel(MainFrame mainFrame ) {        
-        stdScreen.setBtnWHG(200, 60, 20, 0); //ขนาด ปุ่ม และ gap ,แถว
 
+    public OfficePanel(MainFrame mainFrame ) {
+        stdScreen.setBtnWHG(200, 60, 20, 0); //ขนาด ปุ่ม และ gap ,แถว
         setLayout(null);
         setBackground(new Color(12, 51, 204));
 

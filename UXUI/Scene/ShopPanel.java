@@ -1,5 +1,7 @@
 package UXUI.Scene;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import UXUI.MainFrame;
 import Utility.StdAuto;
@@ -11,6 +13,7 @@ import java.awt.event.ActionListener;
 
 public class ShopPanel extends JPanel {
     private StdAuto stdScreen = new StdAuto() ;
+    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     public ShopPanel(MainFrame mainFrame) {
         stdScreen.setBtnWHG(250, 60, 20,0); //ขนาด ปุ่ม และ gap , แถว
 
@@ -36,5 +39,16 @@ public class ShopPanel extends JPanel {
             }
         });
         add(btnchoice2);   
+
+
+        // Background หน้าร้าน
+        JLabel lblMap = new JLabel("");
+
+        String imagePath = "image\\Scene\\Shop\\ShopScene1.png";
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
+
+        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(lblMap);
     }
 }

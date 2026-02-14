@@ -12,23 +12,19 @@ public class MenuPanel extends JPanel {
     
     private MainFrame parent;
     private StdAuto stdScreen = new StdAuto(); //Device screen
- 
+    
+    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+
     public MenuPanel(MainFrame mainFrame) {
         this.parent = mainFrame;
         
         setBackground(new Color(173, 216, 230));
         setLayout(null);
-        stdScreen.setBtnWHG(300, 60, 20, 4); //ขนาด ปุ่ม และ gap ,แถว
-        // 1. Label
-        JLabel lblHome = new JLabel("หน้าเมนูหลัก");
-        lblHome.setFont(new Font("Tahoma", Font.BOLD, 24));
-        lblHome.setHorizontalAlignment(SwingConstants.CENTER);
-        lblHome.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        add(lblHome);
+        stdScreen.setBtnWHG(300, 60, 30, 3); //ขนาด ปุ่ม และ gap ,แถว
         
         stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
         
-        // 2. START Button
+        // 1. START Button
         JButton btnStart = new JButton("START");
         btnStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -44,12 +40,12 @@ public class MenuPanel extends JPanel {
             }
         });
         btnStart.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnStart.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnStart.setBounds(stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnStart);
         
         stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
         
-        // 3. SETTING Button
+        // 2. SETTING Button
         JButton btnSetting = new JButton("SETTING");
         btnSetting.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -57,12 +53,12 @@ public class MenuPanel extends JPanel {
             }
         });
         btnSetting.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnSetting.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnSetting.setBounds(stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnSetting);
         
         stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
         
-        // 4. EXIT Button
+        // 3. EXIT Button
         JButton btnExit = new JButton("EXIT");
         btnExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -70,7 +66,17 @@ public class MenuPanel extends JPanel {
             }
         });
         btnExit.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnExit.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnExit.setBounds(stdScreen.centerX+600, stdScreen.currentY-300, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnExit);
+
+        // Background 
+        JLabel lblMap = new JLabel("");
+
+        String imagePath = "image\\MenuBackground.png";
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
+
+        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(lblMap);
     }
 }

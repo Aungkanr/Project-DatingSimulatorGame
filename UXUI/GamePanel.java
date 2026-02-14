@@ -27,7 +27,6 @@ public class GamePanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         setLayout(null);
 
-
         // --- ส่วนแสดงสถานะ (HUD) ---
 // --------------- show status player ----------------
         lblEnergy = new JLabel("Energy: 0");
@@ -52,18 +51,18 @@ public class GamePanel extends JPanel {
         add(btnExitGame);
 
 //------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
-        JButton btnSchool = new JButton("School");
         stdScreen.setBtnWHG(200, 30, 20,0); //ขนาด ปุ่ม และ gap ,แถว
-        btnSchool.setBounds(stdScreen.centerX+20, stdScreen.currentY-80, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        JButton btnSchool = new JButton("School");
+        btnSchool.setBounds(stdScreen.centerX-20, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnSchool);
         JButton btnHome = new JButton("Home");
-        btnHome.setBounds(stdScreen.centerX+30, stdScreen.currentY+240, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnHome.setBounds(stdScreen.centerX-20, stdScreen.currentY+140, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnHome);
         JButton btnShop = new JButton("Shop");
-        btnShop.setBounds(stdScreen.centerX-240, stdScreen.currentY+120, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnShop.setBounds(stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnShop);
         JButton btnOffice = new JButton("Office ");
-        btnOffice.setBounds(stdScreen.centerX+300, stdScreen.currentY+120, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnOffice.setBounds(stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight);
         add(btnOffice);
 
         btnSchool.addActionListener(new ActionListener() {

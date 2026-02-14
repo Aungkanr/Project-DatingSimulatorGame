@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
     private StdAuto stdScreen = new StdAuto(); //Device screen
     
     private Clip clip; //sound
-    public static String filePath = "Music\\Harvest ";  
+    public static String filePath = "Music\\Harvest Dawn.wav";  
     public static File file = new File(filePath);
 
     public static void main(String[] args) {
@@ -136,16 +136,22 @@ public class MainFrame extends JFrame {
         menuPanel.setVisible(true);
         optionPanel.setVisible(false);
         gamePanel.setVisible(false);
-        school.setVisible(false);
-        shop.setVisible(false);
-        home.setVisible(false);
-        office.setVisible(false);
+        // เช็คว่า != null ก่อนเรียกใช้
+        if (school != null) school.setVisible(false);
+        if (shop != null) shop.setVisible(false);
+        if (home != null) home.setVisible(false);
+        if (office != null) office.setVisible(false);
     }
 
     public void showOption() {
         menuPanel.setVisible(false);
         optionPanel.setVisible(true);
         gamePanel.setVisible(false);
+
+        if (school != null) school.setVisible(false);
+        if (shop != null) shop.setVisible(false);
+        if (home != null) home.setVisible(false);
+        if (office != null) office.setVisible(false);
     }
 
     public void showGame() {

@@ -3,6 +3,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import UXUI.DialoguePanel;
 import UXUI.MainFrame;
 import Utility.StdAuto;
 
@@ -14,6 +16,8 @@ import java.awt.event.ActionListener;
 public class ShopPanel extends JPanel {
     private StdAuto stdScreen = new StdAuto() ;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    DialoguePanel dialogueBox = new DialoguePanel();
+
     public ShopPanel(MainFrame mainFrame) {
         stdScreen.setBtnWHG(250, 60, 20,0); //ขนาด ปุ่ม และ gap , แถว
 
@@ -39,6 +43,10 @@ public class ShopPanel extends JPanel {
             }
         });
         add(btnchoice2);   
+
+        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
+        add(dialogueBox);
+        dialogueBox.setText("Diddy", "Welcome to Diddy shop! What do you want to buy?");
 
 
         // Background หน้าร้าน

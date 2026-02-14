@@ -9,7 +9,7 @@ public class GameTime {
 
     public GameTime() { //construct ลอง configure ค่าเริ่มต้นได้ (อยากลอง cheat)
         this.day = 1;      
-        this.timeSlot = 3; 
+        this.timeSlot = 2; 
     }
 
     public void resetTime() {
@@ -47,6 +47,6 @@ public class GameTime {
     
     // เช็คว่าเป็นตอนกลางคืนไหม 
     public boolean isNight() {
-        return timeSlot == 2;
+        return timeSlot == 3;
     }
 }

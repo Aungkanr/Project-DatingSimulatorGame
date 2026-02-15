@@ -4,6 +4,7 @@ import UXUI.Scene.HomePanel;
 import UXUI.Scene.OfficePanel;
 import UXUI.Scene.SchoolPanel;
 import UXUI.Scene.ShopPanel;
+import UXUI.StatusBarMenu.GamePanel;
 import Utility.StdAuto;
 import java.io.File;
 import java.awt.EventQueue;
@@ -49,6 +50,7 @@ public class MainFrame extends JFrame {
     
     public MainFrame() { //-------------construct --------------
         stdScreen = new StdAuto() ;
+        setSize(stdScreen.width, stdScreen.height); // ตั้งขนาดเฟรมให้เท่ากับค่ามาตรฐานที่เราเพิ่งแก้
         player = new Player() ; 
         gameTime = new GameTime() ;
         //---load sound 
@@ -60,8 +62,8 @@ public class MainFrame extends JFrame {
             e.printStackTrace();
         }
         setSize(1024, 768);       // กำหนดขนาดตายตัว
-        setResizable(false);      // <--- ห้ามย่อขยายหน้าต่าง
-        setLocationRelativeTo(null); // ให้อยู่กลางจอเสมอ
+        setLocationRelativeTo(null);      // ให้อยู่กลางจอเสมอ
+        setResizable(false); // <--- ห้ามย่อขยายหน้าต่าง
         stdScreen.setBtnWHG(300, 60, 20 ,4); //ขนาด ปุ่ม และ gap ,แถว
         setTitle("Dating Simulator Game"); // เพิ่ม title
 

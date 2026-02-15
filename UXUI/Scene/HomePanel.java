@@ -40,19 +40,19 @@ public class HomePanel extends JPanel {
         btnSleep.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnSleep.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                GameTime gt = parent.getGameTime();
-                Player p = parent.getPlayer();
+                GameTime gameTime = parent.getGameTime();
+                Player player = parent.getPlayer();
 
-                if (gt.isNight()) { // ถ้าเป็นกลางคืน -> นอนได้
-                    gt.nextDay();      
-                    p.setEnergy(100);  // restore Energy
+                if (gameTime.isNight_Afternoon()) { // ถ้าเป็นกลางคืน -> นอนได้
+                    gameTime.nextDay();      
+                    player.setEnergy(100);  // restore Energy
 
                     lblMessage.setText(""); // ล้างข้อความเตือน    
                     lblMessage.setForeground(Color.GREEN);
-                    lblMessage.setText("Next Day : " + gt.getDay()); // fix ใส่ method monkong สร้าง
+                    lblMessage.setText("Next Day : " + gameTime.getDay()); // fix ใส่ method monkong สร้าง
 
                 } else {
-                    // ถ้า "ไม่ใช่" กลางคืน -> นอนไม่ได้
+                    // ถ้า "ไม่ใช่" 
                     lblMessage.setForeground(Color.RED);
                     lblMessage.setText("ยังไม่มืดเลย!");
                     // fix

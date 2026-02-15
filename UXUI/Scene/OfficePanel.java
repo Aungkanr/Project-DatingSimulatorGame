@@ -24,7 +24,7 @@ public class OfficePanel extends JPanel {
 
         JButton btnchoice1 = new JButton("Give Job Application");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice1.setBounds(stdScreen.centerX+200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnchoice1.setBounds(stdScreen.centerX-200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.showGame();
@@ -36,7 +36,7 @@ public class OfficePanel extends JPanel {
 
         JButton btnchoice2 = new JButton("I need to work here man!");
         btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice2.setBounds(stdScreen.centerX-200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnchoice2.setBounds(stdScreen.centerX+200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.showGame();

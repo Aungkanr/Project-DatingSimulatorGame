@@ -215,10 +215,10 @@ public class MainFrame extends JFrame {
     }
 
     public Player getPlayer() {
-        return player;
+        return this.player;
     }
     public GameTime getGameTime() {
-        return gameTime;
+        return this.gameTime;
     }
     public GamePanel getGamePanel() {
         return this.gamePanel; // Return the ACTUAL game panel you created

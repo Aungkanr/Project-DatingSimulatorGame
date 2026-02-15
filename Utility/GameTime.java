@@ -46,7 +46,7 @@ public class GameTime {
     }
     
     // เช็คว่าเป็นตอนกลางคืนไหม 
-    public boolean isNight() {
-        return timeSlot == 3;
+    public boolean isNight_Afternoon() {
+        return (timeSlot >= 2) && (timeSlot <=3) ;
     }
 }

@@ -96,6 +96,7 @@ public class LowEnergyPanel extends JPanel {
         btnCancel.setFont(new Font("Tahoma", Font.BOLD, 14));
         btnCancel.addActionListener(e -> {
             this.setVisible(false);
+            parent.showGame();
         });
         add(btnCancel);
     }

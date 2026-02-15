@@ -9,16 +9,15 @@ import Player.Player;
 import Utility.GameTime;
 import Utility.SleepEffect;
 import Utility.StdAuto;
+import Utility.Notify;
 
 public class LowEnergyPanel extends JPanel {
     private SleepEffect sleepEffect = new SleepEffect();
     private StdAuto stdScreen = new StdAuto() ;
+    private Notify notify = new Notify(stdScreen.width);
     private JButton btnSleep;
     private JButton btnCancel;
     private MainFrame parent;
-
-    private JLabel lblMessage; // <--- 1. ตัวแปรสำหรับโชว์ข้อความเตือน
-    
     // 1. เพิ่มตัวแปรเช็คสถานะ
     private boolean isSleepingMode = false; 
 
@@ -36,6 +35,8 @@ public class LowEnergyPanel extends JPanel {
     }
 
     private void initComponents(int screenWidth, int screenHeight) {
+        Player player = parent.getPlayer();
+        GameTime gameTime = parent.getGameTime();
         int boxWidth = 400;
         int boxHeight = 250;
         int x = (screenWidth - boxWidth) / 2;
@@ -58,21 +59,12 @@ public class LowEnergyPanel extends JPanel {
             repaint(); 
 
             // Logic เกม
-            Player player = parent.getPlayer();
-            GameTime gameTime = parent.getGameTime();
             gameTime.nextDay();
             player.setEnergy(100);
 
             // เริ่ม Effect
             sleepEffect.startSleepSequence();
-            lblMessage = new JLabel("");
-            lblMessage.setFont(new Font("Tahoma", Font.BOLD, 20));
-            lblMessage.setForeground(Color.RED); 
-            lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
-            lblMessage.setBounds(stdScreen.centerX - 100, stdScreen.currentY - 50, stdScreen.buttonWidth + 200, 40);
-            lblMessage.setVisible(false);
-            add(lblMessage);
-            
+
             // ตั้งเวลาปิดหน้านี้
             new javax.swing.Timer(4000, new ActionListener() {
                 @Override
@@ -81,15 +73,20 @@ public class LowEnergyPanel extends JPanel {
                     isSleepingMode = false; 
                     btnSleep.setVisible(true);
                     btnCancel.setVisible(true);
-                    lblMessage.setVisible(true);
                     parent.showGame();
-                    lblMessage.setText(""); // ล้างข้อความเตือน    
-                    lblMessage.setForeground(Color.GREEN);
-                    lblMessage.setText("Next Day : " + gameTime.getDay());
-                    setComponentZOrder(lblMessage, 0);
                     ((javax.swing.Timer)e.getSource()).stop();
                 }
             }).start();
+            new javax.swing.Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    notify.show("Next Day : " + gameTime.getDay(), Color.GREEN);
+                    add(notify); // เพิ่ม notify เข้ามาใน panel นี้ (ถ้ายังไม่เพิ่ม)
+                    setComponentZOrder(notify, 0);
+                }
+            }).start();
+
+
         });
         add(btnSleep);
         

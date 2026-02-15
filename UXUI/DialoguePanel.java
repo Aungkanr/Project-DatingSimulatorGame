@@ -23,7 +23,7 @@ public class DialoguePanel extends JPanel {
     //ตัวแปรตั้งค่าความกว่างความสูงกล่อง เพื่อความง่ายต่อการใช้
     private int nameBoxHeight = 60;
     private int nameBoxWidth = 300;
-    private int gap = 10;
+    private int gap = 20;
     private int topMargin = nameBoxHeight + gap;
 
     public DialoguePanel() {
@@ -60,7 +60,7 @@ public class DialoguePanel extends JPanel {
 
         // 3. พื้นที่ข้อความ (ขยับลงตามกล่องหลัก)
         textArea = new JTextArea();
-        textArea.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        textArea.setFont(new Font("Tahoma", Font.PLAIN, 25));
         textArea.setForeground(Color.WHITE);
         textArea.setLineWrap(true); // ปิดการตัดบรรทัด
         textArea.setWrapStyleWord(true);// ตัดเป็นคำๆ

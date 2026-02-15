@@ -44,14 +44,13 @@ public class SchoolPanel extends JPanel {
         });
         add(btnchoice2);
 
-        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
+        dialogueBox.setBounds(stdScreen.centerX-700, stdScreen.currentY+ 90 , stdScreen.buttonWidth+1420, stdScreen.buttonHeight+200);
         add(dialogueBox);
         dialogueBox.setText("Perseone", "เดินหัดดูทางบ้างซิยะ! ตาถั่วหรือไง มายืนขวางประตูหน้าตึกอยู่ได้!");
 
 
         // Background หน้าร้าน
         JLabel lblMap = new JLabel("");
-
         String imagePath = "image\\Scene\\School\\Angryscene.png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);

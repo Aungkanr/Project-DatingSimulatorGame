@@ -1,7 +1,7 @@
 package UXUI;
 import Player.Player;
-import Utility.GameTime;
 import Utility.StdAuto;
+import javax.swing.BorderFactory;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,15 +12,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 public class GamePanel extends JPanel {
+
 
     private MainFrame parent;
     private JLabel lblEnergy;
     private JLabel lblMoney;
-    private JLabel lblDay;
-    private JLabel lblTime;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
-    private StdAuto stdScreen ; //Device screen
+    private StdAuto stdScreen = new StdAuto() ; //Device screen
+
 
     // ------------------ สีปุ่ม ---------------------
     Color ExitGameColor = new Color(48, 25, 82);    
@@ -32,13 +33,12 @@ public class GamePanel extends JPanel {
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
-        stdScreen = new StdAuto() ;
 
         setBackground(Color.DARK_GRAY);
         setLayout(null);
 
         // --- ส่วนแสดงสถานะ (HUD) ---
-        // --------------- show status player ----------------
+// --------------- show status player ----------------
         lblEnergy = new JLabel("Energy: 0");
         lblEnergy.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblEnergy.setForeground(Color.WHITE);
@@ -50,18 +50,6 @@ public class GamePanel extends JPanel {
         lblMoney.setForeground(MoneyColor);
         lblMoney.setBounds(20, 90, 300, 30);
         add(lblMoney);
-
-        lblDay = new JLabel("Day: 1");
-        lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblDay.setForeground(Color.WHITE);
-        lblDay.setBounds(250, 60, 150, 30);
-        add(lblDay);
-
-        lblTime = new JLabel("Time: Morning");
-        lblTime.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblTime.setForeground(Color.WHITE);
-        lblTime.setBounds(250, 90, 200, 30); 
-        add(lblTime);
 
         JButton btnExitGame = new JButton("Return to Menu");
         btnExitGame.setBounds(20, 20, 150, 30);
@@ -153,27 +141,14 @@ public class GamePanel extends JPanel {
         add(lblMap);
     }
 //--------------------------image------------------
-    //------------update - ค่า--------------------
-    public void updateUI() {
-        if (parent == null ) return ;
-        Player player = parent.getPlayer();
-        GameTime gTime = parent.getGameTime(); // เรียก Time มา
-
-        lblEnergy.setText("Energy: " + player.getEnergy());
-        lblMoney.setText("Money: " + player.getMoney());
-        lblDay.setText("Day: " + gTime.getDay());
-        lblTime.setText("Time: " + gTime.getTimeString());
-    }
-    public boolean doActivity(int energyCost) { 
-        Player player = parent.getPlayer();
-        GameTime gTime = parent.getGameTime(); 
-
-        if (player.getEnergy() < 10) {
-            // ... code แจ้งเตือน Energy หมด ...
-            return false;
-        } 
-        gTime.advanceTime(player,energyCost);// ถ้า Time อยู่ที่ Night ให้ค้างที่ Night wait untill click Sleep.
-        updateUI();
-        return true;
+    //update - ค่า
+    @Override
+    public void setVisible(boolean aFlag) {
+        super.setVisible(aFlag);
+        if (aFlag) {
+            Player p = parent.getPlayer();
+            lblEnergy.setText("Energy: " + p.getEnergy());
+            lblMoney.setText("Money: " + p.getMoney());
+        }
     }
 }

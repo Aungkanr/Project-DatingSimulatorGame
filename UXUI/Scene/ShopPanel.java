@@ -45,7 +45,7 @@ public class ShopPanel extends JPanel {
         });
         add(btnchoice2);   
 
-        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
+        dialogueBox.setBounds(stdScreen.centerX-700, stdScreen.currentY+ 90 , stdScreen.buttonWidth+1425, stdScreen.buttonHeight+200);
         add(dialogueBox);
         dialogueBox.setText("Diddy", "Welcome to Diddy shop! What do you want to buy?");
 

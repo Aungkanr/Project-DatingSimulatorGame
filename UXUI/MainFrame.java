@@ -282,7 +282,7 @@ public class MainFrame extends JFrame {
         add(office);
     }
     
-    // ฟังก์ชันสำหรับสลับหน้า 
+   
     // --- ฟังก์ชันจัดการเสียง (ให้ลูกๆ เรียกใช้) ---
     public void toggleMute(boolean isMute) {
         if (clip != null) {

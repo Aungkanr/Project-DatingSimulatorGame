@@ -13,9 +13,7 @@ public class ChangeImageMap {
      * @param screenWidth ความกว้างหน้าจอ
      * @param screenHeight ความสูงหน้าจอ
      */
-    public static void updateMapImage(String timeString, JLabel lblMap, 
-                                      CheckImage checkImageUtil, 
-                                      int screenWidth, int screenHeight) {
+    public static void updateMapImage(String timeString, JLabel lblMap, CheckImage checkImageUtil, int screenWidth, int screenHeight) {
         String imagePath = "";
         
         switch (timeString) {

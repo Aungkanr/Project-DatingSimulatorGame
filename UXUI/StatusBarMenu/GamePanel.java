@@ -1,6 +1,7 @@
 package UXUI.StatusBarMenu;
 import Player.Player;
 import UXUI.Hovereffect;
+import UXUI.LowEnergyPanel;
 import UXUI.MainFrame;
 import Utility.ChangeImageMap;
 import Utility.GameTime;
@@ -24,23 +25,24 @@ public class GamePanel extends JPanel {
     private JLabel lblDay;
     private JLabel lblTime;
     private JLabel lblMap;
-    private ChangeImageMap mapChanger;  
-    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    private ChangeImageMap mapChanger;
     private StdAuto stdScreen ; //Device screen
     private Notify notification ; //ตัวแจ้งเตือน
 
+    // ------------------ Object ---------------------
+    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     // เพิ่มใหม่ ธีมสีชมพู (Pink Theme)
-    Color themePink = new Color(219, 134, 163); // add
-    Color themeBorder = Color.WHITE;// add
+    public static final Color themePink = new Color(219, 134, 163); // add
+    public static final Color themeBorder = Color.WHITE;// add
 
     // ------------------ สีปุ่ม ---------------------
-    Color ExitGameColor = new Color(48, 25, 82);    
+    public static final Color ExitGameColor = new Color(48, 25, 82);    
     //Color MoneyColor = new Color(255, 215, 0);
-    Color MoneyColor = new Color(255, 223, 0); // ปรับเหลืองให้สว่างขึ้นบนพื้นชมพู
-    Color schoolColor = new Color(41, 128, 185);     
-    Color homeColor = new Color(230, 126, 34);        
-    Color shopColor = new Color(46, 204, 113);        
-    Color officeColor = new Color(142, 68, 173);      
+    public static final Color MoneyColor = new Color(255, 223, 0); // ปรับเหลืองให้สว่างขึ้นบนพื้นชมพู
+    public static final Color schoolColor = new Color(41, 128, 185);     
+    public static final Color homeColor = new Color(230, 126, 34);        
+    public static final Color shopColor = new Color(46, 204, 113);        
+    public static final Color officeColor = new Color(142, 68, 173);      
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
@@ -49,6 +51,9 @@ public class GamePanel extends JPanel {
         setBackground(new Color(245, 240, 240));//add
         //setBackground(Color.DARK_GRAY);
         setLayout(null);
+        notification = new Notify(stdScreen.width);
+        add(notification);
+
         notification = new Notify(stdScreen.width);
         add(notification);
 
@@ -100,7 +105,6 @@ public class GamePanel extends JPanel {
         btnExitGame.setBounds(20, 20, 150, 30);
         Hovereffect.HoverEffect(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
         add(btnExitGame);
-        
         btnExitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.showMenu();
@@ -177,7 +181,6 @@ public class GamePanel extends JPanel {
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
     }
-    //--------------------------image------------------
     //------------update - ค่า--------------------
     public void updateUI() {
         if (parent == null ) return ;
@@ -185,18 +188,23 @@ public class GamePanel extends JPanel {
         GameTime gTime = parent.getGameTime(); // เรียก Time มา
 
         lblEnergy.setText("Energy: " + player.getEnergy());
+        lblEnergy.setForeground(Color.white);
         lblMoney.setText("Money: " + player.getMoney());
         lblDay.setText("Day: " + gTime.getDay());
         lblTime.setText("Time: " + gTime.getTimeString());
-
-        mapChanger.updateMapImage(gTime.getTimeString() , lblMap , checkImageUtil , stdScreen);
+        ChangeImageMap.updateMapImage(gTime.getTimeString(), lblMap, checkImageUtil, stdScreen);
     }
     public boolean doActivity(int energyCost) { 
         Player player = parent.getPlayer();
-        GameTime gTime = parent.getGameTime(); 
-
+        GameTime gTime = parent.getGameTime();
+        lblEnergy.setForeground(Color.WHITE); // Reset สี Energy ก่อนตรวจสอบ
         if (player.getEnergy() < 10) {
-            notification.show("Energy is too low!", Color.RED);
+            // ... code แจ้งเตือน Energy หมด ...
+            LowEnergyPanel energyPanel = new LowEnergyPanel(stdScreen.width, stdScreen.height, parent);
+            add(energyPanel);
+            energyPanel.setVisible(true);
+            setComponentZOrder(energyPanel, 0);
+            lblEnergy.setForeground(Color.red);
             return false;
         } 
         gTime.advanceTime(player,energyCost);// ถ้า Time อยู่ที่ Night ให้ค้างที่ Night wait untill click Sleep.

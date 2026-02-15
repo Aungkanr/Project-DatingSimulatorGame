@@ -1,12 +1,14 @@
 package UXUI;
 import Player.Player;
 import Utility.GameTime;
+import Utility.Notify;
 import Utility.StdAuto;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon; 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,6 +23,7 @@ public class GamePanel extends JPanel {
     private JLabel lblTime;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     private StdAuto stdScreen ; //Device screen
+    private Notify notification ; //ตัวแจ้งเตือน
 
     // ------------------ สีปุ่ม ---------------------
     Color ExitGameColor = new Color(48, 25, 82);    
@@ -32,10 +35,13 @@ public class GamePanel extends JPanel {
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
-        stdScreen = new StdAuto() ;
+        stdScreen = new StdAuto();
 
         setBackground(Color.DARK_GRAY);
         setLayout(null);
+
+        notification = new Notify(stdScreen.width);
+        add(notification);
 
         // --- ส่วนแสดงสถานะ (HUD) ---
         // --------------- show status player ----------------
@@ -67,15 +73,12 @@ public class GamePanel extends JPanel {
         btnExitGame.setBounds(20, 20, 150, 30);
         Hovereffect.HoverEffect(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
         add(btnExitGame);
-
         btnExitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.showMenu();
             }
         });
         add(btnExitGame);
-
-//------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
         // เพิ่ม Hover Effect ให้กับปุ่มแต่ละตัว (แทนที่โค้ดเดิมในส่วนปุ่ม)
 
 //------------------- ส่วนของปุ่มที่แสดงบนแมพ--------------
@@ -169,7 +172,7 @@ public class GamePanel extends JPanel {
         GameTime gTime = parent.getGameTime(); 
 
         if (player.getEnergy() < 10) {
-            // ... code แจ้งเตือน Energy หมด ...
+            notification.show("Energy is too low!", Color.RED);
             return false;
         } 
         gTime.advanceTime(player,energyCost);// ถ้า Time อยู่ที่ Night ให้ค้างที่ Night wait untill click Sleep.

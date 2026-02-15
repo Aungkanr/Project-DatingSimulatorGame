@@ -15,16 +15,22 @@ import java.awt.event.ActionListener;
 
 public class ShopPanel extends JPanel {
     private StdAuto stdScreen;
+    private MainFrame mainFrame ;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     DialoguePanel dialogueBox = new DialoguePanel();
 
     public ShopPanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame ;
         stdScreen = new StdAuto() ;
         stdScreen.setBtnWHG(250, 60, 20,0); //ขนาด ปุ่ม และ gap , แถว
         
         setLayout(null);
         setBackground(new Color(12, 51, 204));
-
+        //---------------------------dialogueBox---------------------------
+        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
+        add(dialogueBox);
+        dialogueBox.setText("Diddy", "Welcome to Diddy shop! What do you want to buy?");
+        //---------------------------choice 1---------------------------
         JButton btnchoice1 = new JButton("Hello i want to buy baby oil");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnchoice1.setBounds(stdScreen.centerX+200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
@@ -34,7 +40,7 @@ public class ShopPanel extends JPanel {
             }
         });
         add(btnchoice1);
-
+        //---------------------------choice 2---------------------------
         JButton btnchoice2 = new JButton("give me money man!");
         btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnchoice2.setBounds(stdScreen.centerX-200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
@@ -44,19 +50,11 @@ public class ShopPanel extends JPanel {
             }
         });
         add(btnchoice2);   
-
-        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
-        add(dialogueBox);
-        dialogueBox.setText("Diddy", "Welcome to Diddy shop! What do you want to buy?");
-
-
-        // Background หน้าร้าน
+        //---------------------------Background หน้าร้าน---------------------------
         JLabel lblMap = new JLabel("");
-
         String imagePath = "image\\Scene\\Shop\\ShopScene1.png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
-
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
     }

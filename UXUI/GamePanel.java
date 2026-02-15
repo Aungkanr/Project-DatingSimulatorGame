@@ -19,8 +19,10 @@ public class GamePanel extends JPanel {
     private JLabel lblMoney;
     private JLabel lblDay;
     private JLabel lblTime;
-    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     private StdAuto stdScreen ; //Device screen
+
+    // ------------------ Object ---------------------
+    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
 
     // ------------------ สีปุ่ม ---------------------
     Color ExitGameColor = new Color(48, 25, 82);    
@@ -166,10 +168,15 @@ public class GamePanel extends JPanel {
     }
     public boolean doActivity(int energyCost) { 
         Player player = parent.getPlayer();
-        GameTime gTime = parent.getGameTime(); 
-
+        GameTime gTime = parent.getGameTime();
+        lblEnergy.setForeground(Color.WHITE); // Reset สี Energy ก่อนตรวจสอบ
         if (player.getEnergy() < 10) {
             // ... code แจ้งเตือน Energy หมด ...
+            LowEnergyPanel energyPanel = new LowEnergyPanel(stdScreen.width, stdScreen.height, parent);
+            add(energyPanel);
+            energyPanel.setVisible(true);
+            setComponentZOrder(energyPanel, 0);
+            lblEnergy.setForeground(Color.red);
             return false;
         } 
         gTime.advanceTime(player,energyCost);// ถ้า Time อยู่ที่ Night ให้ค้างที่ Night wait untill click Sleep.

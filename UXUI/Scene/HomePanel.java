@@ -1,6 +1,7 @@
 package UXUI.Scene;
 import UXUI.MainFrame;
 import Utility.GameTime;
+import Utility.Sleep;
 import Player.Player;
 import Utility.StdAuto;
 
@@ -16,8 +17,11 @@ import java.awt.event.ActionListener;
 
 public class HomePanel extends JPanel {
     private StdAuto stdScreen = new StdAuto() ;
+    private Sleep sleepEffect = new Sleep() ;
     private MainFrame parent;
     private JLabel lblMessage; // <--- 1. ตัวแปรสำหรับโชว์ข้อความเตือน
+    private JButton btnBack; // <--- 2. ตัวแปรปุ่มกลับ (ถ้าต้องการเข้าถึงจากหลายที่)
+    
     public HomePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
         stdScreen.setBtnWHG(200, 60, 20 ,0); //ขนาด ปุ่ม และ gap ,แถว
@@ -42,15 +46,29 @@ public class HomePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 GameTime gameTime = parent.getGameTime();
                 Player player = parent.getPlayer();
-
                 if (gameTime.isNight_Afternoon()) { // ถ้าเป็นกลางคืน -> นอนได้
-                    gameTime.nextDay();      
+                    gameTime.nextDay();
+                    btnSleep.setVisible(false); // ซ่อนปุ่มนอนหลับระหว่างที่กำลังนอน
+                    btnBack.setVisible(false); // ซ่อนปุ่มกลับระหว่างที่กำลังนอน
+                    sleepEffect.startSleepSequence();
+                    sleepEffect.setBounds(0, 0, stdScreen.width, stdScreen.height);
+                    add(sleepEffect);
+                    setComponentZOrder(sleepEffect, 0);
                     player.setEnergy(100);  // restore Energy
 
-                    lblMessage.setText(""); // ล้างข้อความเตือน    
-                    lblMessage.setForeground(Color.GREEN);
-                    lblMessage.setText("Next Day : " + gameTime.getDay()); // fix ใส่ method monkong สร้าง
-
+                    new javax.swing.Timer(4000, new ActionListener() { // การทำงานหลังจากผ่านไป 4 วินาที (เวลาที่นอนหลับ) **คล้ายๆ Thread.sleep
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            btnSleep.setVisible(true); // แสดงปุ่มนอนหลับหลังจากที่ตื่น
+                            btnBack.setVisible(true); // แสดงปุ่มกลับหลังจากที่ตื่น
+                            lblMessage.setText(""); // ล้างข้อความเตือน    
+                            lblMessage.setForeground(Color.GREEN);
+                            lblMessage.setText("Next Day : " + gameTime.getDay());
+                            
+                            // อย่าลืมสั่งหยุด Timer
+                            ((javax.swing.Timer)e.getSource()).setRepeats(false);
+                        }
+                    }).start();
                 } else {
                     // ถ้า "ไม่ใช่" 
                     lblMessage.setForeground(Color.RED);
@@ -62,7 +80,7 @@ public class HomePanel extends JPanel {
         add(btnSleep);
 
         // --- ปุ่ม return ----------------------------------------
-        JButton btnBack = new JButton("Back");
+        btnBack = new JButton("Back");
         btnBack.setBounds(20, 20, 100, 30);
         btnBack.addActionListener(e -> {
             lblMessage.setText(""); 

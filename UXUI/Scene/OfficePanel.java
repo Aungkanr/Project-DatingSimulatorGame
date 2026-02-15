@@ -5,6 +5,9 @@ import Utility.StdAuto;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import Player.Player;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,6 +20,7 @@ public class OfficePanel extends JPanel {
     public OfficePanel(MainFrame mainFrame ) {
         stdScreen = new StdAuto() ;
         GamePanel realGamePanel = mainFrame.getGamePanel(); // ---update UI and doActivity
+        Player realPlayer = mainFrame.getPlayer();
 
         stdScreen.setBtnWHG(200, 60, 20, 0); //ขนาด ปุ่ม และ gap ,แถว
         setLayout(null);
@@ -28,7 +32,7 @@ public class OfficePanel extends JPanel {
         btnchoice1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.showGame();
-                
+                realPlayer.increaseMoney(80);
                 realGamePanel.doActivity(40);
             }
         });

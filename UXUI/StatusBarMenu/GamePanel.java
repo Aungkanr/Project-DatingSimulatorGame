@@ -2,14 +2,16 @@ package UXUI.StatusBarMenu;
 import Player.Player;
 import UXUI.Hovereffect;
 import UXUI.MainFrame;
+import Utility.ChangeImageMap;
 import Utility.GameTime;
+import Utility.Notify;
 import Utility.StdAuto;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon; 
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,8 +23,11 @@ public class GamePanel extends JPanel {
     private JLabel lblMoney;
     private JLabel lblDay;
     private JLabel lblTime;
+    private JLabel lblMap;
+    private ChangeImageMap mapChanger;  
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     private StdAuto stdScreen ; //Device screen
+    private Notify notification ; //ตัวแจ้งเตือน
 
     // เพิ่มใหม่ ธีมสีชมพู (Pink Theme)
     Color themePink = new Color(219, 134, 163); // add
@@ -39,11 +44,13 @@ public class GamePanel extends JPanel {
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
-        stdScreen = new StdAuto() ;
+        stdScreen = new StdAuto();
 
         setBackground(new Color(245, 240, 240));//add
         //setBackground(Color.DARK_GRAY);
         setLayout(null);
+        notification = new Notify(stdScreen.width);
+        add(notification);
 
         // ==========================================
         // 1. สร้างกล่องสถานะ (RoundedPanel)
@@ -99,51 +106,6 @@ public class GamePanel extends JPanel {
                 parent.showMenu();
             }
         });
-
-        /* == code เดิม == 
-        // --- ส่วนแสดงสถานะ (HUD) ---
-        // --------------- show status player ----------------
-        lblEnergy = new JLabel("Energy: 0");
-        lblEnergy.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblEnergy.setForeground(Color.WHITE);
-        lblEnergy.setBounds(20, 60, 300, 30);
-        add(lblEnergy);
-
-        lblMoney = new JLabel("Money: 0");
-        lblMoney.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblMoney.setForeground(MoneyColor);
-        lblMoney.setBounds(20, 90, 300, 30);
-        add(lblMoney);
-
-        lblDay = new JLabel("Day: 1");
-        lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblDay.setForeground(Color.WHITE);
-        lblDay.setBounds(250, 60, 150, 30);
-        add(lblDay);
-
-        lblTime = new JLabel("Time: Morning");
-        lblTime.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblTime.setForeground(Color.WHITE);
-        lblTime.setBounds(250, 90, 200, 30); 
-        add(lblTime);
-
-        JButton btnExitGame = new JButton("Return to Menu");
-        btnExitGame.setBounds(20, 20, 150, 30);
-        Hovereffect.HoverEffect(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
-        add(btnExitGame);
-
-        btnExitGame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                parent.showMenu();
-            }
-        });
-        add(btnExitGame);
-        */
-
-
-
-    //------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
-    // เพิ่ม Hover Effect ให้กับปุ่มแต่ละตัว (แทนที่โค้ดเดิมในส่วนปุ่ม)
 
     //------------------- ส่วนของปุ่มที่แสดงบนแมพ--------------
         stdScreen.setBtnWHG(200, 30, 20, 0);
@@ -209,13 +171,9 @@ public class GamePanel extends JPanel {
         });
 
 
-    //--------------------------image------------------
-        JLabel lblMap = new JLabel("");
-
-        String imagePath = "image\\Map.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
-
+    //--------------------------image Map update ตามเวลา (โดยส่งข้อมูล StringของGame Time ไป)------------------
+        lblMap = new JLabel("");  
+        ChangeImageMap.updateMapImage("Morning", lblMap, checkImageUtil, stdScreen);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
     }
@@ -230,13 +188,15 @@ public class GamePanel extends JPanel {
         lblMoney.setText("Money: " + player.getMoney());
         lblDay.setText("Day: " + gTime.getDay());
         lblTime.setText("Time: " + gTime.getTimeString());
+
+        mapChanger.updateMapImage(gTime.getTimeString() , lblMap , checkImageUtil , stdScreen);
     }
     public boolean doActivity(int energyCost) { 
         Player player = parent.getPlayer();
         GameTime gTime = parent.getGameTime(); 
 
         if (player.getEnergy() < 10) {
-            // ... code แจ้งเตือน Energy หมด ...
+            notification.show("Energy is too low!", Color.RED);
             return false;
         } 
         gTime.advanceTime(player,energyCost);// ถ้า Time อยู่ที่ Night ให้ค้างที่ Night wait untill click Sleep.

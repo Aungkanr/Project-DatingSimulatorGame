@@ -66,7 +66,7 @@ public class OfficePanel extends JPanel {
         // --- Background Image ---
         JLabel lblMap = new JLabel("");
         // *อย่าลืมเช็คชื่อไฟล์รูปภาพของคุณว่าชื่ออะไร* (ผมสมมติว่าเป็น OfficeScene.png)
-        String imagePath = "image\\Scene\\Office\\OfficeScene.png"; 
+        String imagePath = "image\\Scene\\Office\\Barad-durWork.png"; 
         ImageIcon originalIcon = new ImageIcon(imagePath);
         
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
@@ -90,6 +90,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import Player.Player;
+import Utility.GameTime;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -103,6 +104,7 @@ public class OfficePanel extends JPanel {
         stdScreen = new StdAuto() ;
         GamePanel realGamePanel = mainFrame.getGamePanel(); // ---update UI and doActivity
         Player realPlayer = mainFrame.getPlayer();
+        GameTime gameTime = mainFrame.getGameTime(); 
 
         stdScreen.setBtnWHG(200, 60, 20, 0); //ขนาด ปุ่ม และ gap ,แถว
         setLayout(null);
@@ -114,7 +116,9 @@ public class OfficePanel extends JPanel {
         btnchoice1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.showGame();
-                realPlayer.increaseMoney(80);
+                if (gameTime.getTimeSlot() < 3) {
+                    realPlayer.increaseMoney(80);
+                }
                 realGamePanel.doActivity(40);
             }
         });

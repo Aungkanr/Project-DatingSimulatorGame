@@ -20,6 +20,12 @@ public class DialoguePanel extends JPanel {
     // --- Config ---
     private int typingSpeed = 30;     // ความเร็วในการพิมพ์ (ms) ยิ่งน้อยยิ่งเร็ว
 
+    //ตัวแปรตั้งค่าความกว่างความสูงกล่อง เพื่อความง่ายต่อการใช้
+    private int nameBoxHeight = 60;
+    private int nameBoxWidth = 300;
+    private int gap = 20;
+    private int topMargin = nameBoxHeight + gap;
+
     public DialoguePanel() {
         // 1. ตั้งค่า Panel หลัก
         setLayout(null); // ใช้ null layout เพื่อจัดวางตำแหน่งเอง (หรือใช้ Layout อื่นก็ได้)
@@ -46,23 +52,22 @@ public class DialoguePanel extends JPanel {
     private void initUI() {
         // 2. ป้ายชื่อ (ขยับลงมาให้อยู่ในกรอบ)
         nameLabel = new JLabel("Suzuka Ayaka");
-        nameLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+        nameLabel.setFont(new Font("Tahoma", Font.BOLD, 26));
         nameLabel.setForeground(Color.WHITE);
         
         // แก้: y จาก -25 เป็น 5 (เพื่อให้ตรงกับกรอบป้ายชื่อใหม่)
-        nameLabel.setBounds(30, 5, 200, 40); 
+        nameLabel.setBounds(30, 10, 200, 40); 
 
         // 3. พื้นที่ข้อความ (ขยับลงตามกล่องหลัก)
         textArea = new JTextArea();
-        textArea.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        textArea.setFont(new Font("Tahoma", Font.PLAIN, 25));
         textArea.setForeground(Color.WHITE);
-        textArea.setLineWrap(true); // ตัดบรรทัดอัตโนมัติ
+        textArea.setLineWrap(true); // ปิดการตัดบรรทัด
         textArea.setWrapStyleWord(true);// ตัดเป็นคำๆ
         textArea.setOpaque(false);// พื้นหลังใส
         textArea.setEditable(false);   // ห้ามพิมพ์แก้
         textArea.setHighlighter(null); // ปิดการไฮไลท์
-        textArea.setBounds(30, 60, 740, 90); // กำหนดขอบเขตข้อความภายในกล่อง
-
+        textArea.setBounds(30, nameBoxHeight + gap + 20, 1400, 120);
         add(nameLabel);
         add(textArea);
 
@@ -113,20 +118,18 @@ public class DialoguePanel extends JPanel {
         Color pinkBg = new Color(230, 100, 160, 200); 
         Color whiteBorder = Color.WHITE;
 
-        // กำหนดระยะขอบบนใหม่ (เพื่อให้มีที่สำหรับป้ายชื่อ)
-        int topMargin = 40; 
-
         // 1. วาดกล่องข้อความหลัก (Main Box) - ดันลงมาที่ y = topMargin
         g2.setColor(pinkBg);
-        g2.fillRoundRect(10, topMargin, getWidth() - 20, getHeight() - topMargin - 10, 20, 20);
+        g2.fillRect(10, topMargin, getWidth() - 20, getHeight() - topMargin - 10);  
         g2.setColor(whiteBorder);
-        g2.setStroke(new BasicStroke(3));
-        g2.drawRoundRect(10, topMargin, getWidth() - 20, getHeight() - topMargin - 10, 20, 20);
+        g2.setStroke(new BasicStroke(6));
+        g2.drawRect(10, topMargin, getWidth() - 20, getHeight() - topMargin - 10);  
 
         // 2. วาดกล่องชื่อ (Name Tag) - วาดที่ y = 0 (จุดยอดสุดของ Panel)
         g2.setColor(pinkBg);
-        g2.fillRoundRect(20, 0, 180, 40, 10, 10); 
+        g2.fillRect(10, 0, nameBoxWidth, nameBoxHeight);  // ลบ , 15, 15 ออก
         g2.setColor(whiteBorder);
-        g2.drawRoundRect(20, 0, 180, 40, 10, 10);
+        g2.setStroke(new BasicStroke(6));
+        g2.drawRect(10, 0, nameBoxWidth, nameBoxHeight);  // ลบ , 15, 15 ออก
     }
 }

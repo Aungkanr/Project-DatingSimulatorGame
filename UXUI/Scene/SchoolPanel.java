@@ -22,7 +22,7 @@ public class SchoolPanel extends JPanel {
 
     public SchoolPanel(MainFrame mainFrame) {
         stdScreen = new StdAuto();
-        stdScreen.setBtnWHG(250, 50, 20, 0); // ตั้งขนาดปุ่มมาตรฐาน (กว้าง 250, สูง 50)
+        stdScreen.setBtnWHG(250, 50,    20, 0); // ตั้งขนาดปุ่มมาตรฐาน (กว้าง 250, สูง 50)
 
         setLayout(null);
         setBackground(new Color(12, 51, 204));
@@ -32,9 +32,7 @@ public class SchoolPanel extends JPanel {
 
         int gap = 20;// ระยะห่างระหว่างปุ่ม
 
-        // ==================================================================
         // 1. ปุ่มซ้าย (Left) : "You are so cute"
-        // ==================================================================
         JButton btnLeft = new JButton("You are so cute");
         btnLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
         // สูตร: Center - Width - Gap
@@ -42,9 +40,7 @@ public class SchoolPanel extends JPanel {
         btnLeft.addActionListener(e -> mainFrame.showGame());
         add(btnLeft);
 
-        // ==================================================================
         // 2. ปุ่มกลาง (Middle) : "I am sorry" (เพิ่มมาใหม่)
-        // ==================================================================
         JButton btnMiddle = new JButton("I am sorry...");
         btnMiddle.setFont(new Font("Tahoma", Font.PLAIN, 14));
         // สูตร: Center
@@ -52,9 +48,7 @@ public class SchoolPanel extends JPanel {
         btnMiddle.addActionListener(e -> mainFrame.showGame());
         add(btnMiddle);
 
-        // ==================================================================
         // 3. ปุ่มขวา (Right) : "Hi my baby"
-        // ==================================================================
         JButton btnRight = new JButton("Hi my baby");
         btnRight.setFont(new Font("Tahoma", Font.PLAIN, 14));
         // สูตร: Center + Width + Gap
@@ -64,10 +58,10 @@ public class SchoolPanel extends JPanel {
 
         // --- กล่องข้อความ (Dialogue Box) ---
         // วางให้อยู่เหนือปุ่มขึ้นไปประมาณ 180px
-        int dialogueW = 800;
-        int dialogueH = 150;
+        int dialogueW = 1425;
+        int dialogueH = 250;
         int dialogueX = (stdScreen.width - dialogueW) / 2; // จัดกึ่งกลางจอ
-        int dialogueY = btnY - dialogueH - 30; // วางเหนือปุ่ม
+        int dialogueY = btnY - dialogueH - 50; // วางเหนือปุ่ม
         
         dialogueBox.setBounds(dialogueX, dialogueY, dialogueW, dialogueH);
         add(dialogueBox);
@@ -88,55 +82,3 @@ public class SchoolPanel extends JPanel {
         setComponentZOrder(lblMap, getComponentCount() - 1);
     }
 }
-/* 
-public class SchoolPanel extends JPanel {
-
-    private StdAuto stdScreen = new StdAuto() ;
-    DialoguePanel dialogueBox = new DialoguePanel();
-    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
-
-    public SchoolPanel(MainFrame mainFrame) {
-        stdScreen.setBtnWHG(200, 60, 20 ,0); //ขนาด ปุ่ม และ gap ,แถว
-
-        setLayout(null);
-        setBackground(new Color(12, 51, 204));
-        JButton btnchoice1 = new JButton("Hi my beaby");
-        btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice1.setBounds(stdScreen.centerX+200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mainFrame.showGame();
-            }
-        });
-        add(btnchoice1);
-
-        JButton btnchoice2 = new JButton("You are so cute");
-        btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice2.setBounds(stdScreen.centerX-200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mainFrame.showGame();
-            }
-        });
-        add(btnchoice2);
-
-        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
-        add(dialogueBox);
-        dialogueBox.setText("Perseone", "เดินหัดดูทางบ้างซิยะ! ตาถั่วหรือไง มายืนขวางประตูหน้าตึกอยู่ได้!");
-
-
-        // Background หน้าร้าน
-        JLabel lblMap = new JLabel("");
-
-        String imagePath = "image\\Scene\\School\\Angryscene.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
-
-        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
-        add(lblMap);
-
-    }
-}
-
-
-*/

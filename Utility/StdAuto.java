@@ -18,6 +18,9 @@ public class StdAuto {
     public int totalContentHeight;
     public int currentY;
 
+    // [เพิ่มใหม่] ตัวแปรสำหรับตำแหน่งปุ่มด้านล่าง
+    public int bottomY;
+
     public void setBtnWHG(int buttonWidth, int buttonHeight, int gap, int amount) { 
         this.buttonWidth = buttonWidth;
         this.buttonHeight = buttonHeight; 
@@ -32,8 +35,14 @@ public class StdAuto {
         } else {
             this.totalContentHeight = 0;
         }
+
         // หาจุดเริ่ม Y เพื่อให้เนื้อหาทั้งหมดอยู่กลางจอ (บน-ล่าง)
         // สูตร: (ความสูงจอ - ความสูงเนื้อหารวม) / 2
-        this.currentY = (height - totalContentHeight) / 2;
+        this.currentY = (height - totalContentHeight) / 2; 
+
+        // [เพิ่มใหม่] คำนวณตำแหน่งปุ่มให้ลอยเหนือขอบล่างขึ้นมา 120px 
+        // (ค่า 120 คือ Safe Zone เพื่อไม่ให้ปุ่มโดน Taskbar บัง หรือจมหายไป)
+        this.bottomY = height - buttonHeight - 100;
     }
 }
+

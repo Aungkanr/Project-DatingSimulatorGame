@@ -36,7 +36,7 @@ public class ShopPanel extends JPanel {
         this.mainFrame = mainFrame ;
 
         stdScreen = new StdAuto();
-        stdScreen.setBtnWHG(250, 50, 20, 0); // ตั้งขนาดปุ่ม
+        stdScreen.setBtnWHG(300, 50, 20, 0); // ตั้งขนาดปุ่ม
         
         setLayout(null);
         setBackground(new Color(12, 51, 204));
@@ -90,25 +90,36 @@ public class ShopPanel extends JPanel {
         statusPanel.add(lblDay);
         statusPanel.add(lblTime);
         add(statusPanel);
+
+    
+
     //---------------------------dialogueBox---------------------------
         dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
         add(dialogueBox);
         if (gameTime.getTimeSlot() < 3) {
             dialogueBox.setText("Florist", "Welcome to Diddy shop! What do you want to buy?");
         } else dialogueBox.setText("Florist", "The shop was closed.!!!!");
+
         
-    //---------------------------choice 1---------------------------
+    // [แก้ไขใหม่] จัดปุ่ม 1-4 ให้สมมาตร ตรงกลางจอ
+        
+        // คำนวณจุดเริ่มต้น X ของปุ่มซ้ายสุด เพื่อให้ทั้งแผงอยู่กลางจอ
+        // ความกว้างรวม = (4 ปุ่ม * กว้าง) + (3 ช่องว่าง * gap)
+        int totalWidth = (stdScreen.buttonWidth * 4) + (20 * 3);
+        int startX = (stdScreen.width - totalWidth) / 2;
+        int gap = 20;
+
+   //---------------------------choice 1---------------------------
         JButton btnchoice1 = new JButton("Blue jazz $50.");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice1.setBounds(stdScreen.centerX + 150, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        // ปุ่มที่ 1 วางที่ startX
+        btnchoice1.setBounds(startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (gameTime.getTimeSlot() < 3) {
-                    // เรียกใช้ ConfirmPanel
                     confirmPanel.showConfirm("Buy Blue jazz $50.?", new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            // โค้ดนี้จะทำงานเมื่อกด Yes เท่านั้น
                             Detect("Blue jazz", 50); 
                         }
                     });
@@ -116,56 +127,60 @@ public class ShopPanel extends JPanel {
             }
         });
         add(btnchoice1);
+
     //---------------------------choice 2---------------------------
         JButton btnchoice2 = new JButton("Poppy $65.");
         btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice2.setBounds(stdScreen.centerX - 150 - stdScreen.buttonWidth, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        // ปุ่มที่ 2 วางถัดจากปุ่ม 1 + gap
+        btnchoice2.setBounds(startX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (gameTime.getTimeSlot() < 3) {
                     confirmPanel.showConfirm("Buy Poppy $65.?", new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // โค้ดนี้จะทำงานเมื่อกด Yes เท่านั้น
-                        Detect("Poppy", 65); 
-                    }
-                });
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Detect("Poppy", 65); 
+                        }
+                    });
                 } else shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED ,2000);
             }
         });
         add(btnchoice2);
+
     //---------------------------choice 3---------------------------
         JButton btnchoice3 = new JButton("Tulip $90.");
         btnchoice3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice3.setBounds(stdScreen.centerX+200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        // ปุ่มที่ 3 วางถัดจากปุ่ม 2 + gap
+        btnchoice3.setBounds(startX + (stdScreen.buttonWidth * 2) + (gap * 2), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (gameTime.getTimeSlot() < 3) {
                     confirmPanel.showConfirm("Buy Tulip $90.?", new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // โค้ดนี้จะทำงานเมื่อกด Yes เท่านั้น
-                        Detect("Tulip", 90); 
-                    }
-                });
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Detect("Tulip", 90); 
+                        }
+                    });
                 } else shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED ,2000);
 
-                }
+            }
         });
         add(btnchoice3);
+
     //---------------------------choice 4---------------------------
         JButton btnchoice4 = new JButton("Fairy rose $120.");
         btnchoice4.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice4.setBounds(stdScreen.centerX+400, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        // ปุ่มที่ 4 วางถัดจากปุ่ม 3 + gap
+        btnchoice4.setBounds(startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (gameTime.getTimeSlot() < 3) {
                     confirmPanel.showConfirm("Buy Fairy rose $120.?", new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // โค้ดนี้จะทำงานเมื่อกด Yes เท่านั้น
-                        Detect("Fairy rose", 120); 
-                    }});
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Detect("Fairy rose", 120); 
+                        }
+                    });
                 } else shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED ,2000);
             }
         });

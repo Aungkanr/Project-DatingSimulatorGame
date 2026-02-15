@@ -67,6 +67,16 @@ public class SchoolPanel extends JPanel {
         add(dialogueBox);
         dialogueBox.setText("Person", "เดินหัดดูทางบ้างซิยะ! ตาถั่วหรือไง มายืนขวางประตูหน้าตึกอยู่ได้!");
 
+        // --- ปุ่ม Back (วางก่อน Background) ---
+        
+        JButton btnBack = new JButton("Back");
+        btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnBack.setBounds(20, 20, 100, 30);
+        btnBack.addActionListener(e -> {
+            mainFrame.showGame(); // กลับไปหน้าเกม
+        });
+        add(btnBack);
+
         // --- Background Image ---
         JLabel lblMap = new JLabel("");
         // ตรวจสอบชื่อไฟล์ภาพให้ถูกต้องนะครับ
@@ -81,4 +91,5 @@ public class SchoolPanel extends JPanel {
         // บังคับให้รูปภาพอยู่เลเยอร์หลังสุด
         setComponentZOrder(lblMap, getComponentCount() - 1);
     }
+
 }

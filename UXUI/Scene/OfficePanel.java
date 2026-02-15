@@ -56,6 +56,16 @@ public class OfficePanel extends JPanel {
         btnchoice2.addActionListener(e -> mainFrame.showGame());
         add(btnchoice2);   
         
+        // --- ปุ่ม Back (วางก่อน Background) ---
+        
+        JButton btnBack = new JButton("Back");
+        btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnBack.setBounds(20, 20, 100, 30);
+        btnBack.addActionListener(e -> {
+            mainFrame.showGame(); // กลับไปหน้าเกม
+        });
+        add(btnBack);
+        
         // --- กล่องข้อความ (Dialogue Box) ---
         int dialogueW = 800;
         int dialogueH = 150;

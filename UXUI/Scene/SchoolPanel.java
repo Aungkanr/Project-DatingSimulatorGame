@@ -30,21 +30,37 @@ public class SchoolPanel extends JPanel {
         // ใช้ค่า Y ที่ปลอดภัย (ลอยจากขอบล่าง 120px)
         int btnY = stdScreen.bottomY;
 
-        // --- ปุ่มขวา (Right Button) ---
-        JButton btnchoice1 = new JButton("Hi my baby");
-        btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        // วางที่ Center + 150 (เยื้องขวา)
-        btnchoice1.setBounds(stdScreen.centerX + 150, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice1.addActionListener(e -> mainFrame.showGame());
-        add(btnchoice1);
+        int gap = 20;// ระยะห่างระหว่างปุ่ม
 
-        // --- ปุ่มซ้าย (Left Button) ---
-        JButton btnchoice2 = new JButton("You are so cute");
-        btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        // วางที่ Center - 150 - ความกว้างปุ่ม (เยื้องซ้าย)
-        btnchoice2.setBounds(stdScreen.centerX - 150 - stdScreen.buttonWidth, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice2.addActionListener(e -> mainFrame.showGame());
-        add(btnchoice2);
+        // ==================================================================
+        // 1. ปุ่มซ้าย (Left) : "You are so cute"
+        // ==================================================================
+        JButton btnLeft = new JButton("You are so cute");
+        btnLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        // สูตร: Center - Width - Gap
+        btnLeft.setBounds(stdScreen.centerX - stdScreen.buttonWidth - gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnLeft.addActionListener(e -> mainFrame.showGame());
+        add(btnLeft);
+
+        // ==================================================================
+        // 2. ปุ่มกลาง (Middle) : "I am sorry" (เพิ่มมาใหม่)
+        // ==================================================================
+        JButton btnMiddle = new JButton("I am sorry...");
+        btnMiddle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        // สูตร: Center
+        btnMiddle.setBounds(stdScreen.centerX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnMiddle.addActionListener(e -> mainFrame.showGame());
+        add(btnMiddle);
+
+        // ==================================================================
+        // 3. ปุ่มขวา (Right) : "Hi my baby"
+        // ==================================================================
+        JButton btnRight = new JButton("Hi my baby");
+        btnRight.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        // สูตร: Center + Width + Gap
+        btnRight.setBounds(stdScreen.centerX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnRight.addActionListener(e -> mainFrame.showGame());
+        add(btnRight);
 
         // --- กล่องข้อความ (Dialogue Box) ---
         // วางให้อยู่เหนือปุ่มขึ้นไปประมาณ 180px

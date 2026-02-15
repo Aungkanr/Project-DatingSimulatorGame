@@ -30,8 +30,8 @@ public class MenuPanel extends JPanel {
         int gap = 20;
 
         // [แก้ตำแหน่งปุ่ม] ให้ชิดขวา และเรียงจากล่างขึ้นบน
-        int btnX = stdScreen.width - btnW - 80; // ห่างจากขอบขวา 80px
-        int startY = 350; // เริ่มวางปุ่ม Start ที่ความสูง 350 (กลางๆ ค่อนไปทางล่าง)
+        int btnX = stdScreen.width - btnW - 150; // ห่างจากขอบขวา 80px
+        int startY = 220; // เริ่มวางปุ่ม Start ที่ความสูง 350 (กลางๆ ค่อนไปทางล่าง)
 
         // 1. START
         JButton btnStart = new JButton("START");

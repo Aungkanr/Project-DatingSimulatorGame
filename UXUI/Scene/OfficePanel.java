@@ -1,6 +1,6 @@
 package UXUI.Scene;
-import UXUI.GamePanel;
 import UXUI.MainFrame;
+import UXUI.StatusBarMenu.GamePanel;
 import Utility.StdAuto;
 
 import javax.swing.JButton;

@@ -1,5 +1,7 @@
-package UXUI;
+package UXUI.StatusBarMenu;
 import Player.Player;
+import UXUI.Hovereffect;
+import UXUI.MainFrame;
 import Utility.GameTime;
 import Utility.StdAuto;
 
@@ -22,9 +24,14 @@ public class GamePanel extends JPanel {
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     private StdAuto stdScreen ; //Device screen
 
+    // เพิ่มใหม่ ธีมสีชมพู (Pink Theme)
+    Color themePink = new Color(219, 134, 163); // add
+    Color themeBorder = Color.WHITE;// add
+
     // ------------------ สีปุ่ม ---------------------
     Color ExitGameColor = new Color(48, 25, 82);    
-    Color MoneyColor = new Color(255, 215, 0);
+    //Color MoneyColor = new Color(255, 215, 0);
+    Color MoneyColor = new Color(255, 223, 0); // ปรับเหลืองให้สว่างขึ้นบนพื้นชมพู
     Color schoolColor = new Color(41, 128, 185);     
     Color homeColor = new Color(230, 126, 34);        
     Color shopColor = new Color(46, 204, 113);        
@@ -34,9 +41,66 @@ public class GamePanel extends JPanel {
         this.parent = mainFrame;
         stdScreen = new StdAuto() ;
 
-        setBackground(Color.DARK_GRAY);
+        setBackground(new Color(245, 240, 240));//add
+        //setBackground(Color.DARK_GRAY);
         setLayout(null);
 
+        // ==========================================
+        // 1. สร้างกล่องสถานะ (RoundedPanel)
+        // ==========================================
+        // สร้าง Panel สีชมพูขึ้นมา
+        RoundedPanel statusPanel = new RoundedPanel(30, themePink); 
+        statusPanel.setBounds(20, 60, 450, 110); // ตำแหน่งกล่องบนหน้าจอ
+        statusPanel.setLayout(null); // จัดวางของในกล่องเอง
+
+        // --- ยัด Label เข้าไปใน statusPanel ---
+        
+        // Energy
+        lblEnergy = new JLabel("Energy: 0");
+        lblEnergy.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblEnergy.setForeground(Color.WHITE);
+        lblEnergy.setBounds(20, 15, 200, 30); // พิกัดเทียบกับกล่องชมพู
+        statusPanel.add(lblEnergy);
+
+        // Money
+        lblMoney = new JLabel("Money: 0");
+        lblMoney.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblMoney.setForeground(MoneyColor);
+        lblMoney.setBounds(20, 55, 200, 30);
+        statusPanel.add(lblMoney);
+
+        // Day (อยู่ขวาบนของกล่อง)
+        lblDay = new JLabel("Day: 1");
+        lblDay.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblDay.setForeground(Color.WHITE);
+        lblDay.setBounds(250, 15, 150, 30);
+        statusPanel.add(lblDay);
+
+        // Time (อยู่ขวาล่างของกล่อง)
+        lblTime = new JLabel("Time: Morning");
+        lblTime.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblTime.setForeground(Color.WHITE);
+        lblTime.setBounds(250, 55, 200, 30); 
+        statusPanel.add(lblTime);
+
+        // นำกล่อง statusPanel ไปแปะบนหน้าจอหลัก
+        add(statusPanel);
+
+        // ==========================================
+        // 2. ปุ่ม Exit Game
+        // ==========================================
+        JButton btnExitGame = new JButton("Return to Menu");
+        btnExitGame.setBounds(20, 20, 150, 30);
+        Hovereffect.HoverEffect(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
+        add(btnExitGame);
+        
+        btnExitGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.showMenu();
+            }
+        });
+
+        /* == code เดิม == 
         // --- ส่วนแสดงสถานะ (HUD) ---
         // --------------- show status player ----------------
         lblEnergy = new JLabel("Energy: 0");
@@ -74,11 +138,14 @@ public class GamePanel extends JPanel {
             }
         });
         add(btnExitGame);
+        */
 
-//------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
-        // เพิ่ม Hover Effect ให้กับปุ่มแต่ละตัว (แทนที่โค้ดเดิมในส่วนปุ่ม)
 
-//------------------- ส่วนของปุ่มที่แสดงบนแมพ--------------
+
+    //------------------- ส่วนของปุ่มที่เเสดงบนเเมพ--------------
+    // เพิ่ม Hover Effect ให้กับปุ่มแต่ละตัว (แทนที่โค้ดเดิมในส่วนปุ่ม)
+
+    //------------------- ส่วนของปุ่มที่แสดงบนแมพ--------------
         stdScreen.setBtnWHG(200, 30, 20, 0);
 
         JButton btnSchool = new JButton("School");
@@ -142,7 +209,7 @@ public class GamePanel extends JPanel {
         });
 
 
-//--------------------------image------------------
+    //--------------------------image------------------
         JLabel lblMap = new JLabel("");
 
         String imagePath = "image\\Map.png";
@@ -152,7 +219,7 @@ public class GamePanel extends JPanel {
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
     }
-//--------------------------image------------------
+    //--------------------------image------------------
     //------------update - ค่า--------------------
     public void updateUI() {
         if (parent == null ) return ;
@@ -176,4 +243,5 @@ public class GamePanel extends JPanel {
         updateUI();
         return true;
     }
+    
 }

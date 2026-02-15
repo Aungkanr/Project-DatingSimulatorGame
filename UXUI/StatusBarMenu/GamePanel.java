@@ -3,6 +3,7 @@ import Player.Player;
 import UXUI.Hovereffect;
 import UXUI.LowEnergyPanel;
 import UXUI.MainFrame;
+import Utility.ChangeImageMap;
 import Utility.GameTime;
 import Utility.Notify;
 import Utility.StdAuto;
@@ -12,7 +13,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon; 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +24,8 @@ public class GamePanel extends JPanel {
     private JLabel lblMoney;
     private JLabel lblDay;
     private JLabel lblTime;
+    private JLabel lblMap;
+    private ChangeImageMap mapChanger;
     private StdAuto stdScreen ; //Device screen
     private Notify notification ; //ตัวแจ้งเตือน
 
@@ -49,6 +51,8 @@ public class GamePanel extends JPanel {
         setBackground(new Color(245, 240, 240));//add
         //setBackground(Color.DARK_GRAY);
         setLayout(null);
+        notification = new Notify(stdScreen.width);
+        add(notification);
 
         notification = new Notify(stdScreen.width);
         add(notification);
@@ -106,8 +110,6 @@ public class GamePanel extends JPanel {
                 parent.showMenu();
             }
         });
-
-    // เพิ่ม Hover Effect ให้กับปุ่มแต่ละตัว (แทนที่โค้ดเดิมในส่วนปุ่ม)
 
     //------------------- ส่วนของปุ่มที่แสดงบนแมพ--------------
         stdScreen.setBtnWHG(200, 30, 20, 0);
@@ -173,13 +175,9 @@ public class GamePanel extends JPanel {
         });
 
 
-    //--------------------------image------------------
-        JLabel lblMap = new JLabel("");
-
-        String imagePath = "image\\Map.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
-
+    //--------------------------image Map update ตามเวลา (โดยส่งข้อมูล StringของGame Time ไป)------------------
+        lblMap = new JLabel("");  
+        ChangeImageMap.updateMapImage("Morning", lblMap, checkImageUtil, stdScreen);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
     }
@@ -194,6 +192,7 @@ public class GamePanel extends JPanel {
         lblMoney.setText("Money: " + player.getMoney());
         lblDay.setText("Day: " + gTime.getDay());
         lblTime.setText("Time: " + gTime.getTimeString());
+        ChangeImageMap.updateMapImage(gTime.getTimeString(), lblMap, checkImageUtil, stdScreen);
     }
     public boolean doActivity(int energyCost) { 
         Player player = parent.getPlayer();

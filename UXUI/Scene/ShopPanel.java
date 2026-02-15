@@ -35,6 +35,15 @@ public class ShopPanel extends JPanel {
     public ShopPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame ;
 
+        stdScreen = new StdAuto();
+        stdScreen.setBtnWHG(250, 50, 20, 0); // ตั้งขนาดปุ่ม
+        
+        setLayout(null);
+        setBackground(new Color(12, 51, 204));
+
+        // [แก้] ใช้ bottomY (ความสูงจอ - 120px)
+        int btnY = stdScreen.bottomY;
+
         GameTime gameTime = mainFrame.getGameTime(); 
         Player player = mainFrame.getPlayer();
 
@@ -91,7 +100,7 @@ public class ShopPanel extends JPanel {
     //---------------------------choice 1---------------------------
         JButton btnchoice1 = new JButton("Blue jazz $50.");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice1.setBounds(stdScreen.centerX-400, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnchoice1.setBounds(stdScreen.centerX + 150, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (gameTime.getTimeSlot() < 3) {
@@ -110,7 +119,7 @@ public class ShopPanel extends JPanel {
     //---------------------------choice 2---------------------------
         JButton btnchoice2 = new JButton("Poppy $65.");
         btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnchoice2.setBounds(stdScreen.centerX-200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnchoice2.setBounds(stdScreen.centerX - 150 - stdScreen.buttonWidth, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (gameTime.getTimeSlot() < 3) {
@@ -170,9 +179,14 @@ public class ShopPanel extends JPanel {
                 mainFrame.showGame();
             }
         });
-        add(btnchoice2);   
 
-        dialogueBox.setBounds(stdScreen.centerX-700, stdScreen.currentY+ 90 , stdScreen.buttonWidth+1425, stdScreen.buttonHeight+200);
+        // กล่องข้อความ (วางเหนือปุ่ม)
+        int dialogueW = 1425;
+        int dialogueH = 200;
+        int dialogueX = (stdScreen.width - dialogueW) / 2; // จัดกึ่งกลางจอ
+        int dialogueY = btnY - dialogueH - 50; // วางเหนือปุ่ม
+
+        dialogueBox.setBounds(dialogueX, dialogueY, dialogueW, dialogueH);
         add(dialogueBox);
         dialogueBox.setText("Diddy", "Welcome to Diddy shop! What do you want to buy?");
 
@@ -181,16 +195,14 @@ public class ShopPanel extends JPanel {
         add(btnBack);   
     //---------------------------Background หน้าร้าน---------------------------
         JLabel lblMap = new JLabel("");
-
-        String imagePath = "image\\Scene\\Shop\\ShopScene1.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
+        ImageIcon originalIcon = new ImageIcon("image\\Scene\\Shop\\ShopScene1.png");
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
-
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
         //layer
         setComponentZOrder(confirmPanel, 0); 
         setComponentZOrder(shopNotify, 1); 
+        setComponentZOrder(lblMap, getComponentCount() - 1);
     }
     //------functiom ซื้อของ------------------------
     public void Detect (String item , int price) { //  code ซื้อของ

@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import Utility.GameTime;
 
-
 public class MainFrame extends JFrame {
     private JPanel contentPane;
     private Player player;

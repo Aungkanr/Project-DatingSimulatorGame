@@ -16,10 +16,10 @@ import java.awt.event.ActionListener;
 
 public class HomePanel extends JPanel {
     private StdAuto stdScreen = new StdAuto() ;
-    private MainFrame parent;
+    private MainFrame mainFrame;
     private JLabel lblMessage; // <--- 1. ตัวแปรสำหรับโชว์ข้อความเตือน
     public HomePanel(MainFrame mainFrame) {
-        this.parent = mainFrame;
+        this.mainFrame = mainFrame;
         stdScreen.setBtnWHG(200, 60, 20 ,0); //ขนาด ปุ่ม และ gap ,แถว
         
         setLayout(null);
@@ -40,8 +40,8 @@ public class HomePanel extends JPanel {
         btnSleep.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnSleep.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                GameTime gameTime = parent.getGameTime();
-                Player player = parent.getPlayer();
+                GameTime gameTime = mainFrame.getGameTime();
+                Player player = mainFrame.getPlayer();
 
                 if (gameTime.isNight_Afternoon()) { // ถ้าเป็นกลางคืน -> นอนได้
                     gameTime.nextDay();      
@@ -66,7 +66,7 @@ public class HomePanel extends JPanel {
         btnBack.setBounds(20, 20, 100, 30);
         btnBack.addActionListener(e -> {
             lblMessage.setText(""); 
-            parent.showGame();
+            mainFrame.showGame();
         });
         add(btnBack);
     }

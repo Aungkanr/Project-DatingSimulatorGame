@@ -21,7 +21,7 @@ public class Notify extends JLabel {
     }
 //--------------functiom --------------------
     //show message 
-    public void show(String message, Color color) {
+    public void showNotify(String message, Color color , int ms ) {
         setText(message);      
         setForeground(color);  
         setVisible(true);  //hide -> show
@@ -36,7 +36,7 @@ public class Notify extends JLabel {
             notifyTimer.stop();
         }
 
-        notifyTimer = new Timer(2000, new ActionListener() {
+        notifyTimer = new Timer(ms  , new ActionListener() {
             @Override //ยืมจาก GmaePanel
             public void actionPerformed(ActionEvent e) {
                 setVisible(false); // hide เมื่อครบเวลา

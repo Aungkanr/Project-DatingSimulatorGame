@@ -7,7 +7,7 @@ public class Player {
     // Constructor 
     public Player() {
         this.energy = 100; // เริ่มต้น 100
-        this.money = 500;  // เริ่มต้น 500 บาท
+        this.money = 100;  // เริ่มต้น 500 บาท
         this.inventory = new Inventory() ; //create obj bag
     }   
     //------------------------ (Getters & Setter)------------------------

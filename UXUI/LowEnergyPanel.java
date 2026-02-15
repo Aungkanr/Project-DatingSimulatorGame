@@ -48,45 +48,45 @@ public class LowEnergyPanel extends JPanel {
         btnSleep.setFont(new Font("Tahoma", Font.BOLD, 14));
         
         btnSleep.addActionListener(e -> {
-            // --- เริ่มกระบวนการนอน ---
-            isSleepingMode = true; // บอกว่าเข้าโหมดนอนแล้วนะ
-            
-            // ซ่อนปุ่มทันที
-            btnSleep.setVisible(false);
-            btnCancel.setVisible(false);
-            
-            // สั่งวาดหน้าจอใหม่ (เพื่อให้กล่องข้อความหายไปตาม logic ใน paintComponent)
-            repaint(); 
+            if (gameTime.isNight_Afternoon()) {
+                // --- เริ่มกระบวนการนอน ---
+                isSleepingMode = true; // บอกว่าเข้าโหมดนอนแล้วนะ
+                
+                // ซ่อนปุ่มทันที
+                btnSleep.setVisible(false);
+                btnCancel.setVisible(false);
+                
+                // สั่งวาดหน้าจอใหม่ (เพื่อให้กล่องข้อความหายไปตาม logic ใน paintComponent)
+                repaint(); 
 
-            // Logic เกม
-            gameTime.nextDay();
-            player.setEnergy(100);
+                // Logic เกม
+                gameTime.nextDay();
+                player.setEnergy(100);
 
-            // เริ่ม Effect
-            sleepEffect.startSleepSequence();
+                // เริ่ม Effect
+                sleepEffect.startSleepSequence();
 
-            // ตั้งเวลาปิดหน้านี้
-            new javax.swing.Timer(4000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setVisible(false);
-                    isSleepingMode = false; 
-                    btnSleep.setVisible(true);
-                    btnCancel.setVisible(true);
-                    parent.showGame();
-                    ((javax.swing.Timer)e.getSource()).stop();
-                }
-            }).start();
-            new javax.swing.Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    notify.show("Next Day : " + gameTime.getDay(), Color.GREEN);
-                    add(notify); // เพิ่ม notify เข้ามาใน panel นี้ (ถ้ายังไม่เพิ่ม)
-                    setComponentZOrder(notify, 0);
-                }
-            }).start();
-
-
+                // ตั้งเวลาปิดหน้านี้
+                new javax.swing.Timer(4000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setVisible(false);
+                        isSleepingMode = false; 
+                        btnSleep.setVisible(true);
+                        btnCancel.setVisible(true);
+                        parent.showGame();
+                        ((javax.swing.Timer)e.getSource()).stop();
+                    }
+                }).start();
+                new javax.swing.Timer(1000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        notify.showNotify("Next Day : " + gameTime.getDay(), Color.GREEN, 800);
+                        add(notify); // เพิ่ม notify เข้ามาใน panel นี้ (ถ้ายังไม่เพิ่ม)
+                        setComponentZOrder(notify, 0);
+                    }
+                }).start();
+            }
         });
         add(btnSleep);
         

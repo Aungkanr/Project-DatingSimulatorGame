@@ -20,7 +20,7 @@ public class ChangeImageMap {
             case "Morning":
                 imagePath = "image\\Map\\Morning.png";
                 break;
-            case "Afternoon":
+            case "Noon":
                 imagePath = "image\\Map\\Afternoon.png";
                 break;
             case "Evening":

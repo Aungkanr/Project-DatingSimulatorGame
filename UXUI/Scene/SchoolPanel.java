@@ -6,7 +6,7 @@ import UXUI.MainFrame;
 
 public class SchoolPanel extends JPanel {
     private MainFrame mainFrame;
-    private int SaveScene = 0;
+    private int SaveScene = 1;
     
     public SchoolPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -14,7 +14,9 @@ public class SchoolPanel extends JPanel {
         // 1. ตั้งค่า Layout ของ SchoolPanel ให้เป็น BorderLayout
         this.setLayout(new BorderLayout());
 
-        showAngryScene(); 
+        if (SaveScene == 1) {
+            showAngryScene(); 
+        }
     }
 
     public void showAngryScene() {

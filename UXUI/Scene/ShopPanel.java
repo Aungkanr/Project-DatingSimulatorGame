@@ -90,25 +90,25 @@ public class ShopPanel extends JPanel {
         statusPanel.add(lblDay);
         statusPanel.add(lblTime);
         add(statusPanel);
-
-    
-
     //---------------------------dialogueBox---------------------------
-        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
+        // กล่องข้อความ (วางเหนือปุ่ม)
+        int dialogueW = 1425;
+        int dialogueH = 200;
+        int dialogueX = (stdScreen.width - dialogueW) / 2; // จัดกึ่งกลางจอ
+        int dialogueY = btnY - dialogueH - 50; // วางเหนือปุ่ม
+
+        dialogueBox.setBounds(dialogueX, dialogueY, dialogueW, dialogueH);
         add(dialogueBox);
         if (gameTime.getTimeSlot() < 3) {
             dialogueBox.setText("Florist", "Welcome to Diddy shop! What do you want to buy?");
         } else dialogueBox.setText("Florist", "The shop was closed.!!!!");
-
-        
-    // [แก้ไขใหม่] จัดปุ่ม 1-4 ให้สมมาตร ตรงกลางจอ
-        
+    //---------------------------------------------------------------
+        // จัดปุ่ม 1-4 ให้สมมาตร ตรงกลางจอ
         // คำนวณจุดเริ่มต้น X ของปุ่มซ้ายสุด เพื่อให้ทั้งแผงอยู่กลางจอ
         // ความกว้างรวม = (4 ปุ่ม * กว้าง) + (3 ช่องว่าง * gap)
         int totalWidth = (stdScreen.buttonWidth * 4) + (20 * 3);
         int startX = (stdScreen.width - totalWidth) / 2;
         int gap = 20;
-
    //---------------------------choice 1---------------------------
         JButton btnchoice1 = new JButton("Blue jazz $50.");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -127,7 +127,6 @@ public class ShopPanel extends JPanel {
             }
         });
         add(btnchoice1);
-
     //---------------------------choice 2---------------------------
         JButton btnchoice2 = new JButton("Poppy $65.");
         btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -146,7 +145,6 @@ public class ShopPanel extends JPanel {
             }
         });
         add(btnchoice2);
-
     //---------------------------choice 3---------------------------
         JButton btnchoice3 = new JButton("Tulip $90.");
         btnchoice3.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -166,7 +164,6 @@ public class ShopPanel extends JPanel {
             }
         });
         add(btnchoice3);
-
     //---------------------------choice 4---------------------------
         JButton btnchoice4 = new JButton("Fairy rose $120.");
         btnchoice4.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -194,19 +191,6 @@ public class ShopPanel extends JPanel {
                 mainFrame.showGame();
             }
         });
-
-        // กล่องข้อความ (วางเหนือปุ่ม)
-        int dialogueW = 1425;
-        int dialogueH = 200;
-        int dialogueX = (stdScreen.width - dialogueW) / 2; // จัดกึ่งกลางจอ
-        int dialogueY = btnY - dialogueH - 50; // วางเหนือปุ่ม
-
-        dialogueBox.setBounds(dialogueX, dialogueY, dialogueW, dialogueH);
-        add(dialogueBox);
-        dialogueBox.setText("Diddy", "Welcome to Diddy shop! What do you want to buy?");
-
-
-        // Background หน้าร้าน
         add(btnBack);   
     //---------------------------Background หน้าร้าน---------------------------
         JLabel lblMap = new JLabel("");
@@ -219,7 +203,8 @@ public class ShopPanel extends JPanel {
         setComponentZOrder(shopNotify, 1); 
         setComponentZOrder(lblMap, getComponentCount() - 1);
     }
-    //------functiom ซื้อของ------------------------
+
+    //------------------functiom ซื้อของ------------------------
     public void Detect (String item , int price) { //  code ซื้อของ
         
         Player realPlayer = mainFrame.getPlayer(); // PULL data from Player มาใช้ (getMoney ,  buyItem )
@@ -231,8 +216,8 @@ public class ShopPanel extends JPanel {
         
             if (success) { // ถ้าซื้อสำเร็จ
                 shopNotify.showNotify("Purchased " + item + "!", Color.GREEN , 2000); 
-                dialogueBox.setText("Florist", "Thanks for buying " + item);
-                // 3. *** อัปเดตตัวเลขเงินในหน้า Shop โดยตรง ***
+                dialogueBox.setText("Florist", "Thanks for buying." + item);
+                // *** อัปเดตตัวเลขเงินในหน้า Shop โดยตรง ***
                 lblMoney.setText("Money: " + realPlayer.getMoney());
                 // บังคับวาดหน้าจอใหม่ทันที 
                 lblMoney.repaint();

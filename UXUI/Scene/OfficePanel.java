@@ -1,83 +1,52 @@
 package UXUI.Scene;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+
+import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 
-import UXUI.DialoguePanel; // เพิ่ม import
 import UXUI.MainFrame;
 import UXUI.StatusBarMenu.GamePanel;
-import Utility.StdAuto;
 import Player.Player;
 
 import java.awt.Color;
 import java.awt.Font;
 
 public class OfficePanel extends JPanel {
-    
-    private StdAuto stdScreen;
-    private Utility.CheckImage checkImageUtil = new Utility.CheckImage();
-    private DialoguePanel dialogueBox = new DialoguePanel(); // เพิ่มกล่องข้อความ
+    private MainFrame mainFrame; // เก็บ reference ของ MainFrame เพื่อใช้ในการเปลี่ยนหน้าจอ
+    GamePanel realGamePanel;
+    Player realPlayer;
 
     public OfficePanel(MainFrame mainFrame) {
-        stdScreen = new StdAuto();
-        stdScreen.setBtnWHG(250, 50, 20, 0); // ตั้งขนาดปุ่มมาตรฐาน
+        this.mainFrame = mainFrame; // เก็บ reference ของ MainFrame
+        realGamePanel = mainFrame.getGamePanel(); 
+        realPlayer = mainFrame.getPlayer();
 
-        GamePanel realGamePanel = mainFrame.getGamePanel(); 
-        Player realPlayer = mainFrame.getPlayer();
+        this.setLayout(new BorderLayout());
 
-        setLayout(null);
-        setBackground(new Color(12, 51, 204));
-        
-        // ใช้ค่า Y ที่ปลอดภัย
-        int btnY = stdScreen.bottomY;
+        showAngryScene(); // เรียกใช้เมธอดเพื่อแสดงฉากแรก
+    }
 
-        // --- ปุ่มขวา (Give Job Application) ---
-        JButton btnchoice1 = new JButton("Give Job Application");
-        btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 14)); // ลดฟอนต์นิดนึงถ้ายาว
-        btnchoice1.setBounds(stdScreen.centerX + 150, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice1.addActionListener(e -> {
-            mainFrame.showGame();
-            realPlayer.increaseMoney(80);
-            if (realGamePanel != null) {
-                realGamePanel.doActivity(40);
-            }
-        });
-        add(btnchoice1);
+    public void showAngryScene() {
+        SceneUpdate scene = new SceneUpdate(
+            "image\\Scene\\Office\\Barad-durWork.png", // ตำเเหน่งของภาพพื้นหลัง
+            "Manager", // ชื่อผู้พูด
+            "เรากำลังรับสมัครพนักงานพอดี สนใจไหม?", // ข้อความที่ต้องการให้แสดงในกล่องข้อความ
+            // diaX, diaY, diaW, diaH, // กำหนดตำแหน่งและขนาดของ Dialogue Box
+            e -> mainFrame.showGame(), // ActionListener สำหรับปุ่ม "กลับไปที่เกม" (เมื่อกดปุ่มนี้จะกลับไปที่หน้าจอเกม)
 
-        // --- ปุ่มซ้าย (I need to work here) ---
-        JButton btnchoice2 = new JButton("I need to work here man!");
-        btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btnchoice2.setBounds(stdScreen.centerX - 150 - stdScreen.buttonWidth, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice2.addActionListener(e -> mainFrame.showGame());
-        add(btnchoice2);   
-        
-        // --- ปุ่ม Back (วางก่อน Background) ---
-        JButton btnBack = new JButton("Back");
-        btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnBack.setBounds(20, 20, 100, 30);
-        btnBack.addActionListener(e -> {
-            mainFrame.showGame(); 
-        });
-        add(btnBack);
-        
-        // --- กล่องข้อความ (Dialogue Box) ---
-        int dialogueW = 800;
-        int dialogueH = 150;
-        dialogueBox.setBounds((stdScreen.width - dialogueW)/2, btnY - dialogueH - 30, dialogueW, dialogueH);
-        add(dialogueBox);
-        dialogueBox.setText("Manager", "เรากำลังรับสมัครพนักงานพอดี สนใจไหม?"); // ใส่ข้อความตัวอย่าง
-
-        // --- Background Image ---
-        JLabel lblMap = new JLabel("");
-        String imagePath = "image\\Scene\\Office\\Barad-durWork.png"; 
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        
-        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
-        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
-        add(lblMap);
-        
-        // move image to down layers
-        setComponentZOrder(lblMap, getComponentCount() - 1);
+            // 1. ปุ่มแบบ Auto ให้ระบบจัดวางให้เอง
+            // *** new SceneUpdate.SceneOption(" ข้อความในปุ่ม ", e ->  เมื่อกดปุ่มจะให้ทำอะไรต่อ), *** ตัวอย่างการใช้งาน
+            new SceneUpdate.SceneOption("Give Job Application", e -> {
+                mainFrame.showGame();
+                realPlayer.increaseMoney(80);
+                if (realGamePanel != null) {
+                    realGamePanel.doActivity(40);
+                }
+            }),
+            new SceneUpdate.SceneOption("I need to work here man!", e -> this.mainFrame.showGame())
+        );
+        add(scene, java.awt.BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 }

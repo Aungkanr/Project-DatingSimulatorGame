@@ -8,9 +8,6 @@ import UXUI.MainFrame;
 import UXUI.StatusBarMenu.GamePanel;
 import Player.Player;
 
-import java.awt.Color;
-import java.awt.Font;
-
 public class OfficePanel extends JPanel {
     private MainFrame mainFrame; // เก็บ reference ของ MainFrame เพื่อใช้ในการเปลี่ยนหน้าจอ
     GamePanel realGamePanel;

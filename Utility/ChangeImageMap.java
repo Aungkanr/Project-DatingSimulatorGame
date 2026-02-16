@@ -30,7 +30,7 @@ public class ChangeImageMap {
                 imagePath = "image\\Map\\Night.png";
                 break;
             default:
-                imagePath = "image\\Map\\Morning.png"; // ค่า default
+                imagePath = "image\\Map\\Morning.pn"; // ค่า default
                 break;
         }
         

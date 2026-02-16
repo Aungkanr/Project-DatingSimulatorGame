@@ -5,19 +5,16 @@ import UXUI.Scene.OfficePanel;
 import UXUI.Scene.SchoolPanel;
 import UXUI.Scene.ShopPanel;
 import UXUI.StatusBarMenu.GamePanel;
-import Utility.StdAuto;
 import java.io.File;
 import java.awt.EventQueue;
 //import java.awt.Frame;
 //import java.awt.Rectangle;//add
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
+
 import javax.sound.sampled.Clip; // แก้เป็น Clip
-import javax.sound.sampled.FloatControl; // เพิ่ม
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import Utility.GameTime;
+import Utility.*;
 
 public class MainFrame extends JFrame {
 
@@ -38,6 +35,10 @@ public class MainFrame extends JFrame {
     private Clip clip; 
     public static String filePath = "Music\\Harvest Dawn.wav";  
     public static File file = new File(filePath);
+
+    // 2. ประกาศตัวแปร SoundManager
+    private MusicManager soundManager;
+    private SFXManager sfxManager;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -68,13 +69,8 @@ public class MainFrame extends JFrame {
         player = new Player(); 
         gameTime = new GameTime();
         
-        try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        soundManager = new MusicManager();
+        sfxManager = new SFXManager();
 
         setLayout(null);
 
@@ -129,16 +125,27 @@ public class MainFrame extends JFrame {
         add(office);
     }
     
-    // ... (Code ฟังก์ชัน toggleMute, showGame ฯลฯ เหมือนเดิม ไม่ต้องแก้) ...
+
+    // 4. แก้ไขฟังก์ชัน Mute ให้เรียกผ่าน Manager
     public void toggleMute(boolean isMute) {
-        if (clip != null) {
-            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            if (isMute) {
-                gainControl.setValue(gainControl.getMinimum());
-            } else {
-                gainControl.setValue(0.0f); 
-            }
+        if (soundManager != null) {
+            soundManager.setMute(isMute);
         }
+    }
+
+    public void toggleSFX(boolean isMute) {
+        if (sfxManager != null) {
+            sfxManager.setMute(isMute);
+        }
+    }
+    
+    // เพิ่ม Getter เผื่อเอาไปใช้ที่อื่น
+    public MusicManager getSoundManager() {
+        return soundManager;
+    }
+
+    public Utility.SFXManager getSFXManager() {
+        return sfxManager;
     }
     
     public Clip getClip() { return clip; }

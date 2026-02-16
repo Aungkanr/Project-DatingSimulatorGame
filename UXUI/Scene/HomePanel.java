@@ -55,6 +55,7 @@ public class HomePanel extends JPanel {
                     add(sleepEffect);
                     setComponentZOrder(sleepEffect, 0);
                     player.setEnergy(100);  // restore Energy
+                    mainFrame.getSFXManager().playSFX("Music\\Snore Mimimimimimimi Sound Effect (Cartoon Sleeping Sound Effect).wav");
 
                     new javax.swing.Timer(4000, new ActionListener() { // การทำงานหลังจากผ่านไป 4 วินาที (เวลาที่นอนหลับ) **คล้ายๆ Thread.sleep
                         @Override

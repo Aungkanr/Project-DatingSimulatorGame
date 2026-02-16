@@ -20,10 +20,10 @@ public class OfficePanel extends JPanel {
 
         this.setLayout(new BorderLayout());
 
-        showAngryScene(); // เรียกใช้เมธอดเพื่อแสดงฉากแรก
+        showScene(); // เรียกใช้เมธอดเพื่อแสดงฉากแรก
     }
 
-    public void showAngryScene() {
+    public void showScene() {
         SceneUpdate scene = new SceneUpdate(
             "image\\Scene\\Office\\Barad-durWork.png", // ตำเเหน่งของภาพพื้นหลัง
             "Manager", // ชื่อผู้พูด

@@ -3,15 +3,14 @@ import java.awt.Color;
 import java.awt.Font;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
-import javax.sound.sampled.Clip; // import แค่นี้พอ
 import javax.swing.*;
 
 import Utility.StdAuto;
 
 public class MenuPanel extends JPanel {
-    
+    private String musicPath = "Music/Harvest Dawn.wav"; // แนะนำใช้ / แทน \\ เพื่อรองรับทุก OS
     private MainFrame parent;
-    private StdAuto stdScreen; 
+    private StdAuto stdScreen;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
 
     Color startBtnColor = new Color(255, 105, 180);        
@@ -40,8 +39,9 @@ public class MenuPanel extends JPanel {
         Hovereffect.HoverEffect(btnStart, btnX, startY, btnW, btnH, startBtnColor);
         btnStart.addActionListener(e -> {
             parent.showGame();
-            Clip c = parent.getClip();
-            if (c != null && !c.isRunning()) { c.setMicrosecondPosition(0); c.loop(Clip.LOOP_CONTINUOUSLY); c.start(); }
+            if (parent.getSoundManager() != null) {
+                parent.getSoundManager().playMusic(musicPath);
+            }
         });
         add(btnStart);
         

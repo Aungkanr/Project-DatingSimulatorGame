@@ -12,8 +12,6 @@ import Player.Player;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class OfficePanel extends JPanel {
     
@@ -38,13 +36,11 @@ public class OfficePanel extends JPanel {
         JButton btnchoice1 = new JButton("Give Job Application");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 14)); // ลดฟอนต์นิดนึงถ้ายาว
         btnchoice1.setBounds(stdScreen.centerX + 150, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mainFrame.showGame();
-                realPlayer.increaseMoney(80);
-                if (realGamePanel != null) {
-                    realGamePanel.doActivity(40);
-                }
+        btnchoice1.addActionListener(e -> {
+            mainFrame.showGame();
+            realPlayer.increaseMoney(80);
+            if (realGamePanel != null) {
+                realGamePanel.doActivity(40);
             }
         });
         add(btnchoice1);
@@ -57,12 +53,11 @@ public class OfficePanel extends JPanel {
         add(btnchoice2);   
         
         // --- ปุ่ม Back (วางก่อน Background) ---
-        
         JButton btnBack = new JButton("Back");
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnBack.setBounds(20, 20, 100, 30);
         btnBack.addActionListener(e -> {
-            mainFrame.showGame(); // กลับไปหน้าเกม
+            mainFrame.showGame(); 
         });
         add(btnBack);
         
@@ -75,7 +70,6 @@ public class OfficePanel extends JPanel {
 
         // --- Background Image ---
         JLabel lblMap = new JLabel("");
-        // *อย่าลืมเช็คชื่อไฟล์รูปภาพของคุณว่าชื่ออะไร* (ผมสมมติว่าเป็น OfficeScene.png)
         String imagePath = "image\\Scene\\Office\\Barad-durWork.png"; 
         ImageIcon originalIcon = new ImageIcon(imagePath);
         
@@ -83,7 +77,7 @@ public class OfficePanel extends JPanel {
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
         
-        // บังคับให้รูปอยู่หลังสุด
+        // move image to down layers
         setComponentZOrder(lblMap, getComponentCount() - 1);
     }
 }

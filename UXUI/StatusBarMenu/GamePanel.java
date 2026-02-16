@@ -191,7 +191,7 @@ public class GamePanel extends JPanel {
         GameTime gTime = parent.getGameTime();
         lblEnergy.setForeground(Color.WHITE); // Reset สี Energy ก่อนตรวจสอบ
 
-        if (player.getEnergy() < 10) {
+        if (player.getEnergy() < energyCost ) {
             // ... code แจ้งเตือน Energy หมด ...
             LowEnergyPanel energyPanel = new LowEnergyPanel(stdScreen.width, stdScreen.height, parent);
             add(energyPanel);

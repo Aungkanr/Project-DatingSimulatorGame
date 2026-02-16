@@ -51,4 +51,8 @@ public class Player {
             return false; 
         }
     }
+    //-----------
+    public Inventory getInventory() {
+        return this.inventory;
+    }
 }

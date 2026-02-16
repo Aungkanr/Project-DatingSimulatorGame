@@ -7,6 +7,7 @@ import Utility.ChangeImageMap;
 import Utility.GameTime;
 import Utility.Notify;
 import Utility.StdAuto;
+import Player.InventoryPanel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -41,7 +42,8 @@ public class GamePanel extends JPanel {
     public static final Color schoolColor = new Color(41, 128, 185);     
     public static final Color homeColor = new Color(230, 126, 34);        
     public static final Color shopColor = new Color(46, 204, 113);        
-    public static final Color officeColor = new Color(142, 68, 173);      
+    public static final Color officeColor = new Color(142, 68, 173);    
+    public static final Color bagBtnColor = new Color(139, 69, 19);  // สีน้ำตาล
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
@@ -144,7 +146,13 @@ public class GamePanel extends JPanel {
         btnOffice.setFont(new Font("Tahoma", Font.BOLD, 14));
         Hovereffect.HoverEffect(btnOffice, stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);
-        //Action
+        
+        JButton btnBag = new JButton("Bag");
+        btnBag.setBounds(180, 20, 100, 30); // วางข้างๆ ปุ่ม Return Menu
+        btnBag.setFont(new Font("Tahoma", Font.BOLD, 14));
+        Hovereffect.HoverEffect(btnBag, 180, 20, 100, 30, bagBtnColor); // ใช้ HoverEffect สีน้ำตาล
+        add(btnBag);
+        //--------------Action--------------------
         btnSchool.addActionListener(e ->  {
             parent.createSchoolPanel();
             parent.showSchool();
@@ -165,6 +173,15 @@ public class GamePanel extends JPanel {
             parent.showOffice();
         });
 
+        btnBag.addActionListener(e -> {  //-------inventory----------------
+            InventoryPanel invPanel = new InventoryPanel(parent, stdScreen.width, stdScreen.height); // 1. สร้าง InventoryPanel
+            
+            add(invPanel); // 2. แปะลงไปใน GamePanel
+            
+            setComponentZOrder(invPanel, 0); // 3. ดึงมาหน้าสุด (Layer 0) และสั่งวาดใหม่
+            invPanel.setVisible(true);
+            repaint();
+        });
     //--------------------------image Map update ตามเวลา (โดยส่งข้อมูล StringของGame Time ไป)------------------
         lblMap = new JLabel("");  
         ChangeImageMap.updateMapImage("Morning", lblMap, checkImageUtil, stdScreen);

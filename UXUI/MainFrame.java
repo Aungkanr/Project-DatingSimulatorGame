@@ -7,8 +7,6 @@ import UXUI.Scene.ShopPanel;
 import UXUI.StatusBarMenu.GamePanel;
 import java.io.File;
 import java.awt.EventQueue;
-//import java.awt.Frame;
-//import java.awt.Rectangle;//add
 
 
 import javax.sound.sampled.Clip; // แก้เป็น Clip

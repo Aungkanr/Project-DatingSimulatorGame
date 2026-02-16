@@ -6,8 +6,8 @@ package Utility;
 public class StdAuto { 
       
     // [มาตรฐานสากล] ล็อคขนาดจอ 1280x720 (HD)
-    public int width = 1600;
-    public int height = 900;
+    public int width = 1550;
+    public int height = 1000;
 
     // สร้าง bounds ไว้กัน error (เผื่อ MainFrame เรียกใช้)
     public static java.awt.Rectangle bounds = new java.awt.Rectangle(0, 0, 1280, 720);

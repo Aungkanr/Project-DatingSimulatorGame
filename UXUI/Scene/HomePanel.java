@@ -18,11 +18,11 @@ import java.awt.event.ActionListener;
 public class HomePanel extends JPanel {
     private StdAuto stdScreen = new StdAuto() ;
     private SleepEffect sleepEffect = new SleepEffect() ;
-    private MainFrame mainFrame;
     private JLabel lblMessage; // <--- 1. ตัวแปรสำหรับโชว์ข้อความเตือน
     private JButton btnBack; // <--- 2. ตัวแปรปุ่มกลับ (ถ้าต้องการเข้าถึงจากหลายที่)
+    private MainFrame mainFrame;
     
-    public HomePanel(MainFrame mainFrame) {
+    public HomePanel(MainFrame mainFrame) { //ClassmainFrame<--
         this.mainFrame = mainFrame;
         stdScreen.setBtnWHG(200, 60, 20 ,0); //ขนาด ปุ่ม และ gap ,แถว
         
@@ -56,6 +56,7 @@ public class HomePanel extends JPanel {
                     setComponentZOrder(sleepEffect, 0);
                     player.setEnergy(100);  // restore Energy
                     mainFrame.getSFXManager().playSFX("Music\\Snore Mimimimimimimi Sound Effect (Cartoon Sleeping Sound Effect).wav");
+                    System.out.println("\n=========== Next Day ===========");
 
                     new javax.swing.Timer(4000, new ActionListener() { // การทำงานหลังจากผ่านไป 4 วินาที (เวลาที่นอนหลับ) **คล้ายๆ Thread.sleep
                         @Override

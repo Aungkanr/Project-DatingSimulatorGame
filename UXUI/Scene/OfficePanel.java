@@ -6,17 +6,20 @@ import javax.swing.JPanel;
 
 import UXUI.MainFrame;
 import UXUI.StatusBarMenu.GamePanel;
+import Utility.GameTime;
 import Player.Player;
 
 public class OfficePanel extends JPanel {
     private MainFrame mainFrame; // เก็บ reference ของ MainFrame เพื่อใช้ในการเปลี่ยนหน้าจอ
-    GamePanel realGamePanel;
-    Player realPlayer;
+    private GamePanel realGamePanel;
+    private GameTime realGameTime;
+    private Player realPlayer;
 
     public OfficePanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame; // เก็บ reference ของ MainFrame
         realGamePanel = mainFrame.getGamePanel(); 
         realPlayer = mainFrame.getPlayer();
+        realGameTime = mainFrame.getGameTime();
 
         this.setLayout(new BorderLayout());
 
@@ -39,6 +42,8 @@ public class OfficePanel extends JPanel {
                 if (realGamePanel != null) {
                     realGamePanel.doActivity(40);
                 }
+                System.out.println("Working -> Energy: "+ realPlayer.getEnergy() +" | Day : "+ realGameTime.getDay() + "\n" +
+                               "          " + "Money : "+ realPlayer.getMoney()  +" | Time: "+ realGameTime.getTimeString());
             }),
             new SceneUpdate.SceneOption("I need to work here man!", e -> this.mainFrame.showGame())
         );

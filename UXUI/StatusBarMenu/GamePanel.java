@@ -7,7 +7,6 @@ import Utility.ChangeImageMap;
 import Utility.GameTime;
 import Utility.Notify;
 import Utility.StdAuto;
-import Player.InventoryPanel;
 
 import java.awt.Color;
 import java.awt.Font;

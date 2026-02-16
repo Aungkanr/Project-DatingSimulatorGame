@@ -25,7 +25,6 @@ public class GamePanel extends JPanel {
     private JLabel lblDay;
     private JLabel lblTime;
     private JLabel lblMap;
-    private ChangeImageMap mapChanger;
     private StdAuto stdScreen ; //Device screen
     private Notify notification ; //ตัวแจ้งเตือน
 
@@ -145,35 +144,26 @@ public class GamePanel extends JPanel {
         btnOffice.setFont(new Font("Tahoma", Font.BOLD, 14));
         Hovereffect.HoverEffect(btnOffice, stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);
-
-        btnSchool.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                parent.createSchoolPanel();
-                parent.showSchool();
-            }
+        //Action
+        btnSchool.addActionListener(e ->  {
+            parent.createSchoolPanel();
+            parent.showSchool();
         });
 
-        btnHome.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                parent.createHomePanel();
-                parent.showHome();
-            }
+        btnHome.addActionListener(e ->  {
+            parent.createHomePanel();
+            parent.showHome();
         });
 
-        btnShop.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                parent.createShopPanel();
-                parent.showShop();
-            }
+        btnShop.addActionListener(e -> {
+            parent.createShopPanel();
+            parent.showShop();
         });
 
-        btnOffice.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                parent.createOfficePanel();
-                parent.showOffice();
-            }
+        btnOffice.addActionListener(e -> {
+            parent.createOfficePanel();
+            parent.showOffice();
         });
-
 
     //--------------------------image Map update ตามเวลา (โดยส่งข้อมูล StringของGame Time ไป)------------------
         lblMap = new JLabel("");  
@@ -192,12 +182,15 @@ public class GamePanel extends JPanel {
         lblMoney.setText("Money: " + player.getMoney());
         lblDay.setText("Day: " + gTime.getDay());
         lblTime.setText("Time: " + gTime.getTimeString());
+        // Update background image based on time
         ChangeImageMap.updateMapImage(gTime.getTimeString(), lblMap, checkImageUtil, stdScreen);
     }
+    // --- Do Activity (Logic) ---
     public boolean doActivity(int energyCost) { 
         Player player = parent.getPlayer();
         GameTime gTime = parent.getGameTime();
         lblEnergy.setForeground(Color.WHITE); // Reset สี Energy ก่อนตรวจสอบ
+
         if (player.getEnergy() < 10) {
             // ... code แจ้งเตือน Energy หมด ...
             LowEnergyPanel energyPanel = new LowEnergyPanel(stdScreen.width, stdScreen.height, parent);
@@ -205,11 +198,11 @@ public class GamePanel extends JPanel {
             energyPanel.setVisible(true);
             setComponentZOrder(energyPanel, 0);
             lblEnergy.setForeground(Color.red);
+            repaint();
             return false;
         } 
         gTime.advanceTime(player,energyCost);// ถ้า Time อยู่ที่ Night ให้ค้างที่ Night wait untill click Sleep.
         updateUI();
         return true;
     }
-    
 }

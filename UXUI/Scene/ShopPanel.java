@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import Player.Player;
 import UXUI.DialoguePanel;
+import UXUI.Hovereffect;
 import UXUI.MainFrame;
 import UXUI.StatusBarMenu.GamePanel;
 import UXUI.StatusBarMenu.RoundedPanel;
@@ -23,6 +24,8 @@ public class ShopPanel extends JPanel {
     private JLabel lblEnergy;
     private JLabel lblDay;
     private JLabel lblTime;
+    public static final Color BUY_BUTTON = new Color(90, 50, 30);
+    public static final Color BACK_BUTTON = new Color(48, 25, 82);    
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     DialoguePanel dialogueBox = new DialoguePanel();
 
@@ -88,12 +91,7 @@ public class ShopPanel extends JPanel {
         add(statusPanel);
     //---------------------------dialogueBox---------------------------
         // กล่องข้อความ (วางเหนือปุ่ม)
-        int dialogueW = 1425;
-        int dialogueH = 200;
-        int dialogueX = (stdScreen.width - dialogueW) / 2; // จัดกึ่งกลางจอ
-        int dialogueY = btnY - dialogueH - 50; // วางเหนือปุ่ม
-
-        dialogueBox.setBounds(dialogueX, dialogueY, dialogueW, dialogueH);
+        dialogueBox.setDefaultBounds(stdScreen, btnY);
         add(dialogueBox);
 
         if (gameTime.getTimeSlot() < 3) {
@@ -112,6 +110,7 @@ public class ShopPanel extends JPanel {
         // ปุ่มที่ 1 วางที่ startX
         btnchoice1.setBounds(startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice1.addActionListener(e -> tryBuyItem("Blue jazz", 50, gameTime));
+        Hovereffect.HoverEffect(btnchoice1,startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight , BUY_BUTTON);        
         add(btnchoice1);
     //---------------------------choice 2---------------------------
         JButton btnchoice2 = new JButton("Poppy $65.");
@@ -119,6 +118,7 @@ public class ShopPanel extends JPanel {
         // ปุ่มที่ 2 วางถัดจากปุ่ม 1 + gap
         btnchoice2.setBounds(startX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice2.addActionListener(e -> tryBuyItem("Poppy", 65, gameTime));
+        Hovereffect.HoverEffect(btnchoice2,startX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice2);
     //---------------------------choice 3---------------------------
         JButton btnchoice3 = new JButton("Tulip $90.");
@@ -126,6 +126,7 @@ public class ShopPanel extends JPanel {
         // ปุ่มที่ 3 วางถัดจากปุ่ม 2 + gap
         btnchoice3.setBounds(startX + (stdScreen.buttonWidth * 2) + (gap * 2), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice3.addActionListener(e -> tryBuyItem("Tulip", 90, gameTime));
+        Hovereffect.HoverEffect(btnchoice3 , startX + (stdScreen.buttonWidth * 2) + (gap * 2), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice3);
     //---------------------------choice 4---------------------------
         JButton btnchoice4 = new JButton("Fairy rose $120.");
@@ -133,16 +134,18 @@ public class ShopPanel extends JPanel {
         // ปุ่มที่ 4 วางถัดจากปุ่ม 3 + gap
         btnchoice4.setBounds(startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnchoice4.addActionListener(e -> tryBuyItem("Fairy rose", 120, gameTime));
+        Hovereffect.HoverEffect(btnchoice4,startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice4);
     //---------------------------Back Button---------------------------------------
         JButton btnBack = new JButton("Back");
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnBack.setBounds(20, 20, 100, 30);
         btnBack.addActionListener(e -> mainFrame.showGame());;
+        Hovereffect.HoverEffect(btnBack,20, 20, 100, 30, BACK_BUTTON);        
         add(btnBack);   
     //---------------------------Background หน้าร้าน---------------------------
         JLabel lblMap = new JLabel("");
-        ImageIcon originalIcon = new ImageIcon("image\\Scene\\Shop\\ShopScene1.png");
+        ImageIcon originalIcon = new ImageIcon("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);

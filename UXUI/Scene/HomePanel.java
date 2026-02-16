@@ -1,10 +1,12 @@
 package UXUI.Scene;
+import UXUI.Hovereffect;
 import UXUI.MainFrame;
 import Utility.GameTime;
 import Utility.SleepEffect;
 import Player.Player;
 import Utility.StdAuto;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,10 +20,14 @@ import java.awt.event.ActionListener;
 public class HomePanel extends JPanel {
     private StdAuto stdScreen = new StdAuto() ;
     private SleepEffect sleepEffect = new SleepEffect() ;
+    Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     private MainFrame mainFrame;
     private JLabel lblMessage; // <--- 1. ตัวแปรสำหรับโชว์ข้อความเตือน
     private JButton btnBack; // <--- 2. ตัวแปรปุ่มกลับ (ถ้าต้องการเข้าถึงจากหลายที่)
-    
+    public static final Color BACK_BUTTON = new Color(48, 25, 82);  
+    public static final Color SLEEP_BTN = new Color(220, 160, 60);
+
+
     public HomePanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         stdScreen.setBtnWHG(200, 60, 20 ,0); //ขนาด ปุ่ม และ gap ,แถว
@@ -38,10 +44,21 @@ public class HomePanel extends JPanel {
         lblMessage.setBounds(stdScreen.centerX - 100, stdScreen.currentY - 50, stdScreen.buttonWidth + 200, 40);
         add(lblMessage);
 
+        // --- สีปุ่ม ----------------------------------------
+        btnBack = new JButton("Back");
+
+        Hovereffect.HoverEffect(btnBack,20,20,100,30,BACK_BUTTON);
+        btnBack.addActionListener(e -> {
+            lblMessage.setText("");
+            mainFrame.showGame();
+        });
+
+        add(btnBack);
         // --- ปุ่ม Sleep ----------------------------------------
         JButton btnSleep = new JButton("Sleep (Next Day)");
         btnSleep.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnSleep.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        Hovereffect.HoverEffect(btnSleep , stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight, SLEEP_BTN);        
         btnSleep.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 GameTime gameTime = mainFrame.getGameTime();
@@ -87,5 +104,21 @@ public class HomePanel extends JPanel {
             mainFrame.showGame();
         });
         add(btnBack);
+
+        
+        //---------Background-----------------//
+        JLabel lblMap = new JLabel("");
+        // *อย่าลืมเช็คชื่อไฟล์รูปภาพของคุณว่าชื่ออะไร* (ผมสมมติว่าเป็น OfficeScene.png)
+        String imagePath = "image\\Scene\\Bedroom\\ห้องนอน.png"; 
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        
+        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
+        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(lblMap);
+        
+        // บังคับให้รูปอยู่หลังสุด
+        setComponentZOrder(lblMap, getComponentCount() - 1);
+        
     }
+    
 }

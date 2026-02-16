@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import Utility.StdAuto;
+
 public class DialoguePanel extends JPanel {
 
     // --- Components ---
@@ -86,6 +88,19 @@ public class DialoguePanel extends JPanel {
             }
         });
     }
+
+    //new method set DialoguePanel
+    public void setDefaultBounds(StdAuto stdScreen, int btnY) {
+
+    int dialogueW = 1250;   
+    int dialogueH = 240;    
+
+    int dialogueX = (stdScreen.width - dialogueW) / 2;
+    int dialogueY = btnY - dialogueH - 45;
+
+    setBounds(dialogueX, dialogueY, dialogueW, dialogueH);
+    }
+
 
     // --- ฟังก์ชันเรียกใช้จากภายนอก ---
 

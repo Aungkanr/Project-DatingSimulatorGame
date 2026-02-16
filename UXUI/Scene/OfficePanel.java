@@ -1,49 +1,152 @@
 package UXUI.Scene;
-
-import java.awt.BorderLayout;
-
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import UXUI.DialoguePanel; // เพิ่ม import
+import UXUI.Hovereffect;
 import UXUI.MainFrame;
 import UXUI.StatusBarMenu.GamePanel;
+import Utility.StdAuto;
 import Player.Player;
 
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class OfficePanel extends JPanel {
-    private MainFrame mainFrame; // เก็บ reference ของ MainFrame เพื่อใช้ในการเปลี่ยนหน้าจอ
-    GamePanel realGamePanel;
-    Player realPlayer;
+    
+    private StdAuto stdScreen;
+    private Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    private DialoguePanel dialogueBox = new DialoguePanel(); // เพิ่มกล่องข้อความ
+    public static final Color btn1 = new Color(55, 55, 55);
+        
 
     public OfficePanel(MainFrame mainFrame) {
-        this.mainFrame = mainFrame; // เก็บ reference ของ MainFrame
-        realGamePanel = mainFrame.getGamePanel(); 
-        realPlayer = mainFrame.getPlayer();
+        stdScreen = new StdAuto();
+        stdScreen.setBtnWHG(250, 50, 20, 0); // ตั้งขนาดปุ่มมาตรฐาน
+        
 
-        this.setLayout(new BorderLayout());
+        GamePanel realGamePanel = mainFrame.getGamePanel(); 
+        Player realPlayer = mainFrame.getPlayer();
 
-        showAngryScene(); // เรียกใช้เมธอดเพื่อแสดงฉากแรก
-    }
+        setLayout(null);
+        setBackground(new Color(12, 51, 204));
+        
+        // ใช้ค่า Y ที่ปลอดภัย
+        int btnY = stdScreen.bottomY;
 
-    public void showAngryScene() {
-        SceneUpdate scene = new SceneUpdate(
-            "image\\Scene\\Office\\Barad-durWork.png", // ตำเเหน่งของภาพพื้นหลัง
-            "Manager", // ชื่อผู้พูด
-            "เรากำลังรับสมัครพนักงานพอดี สนใจไหม?", // ข้อความที่ต้องการให้แสดงในกล่องข้อความ
-            // diaX, diaY, diaW, diaH, // กำหนดตำแหน่งและขนาดของ Dialogue Box
-            e -> mainFrame.showGame(), // ActionListener สำหรับปุ่ม "กลับไปที่เกม" (เมื่อกดปุ่มนี้จะกลับไปที่หน้าจอเกม)
-
-            // 1. ปุ่มแบบ Auto ให้ระบบจัดวางให้เอง
-            // *** new SceneUpdate.SceneOption(" ข้อความในปุ่ม ", e ->  เมื่อกดปุ่มจะให้ทำอะไรต่อ), *** ตัวอย่างการใช้งาน
-            new SceneUpdate.SceneOption("Give Job Application", e -> {
+        // --- ปุ่มขวา (Give Job Application) ---
+        JButton btnchoice1 = new JButton("Give Job Application");
+        btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 14)); // ลดฟอนต์นิดนึงถ้ายาว
+        btnchoice1.setBounds(stdScreen.centerX + 150, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        Hovereffect.HoverEffect(btnchoice1,stdScreen.centerX + 150, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, btn1);        
+        btnchoice1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 mainFrame.showGame();
                 realPlayer.increaseMoney(80);
                 if (realGamePanel != null) {
                     realGamePanel.doActivity(40);
                 }
-            }),
-            new SceneUpdate.SceneOption("I need to work here man!", e -> this.mainFrame.showGame())
-        );
-        add(scene, java.awt.BorderLayout.CENTER);
-        revalidate();
-        repaint();
+            }
+        });
+        add(btnchoice1);
+
+        // --- ปุ่มซ้าย (I need to work here) ---
+        JButton btnchoice2 = new JButton("I need to work here man!");
+        btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnchoice2.setBounds(stdScreen.centerX - 150 - stdScreen.buttonWidth, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        Hovereffect.HoverEffect(btnchoice2 , stdScreen.centerX - 150 - stdScreen.buttonWidth, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, btn1);        
+        btnchoice2.addActionListener(e -> mainFrame.showGame());
+        add(btnchoice2);   
+        
+        // --- กล่องข้อความ (Dialogue Box) ---
+        dialogueBox.setDefaultBounds(stdScreen, btnY);
+        add(dialogueBox);
+        dialogueBox.setText("Manager", "เรากำลังรับสมัครพนักงานพอดี สนใจไหม?"); // ใส่ข้อความตัวอย่าง
+
+        // --- Background Image ---
+        JLabel lblMap = new JLabel("");
+        // *อย่าลืมเช็คชื่อไฟล์รูปภาพของคุณว่าชื่ออะไร* (ผมสมมติว่าเป็น OfficeScene.png)
+        String imagePath = "image\\Scene\\Office\\Barad-durWork.png"; 
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        
+        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
+        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(lblMap);
+        
+        // บังคับให้รูปอยู่หลังสุด
+        setComponentZOrder(lblMap, getComponentCount() - 1);
     }
 }
+
+
+/* 
+package UXUI.Scene;
+import UXUI.MainFrame;
+import UXUI.StatusBarMenu.GamePanel;
+import Utility.StdAuto;
+
+import UXUI.DialoguePanel; // เพิ่ม import
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import Player.Player;
+import Utility.GameTime;
+import Utility.Notify;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class OfficePanel extends JPanel {
+    private StdAuto stdScreen ;
+    private Notify officeNotify ;
+    
+    public OfficePanel(MainFrame mainFrame ) {
+        stdScreen = new StdAuto() ;
+        //----------------ข้อความเตื่อน-----------------
+        officeNotify = new Notify(stdScreen.width);
+        officeNotify.setBounds(0, 50, stdScreen.width, 50); // *อยากเปลี่ยนตำแหน่งก็ได้*
+        add(officeNotify);
+        //-------------------------------------------
+        GamePanel realGamePanel = mainFrame.getGamePanel(); // ---update UI and doActivity
+        Player realPlayer = mainFrame.getPlayer();
+        GameTime gameTime = mainFrame.getGameTime(); 
+
+        stdScreen.setBtnWHG(200, 60, 20, 0); //ขนาด ปุ่ม และ gap ,แถว
+        setLayout(null);
+        setBackground(new Color(12, 51, 204));
+
+        JButton btnchoice1 = new JButton("Give Job Application");
+        btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnchoice1.setBounds(stdScreen.centerX-200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnchoice1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (gameTime.getTimeSlot() < 3) {
+                    realPlayer.increaseMoney(80);
+                } else {
+                    officeNotify.showNotify("Night has fallen, Lord Sauron!!! proud of you.", Color.RED ,3000);
+                }
+                realGamePanel.doActivity(40);
+            }
+        });
+        add(btnchoice1);
+
+        JButton btnchoice2 = new JButton("I need to work here man!");
+        btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnchoice2.setBounds(stdScreen.centerX+200, stdScreen.currentY+400, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        btnchoice2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.showGame();
+            }
+        });
+        add(btnchoice2);   
+    }
+}
+
+*/

@@ -29,8 +29,10 @@ public class ShopPanel extends JPanel {
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     DialoguePanel dialogueBox = new DialoguePanel();
 
+    private ConfirmPanel dialog;
+
     private MainFrame mainFrame ;
-    ConfirmPanel confirmPanel = new ConfirmPanel(); //pull data จาก Confir Panel มาใช้ 
+    // ConfirmPanel confirmPanel = new ConfirmPanel(); //pull data จาก Confir Panel มาใช้ 
     
     public ShopPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame ;
@@ -38,6 +40,8 @@ public class ShopPanel extends JPanel {
         stdScreen = new StdAuto();
         stdScreen.setBtnWHG(300, 50, 20, 0); // ตั้งขนาดปุ่ม
         
+        dialog = new ConfirmPanel(stdScreen.width, stdScreen.height);
+
         setLayout(null);
         setBackground(new Color(12, 51, 204));
 
@@ -52,7 +56,8 @@ public class ShopPanel extends JPanel {
         setBackground(new Color(12, 51, 204));
 
     // -------------ConfirmPanel-----------------
-        add(confirmPanel);  //ไป setting scale, height width  ที่ ConfrimPanel.java
+        add(dialog);
+        // add(confirmPanel);  //ไป setting scale, height width  ที่ ConfrimPanel.java
     //----------------ข้อความเตื่อน-----------------
         shopNotify = new Notify(stdScreen.width);
         shopNotify.setBounds(0, 50, stdScreen.width, 50); // *อยากเปลี่ยนตำแหน่งก็ได้*
@@ -150,7 +155,7 @@ public class ShopPanel extends JPanel {
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
         //layer
-        setComponentZOrder(confirmPanel, 0); 
+        // setComponentZOrder(confirmPanel, 0); 
         setComponentZOrder(shopNotify, 1); 
         setComponentZOrder(statusPanel, 2);
         setComponentZOrder(lblMap, getComponentCount() - 1);
@@ -158,7 +163,8 @@ public class ShopPanel extends JPanel {
     //-------------Method to reduce code duplication-----------------
     private void tryBuyItem(String itemName, int price, GameTime gameTime) {
         if (gameTime.getTimeSlot() < 3) {
-            confirmPanel.showConfirm("Buy " + itemName + " for $" + price + "?", e -> Detect(itemName, price));
+            dialog.show("Buy " + itemName + " for $" + price + "?", null, "YES", e -> Detect(itemName, price));
+            // confirmPanel.showConfirm("Buy " + itemName + " for $" + price + "?", e -> Detect(itemName, price));
         } else {
             shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED, 2000);
         }

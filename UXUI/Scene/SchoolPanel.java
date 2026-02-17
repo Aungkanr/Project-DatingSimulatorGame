@@ -1,48 +1,100 @@
 package UXUI.Scene;
 
-import java.awt.BorderLayout; // 1. import BorderLayout
+import java.awt.BorderLayout;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-
+import javax.swing.SwingUtilities;
 import UXUI.MainFrame;
+import UXUI.StatusBarMenu.Story;
 
 public class SchoolPanel extends JPanel {
+
     private MainFrame mainFrame;
-    private int SaveScene = 1;
-    
-    
+    private JLayeredPane layeredPane;
+
+    // ดึง data จาก Story
+    private final String[][] dialogues  = Story.LAZEL_CH1;
+    private final int[]      mainScenes = Story.LAZEL_CH1_MAIN_SCENES;
+
+    // ===============================================================
+    // Constructor
+    // ===============================================================
     public SchoolPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        
-        // 1. ตั้งค่า Layout ของ SchoolPanel ให้เป็น BorderLayout
         this.setLayout(new BorderLayout());
 
-        if (SaveScene == 1) {
-            showAngryScene(); 
-        }
+        layeredPane = new JLayeredPane();
+        layeredPane.setLayout(null);
+        this.add(layeredPane, BorderLayout.CENTER);
+
+        showScene(0);
     }
 
-    public void showAngryScene() {
-        this.removeAll();
+    // ===============================================================
+    // แสดง scene ตาม index จาก Story
+    // ===============================================================
+    private void showScene(int index) {
+        String[] data = dialogues[index];
+        SceneUpdate scene;
 
-        
-        SceneUpdate scene = new SceneUpdate(
-            "image\\Scene\\School\\Angryscene.png", // ตำเเหน่งของภาพพื้นหลัง
-            "Lazel", // ชื่อผู้พูด
-            "หัดเดินดูทางหน่อย! ขวางมากๆเดี๋ยวกูเอาดาบฟันมึงนะ!", // ข้อความที่ต้องการให้แสดงในกล่องข้อความ
-            // diaX, diaY, diaW, diaH, // กำหนดตำแหน่งและขนาดของ Dialogue Box
-            null, // ActionListener สำหรับปุ่ม "กลับไปที่เกม" (เมื่อกดปุ่มนี้จะกลับไปที่หน้าจอเกม)
+        if (data.length == 1) {
+            // Reaction scene: มีแค่ปุ่ม "ต่อไป"
+            int next = getNextMainScene(index);
+            scene = new SceneUpdate(
+                "image\\Scene\\School\\Angryscene.png",
+                "Lazel", data[0], null,
+                next >= 0
+                    ? new SceneUpdate.SceneOption("ต่อไป", e -> showScene(next))
+                    : new SceneUpdate.SceneOption("จบ Chapter 1", e -> endChapter1())
+            );
+        } else {
+            // Choice scene: มีปุ่ม A B C
+            scene = new SceneUpdate(
+                "image\\Scene\\School\\Angryscene.png",
+                "Lazel", data[0], null,
+                new SceneUpdate.SceneOption(data[1], e -> showScene(index + 1)), // A
+                new SceneUpdate.SceneOption(data[2], e -> showScene(index + 2)), // B
+                new SceneUpdate.SceneOption(data[3], e -> showScene(index + 3))  // C
+            );
+        }
 
-            // 1. ปุ่มแบบ Auto ให้ระบบจัดวางให้เอง
-            // *** new SceneUpdate.SceneOption(" ข้อความในปุ่ม ", e ->  เมื่อกดปุ่มจะให้ทำอะไรต่อ), *** ตัวอย่างการใช้งาน
-            new SceneUpdate.SceneOption("You are so cute", e -> this.mainFrame.showGame()),
-            new SceneUpdate.SceneOption("I am sorry...", e -> this.mainFrame.showGame())
+        changeScene(scene);
+    }
 
-            // 2.ปุ่มแบบ Custom กำหนดตำแหน่งเองเเละขนาดเอง
-            // *** new SceneUpdate.SceneOption(" ข้อความในปุ่", ตำเเหน่งปุ่มX, ตำเเหน่งปุ่มY, ขนาดปุ่มW, ขนาดปุ่มH, e -> เมื่อกดปุ่มจะให้ทำอะไรต่อ) *** ตัวอย่างการใช้งานเเบบ custom
-        );
+    // หา scene หลักถัดไปหลังจาก reaction จบ
+    private int getNextMainScene(int reactionIndex) {
+        for (int i = 0; i < mainScenes.length - 1; i++) {
+            if (reactionIndex > mainScenes[i] && reactionIndex < mainScenes[i + 1]) {
+                return mainScenes[i + 1];
+            }
+        }
+        return -1; // จบ chapter แล้ว
+    }
 
-        add(scene, BorderLayout.CENTER);
-        revalidate();
-        repaint();
+    private void changeScene(SceneUpdate scene) {
+        SwingUtilities.invokeLater(() -> {
+            for (java.awt.Component c : layeredPane.getComponents()) {
+                layeredPane.remove(c);
+            }
+            scene.setBounds(0, 0, layeredPane.getWidth(), layeredPane.getHeight());
+            layeredPane.add(scene, JLayeredPane.DEFAULT_LAYER);
+            layeredPane.revalidate();
+            layeredPane.repaint();
+        });
+    }
+
+    private void endChapter1() {
+        SwingUtilities.invokeLater(() -> mainFrame.showGame());
+    }
+
+    @Override
+    public void setBounds(int x, int y, int w, int h) {
+        super.setBounds(x, y, w, h);
+        if (layeredPane != null) {
+            layeredPane.setBounds(0, 0, w, h);
+            for (java.awt.Component c : layeredPane.getComponents()) {
+                c.setBounds(0, 0, w, h);
+            }
+        }
     }
 }

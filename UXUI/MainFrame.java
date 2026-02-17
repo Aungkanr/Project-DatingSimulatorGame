@@ -5,6 +5,9 @@ import UXUI.Scene.OfficePanel;
 import UXUI.Scene.SchoolPanel;
 import UXUI.Scene.ShopPanel;
 import UXUI.StatusBarMenu.GamePanel;
+import UXUI.StatusBarMenu.Story;
+import UXUI.StatusBarMenu.Story;
+
 import java.io.File;
 import java.awt.EventQueue;
 
@@ -33,6 +36,7 @@ public class MainFrame extends JFrame {
     private Clip clip; 
     public static String filePath = "Music\\Harvest Dawn.wav";  
     public static File file = new File(filePath);
+    private Story statRelation = new Story();
     Utility.AssetManager asset = Utility.AssetManager.getInstance();
 
     // 2. ประกาศตัวแปร SoundManager

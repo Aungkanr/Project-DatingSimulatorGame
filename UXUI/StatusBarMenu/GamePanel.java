@@ -219,6 +219,13 @@ public class GamePanel extends JPanel {
         lblTime.setText("Time: " + gTime.getTimeString());
         ChangeImageMap.updateMapImage(gTime.getTimeString(), lblMap, checkImageUtil, stdScreen);
     }
+    
+    // method energy bar //
+    public void updateEnergyBar() {
+        Player player = parent.getPlayer();
+        energyBar.setEnergy(player.getEnergy());
+    }
+
     public boolean doActivity(int energyCost) { 
         Player player = parent.getPlayer();
         GameTime gTime = parent.getGameTime();

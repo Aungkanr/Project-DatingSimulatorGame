@@ -1,10 +1,14 @@
 package UXUI;
 import Player.*;
+import Relationship.Lazel;
 import UXUI.Scene.*;
 import UXUI.SceneNPC.*;
+import UXUI.SceneNPC.Lazel.LazelPanel;
+import UXUI.SceneNPC.Lazel.SpecialScenePanel;
 import UXUI.StatusBarMenu.GamePanel;
 import java.io.File;
 import java.awt.EventQueue;
+
 
 import javax.sound.sampled.Clip; // แก้เป็น Clip
 import javax.swing.JFrame;
@@ -32,7 +36,7 @@ public class MainFrame extends JFrame {
     private MusicManager soundManager;
     private SFXManager sfxManager;
     private LazelPanel lazelPanel;//X
-
+    private SpecialScenePanel specialScenePanel; 
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -144,10 +148,24 @@ public class MainFrame extends JFrame {
         contentPane.add(lazelPanel); // Add เข้า contentPane
     }
 
+    // --- เพิ่มฟังก์ชั่น SpecialScene ของ lazel --- //
+    public void createSpecialScenePanel(Lazel lazel, String sceneText, int sceneLevel) {
+        if (specialScenePanel != null) contentPane.remove(specialScenePanel);
+        specialScenePanel = new SpecialScenePanel(this, lazel, sceneText, sceneLevel);
+        specialScenePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        specialScenePanel.setVisible(false);
+        contentPane.add(specialScenePanel);
+    }
+
     // --- เพิ่มฟังก์ชัน Show ---
     public void showLazel() {
         toggleVisibility(lazelPanel);
         if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
+    }
+
+    public void showSpecialScene() {
+        toggleVisibility(specialScenePanel);
+        if(gamePanel != null) gamePanel.updateUI();
     }
 
     // 4. แก้ไขฟังก์ชัน Mute ให้เรียกผ่าน Manager
@@ -191,6 +209,7 @@ public class MainFrame extends JFrame {
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
         if(lazelPanel != null) lazelPanel.setVisible(false); //lazel 
+        if(specialScenePanel != null) specialScenePanel.setVisible(false); //specialScencelazel
         if(showPanel != null) showPanel.setVisible(true);
     }
 

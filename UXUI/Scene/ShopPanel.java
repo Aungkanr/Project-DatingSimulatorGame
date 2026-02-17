@@ -14,6 +14,8 @@ import Utility.ConfirmPanel;
 import Utility.GameTime;
 import Utility.Notify;
 import Utility.StdAuto;
+import Utility.StatusBar;
+
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,7 +23,7 @@ public class ShopPanel extends JPanel {
     private StdAuto stdScreen;
     private Notify shopNotify;
     private JLabel lblMoney;
-    private JLabel lblEnergy;
+    private StatusBar energyBar;
     private JLabel lblDay;
     private JLabel lblTime;
     public static final Color BUY_BUTTON = new Color(90, 50, 30);
@@ -48,8 +50,7 @@ public class ShopPanel extends JPanel {
         // ใช้ bottomY (ความสูงจอ - 120px)
         int btnY = stdScreen.bottomY;
         GameTime gameTime = mainFrame.getGameTime(); 
-        Player player = mainFrame.getPlayer();
-
+        
         stdScreen = new StdAuto() ;
         stdScreen.setBtnWHG(250, 60, 20,0); //ขนาด ปุ่ม และ gap , แถว
         setLayout(null);
@@ -64,32 +65,31 @@ public class ShopPanel extends JPanel {
         add(shopNotify);
     // ----------------Status Energy Money Day Time -----------------------------------
         RoundedPanel statusPanel = new RoundedPanel(30, GamePanel.themePink); 
-        statusPanel.setBounds(20, 60, 450, 110); // ตำแหน่งกล่องบนหน้าจอ
+        statusPanel.setBounds(20, 60, 450, 120); // ตำแหน่งกล่องบนหน้าจอ
         statusPanel.setLayout(null);
 
         // Energy
-        lblEnergy = new JLabel("Energy: " + player.getEnergy());
-        lblEnergy.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblEnergy.setForeground(Color.WHITE);
-        lblEnergy.setBounds(20, 15, 200, 30); // พิกัดเทียบกับกล่องชมพู
+        energyBar = new StatusBar(100, "Energy");
+        energyBar.setBounds(20, 10, 410, 20);
+        statusPanel.add(energyBar);
         //money
         Player initialPlayer = mainFrame.getPlayer(); 
         lblMoney = new JLabel("Money: " + initialPlayer.getMoney());
         lblMoney.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblMoney.setForeground(GamePanel.MoneyColor);
-        lblMoney.setBounds(20, 55, 200, 30);
+        lblMoney.setBounds(20, 40, 200, 25);
         // Day (อยู่ขวาบนของกล่อง)
         lblDay = new JLabel("Day: " + gameTime.getDay());
         lblDay.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblDay.setForeground(Color.WHITE);
-        lblDay.setBounds(250, 15, 150, 30);
+        lblDay.setBounds(20, 72, 150, 25);
         // Time (อยู่ขวาล่างของกล่อง)
         lblTime = new JLabel("Time: " + gameTime.getTimeString());
         lblTime.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblTime.setForeground(Color.WHITE);
-        lblTime.setBounds(250, 55, 200, 30); 
+        lblTime.setBounds(250, 72, 200, 25);
         
-        statusPanel.add(lblEnergy);
+        
         statusPanel.add(lblMoney);
         statusPanel.add(lblDay);
         statusPanel.add(lblTime);
@@ -159,6 +159,8 @@ public class ShopPanel extends JPanel {
         setComponentZOrder(shopNotify, 1); 
         setComponentZOrder(statusPanel, 2);
         setComponentZOrder(lblMap, getComponentCount() - 1);
+
+        updateEnergyBar();
     }
     //-------------Method to reduce code duplication-----------------
     private void tryBuyItem(String itemName, int price, GameTime gameTime) {
@@ -189,4 +191,10 @@ public class ShopPanel extends JPanel {
             }
         }
     }
+
+    public void updateEnergyBar() {
+            Player player = mainFrame.getPlayer();
+            energyBar.setEnergy(player.getEnergy());
+    }
+
 }

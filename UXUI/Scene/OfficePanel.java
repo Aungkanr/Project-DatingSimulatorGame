@@ -1,7 +1,6 @@
 package UXUI.Scene;
 
 import javax.swing.JPanel;
-import UXUI.DialoguePanel; // เพิ่ม import
 import UXUI.MainFrame;
 import UXUI.StatusBarMenu.GamePanel;
 import Utility.GameTime;
@@ -34,8 +33,6 @@ public class OfficePanel extends JPanel {
 
     public void showOfficeScene() {
         this.removeAll();
-
-        
 
         SceneUpdate scene = new SceneUpdate(
             "image\\Scene\\Office\\Barad-durWork.png", // ตำเเหน่งของภาพพื้นหลัง

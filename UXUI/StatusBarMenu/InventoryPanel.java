@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import Player.Player;
-import UXUI.MainFrame;
+import Player.*;
+import UXUI.*;
 
 public class InventoryPanel extends JPanel {
 

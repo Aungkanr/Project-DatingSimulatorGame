@@ -72,7 +72,6 @@ public class HomePanel extends JPanel {
                 setComponentZOrder(sleepEffect, 0);
                 player.setEnergy(100);  // restore Energy
                 player.resetDailyRelationships(); // giveGift Daily
-                mainFrame.getSFXManager().setVolume(0.05f);
                 mainFrame.getSFXManager().playSFX("Music\\Snore Mimimimimimimi Sound Effect (Cartoon Sleeping Sound Effect).wav");
                 System.out.println("\n=========== Next Day ===========");
 

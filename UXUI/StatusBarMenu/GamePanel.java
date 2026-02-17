@@ -24,6 +24,12 @@ public class GamePanel extends JPanel {
     private ChangeImageMap mapChanger;
     private StdAuto stdScreen ; //Device screen
     private Notify notification ; //ตัวแจ้งเตือน
+    private JButton btnBag;
+    private JButton btnOffice;
+    private JButton btnShop;
+    private JButton btnHome;
+    private JButton btnSchool;
+    private JButton btnExitGame;
 
     // ------------------ Object ---------------------
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
@@ -108,7 +114,7 @@ public class GamePanel extends JPanel {
         // ==========================================
         // 2. ปุ่ม Exit Game
         // ==========================================
-        JButton btnExitGame = new JButton("Return to Menu");
+        btnExitGame = new JButton("Return to Menu");
         btnExitGame.setBounds(20, 20, 150, 30);
         Hovereffect.HoverEffect(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
         add(btnExitGame);
@@ -121,7 +127,7 @@ public class GamePanel extends JPanel {
     //------------------- ส่วนของปุ่มที่แสดงบนแมพ--------------
         stdScreen.setBtnWHG(200, 30, 20, 0);
 
-        JButton btnSchool = new JButton("School");
+        btnSchool = new JButton("School");
         btnSchool.setBounds(stdScreen.centerX-20, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnSchool.setBackground(schoolColor);
         btnSchool.setForeground(Color.WHITE);
@@ -129,7 +135,7 @@ public class GamePanel extends JPanel {
         Hovereffect.HoverEffect(btnSchool, stdScreen.centerX-20, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight, schoolColor);
         add(btnSchool);
 
-        JButton btnHome = new JButton("Home");
+        btnHome = new JButton("Home");
         btnHome.setBounds(stdScreen.centerX-20, stdScreen.currentY+140, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnHome.setBackground(homeColor);
         btnHome.setForeground(Color.WHITE);
@@ -137,7 +143,7 @@ public class GamePanel extends JPanel {
         Hovereffect.HoverEffect(btnHome, stdScreen.centerX-20, stdScreen.currentY+140, stdScreen.buttonWidth, stdScreen.buttonHeight, homeColor);
         add(btnHome);
 
-        JButton btnShop = new JButton("Shop");
+        btnShop = new JButton("Shop");
         btnShop.setBounds(stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnShop.setBackground(shopColor);
         btnShop.setForeground(Color.WHITE);
@@ -145,7 +151,7 @@ public class GamePanel extends JPanel {
         Hovereffect.HoverEffect(btnShop, stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
         add(btnShop);
 
-        JButton btnOffice = new JButton("Office");
+        btnOffice = new JButton("Office");
         btnOffice.setBounds(stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight);
         btnOffice.setBackground(officeColor);
         btnOffice.setForeground(Color.WHITE);
@@ -153,7 +159,7 @@ public class GamePanel extends JPanel {
         Hovereffect.HoverEffect(btnOffice, stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);
         
-        JButton btnBag = new JButton("Bag");
+        btnBag = new JButton("Bag");
         btnBag.setBounds(180, 20, 100, 30); // วางข้างๆ ปุ่ม Return Menu
         btnBag.setFont(new Font("Tahoma", Font.BOLD, 14));
         Hovereffect.HoverEffect(btnBag, 180, 20, 100, 30, bagBtnColor); // ใช้ HoverEffect สีน้ำตาล
@@ -188,6 +194,7 @@ public class GamePanel extends JPanel {
             
             setComponentZOrder(invPanel, 0); // 3. ดึงมาหน้าสุด (Layer 0) และสั่งวาดใหม่
             invPanel.setVisible(true);
+            disableAllGamePanel();
             repaint();
         });
     //--------------------------image Map update ตามเวลา (โดยส่งข้อมูล StringของGame Time ไป)------------------
@@ -234,5 +241,21 @@ public class GamePanel extends JPanel {
         updateUI();
         return true;
     }
-    
+    //-------ทำกันเผื่อ click ปุ่มอื่น while Bag is opening-----
+    public void enableAllGamePanel () {
+        btnBag.setEnabled(true);
+        btnOffice.setEnabled(true);
+        btnShop.setEnabled(true);
+        btnHome.setEnabled(true);
+        btnSchool.setEnabled(true);
+        btnExitGame.setEnabled(true);
+    }
+    public void disableAllGamePanel() {
+        btnBag.setEnabled(false);
+        btnOffice.setEnabled(false);
+        btnShop.setEnabled(false);
+        btnHome.setEnabled(false);
+        btnSchool.setEnabled(false);
+        btnExitGame.setEnabled(false);
+    }
 }

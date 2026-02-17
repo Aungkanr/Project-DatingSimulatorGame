@@ -13,10 +13,11 @@ public class InventoryPanel extends JPanel {
     private MainFrame parent;
     private JTextArea listArea;
     private JButton btnClose;
+    private GamePanel realgamePanel;
 
     public InventoryPanel(MainFrame parent, int screenWidth, int screenHeight) {
         this.parent = parent;
-        
+        this.realgamePanel = parent.getGamePanel();
         setLayout(null);
         setBounds(0, 0, screenWidth, screenHeight);
         setOpaque(false); 
@@ -81,6 +82,7 @@ public class InventoryPanel extends JPanel {
             parentContainer.revalidate(); 
             parentContainer.repaint();   
         }
+        realgamePanel.enableAllGamePanel(); //เปิดคืนให้ทุกปุมกดได้ หลีงจาก disable
     }
 
     @Override

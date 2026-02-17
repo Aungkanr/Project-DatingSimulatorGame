@@ -1,4 +1,5 @@
-package Player;
+package UXUI.StatusBarMenu;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,14 +33,14 @@ public class InventoryPanel extends JPanel {
 
         // 1. ดึงข้อมูลของจาก Player
         Player player = parent.getPlayer();
-        String myItems = player.getInventory().getAllItemsList(); // ได้ String เช่น "Flower x2\n Cake x1"
+        String myItems = player.getInventory().getAllItemsList(); 
 
         // 2. สร้างพื้นที่แสดงข้อความ (JTextArea)
         listArea = new JTextArea();
         listArea.setText(myItems);
         listArea.setFont(new Font("Tahoma", Font.PLAIN, 20));
         listArea.setForeground(Color.WHITE);
-        listArea.setBackground(new Color(0, 0, 0, 0)); // พื้นหลังใส (เพื่อให้เห็นสีกล่องที่เราวาด)
+        listArea.setBackground(new Color(0, 0, 0, 0)); 
         listArea.setOpaque(false);
         listArea.setEditable(false);
         listArea.setLineWrap(true);
@@ -50,14 +51,14 @@ public class InventoryPanel extends JPanel {
         scrollPane.setBounds(x + 30, y + 60, boxWidth - 60, boxHeight - 120);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
-        scrollPane.setBorder(null); // ลบขอบขาว
+        scrollPane.setBorder(null); 
         add(scrollPane);
 
         // 3. ปุ่ม Close
         btnClose = new JButton("Close Bag");
         btnClose.setBounds(x + 150, y + boxHeight - 50, 200, 40);
         btnClose.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnClose.setBackground(new Color(255, 100, 100)); // สีแดงอ่อน
+        btnClose.setBackground(new Color(255, 100, 100)); 
         btnClose.setForeground(Color.WHITE);
         btnClose.addActionListener(new ActionListener() {
             @Override
@@ -68,12 +69,17 @@ public class InventoryPanel extends JPanel {
         add(btnClose);
     }
 
+    
     private void closePanel() {
         this.setVisible(false);
-        // ลบตัวเองออกจาก GamePanel เพื่อคืน Memory
-        if (getParent() != null) {
-            getParent().remove(this);
-            getParent().repaint(); // วาดหน้าจอหลักใหม่
+        
+        // เก็บตัวแปร Parent ไว้ก่อนสั่ง remove
+        Container parentContainer = getParent();
+        
+        if (parentContainer != null) {
+            parentContainer.remove(this); 
+            parentContainer.revalidate(); 
+            parentContainer.repaint();   
         }
     }
 
@@ -85,7 +91,7 @@ public class InventoryPanel extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // 1. วาดพื้นหลังมืดจางๆ (Overlay)
-        g2.setColor(new Color(0, 0, 0, 150)); // ดำโปร่งแสง
+        g2.setColor(new Color(0, 0, 0, 150)); 
         g2.fillRect(0, 0, getWidth(), getHeight());
 
         // 2. วาดกล่อง Inventory (ตรงกลาง)
@@ -94,7 +100,7 @@ public class InventoryPanel extends JPanel {
         int x = (getWidth() - boxWidth) / 2;
         int y = (getHeight() - boxHeight) / 2;
 
-        // พื้นหลังกล่อง (สีน้ำตาลเข้ม หรือสีตาม Theme)
+        // พื้นหลังกล่อง 
         g2.setColor(new Color(80, 50, 30)); 
         g2.fillRoundRect(x, y, boxWidth, boxHeight, 30, 30);
 
@@ -103,7 +109,7 @@ public class InventoryPanel extends JPanel {
         g2.setStroke(new BasicStroke(4));
         g2.drawRoundRect(x, y, boxWidth, boxHeight, 30, 30);
 
-        // 3. วาดหัวข้อ "My Inventory"
+        //"My Inventory"
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Tahoma", Font.BOLD, 28));
         FontMetrics fm = g2.getFontMetrics();

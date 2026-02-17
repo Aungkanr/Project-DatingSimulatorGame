@@ -8,6 +8,7 @@ public class SchoolPanel extends JPanel {
     private MainFrame mainFrame;
     private int SaveScene = 1;
     
+    
     public SchoolPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         
@@ -25,8 +26,8 @@ public class SchoolPanel extends JPanel {
 
         SceneUpdate scene = new SceneUpdate(
             "image/Scene/School/Angryscene.png", // ตำเเหน่งของภาพพื้นหลัง
-            "Mommy", // ชื่อผู้พูด
-            "เดินหัดดูทางบ้างซิยะ! ตาถั่วหรือไง!", // ข้อความที่ต้องการให้แสดงในกล่องข้อความ
+            "Lazel", // ชื่อผู้พูด
+            "หัดเดินดูทางหน่อย! ขวางมากๆเดี๋ยวกูเอาดาบฟันมึงนะ!", // ข้อความที่ต้องการให้แสดงในกล่องข้อความ
             // diaX, diaY, diaW, diaH, // กำหนดตำแหน่งและขนาดของ Dialogue Box
             e -> mainFrame.showGame(), // ActionListener สำหรับปุ่ม "กลับไปที่เกม" (เมื่อกดปุ่มนี้จะกลับไปที่หน้าจอเกม)
 

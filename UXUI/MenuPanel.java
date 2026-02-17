@@ -60,13 +60,16 @@ public class MenuPanel extends JPanel {
         int exitY = settingY + btnH + gap;
         btnExit.setBounds(btnX, exitY, btnW, btnH);
         Hovereffect.HoverEffect(btnExit, btnX, exitY, btnW, btnH, exitBtnColor);
-        btnExit.addActionListener(e -> System.exit(0));
+        btnExit.addActionListener(e -> {
+            Utility.AssetManager.getInstance().clearCache();
+            System.exit(0);
+        });
         add(btnExit);
 
         // Background
         JLabel lblMap = new JLabel("");
         String imagePath = "image\\MenuBackground.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);

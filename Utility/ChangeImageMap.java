@@ -34,9 +34,13 @@ public class ChangeImageMap {
                 break;
         }
         
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        checkImageUtil.checkImage(originalIcon, lblMap, screenWidth, screenHeight);
-        lblMap.repaint(); // วาดใหม่
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
+        if (originalIcon != null) {
+            checkImageUtil.checkImage(originalIcon, lblMap, screenWidth, screenHeight);
+            lblMap.repaint(); // วาดใหม่
+        } else {
+            System.err.println("Error: Image not found at " + imagePath);
+        }
     }
     
     /**

@@ -145,7 +145,7 @@ public class ShopPanel extends JPanel {
         add(btnBack);   
     //---------------------------Background หน้าร้าน---------------------------
         JLabel lblMap = new JLabel("");
-        ImageIcon originalIcon = new ImageIcon("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);

@@ -112,7 +112,7 @@ public class HomePanel extends JPanel {
         JLabel lblMap = new JLabel("");
         // *อย่าลืมเช็คชื่อไฟล์รูปภาพของคุณว่าชื่ออะไร* (ผมสมมติว่าเป็น OfficeScene.png)
         String imagePath = "image\\Scene\\Bedroom\\ห้องนอน.png"; 
-        ImageIcon originalIcon = new ImageIcon(imagePath);
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
         
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);

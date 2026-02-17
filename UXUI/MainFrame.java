@@ -33,6 +33,7 @@ public class MainFrame extends JFrame {
     private Clip clip; 
     public static String filePath = "Music\\Harvest Dawn.wav";  
     public static File file = new File(filePath);
+    Utility.AssetManager asset = Utility.AssetManager.getInstance();
 
     // 2. ประกาศตัวแปร SoundManager
     private MusicManager soundManager;
@@ -52,6 +53,8 @@ public class MainFrame extends JFrame {
     public MainFrame() { 
         // 1. โหลดค่ามาตรฐาน
         stdScreen = new StdAuto();
+
+        PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี)
         
         // 2. ตั้งค่าหน้าต่าง
         setTitle("Dating Simulator Game");
@@ -92,6 +95,19 @@ public class MainFrame extends JFrame {
         gamePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         gamePanel.setVisible(false);
         contentPane.add(gamePanel);
+    }
+
+
+    public void PreLoad() {
+        asset.getImage("image\\Map\\Afternoon.png");
+        asset.getImage("image\\Map\\Night.png");
+        asset.getImage("image\\Map\\Morning.png");
+        asset.getImage("image\\Map\\Evening.png");
+        asset.getImage("image\\MenuBackground.png");
+        asset.getImage("image\\Scene\\Office\\Barad-durWork.png");
+        asset.getImage("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
+        asset.getImage("image\\Scene\\Bedroom\\ห้องนอน.png");
+        asset.getImage("image\\Scene\\School\\Angryscene.png");
     }
 
     // --- ส่วนสร้าง Scene ต่างๆ (แก้ให้ใช้ stdScreen.width/height) ---

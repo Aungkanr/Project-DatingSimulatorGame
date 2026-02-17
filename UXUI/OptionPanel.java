@@ -51,13 +51,7 @@ public class OptionPanel extends JPanel {
         chckbxMuteSFX.setForeground(new Color(60, 40, 80));
         chckbxMuteSFX.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(50, 43, 226), 2));  // ⬅️ เพิ่มบรรทัดนี้
         chckbxMuteSFX.setBounds(stdScreen.centerX, stdScreen.currentY-80, stdScreen.buttonWidth, stdScreen.buttonHeight+3);
-        chckbxMuteSFX.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        add(chckbxMuteSFX);
-
+        
         // ดึงค่าเริ่มต้น
         if (parent.getSFXManager() != null) {
             chckbxMuteSFX.setSelected(parent.getSFXManager().isMuted());
@@ -91,9 +85,8 @@ public class OptionPanel extends JPanel {
         
         // Background 
         JLabel lblMap = new JLabel("");
-
         String imagePath = "image\\OptionBackGround.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
 
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);

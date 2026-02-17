@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import UXUI.Hovereffect;
 import UXUI.DialoguePanel;
 import Utility.StdAuto;
 
@@ -166,7 +167,8 @@ public class SceneUpdate extends JPanel {
         JButton btn = new JButton(text);
         btn.setBounds(x, y, w, h);
         btn.addActionListener(action);
-        btn.setFont(new Font("Tahoma", Font.PLAIN, 20)); 
+        btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        Hovereffect.HoverEffect(btn, x, y, w, h, new Color(55, 55, 55));
         adjustFontSizeToFit(btn); // ปรับขนาดตัวอักษร
         return btn;
     }
@@ -194,7 +196,7 @@ public class SceneUpdate extends JPanel {
 
     private void initBackground() {
         JLabel lblMap = new JLabel("");
-        ImageIcon originalIcon = new ImageIcon(bgPath);
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(bgPath);
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);

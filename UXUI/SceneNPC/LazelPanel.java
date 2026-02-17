@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import UXUI.MainFrame;
-import UXUI.Scene.SceneUpdate; // เรียกใช้ SceneUpdate จาก Folder Scene
+import UXUI.Scene.CreateTemplateScene; // เรียกใช้ SceneUpdate จาก Folder Scene
 import UXUI.Hovereffect;
 import Utility.*;
 import Relationship.Lazel; // เรียกข้อมูล NPC
@@ -88,17 +88,7 @@ public class LazelPanel extends JPanel {
     private void showDialogueMode(String text) {
         removeAll();
 
-        SceneUpdate scene = new SceneUpdate(
-            "image\\Scene\\School\\Angryscene.png", // BG
-            "Lazel",                                // Speaker Name
-            text,                                   // Text
-            
-            // Back Action (กด Back กลับไปหน้าเมนู)
-            e -> showInteractionMenu(), 
-            
-            // ปุ่ม Continue
-            new SceneUpdate.SceneOption("Continue...", e -> showInteractionMenu())
-        );
+        CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\Angryscene.png", "Lazel", text, null, text,  new CreateTemplateScene.SceneOption("Continue...", e -> showInteractionMenu()));
         
         scene.setBounds(0, 0, getWidth(), getHeight());
         add(scene);

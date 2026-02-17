@@ -1,10 +1,8 @@
 package Relationship;
 
-import javax.swing.JPanel;
-
 public abstract class NPC {
     protected String name;
-    protected int affectionPoints = 98; // คะแนน 0 - 500
+    protected int affectionPoints = 0; // คะแนน 0 - 500
     protected int heartLevel = 0;      // 0 - 5
     
     // สถานะประจำวัน
@@ -60,27 +58,20 @@ public abstract class NPC {
         return false;
     }
 
-    // getDialogue() ยังคง return String เหมือนเดิม
     public String getDialogue() {
-        // ถ้า special scene pending อยู่ ให้ return String บอกสถานะ
         if (checkSpecialSceneTrigger()) {
-            return "SPECIAL_SCENE"; // สัญญาณให้ UI ไปเรียก getSpecialScene แทน
-        }
-        return getRandomDialogue(heartLevel);
-    }
-
-    // เพิ่ม method ใหม่สำหรับดึง JPanel
-    public JPanel getSpecialScenePanel() {
-        if (checkSpecialSceneTrigger()) {
-            sceneUnlocked[heartLevel - 1] = true;
+            // ถ้าเงื่อนไขครบ ให้เล่นฉากพิเศษ และมาร์คว่าดูแล้ว
+            sceneUnlocked[heartLevel - 1] = true; 
             return getSpecialScene(heartLevel);
+        } else {
+            // ถ้าไม่เข้าเงื่อนไข ให้สุ่มคุยปกติ
+            return getRandomDialogue(heartLevel);
         }
-        return null;
     }
 
     // --- Abstract Methods (class child ต้องไปเขียนเอง) ---
     protected abstract String getRandomDialogue(int level);
-    protected abstract JPanel getSpecialScene(int level);
+    protected abstract String getSpecialScene(int level);
 
     // --- Getters ---
     public String getName() { return name; }

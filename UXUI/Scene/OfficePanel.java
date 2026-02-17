@@ -35,20 +35,19 @@ public class OfficePanel extends JPanel {
     public void showOfficeScene() {
         this.removeAll();
 
-        
-
-        SceneUpdate scene = new SceneUpdate(
+        CreateTemplateScene scene = new CreateTemplateScene(
             "image\\Scene\\Office\\Barad-durWork.png", // ตำเเหน่งของภาพพื้นหลัง
             "Manager", // ชื่อผู้พูด
             "เรากำลังรับสมัครพนักงานพอดี สนใจไหม?", // ข้อความที่ต้องการให้แสดงในกล่องข้อความ
             // diaX, diaY, diaW, diaH, // กำหนดตำแหน่งและขนาดของ Dialogue Box
             null, // ActionListener สำหรับปุ่ม "กลับไปที่เกม" (เมื่อกดปุ่มนี้จะกลับไปที่หน้าจอเกม)
+            null,
 
             // 1. ปุ่มแบบ Auto ให้ระบบจัดวางให้เอง
             // *** new SceneUpdate.SceneOption(" ข้อความในปุ่ม ", e ->  เมื่อกดปุ่มจะให้ทำอะไรต่อ), *** ตัวอย่างการใช้งาน
 
             // --- ปุ่มขวา (Give Job Application) ---
-            new SceneUpdate.SceneOption("Give Job Application", e -> {
+            new CreateTemplateScene.SceneOption("Give Job Application", e -> {
                 mainFrame.showGame();
                 realPlayer.increaseMoney(80);
                 if (realGamePanel != null) {
@@ -59,7 +58,7 @@ public class OfficePanel extends JPanel {
             }),
             
             // --- ปุ่มซ้าย (I need to work here) ---
-            new SceneUpdate.SceneOption("I need to work here man!", e -> {
+            new CreateTemplateScene.SceneOption("I need to work here man!", e -> {
                 mainFrame.showGame();
                 realPlayer.increaseMoney(80);
                 if (realGamePanel != null) {

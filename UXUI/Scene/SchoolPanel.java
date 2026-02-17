@@ -1,100 +1,49 @@
 package UXUI.Scene;
 
-import java.awt.BorderLayout;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.awt.Color;
 import UXUI.MainFrame;
-import UXUI.StatusBarMenu.Story;
+import Utility.*;
 
 public class SchoolPanel extends JPanel {
-
     private MainFrame mainFrame;
-    private JLayeredPane layeredPane;
+    private StdAuto stdScreen;
+    private GameTime realGameTime ;
+    private Notify realNotify ;
 
-    // ดึง data จาก Story
-    private final String[][] dialogues  = Story.LAZEL_CH1;
-    private final int[]      mainScenes = Story.LAZEL_CH1_MAIN_SCENES;
-
-    // ===============================================================
-    // Constructor
-    // ===============================================================
     public SchoolPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        this.setLayout(new BorderLayout());
+        this.stdScreen = new StdAuto();
+        this.stdScreen.setBtnWHG(250, 60, 20, 0);
 
-        layeredPane = new JLayeredPane();
-        layeredPane.setLayout(null);
-        this.add(layeredPane, BorderLayout.CENTER);
+        this.setLayout(new java.awt.BorderLayout());
+        setBackground(Color.BLACK);
 
-        showScene(0);
+        this.realGameTime = mainFrame.getGameTime(); // ดึงเวลามาจาก MainFrame
+        this.realNotify = new Notify(stdScreen.width); // สร้างตัวแจ้งเตือน
+        this.realNotify.setBounds(0, 50, stdScreen.width, 50); // กำหนดตำแหน่ง
+        add(realNotify); // *** อย่าลืม add เข้า Panel ***
+
+        // ---------------------------------------------------------
+        initComponents();
+        setComponentZOrder(realNotify, 0);
     }
 
-    // ===============================================================
-    // แสดง scene ตาม index จาก Story
-    // ===============================================================
-    private void showScene(int index) {
-        String[] data = dialogues[index];
-        SceneUpdate scene;
+    private void initComponents() {
 
-        if (data.length == 1) {
-            // Reaction scene: มีแค่ปุ่ม "ต่อไป"
-            int next = getNextMainScene(index);
-            scene = new SceneUpdate(
-                "image\\Scene\\School\\Angryscene.png",
-                "Lazel", data[0], null,
-                next >= 0
-                    ? new SceneUpdate.SceneOption("ต่อไป", e -> showScene(next))
-                    : new SceneUpdate.SceneOption("จบ Chapter 1", e -> endChapter1())
-            );
-        } else {
-            // Choice scene: มีปุ่ม A B C
-            scene = new SceneUpdate(
-                "image\\Scene\\School\\Angryscene.png",
-                "Lazel", data[0], null,
-                new SceneUpdate.SceneOption(data[1], e -> showScene(index + 1)), // A
-                new SceneUpdate.SceneOption(data[2], e -> showScene(index + 2)), // B
-                new SceneUpdate.SceneOption(data[3], e -> showScene(index + 3))  // C
-            );
+        CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\โรงเรียนตอนเช้า.png", null, null, e -> mainFrame.showGame() , "Back to Town", 
+        new CreateTemplateScene.SceneOption("Talk to Lazel", e -> {
+            if (realGameTime.getTimeSlot() < 3) {
+                // สั่ง MainFrame ให้สร้างและโชว์หน้า Lazel
+                //go to scene Lazel
+                mainFrame.createLazelPanel(); 
+                mainFrame.showLazel();
+            } else realNotify.showNotify("Night has fallen, go to sleep.", Color.RED, 2000);
         }
+        ));
 
-        changeScene(scene);
-    }
-
-    // หา scene หลักถัดไปหลังจาก reaction จบ
-    private int getNextMainScene(int reactionIndex) {
-        for (int i = 0; i < mainScenes.length - 1; i++) {
-            if (reactionIndex > mainScenes[i] && reactionIndex < mainScenes[i + 1]) {
-                return mainScenes[i + 1];
-            }
-        }
-        return -1; // จบ chapter แล้ว
-    }
-
-    private void changeScene(SceneUpdate scene) {
-        SwingUtilities.invokeLater(() -> {
-            for (java.awt.Component c : layeredPane.getComponents()) {
-                layeredPane.remove(c);
-            }
-            scene.setBounds(0, 0, layeredPane.getWidth(), layeredPane.getHeight());
-            layeredPane.add(scene, JLayeredPane.DEFAULT_LAYER);
-            layeredPane.revalidate();
-            layeredPane.repaint();
-        });
-    }
-
-    private void endChapter1() {
-        SwingUtilities.invokeLater(() -> mainFrame.showGame());
-    }
-
-    @Override
-    public void setBounds(int x, int y, int w, int h) {
-        super.setBounds(x, y, w, h);
-        if (layeredPane != null) {
-            layeredPane.setBounds(0, 0, w, h);
-            for (java.awt.Component c : layeredPane.getComponents()) {
-                c.setBounds(0, 0, w, h);
-            }
-        }
+        add(scene, java.awt.BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 }

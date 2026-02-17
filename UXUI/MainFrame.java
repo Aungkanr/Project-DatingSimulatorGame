@@ -1,16 +1,10 @@
 package UXUI;
-import Player.Player;
-import UXUI.Scene.HomePanel;
-import UXUI.Scene.OfficePanel;
-import UXUI.Scene.SchoolPanel;
-import UXUI.Scene.ShopPanel;
+import Player.*;
+import UXUI.Scene.*;
+import UXUI.SceneNPC.*;
 import UXUI.StatusBarMenu.GamePanel;
-import UXUI.StatusBarMenu.Story;
-import UXUI.StatusBarMenu.Story;
-
 import java.io.File;
 import java.awt.EventQueue;
-
 
 import javax.sound.sampled.Clip; // แก้เป็น Clip
 import javax.swing.JFrame;
@@ -18,7 +12,6 @@ import javax.swing.JPanel;
 import Utility.*;
 
 public class MainFrame extends JFrame {
-
     private JPanel contentPane;
     private Player player;
     private GameTime gameTime;
@@ -30,18 +23,16 @@ public class MainFrame extends JFrame {
     private ShopPanel shop;
     private HomePanel home;
     private OfficePanel office;
-    
     private StdAuto stdScreen; 
-    
     private Clip clip; 
     public static String filePath = "Music\\Harvest Dawn.wav";  
     public static File file = new File(filePath);
-    private Story statRelation = new Story();
     Utility.AssetManager asset = Utility.AssetManager.getInstance();
-
     // 2. ประกาศตัวแปร SoundManager
     private MusicManager soundManager;
     private SFXManager sfxManager;
+    private LazelPanel lazelPanel;//X
+
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -99,8 +90,8 @@ public class MainFrame extends JFrame {
         gamePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         gamePanel.setVisible(false);
         contentPane.add(gamePanel);
-    }
 
+    }
 
     public void PreLoad() {
         asset.getImage("image\\Map\\Afternoon.png");
@@ -112,6 +103,7 @@ public class MainFrame extends JFrame {
         asset.getImage("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
         asset.getImage("image\\Scene\\Bedroom\\ห้องนอน.png");
         asset.getImage("image\\Scene\\School\\Angryscene.png");
+        asset.getImage("image\\Scene\\School\\โรงเรียนตอนเช้า.png");
     }
 
     // --- ส่วนสร้าง Scene ต่างๆ (แก้ให้ใช้ stdScreen.width/height) ---
@@ -143,6 +135,20 @@ public class MainFrame extends JFrame {
         add(office);
     }
     
+    // --- เพิ่มฟังก์ชันสร้าง Panel ---  //X
+    public void createLazelPanel() {
+        if (lazelPanel != null) contentPane.remove(lazelPanel);
+        lazelPanel = new LazelPanel(this);
+        lazelPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        lazelPanel.setVisible(false);
+        contentPane.add(lazelPanel); // Add เข้า contentPane
+    }
+
+    // --- เพิ่มฟังก์ชัน Show ---
+    public void showLazel() {
+        toggleVisibility(lazelPanel);
+        if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
+    }
 
     // 4. แก้ไขฟังก์ชัน Mute ให้เรียกผ่าน Manager
     public void toggleMute(boolean isMute) {
@@ -184,7 +190,7 @@ public class MainFrame extends JFrame {
         if(shop != null) shop.setVisible(false);
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
-        
+        if(lazelPanel != null) lazelPanel.setVisible(false); //lazel 
         if(showPanel != null) showPanel.setVisible(true);
     }
 

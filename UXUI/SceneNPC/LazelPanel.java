@@ -88,7 +88,7 @@ public class LazelPanel extends JPanel {
     private void showDialogueMode(String text) {
         removeAll();
 
-        CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\Angryscene.png", "Lazel", text, null, text,  new CreateTemplateScene.SceneOption("Continue...", e -> showInteractionMenu()));
+        CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\Angryscene.png", "Lazel", text, null, null,  new CreateTemplateScene.SceneOption("Continue...", e -> showInteractionMenu()));
         
         scene.setBounds(0, 0, getWidth(), getHeight());
         add(scene);

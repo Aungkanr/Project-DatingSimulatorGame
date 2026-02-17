@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import Player.Player;
 import UXUI.DialoguePanel;
+import UXUI.Hovereffect;
 import UXUI.MainFrame;
 import UXUI.StatusBarMenu.GamePanel;
 import UXUI.StatusBarMenu.RoundedPanel;
@@ -16,9 +17,6 @@ import Utility.StdAuto;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class ShopPanel extends JPanel {
     private StdAuto stdScreen;
     private Notify shopNotify;
@@ -26,11 +24,15 @@ public class ShopPanel extends JPanel {
     private JLabel lblEnergy;
     private JLabel lblDay;
     private JLabel lblTime;
+    public static final Color BUY_BUTTON = new Color(90, 50, 30);
+    public static final Color BACK_BUTTON = new Color(48, 25, 82);    
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     DialoguePanel dialogueBox = new DialoguePanel();
 
+    private ConfirmPanel dialog;
+
     private MainFrame mainFrame ;
-    ConfirmPanel confirmPanel = new ConfirmPanel(); //pull data จาก Confir Panel มาใช้ 
+    // ConfirmPanel confirmPanel = new ConfirmPanel(); //pull data จาก Confir Panel มาใช้ 
     
     public ShopPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame ;
@@ -38,12 +40,13 @@ public class ShopPanel extends JPanel {
         stdScreen = new StdAuto();
         stdScreen.setBtnWHG(300, 50, 20, 0); // ตั้งขนาดปุ่ม
         
+        dialog = new ConfirmPanel(stdScreen.width, stdScreen.height);
+
         setLayout(null);
         setBackground(new Color(12, 51, 204));
 
-        // [แก้] ใช้ bottomY (ความสูงจอ - 120px)
+        // ใช้ bottomY (ความสูงจอ - 120px)
         int btnY = stdScreen.bottomY;
-
         GameTime gameTime = mainFrame.getGameTime(); 
         Player player = mainFrame.getPlayer();
 
@@ -53,7 +56,8 @@ public class ShopPanel extends JPanel {
         setBackground(new Color(12, 51, 204));
 
     // -------------ConfirmPanel-----------------
-        add(confirmPanel);  //ไป setting scale, height width  ที่ ConfrimPanel.java
+        add(dialog);
+        // add(confirmPanel);  //ไป setting scale, height width  ที่ ConfrimPanel.java
     //----------------ข้อความเตื่อน-----------------
         shopNotify = new Notify(stdScreen.width);
         shopNotify.setBounds(0, 50, stdScreen.width, 50); // *อยากเปลี่ยนตำแหน่งก็ได้*
@@ -90,149 +94,95 @@ public class ShopPanel extends JPanel {
         statusPanel.add(lblDay);
         statusPanel.add(lblTime);
         add(statusPanel);
-
-    
-
     //---------------------------dialogueBox---------------------------
-        dialogueBox.setBounds(stdScreen.centerX-200, stdScreen.currentY+200, stdScreen.buttonWidth+400, stdScreen.buttonHeight+100);
+        // กล่องข้อความ (วางเหนือปุ่ม)
+        dialogueBox.setDefaultBounds(stdScreen, btnY);
         add(dialogueBox);
+
         if (gameTime.getTimeSlot() < 3) {
             dialogueBox.setText("Florist", "Welcome to Diddy shop! What do you want to buy?");
         } else dialogueBox.setText("Florist", "The shop was closed.!!!!");
-
-        
-    // [แก้ไขใหม่] จัดปุ่ม 1-4 ให้สมมาตร ตรงกลางจอ
-        
+    //---------------------------------------------------------------
+        // จัดปุ่ม 1-4 ให้สมมาตร ตรงกลางจอ
         // คำนวณจุดเริ่มต้น X ของปุ่มซ้ายสุด เพื่อให้ทั้งแผงอยู่กลางจอ
         // ความกว้างรวม = (4 ปุ่ม * กว้าง) + (3 ช่องว่าง * gap)
         int totalWidth = (stdScreen.buttonWidth * 4) + (20 * 3);
         int startX = (stdScreen.width - totalWidth) / 2;
         int gap = 20;
-
    //---------------------------choice 1---------------------------
         JButton btnchoice1 = new JButton("Blue jazz $50.");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
         // ปุ่มที่ 1 วางที่ startX
         btnchoice1.setBounds(startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (gameTime.getTimeSlot() < 3) {
-                    confirmPanel.showConfirm("Buy Blue jazz $50.?", new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            Detect("Blue jazz", 50); 
-                        }
-                    });
-                } else shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED ,2000);
-            }
-        });
+        btnchoice1.addActionListener(e -> tryBuyItem("Blue jazz", 50, gameTime));
+        Hovereffect.HoverEffect(btnchoice1,startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight , BUY_BUTTON);        
         add(btnchoice1);
-
     //---------------------------choice 2---------------------------
         JButton btnchoice2 = new JButton("Poppy $65.");
         btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
         // ปุ่มที่ 2 วางถัดจากปุ่ม 1 + gap
         btnchoice2.setBounds(startX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (gameTime.getTimeSlot() < 3) {
-                    confirmPanel.showConfirm("Buy Poppy $65.?", new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            Detect("Poppy", 65); 
-                        }
-                    });
-                } else shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED ,2000);
-            }
-        });
+        btnchoice2.addActionListener(e -> tryBuyItem("Poppy", 65, gameTime));
+        Hovereffect.HoverEffect(btnchoice2,startX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice2);
-
     //---------------------------choice 3---------------------------
         JButton btnchoice3 = new JButton("Tulip $90.");
         btnchoice3.setFont(new Font("Tahoma", Font.PLAIN, 16));
         // ปุ่มที่ 3 วางถัดจากปุ่ม 2 + gap
         btnchoice3.setBounds(startX + (stdScreen.buttonWidth * 2) + (gap * 2), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (gameTime.getTimeSlot() < 3) {
-                    confirmPanel.showConfirm("Buy Tulip $90.?", new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            Detect("Tulip", 90); 
-                        }
-                    });
-                } else shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED ,2000);
-
-            }
-        });
+        btnchoice3.addActionListener(e -> tryBuyItem("Tulip", 90, gameTime));
+        Hovereffect.HoverEffect(btnchoice3 , startX + (stdScreen.buttonWidth * 2) + (gap * 2), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice3);
-
     //---------------------------choice 4---------------------------
         JButton btnchoice4 = new JButton("Fairy rose $120.");
         btnchoice4.setFont(new Font("Tahoma", Font.PLAIN, 16));
         // ปุ่มที่ 4 วางถัดจากปุ่ม 3 + gap
         btnchoice4.setBounds(startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice4.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (gameTime.getTimeSlot() < 3) {
-                    confirmPanel.showConfirm("Buy Fairy rose $120.?", new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            Detect("Fairy rose", 120); 
-                        }
-                    });
-                } else shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED ,2000);
-            }
-        });
+        btnchoice4.addActionListener(e -> tryBuyItem("Fairy rose", 120, gameTime));
+        Hovereffect.HoverEffect(btnchoice4,startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice4);
-    //---------------------------Exit---------------------------------------
+    //---------------------------Back Button---------------------------------------
         JButton btnBack = new JButton("Back");
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnBack.setBounds(20, 20, 100, 30);
-        btnBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mainFrame.showGame();
-            }
-        });
-
-        // กล่องข้อความ (วางเหนือปุ่ม)
-        int dialogueW = 1425;
-        int dialogueH = 200;
-        int dialogueX = (stdScreen.width - dialogueW) / 2; // จัดกึ่งกลางจอ
-        int dialogueY = btnY - dialogueH - 50; // วางเหนือปุ่ม
-
-        dialogueBox.setBounds(dialogueX, dialogueY, dialogueW, dialogueH);
-        add(dialogueBox);
-        dialogueBox.setText("Diddy", "Welcome to Diddy shop! What do you want to buy?");
-
-
-        // Background หน้าร้าน
+        btnBack.addActionListener(e -> mainFrame.showGame());;
+        Hovereffect.HoverEffect(btnBack,20, 20, 100, 30, BACK_BUTTON);        
         add(btnBack);   
     //---------------------------Background หน้าร้าน---------------------------
         JLabel lblMap = new JLabel("");
-        ImageIcon originalIcon = new ImageIcon("image\\Scene\\Shop\\ShopScene1.png");
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
         //layer
-        setComponentZOrder(confirmPanel, 0); 
+        // setComponentZOrder(confirmPanel, 0); 
         setComponentZOrder(shopNotify, 1); 
+        setComponentZOrder(statusPanel, 2);
         setComponentZOrder(lblMap, getComponentCount() - 1);
     }
-    //------functiom ซื้อของ------------------------
+    //-------------Method to reduce code duplication-----------------
+    private void tryBuyItem(String itemName, int price, GameTime gameTime) {
+        if (gameTime.getTimeSlot() < 3) {
+            dialog.show("Buy " + itemName + " for $" + price + "?", null, "YES", e -> Detect(itemName, price));
+            // confirmPanel.showConfirm("Buy " + itemName + " for $" + price + "?", e -> Detect(itemName, price));
+        } else {
+            shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED, 2000);
+        }
+    }
+    //------------------Buy Logic------------------------
     public void Detect (String item , int price) { //  code ซื้อของ
         
         Player realPlayer = mainFrame.getPlayer(); // PULL data from Player มาใช้ (getMoney ,  buyItem )
+        
         if (realPlayer.getMoney() < price) {
             shopNotify.showNotify("Not enough money!", Color.RED , 2000);
             dialogueBox.setText("Florist", "No money? Get out!");
         } else {
             boolean success = realPlayer.buyItem(item, price); 
-        
-            if (success) { // ถ้าซื้อสำเร็จ
+            if (success) { 
                 shopNotify.showNotify("Purchased " + item + "!", Color.GREEN , 2000); 
-                dialogueBox.setText("Florist", "Thanks for buying " + item);
-                // 3. *** อัปเดตตัวเลขเงินในหน้า Shop โดยตรง ***
+                dialogueBox.setText("Florist", "Thanks for buying." + item);
+                // *** อัปเดตตัวเลขเงินในหน้า Shop โดยตรง ***
                 lblMoney.setText("Money: " + realPlayer.getMoney());
                 // บังคับวาดหน้าจอใหม่ทันที 
                 lblMoney.repaint();

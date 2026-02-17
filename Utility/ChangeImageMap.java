@@ -20,7 +20,7 @@ public class ChangeImageMap {
             case "Morning":
                 imagePath = "image\\Map\\Morning.png";
                 break;
-            case "Afternoon":
+            case "Noon":
                 imagePath = "image\\Map\\Afternoon.png";
                 break;
             case "Evening":
@@ -30,13 +30,17 @@ public class ChangeImageMap {
                 imagePath = "image\\Map\\Night.png";
                 break;
             default:
-                imagePath = "image\\Map\\Morning.png"; // ค่า default
+                imagePath = "image\\Map\\Morning.pn"; // ค่า default
                 break;
         }
         
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        checkImageUtil.checkImage(originalIcon, lblMap, screenWidth, screenHeight);
-        lblMap.repaint(); // วาดใหม่
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
+        if (originalIcon != null) {
+            checkImageUtil.checkImage(originalIcon, lblMap, screenWidth, screenHeight);
+            lblMap.repaint(); // วาดใหม่
+        } else {
+            System.err.println("Error: Image not found at " + imagePath);
+        }
     }
     
     /**

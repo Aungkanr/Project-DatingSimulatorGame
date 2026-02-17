@@ -38,7 +38,7 @@ public class SchoolPanel extends JPanel {
                 //go to scene Lazel
                 mainFrame.createLazelPanel(); 
                 mainFrame.showLazel();
-            } else realNotify.showNotify("Night has fallen, go to sleep.", Color.RED, 2000);
+            } else realNotify.showNotify("Lazel is not here, she has left for a while.", Color.RED, 2050);
         }
         ));
 

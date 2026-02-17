@@ -21,11 +21,14 @@ public abstract class NPC {
 
     // --- Action Methods ---
     
+    public void markAsGifted() {
+        this.giftedToday = true;
+    }
+
     public String giveGift() {
         if (giftedToday) {
             return "ให้ไปแล้วนี่นา... ไว้พรุ่งนี้ค่อยให้ใหม่นะ";
         }
-        
         giftedToday = true;
         addAffection(20); // ให้ของขวัญ +20 แต้ม
         return "มอบของขวัญให้ " + name + " เรียบร้อย! (+20 ความชอบ)";
@@ -53,7 +56,7 @@ public abstract class NPC {
     public boolean checkSpecialSceneTrigger() {
         if (heartLevel > 0 && heartLevel <= 5) {
             // heartLevel 1 ดู index 0, heartLevel 5 ดู index 4
-            return !sceneUnlocked[heartLevel - 1]; 
+            return !sceneUnlocked[heartLevel - 1]; //true
         }
         return false;
     }

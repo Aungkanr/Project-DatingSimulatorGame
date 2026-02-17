@@ -9,7 +9,7 @@ public class GameTime {
 
     public GameTime() { //construct ลอง configure ค่าเริ่มต้นได้ (อยากลอง cheat)
         this.day = 1;      
-        this.timeSlot = 3; 
+        this.timeSlot = 0; 
     }
 
     public void resetTime() {

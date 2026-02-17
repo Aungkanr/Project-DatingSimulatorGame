@@ -6,7 +6,7 @@ import UXUI.StatusBarMenu.GamePanel;
 import java.io.File;
 import java.awt.EventQueue;
 
-import javax.sound.sampled.Clip; // แก้เป็น Clip
+import javax.sound.sampled.Clip; 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import Utility.*;
@@ -28,13 +28,17 @@ public class MainFrame extends JFrame {
     public static String filePath = "Music\\Harvest Dawn.wav";  
     public static File file = new File(filePath);
     Utility.AssetManager asset = Utility.AssetManager.getInstance();
+    
     // 2. ประกาศตัวแปร SoundManager
     private MusicManager soundManager;
     private SFXManager sfxManager;
-    private LazelPanel lazelPanel;//X
+    private LazelPanel lazelPanel; //X
 
 
     public static void main(String[] args) {
+        // [เพิ่มบรรทัดนี้] สั่งให้ Java ไม่ต้องขยายตาม Windows Scale (แก้ภาพแตก/เบลอ)
+        System.setProperty("sun.java2d.uiScale", "1.0"); 
+
         EventQueue.invokeLater(() -> {
             try {
                 MainFrame frame = new MainFrame();
@@ -49,13 +53,13 @@ public class MainFrame extends JFrame {
         // 1. โหลดค่ามาตรฐาน
         stdScreen = new StdAuto();
 
-        PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี)
+        PreLoad(); // โหลด asset ล่วงหน้า
         
         // 2. ตั้งค่าหน้าต่าง
         setTitle("Dating Simulator Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        // [สำคัญ] ใช้ขนาดจาก StdAuto (1280x720)
+        // [สำคัญ] ใช้ขนาดจาก StdAuto
         setSize(stdScreen.width, stdScreen.height);
         
         // จัดกลางจอ + ห้ามย่อขยาย
@@ -106,33 +110,37 @@ public class MainFrame extends JFrame {
         asset.getImage("image\\Scene\\School\\โรงเรียนตอนเช้า.png");
     }
 
-    // --- ส่วนสร้าง Scene ต่างๆ (แก้ให้ใช้ stdScreen.width/height) ---
+    // --- ส่วนสร้าง Scene ต่างๆ ---
     public void createSchoolPanel() { 
+        if (school != null) contentPane.remove(school); // ลบของเก่าก่อนสร้างใหม่เพื่อความชัวร์
         school = new SchoolPanel(this);
         school.setBounds(0, 0, stdScreen.width, stdScreen.height);
         school.setVisible(false);
-        add(school);
+        contentPane.add(school); // แนะนำให้ add ใส่ contentPane เพื่อความเป็นระเบียบ
     }
     
     public void createShopPanel() { 
+        if (shop != null) contentPane.remove(shop);
         shop = new ShopPanel(this);
         shop.setBounds(0, 0, stdScreen.width, stdScreen.height);
         shop.setVisible(false);
-        add(shop);
+        contentPane.add(shop);
     }
 
     public void createHomePanel() { 
+        if (home != null) contentPane.remove(home);
         home = new HomePanel(this);
         home.setBounds(0, 0, stdScreen.width, stdScreen.height);
         home.setVisible(false);
-        add(home);
+        contentPane.add(home);
     }
 
     public void createOfficePanel() { 
+        if (office != null) contentPane.remove(office);
         office = new OfficePanel(this);
         office.setBounds(0, 0, stdScreen.width, stdScreen.height);
         office.setVisible(false);
-        add(office);
+        contentPane.add(office);
     }
     
     // --- เพิ่มฟังก์ชันสร้าง Panel ---  //X
@@ -141,16 +149,15 @@ public class MainFrame extends JFrame {
         lazelPanel = new LazelPanel(this);
         lazelPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         lazelPanel.setVisible(false);
-        contentPane.add(lazelPanel); // Add เข้า contentPane
+        contentPane.add(lazelPanel); 
     }
 
     // --- เพิ่มฟังก์ชัน Show ---
     public void showLazel() {
         toggleVisibility(lazelPanel);
-        if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
+        if(gamePanel != null) gamePanel.updateUI(); 
     }
 
-    // 4. แก้ไขฟังก์ชัน Mute ให้เรียกผ่าน Manager
     public void toggleMute(boolean isMute) {
         if (soundManager != null) {
             soundManager.setMute(isMute);
@@ -163,14 +170,8 @@ public class MainFrame extends JFrame {
         }
     }
     
-    // เพิ่ม Getter เผื่อเอาไปใช้ที่อื่น
-    public MusicManager getSoundManager() {
-        return soundManager;
-    }
-
-    public Utility.SFXManager getSFXManager() {
-        return sfxManager;
-    }
+    public MusicManager getSoundManager() { return soundManager; }
+    public Utility.SFXManager getSFXManager() { return sfxManager; }
     
     public Clip getClip() { return clip; }
     public void showMenu() { toggleVisibility(menuPanel); }
@@ -181,7 +182,6 @@ public class MainFrame extends JFrame {
     public void showHome() { toggleVisibility(home); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showOffice() { toggleVisibility(office); if(gamePanel!=null) gamePanel.updateUI(); }
 
-    // Helper function เพื่อปิด panel อื่นๆ อัตโนมัติ
     private void toggleVisibility(JPanel showPanel) {
         if(menuPanel != null) menuPanel.setVisible(false);
         if(optionPanel != null) optionPanel.setVisible(false);
@@ -190,7 +190,8 @@ public class MainFrame extends JFrame {
         if(shop != null) shop.setVisible(false);
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
-        if(lazelPanel != null) lazelPanel.setVisible(false); //lazel 
+        if(lazelPanel != null) lazelPanel.setVisible(false); 
+        
         if(showPanel != null) showPanel.setVisible(true);
     }
 
@@ -198,3 +199,4 @@ public class MainFrame extends JFrame {
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
 }
+

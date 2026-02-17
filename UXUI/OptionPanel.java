@@ -10,11 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Utility.ScreenFader;
 import Utility.StdAuto;
 
 public class OptionPanel extends JPanel {
 
     private MainFrame parent;
+    ScreenFader fader = new ScreenFader(); 
     private StdAuto stdScreen = new StdAuto(); //Device screen
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();  
 
@@ -28,6 +30,9 @@ public class OptionPanel extends JPanel {
         setBackground(new Color(0, 51, 204)); 
         setLayout(null);
         stdScreen.setBtnWHG(300, 60, 20 ,2); //ขนาด ปุ่ม และ gap , แถว
+
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader); // add ทับ layer บนสุด
 
         // --- CheckBox Mute ---
         JCheckBox chckbxMute = new JCheckBox("Mute Music");
@@ -71,7 +76,7 @@ public class OptionPanel extends JPanel {
         JButton btnBack = new JButton("กลับเมนูหลัก");
         btnBack.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.showMenu();
+                fader.fadeInOut(250, 250,()-> {parent.showMenu();}, null);
             }
         });
         btnBack.setFont(new Font("Tahoma", Font.BOLD, 18));  

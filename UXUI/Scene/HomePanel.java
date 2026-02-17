@@ -2,6 +2,7 @@ package UXUI.Scene;
 import UXUI.Hovereffect;
 import UXUI.MainFrame;
 import Utility.GameTime;
+import Utility.ScreenFader;
 import Utility.SleepEffect;
 import Player.Player;
 import Utility.StdAuto;
@@ -18,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HomePanel extends JPanel {
+    ScreenFader fader = new ScreenFader();
     private StdAuto stdScreen = new StdAuto() ;
     private SleepEffect sleepEffect = new SleepEffect() ;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
@@ -35,6 +37,9 @@ public class HomePanel extends JPanel {
         setLayout(null);
         setBackground(new Color(12, 51, 204));
         stdScreen.setBtnWHG(200, 60, 20, 0); 
+
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader); // add ทับ layer บนสุด
 
         // --- สร้าง Label ข้อความเตือน (ซ่อนไว้ก่อน หรือเขียนว่างๆ ไว้) ------
         lblMessage = new JLabel("");
@@ -72,6 +77,7 @@ public class HomePanel extends JPanel {
                 setComponentZOrder(sleepEffect, 0);
                 player.setEnergy(100);  // restore Energy
                 player.resetDailyRelationships(); // giveGift Daily
+                mainFrame.getSFXManager().setVolume(0.05f);
                 mainFrame.getSFXManager().playSFX("Music\\Snore Mimimimimimimi Sound Effect (Cartoon Sleeping Sound Effect).wav");
                 System.out.println("\n=========== Next Day ===========");
 

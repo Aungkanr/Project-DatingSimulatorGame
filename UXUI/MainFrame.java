@@ -199,3 +199,4 @@ public class MainFrame extends JFrame {
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
 }
+

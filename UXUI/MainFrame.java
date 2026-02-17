@@ -103,6 +103,7 @@ public class MainFrame extends JFrame {
         asset.getImage("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
         asset.getImage("image\\Scene\\Bedroom\\ห้องนอน.png");
         asset.getImage("image\\Scene\\School\\Angryscene.png");
+        asset.getImage("image\\Scene\\School\\โรงเรียนตอนเช้า.png");
     }
 
     // --- ส่วนสร้าง Scene ต่างๆ (แก้ให้ใช้ stdScreen.width/height) ---

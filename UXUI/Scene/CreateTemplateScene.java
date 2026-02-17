@@ -15,7 +15,7 @@ import UXUI.Hovereffect;
 import UXUI.DialoguePanel;
 import Utility.StdAuto;
 
-public class SceneUpdate extends JPanel {
+public class CreateTemplateScene extends JPanel {
 
     // --- Inner Class: SceneOption (เหมือนเดิม) ---
     public static class SceneOption {
@@ -50,6 +50,7 @@ public class SceneUpdate extends JPanel {
     private String bgPath;
     private String speakerName;
     private String dialogueText;
+    private String Backtext;
     private SceneOption[] options;
     private ActionListener backAction;
 
@@ -58,24 +59,26 @@ public class SceneUpdate extends JPanel {
     private boolean isCustomDialogue = false; // ตัวเช็คว่าผู้ใช้กำหนดขนาดเองไหม
 
 // --- Constructor 1: แบบ Auto (ไม่ระบุขนาด) ---
-    public SceneUpdate(String bgPath, String speakerName, String dialogueText, ActionListener backAction, SceneOption... options) {
+    public CreateTemplateScene(String bgPath, String speakerName, String dialogueText,  ActionListener backAction, String backtext, SceneOption... options) {
         this.bgPath = bgPath;
         this.speakerName = speakerName;
         this.dialogueText = dialogueText;
         this.backAction = backAction;
+        this.Backtext = backtext;
         this.options = options;
-        
+
         this.isCustomDialogue = false; // บอกระบบว่า "ฉันไม่ได้กำหนดขนาดนะ คำนวณให้หน่อย"
         
         initialize(); // เริ่มสร้างหน้าจอ
     }
     //Overloading
     // --- Constructor 2: แบบ Custom (กำหนดขนาดเอง) ---
-    public SceneUpdate(String bgPath, String speakerName, String dialogueText, int dX, int dY, int dW, int dH, ActionListener backAction, SceneOption... options) {
+    public CreateTemplateScene(String bgPath, String speakerName, String dialogueText, int dX, int dY, int dW, int dH, ActionListener backAction, String backtext, SceneOption... options) {
         this.bgPath = bgPath;
         this.speakerName = speakerName;
         this.dialogueText = dialogueText;
         this.backAction = backAction;
+        this.Backtext = backtext;
         this.options = options;
         
         // รับค่าขนาดมา
@@ -104,9 +107,6 @@ public class SceneUpdate extends JPanel {
     }
 
     private void initComponents() {
-        // --- 1. จัดการ Dialogue Box ---
-        dialogueBox = new DialoguePanel();
-        
         // ถ้าผู้ใช้ไม่ได้กำหนดขนาดมา (isCustomDialogue เป็น false) ให้คำนวณใหม่
         if (!isCustomDialogue) {
             this.diaW = 1425;
@@ -115,11 +115,14 @@ public class SceneUpdate extends JPanel {
             this.diaX = (stdScreen.width - this.diaW) / 2;
             this.diaY = stdScreen.bottomY - this.diaH - 50;
         } 
-        
-        // ตั้งค่าตำแหน่ง (ตอนนี้ค่าทุกอย่างถูกต้องแล้วแน่นอน)
-        dialogueBox.setBounds(diaX, diaY, diaW, diaH);
-        dialogueBox.setText(speakerName, dialogueText);
-        add(dialogueBox);
+        // --- จัดการ Dialogue Box ---
+        if (speakerName != null && dialogueText != null) {
+            dialogueBox = new DialoguePanel();
+            // ตั้งค่าตำแหน่ง (ตอนนี้ค่าทุกอย่างถูกต้องแล้วแน่นอน)
+            dialogueBox.setBounds(diaX, diaY, diaW, diaH);
+            dialogueBox.setText(speakerName, dialogueText);
+            add(dialogueBox);
+        }
 
         // --- 2. จัดการปุ่ม (เหมือนเดิม) ---
         if (options != null && options.length > 0) {
@@ -157,7 +160,7 @@ public class SceneUpdate extends JPanel {
 
         // --- 3. ปุ่ม Back ---
         if (backAction != null) {
-            JButton btnBack = createButton("Back", 20, 20, 100, 30, backAction);
+            JButton btnBack = createButton(this.Backtext, 20, 20, 120, 30, backAction);
             btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16)); 
             add(btnBack);
         }

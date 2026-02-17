@@ -14,9 +14,10 @@ import java.util.List;
  */
 public class DialogueNode {
 
-    public String speaker;   // "Lazel" หรือ "Player"
-    public String text;      // บทพูด
-    public boolean isEnd;    // true = END node (จบ scene)
+    public String speaker;    // "Lazel" หรือ "Player"
+    public String text;       // บทพูด
+    public boolean isEnd;     // true = END node (จบ scene)
+    public String imagePath;  // null = ใช้รูป default, ใส่ path = เปลี่ยนรูป
 
     // รายการ choice ที่แตกออกจาก node นี้
     public List<Choice> choices = new ArrayList<>();

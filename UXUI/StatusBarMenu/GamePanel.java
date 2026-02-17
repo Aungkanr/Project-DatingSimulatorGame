@@ -8,6 +8,8 @@ import Utility.GameTime;
 import Utility.Notify;
 import Utility.StatusBar;
 import Utility.StdAuto;
+import UXUI.*;
+import Utility.*;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -33,6 +35,7 @@ public class GamePanel extends JPanel {
 
     // ------------------ Object ---------------------
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    ScreenFader fader = new ScreenFader();
     // เพิ่มใหม่ ธีมสีชมพู (Pink Theme)
     public static final Color themePink = new Color(30, 25, 50, 220);      // ม่วงเข้มโปร่งแสง
     public static final Color themeBorder = new Color(100, 150, 255, 180); // ฟ้าเรืองแสง
@@ -59,6 +62,9 @@ public class GamePanel extends JPanel {
 
         notification = new Notify(stdScreen.width);
         add(notification);
+
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
 
         // ==========================================
         // 1. สร้างกล่องสถานะ (RoundedPanel)
@@ -116,7 +122,7 @@ public class GamePanel extends JPanel {
         add(btnExitGame);
         btnExitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.showMenu();
+                fader.fadeInOut(500, 500, ()->{parent.showMenu();}, null);
             }
         });
 
@@ -162,28 +168,24 @@ public class GamePanel extends JPanel {
         add(btnBag);
         //--------------Action--------------------
         btnSchool.addActionListener(e ->  {
-            parent.createSchoolPanel();
-            parent.showSchool();
+            fader.fadeInOut(500, 500, ()->{parent.createSchoolPanel(); parent.showSchool();}, null);
         });
 
         btnHome.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.createHomePanel();
-                parent.showHome();
+                fader.fadeInOut(500, 500, ()->{parent.createHomePanel(); parent.showHome();}, null);
             }
         });
 
         btnShop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.createShopPanel();
-                parent.showShop();
+                fader.fadeInOut(500, 500, ()->{parent.createShopPanel(); parent.showShop();}, null);
             }
         });
 
         btnOffice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.createOfficePanel();
-                parent.showOffice();
+                fader.fadeInOut(500, 500, ()->{parent.createOfficePanel(); parent.showOffice();}, null);
             }
         });
 

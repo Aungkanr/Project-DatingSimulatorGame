@@ -2,7 +2,10 @@ package Relationship;
 
 import java.util.Random;
 
+
 public class Lazel extends NPC {
+    
+    public String imagePath; // null = ใช้รูปเดิม, ใส่ path = เปลี่ยนรูป
 
     public Lazel() {
         super("Lazel");
@@ -97,6 +100,7 @@ public class Lazel extends NPC {
         // ===== 1.5A =====
         DialogueNode n1_5A = new DialogueNode("Lazel",
             "\"เออ! พูดได้ดี! ...อย่าทำให้ข้าผิดหวังล่ะคู่หู! เจอกันเย็นนี้!\" (ตบหลังคุณดังปึก)");
+            n1_5A.imagePath = "image\\Scene\\LazelScene1\\ตาธรรมดา.png"; // ใส่รูปที่ต้องการ
         n1_5A.addChoice("โอ้ย! มือหนักชะมัด... แต่ก็เจอกันครับ!", endBest)
              .addChoice("ครับผม", endGood)
              .addChoice("เริ่มไม่อยากไปละ", endNormal);
@@ -118,6 +122,7 @@ public class Lazel extends NPC {
         // ===== 1.4A =====
         DialogueNode n1_4A = new DialogueNode("Lazel",
             "(หน้าแดงเล็กน้อย) \"อะ... อะไรของเจ้า... ชมกันโต้งๆ แบบนี้เลยเหรอ... ธิ... ก็ไม่เลว\"");
+            n1_4A.imagePath = "image\\Scene\\LazelScene1\\เขิน.png"; // ใส่รูปที่ต้องการ
         n1_4A.addChoice("เย็นนี้ว่าง? ไปหาโรกันเถอะ", n1_5A)
              .addChoice("งั้นไว้เจอกันนะ", n1_5B)
              .addChoice("เป็นเหรอครับ?", n1_5A);
@@ -125,6 +130,7 @@ public class Lazel extends NPC {
         // ===== 1.4B =====
         DialogueNode n1_4B = new DialogueNode("Lazel",
             "\"ฮ่า! เตรียมตัวแพ้ได้เลย... แต่ถ้าเจ้าฝีมือดีจริง ข้าอาจจะพิจารณาให้มาร่วมปาร์ตี้ก็ได้นะ\"");
+            n1_4B.imagePath = "image\\Scene\\LazelScene1\\ยิ้มมุมปาก.png"; // ใส่รูปที่ต้องการ
         n1_4B.addChoice("ผมจะทำให้ท่านยอมรับเอง", n1_5A)
              .addChoice("ใครอยากอยู่กับเธอกัน", n1_5C)
              .addChoice("ถ้าข้าชนะ เธอต้องมาเข้าปาร์ตี้บ้านนะ", n1_5A);
@@ -139,6 +145,7 @@ public class Lazel extends NPC {
         // ===== 1.3A =====
         DialogueNode n1_3A = new DialogueNode("Lazel",
             "\"เออ! พูดจาเข้าหูดีนี่หว่า... ข้าชื่อ Lazel เป็นเอซของที่นี่ จำชื่อนี้ใส่กะโหลกไว้ซะล่ะ!\"");
+            n1_3A.imagePath = "image\\Scene\\LazelScene1\\ตาธรรมดา.png"; // ใส่รูปที่ต้องการ
         n1_3A.addChoice("ยินดีที่ได้รู้จัก Lazel ผมชื่อ Champ", n1_4A)
              .addChoice("เอซ? โม้รึเปล่าเนี่ย?", n1_4B)
              .addChoice("ครับๆ คุณเอซ", n1_4B);
@@ -153,6 +160,7 @@ public class Lazel extends NPC {
         // ===== 1.3C =====
         DialogueNode n1_3C = new DialogueNode("Lazel",
             "(แววตาวาวโรจน์) \"โธ่... ท้าทายข้าเหรอ? Lazel ผู้นี้ไม่เคยปฏิเสธคำท้านะ... เย็นนี้เจอกันที่ลานประลอง ห้ามหนีนะเว้ย!\"");
+            n1_3C.imagePath = "image\\Scene\\LazelScene1\\ตาไฟ.png"; // ใส่รูปที่ต้องการ
         n1_3C.addChoice("รับคำท้า! ใครแพ้เลี้ยงข้าว!", n1_4C)
              .addChoice("ไม่เอาอะ ยี้เกียจ", endBad)
              .addChoice("แน่ใจนะ? เดี๋ยวร้องให้ยิ่งมูกโป่งนะ", n1_4C);
@@ -160,6 +168,7 @@ public class Lazel extends NPC {
         // ===== 1.2A =====
         DialogueNode n1_2A = new DialogueNode("Lazel",
             "\"ฮึ! ...รู้จักขอโทษก็ดี (ปัดฝุ่น) นึกว่าจะปากเก่งเหมือนพวกหน้าใหม่คนอื่น... เจ้าเป็นเด็กใหม่เหรอ? ไม่คุ้นหน้าเลย\"");
+            n1_2A.imagePath = "image\\Scene\\LazelScene1\\ปัดฝุ่น.png"; // ใส่รูปที่ต้องการ
         n1_2A.addChoice("ใช่ครับ เพิ่งย้ายมาเรียนล่ามังกร ฝากตัวด้วยนะ", n1_3A)
              .addChoice("ข้าเป็นนักล่าระดับตำนาน แค่ปลอมตัวมาดูงาน", n1_3B)
              .addChoice("ไม่ใช่เรื่องของเจ้า", n1_3C);
@@ -174,6 +183,7 @@ public class Lazel extends NPC {
         // ===== 1.2C =====
         DialogueNode n1_2C = new DialogueNode("Lazel",
             "(ยิ้มมุมปาก ภูมิใจ) \"ตาถึงนี่หว่า... นี่คือดาบเขี้ยวมังกร ของตกทอดจากพ่อข้าเอง อยากดูใกล้ๆ ไหมล่ะ?\"");
+            n1_2C.imagePath = "image\\Scene\\LazelScene1\\ยิ้มมุมปาก.png"; // ใส่รูปที่ต้องการ
         n1_2C.addChoice("เท่มาก เหมาะกับนักรบอย่างท่านเลย", n1_3A)
              .addChoice("ดูเก่าไปหน่อยนะ สนิมขึ้นแล้วมั้ง", n1_2B)
              .addChoice("ก็งั้นๆ แหละ นึกว่าดาบเทพ", n1_3C);
@@ -181,6 +191,7 @@ public class Lazel extends NPC {
         // ===== ROOT 1.1 =====
         DialogueNode root = new DialogueNode("Lazel",
             "(วิ่งชนคุณเต็มแรงจนล้ม) \"โอ๊ย! ...เฮ้ย! เดินดูตาม้าตาเรือหน่อยสิวะ! ดาบข้าเกือบจะทิ่มตาเจ้าบอดแล้วเห็นไหมเนี่ย!?\"");
+            root.imagePath = "image\\Scene\\LazelScene1\\อาการเจ็บ.png"; // ใส่รูปที่ต้องการ
         root.addChoice("ขอโทษครับ ผมไม่ทันระวังเอง คุณเจ็บตรงไหนไหม?", n1_2A)
             .addChoice("เจ้าแหละวิ่งไม่ดูทาง ยัยม้าดีดกะโหลก!", n1_2B)
             .addChoice("โว้ว! ดาบสวยดีนี่... ขอดูหน่อยสิ", n1_2C);

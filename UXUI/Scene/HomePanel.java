@@ -2,6 +2,7 @@ package UXUI.Scene;
 import UXUI.Hovereffect;
 import UXUI.MainFrame;
 import Utility.GameTime;
+import Utility.ScreenFader;
 import Utility.SleepEffect;
 import Player.Player;
 import Utility.StdAuto;
@@ -18,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HomePanel extends JPanel {
+    ScreenFader fader = new ScreenFader();
     private StdAuto stdScreen = new StdAuto() ;
     private SleepEffect sleepEffect = new SleepEffect() ;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
@@ -35,6 +37,9 @@ public class HomePanel extends JPanel {
         setLayout(null);
         setBackground(new Color(12, 51, 204));
         stdScreen.setBtnWHG(200, 60, 20, 0); 
+
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader); // add ทับ layer บนสุด
 
         // --- สร้าง Label ข้อความเตือน (ซ่อนไว้ก่อน หรือเขียนว่างๆ ไว้) ------
         lblMessage = new JLabel("");
@@ -56,46 +61,39 @@ public class HomePanel extends JPanel {
         add(btnBack);
         // --- ปุ่ม Sleep ----------------------------------------
         JButton btnSleep = new JButton("Sleep (Next Day)");
-        btnSleep.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        btnSleep.setBounds(stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        Hovereffect.HoverEffect(btnSleep , stdScreen.centerX, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight, SLEEP_BTN);        
-        btnSleep.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnSleep.addActionListener(e -> { 
                 GameTime gameTime = mainFrame.getGameTime();
                 Player player = mainFrame.getPlayer();
-                if (gameTime.isNight_Afternoon()) { // ถ้าเป็นกลางคืน -> นอนได้
+                if (gameTime.isNight_Afternoon()) {
                     gameTime.nextDay();
-                    btnSleep.setVisible(false); // ซ่อนปุ่มนอนหลับระหว่างที่กำลังนอน
-                    btnBack.setVisible(false); // ซ่อนปุ่มกลับระหว่างที่กำลังนอน
+                    btnSleep.setVisible(false);
+                    btnBack.setVisible(false);
                     sleepEffect.startSleepSequence();
                     sleepEffect.setBounds(0, 0, stdScreen.width, stdScreen.height);
                     add(sleepEffect);
                     setComponentZOrder(sleepEffect, 0);
-                    player.setEnergy(100);  // restore Energy
+                    player.setEnergy(100);
+                    player.resetDailyRelationships();
+                    mainFrame.getSFXManager().setVolume(0.05f);
                     mainFrame.getSFXManager().playSFX("Music\\Snore Mimimimimimimi Sound Effect (Cartoon Sleeping Sound Effect).wav");
                     System.out.println("\n=========== Next Day ===========");
 
-                    new javax.swing.Timer(4000, new ActionListener() { // การทำงานหลังจากผ่านไป 4 วินาที (เวลาที่นอนหลับ) **คล้ายๆ Thread.sleep
+                    new javax.swing.Timer(4000, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            btnSleep.setVisible(true); // แสดงปุ่มนอนหลับหลังจากที่ตื่น
-                            btnBack.setVisible(true); // แสดงปุ่มกลับหลังจากที่ตื่น
-                            lblMessage.setText(""); // ล้างข้อความเตือน
+                            btnSleep.setVisible(true);
+                            btnBack.setVisible(true);
+                            lblMessage.setText("");
                             lblMessage.setForeground(Color.GREEN);
                             lblMessage.setText("Next Day : " + gameTime.getDay());
-                            
-                            // อย่าลืมสั่งหยุด Timer
                             ((javax.swing.Timer)e.getSource()).setRepeats(false);
                         }
                     }).start();
                 } else {
-                    // ถ้า "ไม่ใช่" 
                     lblMessage.setForeground(Color.RED);
                     lblMessage.setText("ยังไม่มืดเลย!");
-                    // fix
                 }
-            }
-        });
+            });
         add(btnSleep);
 
         // --- ปุ่ม return ----------------------------------------

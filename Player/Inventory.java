@@ -1,10 +1,11 @@
 package Player;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Inventory { //กระเป๋า player ex {teddy bear , 2}  item , amount
     //Keys are unique, but Values can be duplicated
-    private HashMap<String, Integer> items ; 
+    private HashMap<String, Integer> items ;    
 
     public Inventory () { // construct 
         this.items = new HashMap<>() ;
@@ -25,14 +26,33 @@ public class Inventory { //กระเป๋า player ex {teddy bear , 2}  ite
     public int getItemCount(String itemName) {
         return items.getOrDefault(itemName, 0);
     }
-    // แสดงรายการของทั้งหมดเป็น String (เอาไว้โชว์) เปิด Bag 
-    public String getAllItemsList() {
-        if (items.isEmpty()) return "Empty";
-        StringBuilder list = new StringBuilder();
-        for (String key : items.keySet()) {
-            list.append(key).append(" x").append(items.get(key)).append("\n");
-        }
-        return list.toString();
+
+    // ส่ง Map กลับไป เพื่อให้ UI เอาไปวนลูปสร้างปุ่มได้
+    public Map<String, Integer> getItemsMap() {
+        return this.items;
     }
 
+    // -------------------------------------------------------------
+    // [เพิ่มใหม่ 1] ฟังก์ชันลบไอเทม (ใช้ตอนให้ของขวัญ)
+    public boolean removeItem(String itemName) {
+        if (items.containsKey(itemName)) {
+            int currentQty = items.get(itemName);
+            if (currentQty > 1) {
+                items.put(itemName, currentQty - 1);
+            } else {
+                items.remove(itemName);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public String getAllItemsList() {
+       if (items.isEmpty()) return "Empty";
+       StringBuilder list = new StringBuilder();
+       for (String key : items.keySet()) {
+           list.append(key).append(" x").append(items.get(key)).append("\n");
+       }
+       return list.toString();
+    }
 }   

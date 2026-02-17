@@ -2,7 +2,7 @@ package Relationship;
 
 public abstract class NPC {
     protected String name;
-    protected int affectionPoints = 80; // คะแนน 0 - 500
+    protected int affectionPoints = 90; // คะแนน 0 - 500
     protected int heartLevel = 0;      // 0 - 5
     
     // สถานะประจำวัน
@@ -28,11 +28,14 @@ public abstract class NPC {
 
     // --- Action Methods ---
     
+    public void markAsGifted() {
+        this.giftedToday = true;
+    }
+
     public String giveGift() {
         if (giftedToday) {
             return "ให้ไปแล้วนี่นา... ไว้พรุ่งนี้ค่อยให้ใหม่นะ";
         }
-        
         giftedToday = true;
         addAffection(20); // ให้ของขวัญ +20 แต้ม
         return "มอบของขวัญให้ " + name + " เรียบร้อย! (+20 ความชอบ)";
@@ -59,7 +62,8 @@ public abstract class NPC {
     // เงื่อนไข: คะแนนถึงระดับนั้นๆ AND ยังไม่เคยดูฉากนั้น
     public boolean checkSpecialSceneTrigger() {
         if (heartLevel > 0 && heartLevel <= 5) {
-            return !sceneUnlocked[heartLevel - 1]; 
+            // heartLevel 1 ดู index 0, heartLevel 5 ดู index 4
+            return !sceneUnlocked[heartLevel - 1]; //true
         }
         return false;
     }

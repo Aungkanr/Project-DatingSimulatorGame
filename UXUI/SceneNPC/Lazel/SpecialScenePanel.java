@@ -27,30 +27,27 @@ public class SpecialScenePanel extends JPanel {
         setLayout(null);
         setBackground(Color.BLACK);
 
-        // ดึง root node จาก dialogue tree แล้วเริ่มแสดง
         DialogueNode root = lazel.getDialogueTree(sceneLevel);
         showNode(root);
     }
 
     // ==========================================
     // Core: แสดง node ปัจจุบัน
-    // ตรวจว่า isEnd → แสดงปุ่ม Continue
-    // ไม่ isEnd + มี choices → แสดงปุ่ม choice
     // ==========================================
     private void showNode(DialogueNode node) {
         removeAll();
 
-        setupBackground(bgPath);
+        // ถ้า node มี imagePath → ใช้รูปนั้น, ถ้าไม่มี → ใช้ default
+        String currentBg = (node.imagePath != null) ? node.imagePath : bgPath;
+        setupBackground(currentBg);
 
         // --- กล่อง Dialogue ด้านบน ---
         JPanel dialogueBox = createDialogueBox(node.speaker, node.text);
         add(dialogueBox);
 
         if (node.isEnd) {
-            // --- END: แสดงปุ่ม Continue กลับ LazelPanel ---
             showContinueButton();
         } else {
-            // --- มี choices: แสดงปุ่มให้เลือก ---
             JLabel lblPrompt = new JLabel("คุณจะตอบว่า...");
             lblPrompt.setFont(new Font("Tahoma", Font.BOLD, 18));
             lblPrompt.setForeground(new Color(255, 230, 150));
@@ -102,14 +99,12 @@ public class SpecialScenePanel extends JPanel {
         box.setBackground(new Color(0, 0, 0, 200));
         box.setBorder(BorderFactory.createLineBorder(new Color(200, 170, 100), 2));
 
-        // ชื่อผู้พูด
         JLabel lblName = new JLabel(speaker);
         lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblName.setForeground(new Color(255, 210, 100));
         lblName.setBounds(15, 8, 200, 25);
         box.add(lblName);
 
-        // บทพูด
         JTextArea txtDialogue = new JTextArea(text);
         txtDialogue.setFont(new Font("Tahoma", Font.PLAIN, 16));
         txtDialogue.setForeground(Color.WHITE);
@@ -127,12 +122,12 @@ public class SpecialScenePanel extends JPanel {
     // Helper: ปุ่ม Choice
     // ==========================================
     private JButton createChoiceButton(String text, int index, ActionListener action) {
-        int btnW  = stdScreen.width - 100;
-        int btnH  = 52;
-        int btnX  = 50;
-        int gap   = 8;
+        int btnW   = stdScreen.width - 100;
+        int btnH   = 52;
+        int btnX   = 50;
+        int gap    = 8;
         int startY = stdScreen.height - 80 - (3 * (btnH + gap));
-        int btnY  = startY + index * (btnH + gap);
+        int btnY   = startY + index * (btnH + gap);
 
         JButton btn = new JButton((index + 1) + ".  " + text);
         btn.setFont(new Font("Tahoma", Font.PLAIN, 15));

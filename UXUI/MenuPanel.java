@@ -5,6 +5,7 @@ import java.awt.Font;
 //import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import Utility.ScreenFader;
 import Utility.StdAuto;
 
 public class MenuPanel extends JPanel {
@@ -12,6 +13,7 @@ public class MenuPanel extends JPanel {
     private MainFrame parent;
     private StdAuto stdScreen;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    ScreenFader fader = new ScreenFader();
 
     Color startBtnColor = new Color(255, 105, 180);        
     Color settingBtnColor = new Color(138, 43, 226);       
@@ -21,6 +23,9 @@ public class MenuPanel extends JPanel {
         stdScreen = new StdAuto();
         this.parent = mainFrame;
         
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
+
         setLayout(null);
         setBackground(new Color(173, 216, 230));
         
@@ -38,10 +43,11 @@ public class MenuPanel extends JPanel {
         btnStart.setBounds(btnX, startY, btnW, btnH);
         Hovereffect.HoverEffect(btnStart, btnX, startY, btnW, btnH, startBtnColor);
         btnStart.addActionListener(e -> {
+            fader.fadeInOut(500, 500, ()->{                
             parent.showGame();
             if (parent.getSoundManager() != null) {
                 parent.getSoundManager().playMusic(musicPath);
-            }
+            }}, null);
         });
         add(btnStart);
         
@@ -51,7 +57,12 @@ public class MenuPanel extends JPanel {
         int settingY = startY + btnH + gap;
         btnSetting.setBounds(btnX, settingY, btnW, btnH);
         Hovereffect.HoverEffect(btnSetting, btnX, settingY, btnW, btnH, settingBtnColor);
-        btnSetting.addActionListener(e -> parent.showOption());
+        btnSetting.addActionListener(e -> {
+            fader.fadeOut(250, () -> {
+                parent.showOption();
+                fader.fadeIn(250, null);
+            });
+        });
         add(btnSetting);
         
         // 3. EXIT

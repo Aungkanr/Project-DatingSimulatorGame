@@ -33,7 +33,7 @@ public class SchoolPanel extends JPanel {
 
         CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\โรงเรียนตอนเช้า.png", null, null, e -> mainFrame.showGame() , "Back to Town", 
         new CreateTemplateScene.SceneOption("Talk to Lazel", e -> {
-            if (realGameTime.getTimeSlot() < 3) {
+            if (realGameTime.getTimeSlot() < 2) {
                 // สั่ง MainFrame ให้สร้างและโชว์หน้า Lazel
                 //go to scene Lazel
                 mainFrame.createLazelPanel(); 

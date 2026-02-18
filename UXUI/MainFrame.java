@@ -1,13 +1,15 @@
 package UXUI;
 import Player.*;
+import Relationship.Galadriel;
 import Relationship.Lazel;
 import UXUI.Scene.*;
+import UXUI.SceneNPC.Galadriel.GaladrielPanel;
+import UXUI.SceneNPC.Galadriel.SpecialSceneGaladrielPanel;
 import UXUI.SceneNPC.Lazel.LazelPanel;
-import UXUI.SceneNPC.Lazel.SpecialScenePanel;
+import UXUI.SceneNPC.Lazel.SpecialSceneLazelPanel;
 import UXUI.StatusBarMenu.GamePanel;
 import java.io.File;
 import java.awt.EventQueue;
-
 
 import javax.sound.sampled.Clip; // แก้เป็น Clip
 import javax.swing.JFrame;
@@ -34,8 +36,11 @@ public class MainFrame extends JFrame {
     // 2. ประกาศตัวแปร SoundManager
     private MusicManager soundManager;
     private SFXManager sfxManager;
+    //NPC
     private LazelPanel lazelPanel;//X
-    private SpecialScenePanel specialScenePanel; 
+    private GaladrielPanel galadrielPanel ; //x
+    private SpecialSceneGaladrielPanel specialSceneGaladrielPanel; //x
+    private SpecialSceneLazelPanel specialSceneLazelPanel; //x
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.uiScale", "1.0");
@@ -133,8 +138,36 @@ public class MainFrame extends JFrame {
         office.setVisible(false);
         add(office);
     }
-    
-    // --- เพิ่มฟังก์ชันสร้าง Panel ---  //X
+    //=========================================================================================================================================================================================
+    // --- เพิ่มฟังก์ชันสร้าง Galadriel Panel --------------------------------------  //X
+    public void createGaladrielPanel() {
+        if (galadrielPanel != null) contentPane.remove(galadrielPanel);
+        galadrielPanel = new GaladrielPanel(this);
+        galadrielPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        galadrielPanel.setVisible(false);
+        contentPane.add(galadrielPanel); // Add เข้า contentPane
+    }
+
+    // --- เพิ่มฟังก์ชั่น SpecialScene ของ galadriel -------------------------------------- //X
+    public void createSpecialSceneGaladrielPanel(Galadriel galadriel, String sceneText, int sceneLevel) {
+        if (specialSceneGaladrielPanel != null) contentPane.remove(specialSceneGaladrielPanel);
+        specialSceneGaladrielPanel = new SpecialSceneGaladrielPanel(this, galadriel, sceneText, sceneLevel);
+        specialSceneGaladrielPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        specialSceneGaladrielPanel.setVisible(false);
+        contentPane.add(specialSceneGaladrielPanel);
+    }
+
+    // --- เพิ่มฟังก์ชัน Showgaladriel ------------------------------------------------------ //X
+    public void showGaladriel() {
+        toggleVisibility(galadrielPanel);
+        if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
+    }
+    public void showSpecialSceneGaladriel() { 
+        toggleVisibility(specialSceneLazelPanel);
+        if(gamePanel != null) gamePanel.updateUI();
+    }
+    //=========================================================================================================================================================================================
+    // --- เพิ่มฟังก์ชันสร้าง Lazel Panel --------------------------------------  //X
     public void createLazelPanel() {
         if (lazelPanel != null) contentPane.remove(lazelPanel);
         lazelPanel = new LazelPanel(this);
@@ -143,25 +176,27 @@ public class MainFrame extends JFrame {
         contentPane.add(lazelPanel); // Add เข้า contentPane
     }
 
-    // --- เพิ่มฟังก์ชั่น SpecialScene ของ lazel --- //
-    public void createSpecialScenePanel(Lazel lazel, String sceneText, int sceneLevel) {
-        if (specialScenePanel != null) contentPane.remove(specialScenePanel);
-        specialScenePanel = new SpecialScenePanel(this, lazel, sceneText, sceneLevel);
-        specialScenePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
-        specialScenePanel.setVisible(false);
-        contentPane.add(specialScenePanel);
+    // --- เพิ่มฟังก์ชั่น SpecialScene ของ lazel -------------------------------------- //X
+    public void createSpecialSceneLazelPanel(Lazel lazel, String sceneText, int sceneLevel) {
+        if (specialSceneLazelPanel != null) contentPane.remove(specialSceneLazelPanel);
+        specialSceneLazelPanel = new SpecialSceneLazelPanel(this, lazel, sceneText, sceneLevel);
+        specialSceneLazelPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        specialSceneLazelPanel.setVisible(false);
+        contentPane.add(specialSceneLazelPanel);
     }
 
-    // --- เพิ่มฟังก์ชัน Show ---
+    // --- เพิ่มฟังก์ชัน Show ------------------------------------------------------ //X
     public void showLazel() {
         toggleVisibility(lazelPanel);
         if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
     }
-
-    public void showSpecialScene() {
-        toggleVisibility(specialScenePanel);
+    //------showSpecialSceneLazel---------------------------------------------------
+    public void showSpecialSceneLazel() { 
+        toggleVisibility(specialSceneLazelPanel);
         if(gamePanel != null) gamePanel.updateUI();
     }
+    //=======================================================================================
+    
 
     // 4. แก้ไขฟังก์ชัน Mute ให้เรียกผ่าน Manager
     public void toggleMute(boolean isMute) {
@@ -203,8 +238,11 @@ public class MainFrame extends JFrame {
         if(shop != null) shop.setVisible(false);
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
-        if(lazelPanel != null) lazelPanel.setVisible(false); //lazel 
-        if(specialScenePanel != null) specialScenePanel.setVisible(false); //specialScencelazel
+        if(lazelPanel != null) lazelPanel.setVisible(false); 
+        if(specialSceneLazelPanel != null) specialSceneLazelPanel.setVisible(false);
+        if(galadrielPanel != null) galadrielPanel.setVisible(false); 
+        if(specialSceneGaladrielPanel != null) specialSceneGaladrielPanel.setVisible(false);
+
         if(showPanel != null) showPanel.setVisible(true);
     }
 

@@ -30,19 +30,22 @@ public class ShopPanel extends JPanel {
     public static final Color BACK_BUTTON = new Color(48, 25, 82);    
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     DialoguePanel dialogueBox = new DialoguePanel();
+    private GameTime realGametime ;
+    private Notify realNotify;
 
     private JButton btnchoice1;
     private JButton btnchoice2;
     private JButton btnchoice3;
     private JButton btnchoice4;
-    private JButton btnBack;    
+    private JButton btnBack;
+    private JButton Galadriel;     
     private ConfirmPanel dialog;
     private MainFrame mainFrame ;
     // ConfirmPanel confirmPanel = new ConfirmPanel(); //pull data จาก Confir Panel มาใช้ 
     
     public ShopPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame ;
-
+        realGametime = mainFrame.getGameTime();
         stdScreen = new StdAuto();
         stdScreen.setBtnWHG(300, 50, 20, 0); // ตั้งขนาดปุ่ม
         
@@ -92,7 +95,6 @@ public class ShopPanel extends JPanel {
         lblTime.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblTime.setForeground(Color.WHITE);
         lblTime.setBounds(250, 72, 200, 25);
-        
         
         statusPanel.add(lblMoney);
         statusPanel.add(lblDay);
@@ -145,6 +147,25 @@ public class ShopPanel extends JPanel {
         btnchoice4.addActionListener(e -> {tryBuyItem("Fairy rose", 120, gameTime);});
         Hovereffect.HoverEffect(btnchoice4,startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice4);
+    //---------------------Talk to Galadriel----------------------------
+        Galadriel = new JButton("Talk to Galadriel");
+        Galadriel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        
+        int talkX = stdScreen.width - stdScreen.buttonWidth - 30; 
+        int talkY = 20; 
+        Galadriel.setBounds(talkX, talkY, stdScreen.buttonWidth, stdScreen.buttonHeight);
+        
+        Galadriel.addActionListener(e -> {
+            if (mainFrame.getGameTime().getTimeSlot() < 3) { 
+                mainFrame.createGaladrielPanel(); 
+                mainFrame.showGaladriel();
+            } else shopNotify.showNotify("Galadriel is resting.", Color.RED, 2000);
+        });
+        
+        // ใช้สีปุ่ม Talk ให้ต่างจากปุ่มซื้อ (เช่น สีทอง)
+        Color talkColor = new Color(218, 165, 32); 
+        Hovereffect.HoverEffect(Galadriel, talkX, talkY, stdScreen.buttonWidth, stdScreen.buttonHeight, talkColor);        
+        add(Galadriel);
     //---------------------------Back Button---------------------------------------
         btnBack = new JButton("Back");
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));

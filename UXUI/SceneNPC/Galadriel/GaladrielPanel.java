@@ -1,4 +1,4 @@
-    package UXUI.SceneNPC.Lazel;
+    package UXUI.SceneNPC.Galadriel;
 
     import javax.swing.*;
     import java.awt.*;
@@ -11,19 +11,19 @@
     import UXUI.Scene.CreateTemplateScene;
     import UXUI.Hovereffect;
     import Utility.*;
-    import Relationship.Lazel;
+    import Relationship.Galadriel;
     import UXUI.Scene.CreateTemplateScene.SceneOption;
 
 
-    public class LazelPanel extends JPanel {
+    public class GaladrielPanel extends JPanel {
         private MainFrame mainFrame;
         private StdAuto stdScreen;
-        private Lazel lazel;
+        private Galadriel galadriel;
         private JLabel lblBg;
 
-        public LazelPanel(MainFrame mainFrame) {
+        public GaladrielPanel(MainFrame mainFrame) {
             this.mainFrame = mainFrame;
-            this.lazel = mainFrame.getPlayer().getLazel();
+            this.galadriel = mainFrame.getPlayer().galadriel();
             
             this.stdScreen = new StdAuto();
             this.stdScreen.setBtnWHG(250, 60, 20, 0);
@@ -39,28 +39,28 @@
         // ==========================================
         public void showInteractionMenu() {
             removeAll();
-
+            setBackground(Color.BLUE);
             // ปุ่ม Talk
             createButton("Talk", 1, e -> {
-                String text = lazel.getDialogue();
+                String text = galadriel.getDialogue();
 
                 // ถ้า dialogue นี้มาจาก Special Scene → ส่งไป SpecialScenePanel
-                if (lazel.isLastDialogueSpecial()) {
-                    int sceneLevel = lazel.getLastSpecialSceneLevel();
-                    lazel.resetSpecialSceneFlag();
-                    mainFrame.createSpecialSceneLazelPanel(lazel, text, sceneLevel);
-                    mainFrame.showSpecialSceneLazel();
+                if (galadriel.isLastDialogueSpecial()) {
+                    int sceneLevel = galadriel.getLastSpecialSceneLevel();
+                    galadriel.resetSpecialSceneFlag();
+                    mainFrame.createSpecialSceneGaladrielPanel(galadriel, text, sceneLevel);
+                    mainFrame.showSpecialSceneGaladriel();
                 } else {
                     showDialogueMode(text);
                 }
             });
 
             // 2. ปุ่ม Give Gift
-            String giftText = lazel.isGiftedToday() ? "Gift Given (Daily Limit)" : "Give Gift";
+            String giftText = galadriel.isGiftedToday() ? "Gift Given (Daily Limit)" : "Give Gift";
             JButton btnGift = createButton("Give Gift", 2, null);
             btnGift.setText(giftText);
             
-            if (lazel.isGiftedToday()) {
+            if (galadriel.isGiftedToday()) {
                 btnGift.setEnabled(false);
             } else {
                 // *** เมื่อกดปุ่มนี้ ให้เรียกฟังก์ชันสร้างหน้าเลือกของ ***
@@ -69,7 +69,7 @@
             add(btnGift);
 
             // Status Label
-            JLabel lblStatus = new JLabel("Relationship: Lazel (Lv." + lazel.getHeartLevel() + ")");
+            JLabel lblStatus = new JLabel("Relationship: galadriel (Lv." + galadriel.getHeartLevel() + ")");
             lblStatus.setFont(new Font("Tahoma", Font.BOLD, 24));
             lblStatus.setForeground(Color.WHITE);
             lblStatus.setBounds(50, 50, 600, 40);
@@ -85,7 +85,7 @@
             Hovereffect.HoverEffect(btnBack, 20, 20, 100, 30, new Color(48, 25, 82));
             add(btnBack);
 
-            setupBackground("image\\Scene\\School\\Angryscene.png"); //ตอน interactionMenu
+            setupBackground("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png"); //ตอน interactionMenu
             revalidate();
             repaint();
         }
@@ -96,7 +96,7 @@
         private void showDialogueMode(String text) {
             removeAll();
 
-            CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\Angryscene.png", "Lazel", text, null, null,  new CreateTemplateScene.SceneOption("Continue...", e -> showInteractionMenu()));
+            CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\Angryscene.png", "galadriel", text, null, null,  new CreateTemplateScene.SceneOption("Continue...", e -> showInteractionMenu()));
             
             scene.setBounds(0, 0, getWidth(), getHeight());
             add(scene);
@@ -137,7 +137,7 @@
                 // สร้าง Scene
                 CreateTemplateScene scene = new CreateTemplateScene(
                     "image\\Scene\\School\\Angryscene.png", "System", 
-                    "เลือกของขวัญที่จะให้ Lazel:", 
+                    "เลือกของขวัญที่จะให้ galadriel:", 
                     null, null, 
                     optionsList.toArray(new SceneOption[0])
                 );
@@ -152,42 +152,42 @@
         private void processGift(String itemName) {
         
         mainFrame.getPlayer().getInventory().removeItem(itemName);//remove item in bag
-        lazel.markAsGifted(); //mark gifted today
+        galadriel.markAsGifted(); //mark gifted today
 
         removeAll(); // clear 
         CreateTemplateScene scene;
 
         if (itemName.equals("Fairy rose")) {
-            lazel.addAffection(20); 
+            galadriel.addAffection(20); 
             
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
-                "Lazel", 
-                "Lazel: (หน้าแดงก่ำ) นี่มัน... Fairy Rose! เจ้าไปหามันมาได้ยังไง? ...ข้าจะเก็บมันไว้อย่างดี ขอบใจนะ", 
+                "galadriel", 
+                "galadriel: (หน้าแดงก่ำ) นี่มัน... Fairy Rose! เจ้าไปหามันมาได้ยังไง? ...ข้าจะเก็บมันไว้อย่างดี ขอบใจนะ", 
                 null, null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()) // กลับหน้าเมนู
             );
         } 
         else if (itemName.equals("Tulip") || itemName.equals("Poppy")) {
-            lazel.addAffection(10); // คะแนนปานกลาง
+            galadriel.addAffection(10); // คะแนนปานกลาง
             
             // *** ใส่รูปตอนยิ้ม หรือพอใจ ตรงนี้ ***
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
-                "Lazel", 
-                "Lazel: ดอกไม้นี่สวยดีนะ... ข้าไม่ค่อยได้รับของแบบนี้เท่าไหร่ แต่ก็ไม่เลว", 
+                "galadriel", 
+                "galadriel: ดอกไม้นี่สวยดีนะ... ข้าไม่ค่อยได้รับของแบบนี้เท่าไหร่ แต่ก็ไม่เลว", 
                 null, null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()) // กลับหน้าเมนู
             );
         } 
         else {
-            lazel.addAffection(5); // คะแนนปกติ
+            galadriel.addAffection(5); // คะแนนปกติ
             
             // *** ใส่รูปหน้าปกติ ตรงนี้ ***
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png",
-                "Lazel", 
-                "Lazel: ขยะ... แต่ข้าจะรับไว้พิจารณา", 
+                "galadriel", 
+                "galadriel: ขยะ... แต่ข้าจะรับไว้พิจารณา", 
                 null, null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()) // กลับหน้าเมนู
             );

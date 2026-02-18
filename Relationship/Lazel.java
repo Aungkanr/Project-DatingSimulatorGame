@@ -4,14 +4,17 @@ import java.util.Random;
 
 public class Lazel extends NPC {
 
+    public String imagePath; // null = ใช้รูปเดิม, ใส่ path = เปลี่ยนรูป
+
     public Lazel() {
         super("Lazel");
-        //heartLevel = 0;  
-        //affectionPoints = 90;  ลองปรับตรงนี้ แยกของแต่ละคน 
+        //heartLevel = 4;  
+        //affectionPoints = 490;  //ลองปรับตรงนี้ แยกของแต่ละคน 
     }
 
     @Override
     protected String getRandomDialogue(int level) {
+    
         String[] dialogues;
         if (level < 2) {
             dialogues = new String[]{

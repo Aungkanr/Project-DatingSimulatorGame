@@ -2,16 +2,15 @@ package Relationship;
 
 import java.util.Random;
 
-public class Lazel extends NPC {
-    
+public class Galadriel extends NPC {
     public String imagePath; // null = ใช้รูปเดิม, ใส่ path = เปลี่ยนรูป
 
-    public Lazel() {
-        super("Lazel");
+    public Galadriel() {
+        super("Galadriel");
         //heartLevel = 0;  
         //affectionPoints = 90;  ลองปรับตรงนี้ แยกของแต่ละคน 
     }
-
+    //แก้บท
     @Override
     protected String getRandomDialogue(int level) {
         String[] dialogues;

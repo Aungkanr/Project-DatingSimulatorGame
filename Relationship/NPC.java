@@ -2,7 +2,7 @@ package Relationship;
 
 public abstract class NPC {
     protected String name;
-    protected int affectionPoints = 90; // คะแนน 0 - 500
+    protected int affectionPoints = 0; // คะแนน 0 - 500
     protected int heartLevel = 0;      // 0 - 5
     
     // สถานะประจำวัน
@@ -42,6 +42,11 @@ public abstract class NPC {
     }
 
     public void addAffection(int amount) {
+        this.affectionPoints += amount;
+        updateHeartLevel();
+    }
+
+    public void decreaseAffection(int amount) {
         this.affectionPoints += amount;
         updateHeartLevel();
     }

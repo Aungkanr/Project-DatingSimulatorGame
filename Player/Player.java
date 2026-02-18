@@ -1,13 +1,13 @@
 package Player;
-import Relationship.*; // Import package ใหม่
+import Relationship.*; 
 public class Player {
     private int energy;
     private int money;
     private Inventory inventory;
 
     private Lazel lazel;
-    // private Arwen arwen;     
-    // private Galadriel galadriel; 
+    // private Arwen arwen;     //X
+    private Galadriel galadriel; 
 
     // Constructor 
     public Player() {
@@ -16,8 +16,8 @@ public class Player {
         this.inventory = new Inventory() ; //create obj bag
 
         this.lazel = new Lazel();
-        // this.arwen = new Arwen();
-        // this.galadriel = new Galadriel();
+        // this.arwen = new Arwen();//X
+        this.galadriel = new Galadriel();
     }   
     //------------------------ (Getters & Setter)------------------------
     public int getEnergy() {
@@ -43,8 +43,8 @@ public class Player {
     }
 
     public Lazel getLazel() { return lazel; }
-    // public Arwen getArwen() { return arwen; }
-    //public Galadriel galadriel() { return galadriel ;}
+    //public Arwen getArwen() { return arwen; } //X
+    public Galadriel galadriel() { return galadriel ;} 
 
     
     //-----------------------------เน้นใช้ ------------------------
@@ -73,8 +73,8 @@ public class Player {
     // เพิ่ม Method รีเซ็ตของขวัญประจำวัน 
     public void resetDailyRelationships() {
         lazel.resetDaily();
-        // arwen.resetDaily();
-        // galadriel.resetDaily();
+        // arwen.resetDaily();//X
+        galadriel.resetDaily();
     }
 
     //-----------------------------------------------

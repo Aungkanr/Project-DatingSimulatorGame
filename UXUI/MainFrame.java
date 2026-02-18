@@ -210,6 +210,15 @@ public class MainFrame extends JFrame {
             sfxManager.setMute(isMute);
         }
     }
+
+    //ตั้งค่าเสียงให้ปรับลดลงได้ทั้งของ MUSIC และ SFX 
+    public void setMusicVolume(float volume) {
+        if (soundManager != null) soundManager.setVolume(volume);
+    }
+
+    public void setSFXVolume(float volume) {
+        if (sfxManager != null) sfxManager.setVolume(volume);
+    }
     
     // เพิ่ม Getter เผื่อเอาไปใช้ที่อื่น
     public MusicManager getSoundManager() {

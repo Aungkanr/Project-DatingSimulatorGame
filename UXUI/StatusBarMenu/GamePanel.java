@@ -8,7 +8,6 @@ import Utility.GameTime;
 import Utility.Notify;
 import Utility.StatusBar;
 import Utility.StdAuto;
-import UXUI.*;
 import Utility.*;
 
 import java.awt.Color;
@@ -29,7 +28,6 @@ public class GamePanel extends JPanel {
     private JLabel lblDay;
     private JLabel lblTime;
     private JLabel lblMap;
-    private ChangeImageMap mapChanger;
     private StdAuto stdScreen ; //Device screen
     private Notify notification ; //ตัวแจ้งเตือน
     private JButton btnBag;
@@ -219,7 +217,6 @@ public class GamePanel extends JPanel {
 
         // อัพเดทหลอด Energy and Money
         energyBar.setEnergy(player.getEnergy());
-
 
         lblEnergy.setText("Energy: " + player.getEnergy());
         lblEnergy.setForeground(Color.white);

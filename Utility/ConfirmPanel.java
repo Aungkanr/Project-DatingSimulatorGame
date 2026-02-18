@@ -4,12 +4,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import UXUI.MainFrame;
+
 public class ConfirmPanel extends JPanel {
 
     // ตัวแปรเก็บค่าข้อความ (เปลี่ยนค่าได้ตลอด)
     private String title = "";
     private String[] messageLines = {};
-    
     // ปุ่ม
     private JButton btnConfirm;
     private JButton btnCancel;
@@ -17,7 +18,7 @@ public class ConfirmPanel extends JPanel {
     // ตัวเก็บคำสั่ง (Callback) ที่จะเปลี่ยนไปตามสถานการณ์
     private ActionListener onConfirmAction;
 
-    public ConfirmPanel(int screenWidth, int screenHeight) {
+    public ConfirmPanel(int screenWidth, int screenHeight ,MainFrame mainFrame) {
         setLayout(null);
         setBounds(0, 0, screenWidth, screenHeight);
         setOpaque(false); // พื้นหลังโปร่งใส
@@ -58,7 +59,7 @@ public class ConfirmPanel extends JPanel {
         btnCancel.setFocusPainted(false);
         
         // ปุ่มยกเลิก มีหน้าที่แค่ปิดหน้าต่าง
-        btnCancel.addActionListener(e -> setVisible(false));
+        btnCancel.addActionListener(e -> {setVisible(false);});
         add(btnCancel);
     }
 

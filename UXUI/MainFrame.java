@@ -2,7 +2,6 @@ package UXUI;
 import Player.*;
 import Relationship.Lazel;
 import UXUI.Scene.*;
-import UXUI.SceneNPC.*;
 import UXUI.SceneNPC.Lazel.LazelPanel;
 import UXUI.SceneNPC.Lazel.SpecialScenePanel;
 import UXUI.StatusBarMenu.GamePanel;
@@ -39,6 +38,8 @@ public class MainFrame extends JFrame {
     private SpecialScenePanel specialScenePanel; 
 
     public static void main(String[] args) {
+        System.setProperty("sun.java2d.uiScale", "1.0");
+
         EventQueue.invokeLater(() -> {
             try {
                 MainFrame frame = new MainFrame();
@@ -216,4 +217,5 @@ public class MainFrame extends JFrame {
     public Player getPlayer() { return this.player; }
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
+    public ShopPanel getShopPanel() { return this.shop;}
 }

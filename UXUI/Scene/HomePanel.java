@@ -21,7 +21,6 @@ public class HomePanel extends JPanel {
     private StdAuto stdScreen = new StdAuto() ;
     private SleepEffect sleepEffect = new SleepEffect() ;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
-    private MainFrame mainFrame;
     private JLabel lblMessage; // <--- 1. ตัวแปรสำหรับโชว์ข้อความเตือน
     private JButton btnBack; // <--- 2. ตัวแปรปุ่มกลับ (ถ้าต้องการเข้าถึงจากหลายที่)
     public static final Color BACK_BUTTON = new Color(48, 25, 82);  
@@ -29,7 +28,6 @@ public class HomePanel extends JPanel {
 
 
     public HomePanel(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
         stdScreen.setBtnWHG(200, 60, 20 ,0); //ขนาด ปุ่ม และ gap ,แถว
         
         setLayout(null);

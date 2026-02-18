@@ -7,8 +7,6 @@ import java.awt.Graphics2D;//เพิ่มเข้ามา
 import java.awt.RenderingHints;//เพิ่มเข้ามา
 import javax.swing.JPanel;
 
-
-
 public class RoundedPanel extends JPanel{
     private int cornerRadius;
         private Color backgroundColor;

@@ -1,14 +1,23 @@
 package Player;
+import Relationship.*; // Import package ใหม่
 public class Player {
     private int energy;
     private int money;
     private Inventory inventory;
+
+    private Lazel lazel;
+    // private Arwen arwen;     
+    // private Galadriel galadriel; 
 
     // Constructor 
     public Player() {
         this.energy = 100; // เริ่มต้น 100
         this.money = 100;  // เริ่มต้น 500 บาท
         this.inventory = new Inventory() ; //create obj bag
+
+        this.lazel = new Lazel();
+        // this.arwen = new Arwen();
+        // this.galadriel = new Galadriel();
     }   
     //------------------------ (Getters & Setter)------------------------
     public int getEnergy() {
@@ -28,6 +37,16 @@ public class Player {
     public void setMoney(int money) {
         this.money = money;
     }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
+    public Lazel getLazel() { return lazel; }
+    // public Arwen getArwen() { return arwen; }
+    //public Galadriel galadriel() { return galadriel ;}
+
+    
     //-----------------------------เน้นใช้ ------------------------
     public void decreaseEnergy(int amount) {
         setEnergy(this.energy - amount);
@@ -51,4 +70,12 @@ public class Player {
             return false; 
         }
     }
+    // เพิ่ม Method รีเซ็ตของขวัญประจำวัน 
+    public void resetDailyRelationships() {
+        lazel.resetDaily();
+        // arwen.resetDaily();
+        // galadriel.resetDaily();
+    }
+
+    //-----------------------------------------------
 }

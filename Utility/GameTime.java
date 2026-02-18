@@ -4,8 +4,8 @@ import Player.Player;
 
 public class GameTime {
     private int day ; 
-    private int timeSlot ; // 0 = Morning, 1 = Noon, 2 = Afternoon, 3 = Night
-    public static final String[] TimeText = {"Morning", "Noon", "Afternoon", "Night"}; //ห้ามแก้
+    private int timeSlot ; // 0 = Morning, 1 = Noon, 2 = Evening, 3 = Night
+    public static final String[] TimeText = {"Morning", "Noon", "Evening", "Night"}; //ห้ามแก้
 
     public GameTime() { //construct ลอง configure ค่าเริ่มต้นได้ (อยากลอง cheat)
         this.day = 1;      

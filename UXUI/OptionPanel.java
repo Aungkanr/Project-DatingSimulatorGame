@@ -10,11 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Utility.ScreenFader;
 import Utility.StdAuto;
 
 public class OptionPanel extends JPanel {
 
     private MainFrame parent;
+    ScreenFader fader = new ScreenFader(); 
     private StdAuto stdScreen = new StdAuto(); //Device screen
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();  
 
@@ -28,6 +30,9 @@ public class OptionPanel extends JPanel {
         setBackground(new Color(0, 51, 204)); 
         setLayout(null);
         stdScreen.setBtnWHG(300, 60, 20 ,2); //ขนาด ปุ่ม และ gap , แถว
+
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader); // add ทับ layer บนสุด
 
         // --- CheckBox Mute ---
         JCheckBox chckbxMute = new JCheckBox("Mute Music");
@@ -43,13 +48,35 @@ public class OptionPanel extends JPanel {
         });
         add(chckbxMute);
 
+
+        // --- CheckBox Mute ---
+        JCheckBox chckbxMuteSFX = new JCheckBox("Mute SFX");
+        chckbxMuteSFX.setHorizontalAlignment(SwingConstants.CENTER);
+        chckbxMuteSFX.setFont(new Font("Tahoma", Font.BOLD, 16));  
+        chckbxMuteSFX.setForeground(new Color(60, 40, 80));
+        chckbxMuteSFX.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(50, 43, 226), 2));  // ⬅️ เพิ่มบรรทัดนี้
+        chckbxMuteSFX.setBounds(stdScreen.centerX, stdScreen.currentY-80, stdScreen.buttonWidth, stdScreen.buttonHeight+3);
+        
+        // ดึงค่าเริ่มต้น
+        if (parent.getSFXManager() != null) {
+            chckbxMuteSFX.setSelected(parent.getSFXManager().isMuted());
+        }
+        
+        // ใส่ Action
+        chckbxMuteSFX.addItemListener(e -> {
+            boolean isMuted = (e.getStateChange() == java.awt.event.ItemEvent.SELECTED);
+            parent.toggleSFX(isMuted); // เรียกฟังก์ชัน toggleSFX ใน MainFrame
+        });
+        add(chckbxMuteSFX);
+
+
         stdScreen.currentY += stdScreen.buttonHeight + stdScreen.gap;
 
         // --- Back Button ---
         JButton btnBack = new JButton("กลับเมนูหลัก");
         btnBack.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.showMenu();
+                fader.fadeInOut(250, 250,()-> {parent.showMenu();}, null);
             }
         });
         btnBack.setFont(new Font("Tahoma", Font.BOLD, 18));  
@@ -63,9 +90,8 @@ public class OptionPanel extends JPanel {
         
         // Background 
         JLabel lblMap = new JLabel("");
-
         String imagePath = "image\\OptionBackGround.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
 
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);

@@ -1,84 +1,49 @@
 package UXUI.Scene;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-import UXUI.DialoguePanel;
-import UXUI.MainFrame;
-import Utility.StdAuto;
-
+import javax.swing.*;
 import java.awt.Color;
-import java.awt.Font;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-
+import UXUI.MainFrame;
+import Utility.*;
 
 public class SchoolPanel extends JPanel {
-
+    private MainFrame mainFrame;
     private StdAuto stdScreen;
-    private DialoguePanel dialogueBox = new DialoguePanel();
-    private Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    private GameTime realGameTime ;
+    private Notify realNotify ;
 
     public SchoolPanel(MainFrame mainFrame) {
-        stdScreen = new StdAuto();
-        stdScreen.setBtnWHG(250, 50,    20, 0); // ตั้งขนาดปุ่มมาตรฐาน (กว้าง 250, สูง 50)
+        this.mainFrame = mainFrame;
+        this.stdScreen = new StdAuto();
+        this.stdScreen.setBtnWHG(250, 60, 20, 0);
 
-        setLayout(null);
-        setBackground(new Color(12, 51, 204));
-        
-        // ใช้ค่า Y ที่ปลอดภัย (ลอยจากขอบล่าง 120px)
-        int btnY = stdScreen.bottomY;
+        this.setLayout(new java.awt.BorderLayout());
+        setBackground(Color.BLACK);
 
-        int gap = 20;// ระยะห่างระหว่างปุ่ม
+        this.realGameTime = mainFrame.getGameTime(); // ดึงเวลามาจาก MainFrame
+        this.realNotify = new Notify(stdScreen.width); // สร้างตัวแจ้งเตือน
+        this.realNotify.setBounds(0, 50, stdScreen.width, 50); // กำหนดตำแหน่ง
+        add(realNotify); // *** อย่าลืม add เข้า Panel ***
 
-        // 1. ปุ่มซ้าย (Left) : "You are so cute"
-        JButton btnLeft = new JButton("You are so cute");
-        btnLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        // สูตร: Center - Width - Gap
-        btnLeft.setBounds(stdScreen.centerX - stdScreen.buttonWidth - gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnLeft.addActionListener(e -> mainFrame.showGame());
-        add(btnLeft);
+        // ---------------------------------------------------------
+        initComponents();
+        setComponentZOrder(realNotify, 0);
+    }
 
-        // 2. ปุ่มกลาง (Middle) : "I am sorry" (เพิ่มมาใหม่)
-        JButton btnMiddle = new JButton("I am sorry...");
-        btnMiddle.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        // สูตร: Center
-        btnMiddle.setBounds(stdScreen.centerX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnMiddle.addActionListener(e -> mainFrame.showGame());
-        add(btnMiddle);
+    private void initComponents() {
 
-        // 3. ปุ่มขวา (Right) : "Hi my baby"
-        JButton btnRight = new JButton("Hi my baby");
-        btnRight.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        // สูตร: Center + Width + Gap
-        btnRight.setBounds(stdScreen.centerX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnRight.addActionListener(e -> mainFrame.showGame());
-        add(btnRight);
+        CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\โรงเรียนตอนเช้า.png", null, null, e -> mainFrame.showGame() , "Back to Town", 
+        new CreateTemplateScene.SceneOption("Talk to Lazel", e -> {
+            if (realGameTime.getTimeSlot() < 2) {
+                // สั่ง MainFrame ให้สร้างและโชว์หน้า Lazel
+                //go to scene Lazel
+                mainFrame.createLazelPanel(); 
+                mainFrame.showLazel();
+            } else realNotify.showNotify("Lazel is not here, she has left for a while.", Color.RED, 2050);
+        }
+        ));
 
-        // --- กล่องข้อความ (Dialogue Box) ---
-        // วางให้อยู่เหนือปุ่มขึ้นไปประมาณ 180px
-        int dialogueW = 1425;
-        int dialogueH = 250;
-        int dialogueX = (stdScreen.width - dialogueW) / 2; // จัดกึ่งกลางจอ
-        int dialogueY = btnY - dialogueH - 50; // วางเหนือปุ่ม
-        
-        dialogueBox.setBounds(dialogueX, dialogueY, dialogueW, dialogueH);
-        add(dialogueBox);
-        dialogueBox.setText("Person", "เดินหัดดูทางบ้างซิยะ! ตาถั่วหรือไง มายืนขวางประตูหน้าตึกอยู่ได้!");
-
-        // --- Background Image ---
-        JLabel lblMap = new JLabel("");
-        // ตรวจสอบชื่อไฟล์ภาพให้ถูกต้องนะครับ
-        String imagePath = "image\\Scene\\School\\Angryscene.png"; 
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        
-        // สั่งยืดภาพให้เต็มจอ 1280x720
-        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
-        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
-        add(lblMap);
-        
-        // บังคับให้รูปภาพอยู่เลเยอร์หลังสุด
-        setComponentZOrder(lblMap, getComponentCount() - 1);
+        add(scene, java.awt.BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 }

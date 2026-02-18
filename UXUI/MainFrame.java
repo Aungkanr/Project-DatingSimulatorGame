@@ -51,10 +51,10 @@ public class MainFrame extends JFrame {
     }
     
     public MainFrame() { 
+        PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี) ***ควรอยู่ลำดับเเรกของโค้ดเสมอเพราะต้องโหลดก่อนเข้าเกม***
+
         // 1. โหลดค่ามาตรฐาน
         stdScreen = new StdAuto();
-
-        PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี)
         
         // 2. ตั้งค่าหน้าต่าง
         setTitle("Dating Simulator Game");
@@ -99,16 +99,10 @@ public class MainFrame extends JFrame {
     }
 
     public void PreLoad() {
-        asset.getImage("image\\Map\\Afternoon.png");
-        asset.getImage("image\\Map\\Night.png");
-        asset.getImage("image\\Map\\Morning.png");
-        asset.getImage("image\\Map\\Evening.png");
-        asset.getImage("image\\MenuBackground.png");
-        asset.getImage("image\\Scene\\Office\\Barad-durWork.png");
-        asset.getImage("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
-        asset.getImage("image\\Scene\\Bedroom\\ห้องนอน.png");
-        asset.getImage("image\\Scene\\School\\Angryscene.png");
-        asset.getImage("image\\Scene\\School\\โรงเรียนตอนเช้า.png");
+        System.out.println("---------- Start Preloading ----------");
+        loadAssetsFromFolder("image"); // โหลดทุกรูปในโฟลเดอร์ image และลูกๆ ของมัน
+        loadAssetsFromFolder("Music"); // โหลดทุกเพลงในโฟลเดอร์ Music
+        System.out.println("---------- Preloading Finished ----------");
     }
 
     // --- ส่วนสร้าง Scene ต่างๆ (แก้ให้ใช้ stdScreen.width/height) ---
@@ -218,4 +212,57 @@ public class MainFrame extends JFrame {
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
     public ShopPanel getShopPanel() { return this.shop;}
+
+
+    private void loadAssetsFromFolder(String folderPath) {
+        File folder = new File(folderPath);
+
+        if (!folder.exists()) {
+            System.err.println("❌ Folder not found: " + folderPath);
+            return;
+        }
+
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isDirectory()) {
+                    // ถ้าเป็นโฟลเดอร์ ให้วนลูปเข้าไปข้างใน (Recursion)
+                    loadAssetsFromFolder(file.getPath());
+                } else {
+                    String path = file.getPath();
+                    String lowerPath = path.toLowerCase(); // แปลงเป็นตัวเล็กหมดเพื่อเช็ค
+
+                    // -------------------------------------------------------------
+                    // 1. เช็คไฟล์รูปภาพ (Images) ที่ Java รองรับ
+                    // รองรับ: PNG, JPG, JPEG, GIF (ภาพดุ๊กดิ๊ก), BMP (บิตแมพ), WBMP
+                    // -------------------------------------------------------------
+                    if (lowerPath.endsWith(".png") || 
+                        lowerPath.endsWith(".jpg") || 
+                        lowerPath.endsWith(".jpeg") || 
+                        lowerPath.endsWith(".gif") || 
+                        lowerPath.endsWith(".bmp") || 
+                        lowerPath.endsWith(".wbmp")) {
+                        
+                        asset.getImage(path);
+                        // System.out.println("Found Image: " + file.getName());
+
+                    } 
+                    // -------------------------------------------------------------
+                    // 2. เช็คไฟล์เสียง (Audio) ที่ Java Sound รองรับ
+                    // รองรับ: WAV, AIFF, AU, SND (ไม่รองรับ MP3 โดยตรงถ้าไม่มี Plugin)
+                    // -------------------------------------------------------------
+                    else if (lowerPath.endsWith(".wav") || 
+                             lowerPath.endsWith(".aiff") || 
+                             lowerPath.endsWith(".aif") || 
+                             lowerPath.endsWith(".au") || 
+                             lowerPath.endsWith(".snd")) {
+                        
+                        asset.getSound(path);
+                        // System.out.println("Found Sound: " + file.getName());
+                    }
+                }
+            }
+        }
+    }
 }

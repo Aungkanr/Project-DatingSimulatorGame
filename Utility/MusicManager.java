@@ -6,13 +6,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class MusicManager {
-    private Clip clip;
+    private Clip clip ;
     private boolean isMuted = false;
     
     // 1. เพิ่มตัวแปรเก็บชื่อเพลงล่าสุด
     private String currentMusicPath = ""; 
 
     public void playMusic(String filePath) {
+        clip = AssetManager.getInstance().getSound(filePath);
         try {
             // -----------------------------------------------------------
             // 2. เช็คว่าเพลงที่จะเปิด คือเพลงเดิมที่เล่นอยู่ไหม?

@@ -19,10 +19,9 @@ public class SFXManager {
 
     // สั่งเล่นเสียง Effect
     public void playSFX(String filePath) {
-        if (isMuted) return; 
-
+        if (isMuted) return;
         try {
-            Clip clip;
+            Clip clip = AssetManager.getInstance().getSound(filePath);
             
             // 1. เช็ค Cache
             if (sfxCache.containsKey(filePath)) {

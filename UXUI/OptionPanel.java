@@ -34,6 +34,8 @@ public class OptionPanel extends JPanel {
         fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(fader); // add ทับ layer บนสุด
 
+        parent.getSFXManager().setVolume(0.1f);
+
         // --- CheckBox Mute ---
         JCheckBox chckbxMute = new JCheckBox("Mute Music");
         chckbxMute.setHorizontalAlignment(SwingConstants.CENTER);
@@ -76,6 +78,7 @@ public class OptionPanel extends JPanel {
         JButton btnBack = new JButton("กลับเมนูหลัก");
         btnBack.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
                 fader.fadeInOut(250, 250,()-> {parent.showMenu();}, null);
             }
         });

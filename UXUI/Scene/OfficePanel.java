@@ -1,7 +1,7 @@
 package UXUI.Scene;
 
 import javax.swing.JPanel;
-import UXUI.DialoguePanel; // เพิ่ม import
+
 import UXUI.MainFrame;
 import UXUI.StatusBarMenu.GamePanel;
 import Utility.GameTime;

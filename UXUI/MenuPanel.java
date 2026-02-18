@@ -9,7 +9,7 @@ import Utility.ScreenFader;
 import Utility.StdAuto;
 
 public class MenuPanel extends JPanel {
-    private String musicPath = "Music/Harvest Dawn.wav"; // แนะนำใช้ / แทน \\ เพื่อรองรับทุก OS
+    private String musicPath = "Music\\Harvest Dawn.wav"; // แนะนำใช้ / แทน \\ เพื่อรองรับทุก OS
     private MainFrame parent;
     private StdAuto stdScreen;
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
@@ -37,12 +37,14 @@ public class MenuPanel extends JPanel {
         int btnX = stdScreen.width - btnW - 150; // ห่างจากขอบขวา 80px
         int startY = 220; // เริ่มวางปุ่ม Start ที่ความสูง 350 (กลางๆ ค่อนไปทางล่าง)
 
+        parent.getSFXManager().setVolume(0.1f);
         // 1. START
         JButton btnStart = new JButton("START");
         btnStart.setFont(new Font("Tahoma", Font.BOLD, 20));
         btnStart.setBounds(btnX, startY, btnW, btnH);
         Hovereffect.HoverEffect(btnStart, btnX, startY, btnW, btnH, startBtnColor);
         btnStart.addActionListener(e -> {
+            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             fader.fadeInOut(500, 500, ()->{                
             parent.showGame();
             if (parent.getSoundManager() != null) {
@@ -58,6 +60,7 @@ public class MenuPanel extends JPanel {
         btnSetting.setBounds(btnX, settingY, btnW, btnH);
         Hovereffect.HoverEffect(btnSetting, btnX, settingY, btnW, btnH, settingBtnColor);
         btnSetting.addActionListener(e -> {
+            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             fader.fadeOut(250, () -> {
                 parent.showOption();
                 fader.fadeIn(250, null);
@@ -72,6 +75,7 @@ public class MenuPanel extends JPanel {
         btnExit.setBounds(btnX, exitY, btnW, btnH);
         Hovereffect.HoverEffect(btnExit, btnX, exitY, btnW, btnH, exitBtnColor);
         btnExit.addActionListener(e -> {
+            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             Utility.AssetManager.getInstance().clearCache();
             System.exit(0);
         });

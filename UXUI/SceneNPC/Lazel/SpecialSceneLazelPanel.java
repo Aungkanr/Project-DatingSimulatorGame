@@ -10,7 +10,7 @@ import Utility.*;
 import Relationship.Lazel;
 import Relationship.DialogueNode;
 
-public class SpecialScenePanel extends JPanel {
+public class SpecialSceneLazelPanel extends JPanel {
 
     private MainFrame mainFrame;
     private StdAuto stdScreen;
@@ -19,7 +19,7 @@ public class SpecialScenePanel extends JPanel {
 
     private final String bgPath = "image\\Scene\\School\\Angryscene.png";
 
-    public SpecialScenePanel(MainFrame mainFrame, Lazel lazel, String sceneText, int sceneLevel) {
+    public SpecialSceneLazelPanel(MainFrame mainFrame, Lazel lazel, String sceneText, int sceneLevel) {
         this.mainFrame = mainFrame;
         this.lazel     = lazel;
         this.stdScreen = new StdAuto();

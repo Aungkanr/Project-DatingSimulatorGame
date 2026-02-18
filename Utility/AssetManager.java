@@ -69,58 +69,36 @@ public class AssetManager {
     // ==========================================
     // ส่วนจัดการเสียง (Sounds)
     // ==========================================
-    public void playSound(String path, boolean loop) {
+    public Clip getSound(String path) {
+        // 1. เช็คว่ามีของในโกดัง (Cache) หรือยัง?
+        if (soundCache.containsKey(path)) {
+            return soundCache.get(path); // เจอแล้ว! ส่ง Clip ไปให้เลย
+        }
+
+        // 2. ถ้าไม่มี ให้ไปโหลดจากไฟล์ (Load from Disk)
         try {
-            Clip clip;
-            
-            // 1. เช็คว่าเคยโหลดเสียงนี้หรือยัง
-            if (soundCache.containsKey(path)) {
-                clip = soundCache.get(path);
-                
-                // ถ้าเสียงกำลังเล่นอยู่ ให้หยุดก่อน (หรือจะประยุกต์ให้เล่นซ้อนก็ได้)
-                if (clip.isRunning()) {
-                    clip.stop();
-                }
-                clip.setFramePosition(0); // กรอเทปกลับไปจุดเริ่มต้น
-
-            } else {
-                // 2. โหลดใหม่ถ้ายังไม่มีใน Cache
-                File f = new File(path);
-                if (!f.exists()) {
-                    System.err.println("!Sound not found: " + path);
-                    return;
-                }
-                
-                AudioInputStream ais = AudioSystem.getAudioInputStream(f);
-                clip = AudioSystem.getClip();
-                clip.open(ais);
-
-                // 3. เก็บลง Cache
-                soundCache.put(path, clip);
-                System.out.println("Loaded Sound to Memory: " + path);
+            File f = new File(path);
+            if (!f.exists()) {
+                System.err.println("!Sound not found: " + path);
+                return null;
             }
 
-            // 4. สั่งเล่น
-            if (loop) {
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-            } else {
-                clip.start();
-            }
+            AudioInputStream ais = AudioSystem.getAudioInputStream(f);
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+
+            // 3. เก็บเข้าโกดัง (Cache)
+            soundCache.put(path, clip);
+            System.out.println("Loaded Sound to Memory: " + path);
+
+            return clip; // ส่ง Clip ที่เพิ่งโหลดเสร็จกลับไป
 
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
-    
-    // สั่งหยุดเสียง (ใช้สำหรับ BGM)
-    public void stopSound(String path) {
-        if (soundCache.containsKey(path)) {
-            Clip clip = soundCache.get(path);
-            if (clip.isRunning()) {
-                clip.stop();
-            }
-        }
-    }
+
 
     // สั่งเคลียร์ RAM (เช่น ตอนปิดเกม หรือเปลี่ยนด่านใหญ่ๆ)
     public void clearCache() {

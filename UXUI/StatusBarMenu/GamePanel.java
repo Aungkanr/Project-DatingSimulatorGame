@@ -3,12 +3,6 @@ import Player.Player;
 import UXUI.Hovereffect;
 import UXUI.LowEnergyPanel;
 import UXUI.MainFrame;
-import Utility.ChangeImageMap;
-import Utility.GameTime;
-import Utility.Notify;
-import Utility.StatusBar;
-import Utility.StdAuto;
-import UXUI.*;
 import Utility.*;
 
 import java.awt.Color;
@@ -29,7 +23,6 @@ public class GamePanel extends JPanel {
     private JLabel lblDay;
     private JLabel lblTime;
     private JLabel lblMap;
-    private ChangeImageMap mapChanger;
     private StdAuto stdScreen ; //Device screen
     private Notify notification ; //ตัวแจ้งเตือน
     private JButton btnBag;
@@ -40,6 +33,7 @@ public class GamePanel extends JPanel {
     private JButton btnExitGame;
 
     // ------------------ Object ---------------------
+    Utility.AssetManager asset = Utility.AssetManager.getInstance();
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     ScreenFader fader = new ScreenFader();
     // เพิ่มใหม่ ธีมสีชมพู (Pink Theme)
@@ -71,6 +65,8 @@ public class GamePanel extends JPanel {
 
         fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(fader);
+
+        parent.getSFXManager().setVolume(0.1f);
 
         // ==========================================
         // 1. สร้างกล่องสถานะ (RoundedPanel)
@@ -128,6 +124,7 @@ public class GamePanel extends JPanel {
         add(btnExitGame);
         btnExitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
                 fader.fadeInOut(500, 500, ()->{parent.showMenu();}, null);
             }
         });
@@ -219,7 +216,6 @@ public class GamePanel extends JPanel {
 
         // อัพเดทหลอด Energy and Money
         energyBar.setEnergy(player.getEnergy());
-
 
         lblEnergy.setText("Energy: " + player.getEnergy());
         lblEnergy.setForeground(Color.white);

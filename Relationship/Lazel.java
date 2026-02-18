@@ -6,6 +6,8 @@ public class Lazel extends NPC {
 
     public Lazel() {
         super("Lazel");
+        //heartLevel = 0;  
+        //affectionPoints = 90;  ลองปรับตรงนี้ แยกของแต่ละคน 
     }
 
     @Override

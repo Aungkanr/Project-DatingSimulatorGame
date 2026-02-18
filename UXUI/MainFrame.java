@@ -1,14 +1,15 @@
 package UXUI;
 import Player.*;
+import Relationship.Galadriel;
 import Relationship.Lazel;
 import UXUI.Scene.*;
-import UXUI.SceneNPC.*;
+import UXUI.SceneNPC.Galadriel.GaladrielPanel;
+import UXUI.SceneNPC.Galadriel.SpecialSceneGaladrielPanel;
 import UXUI.SceneNPC.Lazel.LazelPanel;
-import UXUI.SceneNPC.Lazel.SpecialScenePanel;
+import UXUI.SceneNPC.Lazel.SpecialSceneLazelPanel;
 import UXUI.StatusBarMenu.GamePanel;
 import java.io.File;
 import java.awt.EventQueue;
-
 
 import javax.sound.sampled.Clip; // แก้เป็น Clip
 import javax.swing.JFrame;
@@ -35,10 +36,15 @@ public class MainFrame extends JFrame {
     // 2. ประกาศตัวแปร SoundManager
     private MusicManager soundManager;
     private SFXManager sfxManager;
+    //NPC
     private LazelPanel lazelPanel;//X
-    private SpecialScenePanel specialScenePanel; 
+    private GaladrielPanel galadrielPanel ; //x
+    private SpecialSceneGaladrielPanel specialSceneGaladrielPanel; //x
+    private SpecialSceneLazelPanel specialSceneLazelPanel; //x
 
     public static void main(String[] args) {
+        System.setProperty("sun.java2d.uiScale", "1.0");
+
         EventQueue.invokeLater(() -> {
             try {
                 MainFrame frame = new MainFrame();
@@ -50,10 +56,10 @@ public class MainFrame extends JFrame {
     }
     
     public MainFrame() { 
+        PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี) ***ควรอยู่ลำดับเเรกของโค้ดเสมอเพราะต้องโหลดก่อนเข้าเกม***
+
         // 1. โหลดค่ามาตรฐาน
         stdScreen = new StdAuto();
-
-        PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี)
         
         // 2. ตั้งค่าหน้าต่าง
         setTitle("Dating Simulator Game");
@@ -98,16 +104,10 @@ public class MainFrame extends JFrame {
     }
 
     public void PreLoad() {
-        asset.getImage("image\\Map\\Afternoon.png");
-        asset.getImage("image\\Map\\Night.png");
-        asset.getImage("image\\Map\\Morning.png");
-        asset.getImage("image\\Map\\Evening.png");
-        asset.getImage("image\\MenuBackground.png");
-        asset.getImage("image\\Scene\\Office\\Barad-durWork.png");
-        asset.getImage("image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
-        asset.getImage("image\\Scene\\Bedroom\\ห้องนอน.png");
-        asset.getImage("image\\Scene\\School\\Angryscene.png");
-        asset.getImage("image\\Scene\\School\\โรงเรียนตอนเช้า.png");
+        System.out.println("---------- Start Preloading ----------");
+        loadAssetsFromFolder("image"); // โหลดทุกรูปในโฟลเดอร์ image และลูกๆ ของมัน
+        loadAssetsFromFolder("Music"); // โหลดทุกเพลงในโฟลเดอร์ Music
+        System.out.println("---------- Preloading Finished ----------");
     }
 
     // --- ส่วนสร้าง Scene ต่างๆ (แก้ให้ใช้ stdScreen.width/height) ---
@@ -138,8 +138,36 @@ public class MainFrame extends JFrame {
         office.setVisible(false);
         add(office);
     }
-    
-    // --- เพิ่มฟังก์ชันสร้าง Panel ---  //X
+    //=========================================================================================================================================================================================
+    // --- เพิ่มฟังก์ชันสร้าง Galadriel Panel --------------------------------------  //X
+    public void createGaladrielPanel() {
+        if (galadrielPanel != null) contentPane.remove(galadrielPanel);
+        galadrielPanel = new GaladrielPanel(this);
+        galadrielPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        galadrielPanel.setVisible(false);
+        contentPane.add(galadrielPanel); // Add เข้า contentPane
+    }
+
+    // --- เพิ่มฟังก์ชั่น SpecialScene ของ galadriel -------------------------------------- //X
+    public void createSpecialSceneGaladrielPanel(Galadriel galadriel, String sceneText, int sceneLevel) {
+        if (specialSceneGaladrielPanel != null) contentPane.remove(specialSceneGaladrielPanel);
+        specialSceneGaladrielPanel = new SpecialSceneGaladrielPanel(this, galadriel, sceneText, sceneLevel);
+        specialSceneGaladrielPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        specialSceneGaladrielPanel.setVisible(false);
+        contentPane.add(specialSceneGaladrielPanel);
+    }
+
+    // --- เพิ่มฟังก์ชัน Showgaladriel ------------------------------------------------------ //X
+    public void showGaladriel() {
+        toggleVisibility(galadrielPanel);
+        if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
+    }
+    public void showSpecialSceneGaladriel() { 
+        toggleVisibility(specialSceneLazelPanel);
+        if(gamePanel != null) gamePanel.updateUI();
+    }
+    //=========================================================================================================================================================================================
+    // --- เพิ่มฟังก์ชันสร้าง Lazel Panel --------------------------------------  //X
     public void createLazelPanel() {
         if (lazelPanel != null) contentPane.remove(lazelPanel);
         lazelPanel = new LazelPanel(this);
@@ -148,25 +176,27 @@ public class MainFrame extends JFrame {
         contentPane.add(lazelPanel); // Add เข้า contentPane
     }
 
-    // --- เพิ่มฟังก์ชั่น SpecialScene ของ lazel --- //
-    public void createSpecialScenePanel(Lazel lazel, String sceneText, int sceneLevel) {
-        if (specialScenePanel != null) contentPane.remove(specialScenePanel);
-        specialScenePanel = new SpecialScenePanel(this, lazel, sceneText, sceneLevel);
-        specialScenePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
-        specialScenePanel.setVisible(false);
-        contentPane.add(specialScenePanel);
+    // --- เพิ่มฟังก์ชั่น SpecialScene ของ lazel -------------------------------------- //X
+    public void createSpecialSceneLazelPanel(Lazel lazel, String sceneText, int sceneLevel) {
+        if (specialSceneLazelPanel != null) contentPane.remove(specialSceneLazelPanel);
+        specialSceneLazelPanel = new SpecialSceneLazelPanel(this, lazel, sceneText, sceneLevel);
+        specialSceneLazelPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        specialSceneLazelPanel.setVisible(false);
+        contentPane.add(specialSceneLazelPanel);
     }
 
-    // --- เพิ่มฟังก์ชัน Show ---
+    // --- เพิ่มฟังก์ชัน Show ------------------------------------------------------ //X
     public void showLazel() {
         toggleVisibility(lazelPanel);
         if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
     }
-
-    public void showSpecialScene() {
-        toggleVisibility(specialScenePanel);
+    //------showSpecialSceneLazel---------------------------------------------------
+    public void showSpecialSceneLazel() { 
+        toggleVisibility(specialSceneLazelPanel);
         if(gamePanel != null) gamePanel.updateUI();
     }
+    //=======================================================================================
+    
 
     // 4. แก้ไขฟังก์ชัน Mute ให้เรียกผ่าน Manager
     public void toggleMute(boolean isMute) {
@@ -208,12 +238,69 @@ public class MainFrame extends JFrame {
         if(shop != null) shop.setVisible(false);
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
-        if(lazelPanel != null) lazelPanel.setVisible(false); //lazel 
-        if(specialScenePanel != null) specialScenePanel.setVisible(false); //specialScencelazel
+        if(lazelPanel != null) lazelPanel.setVisible(false); 
+        if(specialSceneLazelPanel != null) specialSceneLazelPanel.setVisible(false);
+        if(galadrielPanel != null) galadrielPanel.setVisible(false); 
+        if(specialSceneGaladrielPanel != null) specialSceneGaladrielPanel.setVisible(false);
+
         if(showPanel != null) showPanel.setVisible(true);
     }
 
     public Player getPlayer() { return this.player; }
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
+    public ShopPanel getShopPanel() { return this.shop;}
+
+
+    private void loadAssetsFromFolder(String folderPath) {
+        File folder = new File(folderPath);
+
+        if (!folder.exists()) {
+            System.err.println("❌ Folder not found: " + folderPath);
+            return;
+        }
+
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isDirectory()) {
+                    // ถ้าเป็นโฟลเดอร์ ให้วนลูปเข้าไปข้างใน (Recursion)
+                    loadAssetsFromFolder(file.getPath());
+                } else {
+                    String path = file.getPath();
+                    String lowerPath = path.toLowerCase(); // แปลงเป็นตัวเล็กหมดเพื่อเช็ค
+
+                    // -------------------------------------------------------------
+                    // 1. เช็คไฟล์รูปภาพ (Images) ที่ Java รองรับ
+                    // รองรับ: PNG, JPG, JPEG, GIF (ภาพดุ๊กดิ๊ก), BMP (บิตแมพ), WBMP
+                    // -------------------------------------------------------------
+                    if (lowerPath.endsWith(".png") || 
+                        lowerPath.endsWith(".jpg") || 
+                        lowerPath.endsWith(".jpeg") || 
+                        lowerPath.endsWith(".gif") || 
+                        lowerPath.endsWith(".bmp") || 
+                        lowerPath.endsWith(".wbmp")) {
+                        
+                        asset.getImage(path);
+                        // System.out.println("Found Image: " + file.getName());
+
+                    } 
+                    // -------------------------------------------------------------
+                    // 2. เช็คไฟล์เสียง (Audio) ที่ Java Sound รองรับ
+                    // รองรับ: WAV, AIFF, AU, SND (ไม่รองรับ MP3 โดยตรงถ้าไม่มี Plugin)
+                    // -------------------------------------------------------------
+                    else if (lowerPath.endsWith(".wav") || 
+                             lowerPath.endsWith(".aiff") || 
+                             lowerPath.endsWith(".aif") || 
+                             lowerPath.endsWith(".au") || 
+                             lowerPath.endsWith(".snd")) {
+                        
+                        asset.getSound(path);
+                        // System.out.println("Found Sound: " + file.getName());
+                    }
+                }
+            }
+        }
+    }
 }

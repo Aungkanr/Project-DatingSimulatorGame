@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import Player.Player;
-import Utility.*;
+import Utility.GameTime;
+import Utility.SleepEffect;
+import Utility.StdAuto;
+import Utility.Notify;
 
 public class LowEnergyPanel extends JPanel {
     private SleepEffect sleepEffect = new SleepEffect();

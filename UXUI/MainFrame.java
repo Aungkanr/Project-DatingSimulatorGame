@@ -1,12 +1,16 @@
 package UXUI;
 import Player.*;
+import Relationship.Lazel;
 import UXUI.Scene.*;
 import UXUI.SceneNPC.*;
+import UXUI.SceneNPC.Lazel.LazelPanel;
+import UXUI.SceneNPC.Lazel.SpecialScenePanel;
 import UXUI.StatusBarMenu.GamePanel;
 import java.io.File;
 import java.awt.EventQueue;
 
-import javax.sound.sampled.Clip; 
+
+import javax.sound.sampled.Clip; // แก้เป็น Clip
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import Utility.*;
@@ -28,17 +32,13 @@ public class MainFrame extends JFrame {
     public static String filePath = "Music\\Harvest Dawn.wav";  
     public static File file = new File(filePath);
     Utility.AssetManager asset = Utility.AssetManager.getInstance();
-    
     // 2. ประกาศตัวแปร SoundManager
     private MusicManager soundManager;
     private SFXManager sfxManager;
-    private LazelPanel lazelPanel; //X
-
+    private LazelPanel lazelPanel;//X
+    private SpecialScenePanel specialScenePanel; 
 
     public static void main(String[] args) {
-        // [เพิ่มบรรทัดนี้] สั่งให้ Java ไม่ต้องขยายตาม Windows Scale (แก้ภาพแตก/เบลอ)
-        System.setProperty("sun.java2d.uiScale", "1.0"); 
-
         EventQueue.invokeLater(() -> {
             try {
                 MainFrame frame = new MainFrame();
@@ -53,13 +53,13 @@ public class MainFrame extends JFrame {
         // 1. โหลดค่ามาตรฐาน
         stdScreen = new StdAuto();
 
-        PreLoad(); // โหลด asset ล่วงหน้า
+        PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี)
         
         // 2. ตั้งค่าหน้าต่าง
         setTitle("Dating Simulator Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        // [สำคัญ] ใช้ขนาดจาก StdAuto
+        // [สำคัญ] ใช้ขนาดจาก StdAuto (1280x720)
         setSize(stdScreen.width, stdScreen.height);
         
         // จัดกลางจอ + ห้ามย่อขยาย
@@ -110,37 +110,33 @@ public class MainFrame extends JFrame {
         asset.getImage("image\\Scene\\School\\โรงเรียนตอนเช้า.png");
     }
 
-    // --- ส่วนสร้าง Scene ต่างๆ ---
+    // --- ส่วนสร้าง Scene ต่างๆ (แก้ให้ใช้ stdScreen.width/height) ---
     public void createSchoolPanel() { 
-        if (school != null) contentPane.remove(school); // ลบของเก่าก่อนสร้างใหม่เพื่อความชัวร์
         school = new SchoolPanel(this);
         school.setBounds(0, 0, stdScreen.width, stdScreen.height);
         school.setVisible(false);
-        contentPane.add(school); // แนะนำให้ add ใส่ contentPane เพื่อความเป็นระเบียบ
+        add(school);
     }
     
     public void createShopPanel() { 
-        if (shop != null) contentPane.remove(shop);
         shop = new ShopPanel(this);
         shop.setBounds(0, 0, stdScreen.width, stdScreen.height);
         shop.setVisible(false);
-        contentPane.add(shop);
+        add(shop);
     }
 
     public void createHomePanel() { 
-        if (home != null) contentPane.remove(home);
         home = new HomePanel(this);
         home.setBounds(0, 0, stdScreen.width, stdScreen.height);
         home.setVisible(false);
-        contentPane.add(home);
+        add(home);
     }
 
     public void createOfficePanel() { 
-        if (office != null) contentPane.remove(office);
         office = new OfficePanel(this);
         office.setBounds(0, 0, stdScreen.width, stdScreen.height);
         office.setVisible(false);
-        contentPane.add(office);
+        add(office);
     }
     
     // --- เพิ่มฟังก์ชันสร้าง Panel ---  //X
@@ -149,15 +145,30 @@ public class MainFrame extends JFrame {
         lazelPanel = new LazelPanel(this);
         lazelPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         lazelPanel.setVisible(false);
-        contentPane.add(lazelPanel); 
+        contentPane.add(lazelPanel); // Add เข้า contentPane
+    }
+
+    // --- เพิ่มฟังก์ชั่น SpecialScene ของ lazel --- //
+    public void createSpecialScenePanel(Lazel lazel, String sceneText, int sceneLevel) {
+        if (specialScenePanel != null) contentPane.remove(specialScenePanel);
+        specialScenePanel = new SpecialScenePanel(this, lazel, sceneText, sceneLevel);
+        specialScenePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        specialScenePanel.setVisible(false);
+        contentPane.add(specialScenePanel);
     }
 
     // --- เพิ่มฟังก์ชัน Show ---
     public void showLazel() {
         toggleVisibility(lazelPanel);
-        if(gamePanel != null) gamePanel.updateUI(); 
+        if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
     }
 
+    public void showSpecialScene() {
+        toggleVisibility(specialScenePanel);
+        if(gamePanel != null) gamePanel.updateUI();
+    }
+
+    // 4. แก้ไขฟังก์ชัน Mute ให้เรียกผ่าน Manager
     public void toggleMute(boolean isMute) {
         if (soundManager != null) {
             soundManager.setMute(isMute);
@@ -170,8 +181,14 @@ public class MainFrame extends JFrame {
         }
     }
     
-    public MusicManager getSoundManager() { return soundManager; }
-    public Utility.SFXManager getSFXManager() { return sfxManager; }
+    // เพิ่ม Getter เผื่อเอาไปใช้ที่อื่น
+    public MusicManager getSoundManager() {
+        return soundManager;
+    }
+
+    public Utility.SFXManager getSFXManager() {
+        return sfxManager;
+    }
     
     public Clip getClip() { return clip; }
     public void showMenu() { toggleVisibility(menuPanel); }
@@ -182,6 +199,7 @@ public class MainFrame extends JFrame {
     public void showHome() { toggleVisibility(home); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showOffice() { toggleVisibility(office); if(gamePanel!=null) gamePanel.updateUI(); }
 
+    // Helper function เพื่อปิด panel อื่นๆ อัตโนมัติ
     private void toggleVisibility(JPanel showPanel) {
         if(menuPanel != null) menuPanel.setVisible(false);
         if(optionPanel != null) optionPanel.setVisible(false);
@@ -190,8 +208,8 @@ public class MainFrame extends JFrame {
         if(shop != null) shop.setVisible(false);
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
-        if(lazelPanel != null) lazelPanel.setVisible(false); 
-        
+        if(lazelPanel != null) lazelPanel.setVisible(false); //lazel 
+        if(specialScenePanel != null) specialScenePanel.setVisible(false); //specialScencelazel
         if(showPanel != null) showPanel.setVisible(true);
     }
 
@@ -199,4 +217,3 @@ public class MainFrame extends JFrame {
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
 }
-

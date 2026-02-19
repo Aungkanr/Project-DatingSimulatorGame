@@ -39,6 +39,8 @@ public class GamePanel extends JPanel {
     private JButton btnHome;
     private JButton btnSchool;
     private JButton btnExitGame;
+    private JButton neighbor;
+
 
     // ------------------ Object ---------------------
     Utility.AssetManager asset = Utility.AssetManager.getInstance();
@@ -147,11 +149,16 @@ public class GamePanel extends JPanel {
         Hovereffect.HoverEffectRounded(btnShop, stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
         add(btnShop);
 
+        neighbor = createRoundedButton("neighbor");
+        neighbor.setFont(new Font("Tahoma", Font.BOLD, 14));
+        Hovereffect.HoverEffectRounded(neighbor, stdScreen.centerX-480, stdScreen.currentY +160, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
+        add(neighbor);
+
         btnOffice = createRoundedButton("Office");
         btnOffice.setFont(new Font("Tahoma", Font.BOLD, 14));
         Hovereffect.HoverEffectRounded(btnOffice, stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);
-        
+
         btnBag = createRoundedButton("Bag");
         btnBag.setFont(new Font("Tahoma", Font.BOLD, 14));
         Hovereffect.HoverEffectRounded(btnBag, 180, 20, 100, 30, bagBtnColor); 

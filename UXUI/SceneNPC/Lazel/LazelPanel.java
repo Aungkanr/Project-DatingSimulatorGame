@@ -161,7 +161,7 @@
             lazel.addAffection(20); 
             
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
                 "Lazel: (หน้าแดงก่ำ) นี่มัน... Fairy Rose! เจ้าไปหามันมาได้ยังไง? ...ข้าจะเก็บมันไว้อย่างดี ขอบใจนะ", 
                 null, null, 
@@ -173,7 +173,7 @@
             
             // *** ใส่รูปตอนยิ้ม หรือพอใจ ตรงนี้ ***
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
                 "Lazel: ดอกไม้นี่สวยดีนะ... ข้าไม่ค่อยได้รับของแบบนี้เท่าไหร่ แต่ก็ไม่เลว", 
                 null, null, 
@@ -185,7 +185,7 @@
             
             // *** ใส่รูปหน้าปกติ ตรงนี้ ***
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png",
+                "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
                 "Lazel: ขยะ... แต่ข้าจะรับไว้พิจารณา", 
                 null, null, 

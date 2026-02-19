@@ -100,7 +100,7 @@ public class Galadriel extends NPC {
         // ===== 1.5A =====
         DialogueNode n1_5A = new DialogueNode("Lazel",
             "\"เออ! พูดได้ดี! ...อย่าทำให้ข้าผิดหวังล่ะคู่หู! เจอกันเย็นนี้!\" (ตบหลังคุณดังปึก)");
-            n1_5A.imagePath = "image\\Scene\\LazelScene1\\ตาธรรมดา.png"; // ใส่รูปที่ต้องการ
+            n1_5A.imagePath = "image\\Scene\\Lazel\\ซีน1\\ตาธรรมดา.png"; // ใส่รูปที่ต้องการ
         n1_5A.addChoice("โอ้ย! มือหนักชะมัด... แต่ก็เจอกันครับ!", endBest)
              .addChoice("ครับผม", endGood)
              .addChoice("เริ่มไม่อยากไปละ", endNormal);

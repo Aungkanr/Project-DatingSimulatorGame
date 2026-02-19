@@ -79,8 +79,8 @@
             JButton btnBack = new JButton("Back");
             btnBack.setBounds(20, 20, 100, 30);
             btnBack.addActionListener(e -> {
-                mainFrame.createSchoolPanel();
-                mainFrame.showSchool();
+                mainFrame.createShopPanel();
+                mainFrame.showShop();
             });
             Hovereffect.HoverEffect(btnBack, 20, 20, 100, 30, new Color(48, 25, 82));
             add(btnBack);

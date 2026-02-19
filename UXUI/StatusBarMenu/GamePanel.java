@@ -38,9 +38,8 @@ public class GamePanel extends JPanel {
     private JButton btnShop;
     private JButton btnHome;
     private JButton btnSchool;
+    private JButton btnNeighbor;
     private JButton btnExitGame;
-    private JButton neighbor;
-
 
     // ------------------ Object ---------------------
     Utility.AssetManager asset = Utility.AssetManager.getInstance();
@@ -54,9 +53,10 @@ public class GamePanel extends JPanel {
     public static final Color ExitGameColor = new Color(48, 25, 82);    
     public static final Color MoneyColor = new Color(255, 215, 80);  // เหลืองทองสว่าง
     public static final Color schoolColor = new Color(41, 128, 185);     
-    public static final Color homeColor = new Color(230, 126, 34);        
-    public static final Color shopColor = new Color(46, 204, 113);        
-    public static final Color officeColor = new Color(142, 68, 173);    
+    public static final Color homeColor = new Color(230, 126, 34);
+    public static final Color shopColor = new Color(46, 204, 113); 
+    public static final Color officeColor = new Color(142, 68, 173);
+    public static final Color neightborColor = new Color(255, 192, 203);       
     public static final Color bagBtnColor = new Color(139, 69, 19);  // สีน้ำตาล
 
     public GamePanel(MainFrame mainFrame) {
@@ -136,29 +136,29 @@ public class GamePanel extends JPanel {
 
         btnSchool = createRoundedButton("School");
         btnSchool.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffectRounded(btnSchool, stdScreen.centerX-20, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight, schoolColor);
+        Hovereffect.HoverEffectRounded(btnSchool, stdScreen.centerX+80, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight, schoolColor);
         add(btnSchool);
 
         btnHome = createRoundedButton("Home");
         btnHome.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffectRounded(btnHome, stdScreen.centerX-20, stdScreen.currentY+140, stdScreen.buttonWidth, stdScreen.buttonHeight, homeColor);
+        Hovereffect.HoverEffectRounded(btnHome, stdScreen.centerX-20, stdScreen.currentY+180, stdScreen.buttonWidth, stdScreen.buttonHeight, homeColor);
         add(btnHome);
 
         btnShop = createRoundedButton("Shop");
         btnShop.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffectRounded(btnShop, stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
+        Hovereffect.HoverEffectRounded(btnShop, stdScreen.centerX-380, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
         add(btnShop);
-
-        neighbor = createRoundedButton("neighbor");
-        neighbor.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffectRounded(neighbor, stdScreen.centerX-480, stdScreen.currentY +160, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
-        add(neighbor);
 
         btnOffice = createRoundedButton("Office");
         btnOffice.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffectRounded(btnOffice, stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
+        Hovereffect.HoverEffectRounded(btnOffice, stdScreen.centerX+300, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);
 
+        btnNeighbor = createRoundedButton("Neighbor");
+        btnNeighbor.setFont(new Font("Tahoma", Font.BOLD, 14));
+        Hovereffect.HoverEffectRounded(btnNeighbor, stdScreen.centerX-300, stdScreen.currentY+240, stdScreen.buttonWidth, stdScreen.buttonHeight, neightborColor);
+        add(btnNeighbor);
+        
         btnBag = createRoundedButton("Bag");
         btnBag.setFont(new Font("Tahoma", Font.BOLD, 14));
         Hovereffect.HoverEffectRounded(btnBag, 180, 20, 100, 30, bagBtnColor); 
@@ -184,6 +184,12 @@ public class GamePanel extends JPanel {
         btnOffice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fader.fadeInOut(500, 500, ()->{parent.createOfficePanel(); parent.showOffice();}, null);
+            }
+        });
+        
+        btnNeighbor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                fader.fadeInOut(500, 500, ()->{parent.createNeightBorPanel(); parent.showNeighbor();}, null);
             }
         });
 
@@ -297,6 +303,7 @@ public class GamePanel extends JPanel {
         btnShop.setEnabled(true);
         btnHome.setEnabled(true);
         btnSchool.setEnabled(true);
+        btnNeighbor.setEnabled(true);
         btnExitGame.setEnabled(true);
     }
     public void disableAllGamePanel() {
@@ -305,6 +312,7 @@ public class GamePanel extends JPanel {
         btnShop.setEnabled(false);
         btnHome.setEnabled(false);
         btnSchool.setEnabled(false);
+        btnNeighbor.setEnabled(false);
         btnExitGame.setEnabled(false);
     }
 }

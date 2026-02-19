@@ -127,10 +127,11 @@ public class ShopPanel extends JPanel {
         int startX = (stdScreen.width - totalWidth) / 2;
         int gap = 20;
 
-        btnchoice1 = createRoundedButton("Blue jazz $50.");
+        // [แก้ไข] เปลี่ยนตัว j เป็น J ใหญ่ ให้ตรงกับไฟล์ BlueJazz.png
+        btnchoice1 = createRoundedButton("Blue Jazz $50.");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnchoice1.setBounds(startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice1.addActionListener(e -> { tryBuyItem("Blue jazz", 50, gameTime);});
+        btnchoice1.addActionListener(e -> { tryBuyItem("Blue Jazz", 50, gameTime);});
         Hovereffect.HoverEffectRounded(btnchoice1,startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight , BUY_BUTTON);        
         add(btnchoice1);
 
@@ -148,10 +149,11 @@ public class ShopPanel extends JPanel {
         Hovereffect.HoverEffectRounded(btnchoice3 , startX + (stdScreen.buttonWidth * 2) + (gap * 2), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice3);
 
-        btnchoice4 = createRoundedButton("Fairy rose $120.");
+        // [แก้ไข] เปลี่ยนตัว r เป็น R ใหญ่ ให้ตรงกับไฟล์ FairyRose.png
+        btnchoice4 = createRoundedButton("Fairy Rose $120.");
         btnchoice4.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnchoice4.setBounds(startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice4.addActionListener(e -> {tryBuyItem("Fairy rose", 120, gameTime);});
+        btnchoice4.addActionListener(e -> {tryBuyItem("Fairy Rose", 120, gameTime);});
         Hovereffect.HoverEffectRounded(btnchoice4,startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice4);
 
@@ -178,7 +180,15 @@ public class ShopPanel extends JPanel {
         btnBack = createRoundedButton("Back");
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnBack.setBounds(20, 20, 100, 30);
-        btnBack.addActionListener(e -> mainFrame.showGame());;
+        
+        // [แก้ไข] สั่งให้อัปเดต UI หน้าหลัก (GamePanel) เพื่อรีเฟรชตัวเลขเงินและเวลา
+        btnBack.addActionListener(e -> {
+            if(mainFrame.getGamePanel() != null) {
+                mainFrame.getGamePanel().updateUI(); 
+            }
+            mainFrame.showGame();
+        });
+        
         Hovereffect.HoverEffectRounded(btnBack,20, 20, 100, 30, BACK_BUTTON);        
         add(btnBack);   
 

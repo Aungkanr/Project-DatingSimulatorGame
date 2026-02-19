@@ -149,7 +149,7 @@ public class GamePanel extends JPanel {
         Hovereffect.HoverEffectRounded(btnShop, stdScreen.centerX-380, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
         add(btnShop);
 
-        btnOffice = createRoundedButton("Office");
+        btnOffice = createRoundedButton("Blacksmith");
         btnOffice.setFont(new Font("Tahoma", Font.BOLD, 14));
         Hovereffect.HoverEffectRounded(btnOffice, stdScreen.centerX+300, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);
@@ -199,6 +199,9 @@ public class GamePanel extends JPanel {
             setComponentZOrder(invPanel, 0); 
             invPanel.setVisible(true);
             disableAllGamePanel();
+
+            revalidate();//สั่งให้ Swing จัด Layout ทันที ของจะได้เด้งขึ้นมาเลยไม่ล่องหน!
+
             repaint();
         });
 

@@ -9,6 +9,9 @@ public class Player {
     // private Arwen arwen;     //X
     private Galadriel galadriel; 
 
+    // Save Scene
+    private int officeStage = 0;
+
     // Constructor 
     public Player() {
         this.energy = 100; // เริ่มต้น 100
@@ -78,4 +81,17 @@ public class Player {
     }
 
     //-----------------------------------------------
+
+    ///////////////Office Save Scene////////////////////////
+    public int getOfficeStage() {
+        return officeStage;
+    }
+
+    public void setOfficeStage(int stage) {
+        this.officeStage = stage;
+    }
+
+    public void increaseOfficeStage() {
+        this.officeStage++;
+    }
 }

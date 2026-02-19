@@ -28,6 +28,7 @@ public class MainFrame extends JFrame {
     private ShopPanel shop;
     private HomePanel home;
     private OfficePanel office;
+    private NeighBorPanel neighbor;
     private StdAuto stdScreen; 
     private Clip clip; 
     public static String filePath = "Music\\Harvest Dawn.wav";  
@@ -138,6 +139,13 @@ public class MainFrame extends JFrame {
         office.setVisible(false);
         add(office);
     }
+
+    public void createNeightBorPanel() { 
+        neighbor = new NeighBorPanel(this);
+        neighbor.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        neighbor.setVisible(false);
+        add(neighbor);
+    }
     //=========================================================================================================================================================================================
     // --- เพิ่มฟังก์ชันสร้าง Galadriel Panel --------------------------------------  //X
     public void createGaladrielPanel() {
@@ -237,6 +245,7 @@ public class MainFrame extends JFrame {
     public void showShop() { toggleVisibility(shop); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showHome() { toggleVisibility(home); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showOffice() { toggleVisibility(office); if(gamePanel!=null) gamePanel.updateUI(); }
+    public void showNeighbor() { toggleVisibility(neighbor); if(gamePanel!=null) gamePanel.updateUI(); }
 
     // Helper function เพื่อปิด panel อื่นๆ อัตโนมัติ
     private void toggleVisibility(JPanel showPanel) {
@@ -247,6 +256,7 @@ public class MainFrame extends JFrame {
         if(shop != null) shop.setVisible(false);
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
+        if(neighbor != null) neighbor.setVisible(false);
         if(lazelPanel != null) lazelPanel.setVisible(false); 
         if(specialSceneLazelPanel != null) specialSceneLazelPanel.setVisible(false);
         if(galadrielPanel != null) galadrielPanel.setVisible(false); 

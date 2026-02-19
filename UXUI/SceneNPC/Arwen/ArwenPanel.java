@@ -1,26 +1,26 @@
-package UXUI.SceneNPC.Lazel;
+package UXUI.SceneNPC.Arwen;
 
 import UXUI.MainFrame;
 import UXUI.SceneNPC.BaseNPCPanel; //Parent class 
 import UXUI.Scene.CreateTemplateScene;
 import UXUI.Scene.CreateTemplateScene.SceneOption;
 
-public class LazelPanel extends BaseNPCPanel {
+public class ArwenPanel extends BaseNPCPanel {
 
-    public LazelPanel(MainFrame mainFrame) {
-        super(mainFrame, mainFrame.getPlayer().getLazel(), "image\\Scene\\School\\Angryscene.png");
+    public ArwenPanel(MainFrame mainFrame) {
+        super(mainFrame, mainFrame.getPlayer().getArwen(), "image\\Scene\\Bedroom\\ห้องนอน.png");
     }
 
     @Override
     public void returnBtn() {
-        mainFrame.createSchoolPanel();
-        mainFrame.showSchool();
+        mainFrame.createNeightBorPanel();
+        mainFrame.showNeighbor();
     }
 
     @Override
     protected void triggerSpecialScene(String text, int sceneLevel) {
-        mainFrame.createSpecialSceneLazelPanel((Relationship.Lazel) targetNPC, text, sceneLevel);
-        mainFrame.showSpecialSceneLazel();
+        mainFrame.createSpecialSceneArwenPanel((Relationship.Arwen) targetNPC, text, sceneLevel);
+        mainFrame.showSpecialSceneArwen();
     }
 
     @Override
@@ -31,12 +31,12 @@ public class LazelPanel extends BaseNPCPanel {
         removeAll(); 
         CreateTemplateScene scene;
         
-        // Logic คะแนน Gift ของ Lazel
+        // Logic คะแนน Gift ของ Arwen
         if (itemName.equals("Fairy rose")) {
             targetNPC.addAffection(20); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
-                "Lazel", 
+                "Arwen", 
                 "โอ้... Fairy Rose ขอบใจนะ", 
                 null, 
                 null, 
@@ -45,7 +45,7 @@ public class LazelPanel extends BaseNPCPanel {
             targetNPC.addAffection(10); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
-                "Lazel", 
+                "Arwen", 
                 "งดงามมาก...", 
                 null, 
                 null, 
@@ -54,7 +54,7 @@ public class LazelPanel extends BaseNPCPanel {
             targetNPC.addAffection(5); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
-                "Lazel", 
+                "Arwen", 
                 "ขยะ... แต่ข้าจะรับไว้พิจารณา", 
                 null, 
                 null, 

@@ -1,8 +1,11 @@
 package UXUI;
 import Player.*;
+import Relationship.Arwen;
 import Relationship.Galadriel;
 import Relationship.Lazel;
 import UXUI.Scene.*;
+import UXUI.SceneNPC.Arwen.ArwenPanel;
+import UXUI.SceneNPC.Arwen.SpecialSceneArwenPanel;
 import UXUI.SceneNPC.Galadriel.GaladrielPanel;
 import UXUI.SceneNPC.Galadriel.SpecialSceneGaladrielPanel;
 import UXUI.SceneNPC.Lazel.LazelPanel;
@@ -40,8 +43,11 @@ public class MainFrame extends JFrame {
     //NPC
     private LazelPanel lazelPanel;//X
     private GaladrielPanel galadrielPanel ; //x
+    private ArwenPanel arwenPanel;//x
     private SpecialSceneGaladrielPanel specialSceneGaladrielPanel; //x
     private SpecialSceneLazelPanel specialSceneLazelPanel; //x
+    private SpecialSceneArwenPanel specialSceneArwenPanel; //x
+    
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.uiScale", "1.0");
@@ -203,8 +209,36 @@ public class MainFrame extends JFrame {
         toggleVisibility(specialSceneLazelPanel);
         if(gamePanel != null) gamePanel.updateUI();
     }
-    //=======================================================================================
-    
+    //=========================================================================================================================================================================================
+    // --- เพิ่มฟังก์ชันสร้าง Arwen Panel --------------------------------------  //X
+    public void createArwenPanel() {
+        if (arwenPanel != null) contentPane.remove(arwenPanel);
+        arwenPanel = new ArwenPanel(this);
+        arwenPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        arwenPanel.setVisible(false);
+        contentPane.add(arwenPanel); // Add เข้า contentPane
+    }
+
+    // --- เพิ่มฟังก์ชั่น SpecialScene ของ Arwen -------------------------------------- //X
+    public void createSpecialSceneArwenPanel(Arwen arwen, String sceneText, int sceneLevel) {
+        if (specialSceneArwenPanel != null) contentPane.remove(specialSceneArwenPanel);
+        specialSceneArwenPanel = new SpecialSceneArwenPanel(this, arwen, sceneText, sceneLevel);
+        specialSceneArwenPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        specialSceneArwenPanel.setVisible(false);
+        contentPane.add(specialSceneArwenPanel);
+    }
+
+    // --- เพิ่มฟังก์ชัน Show ------------------------------------------------------ //X
+    public void showArwen() {
+        toggleVisibility(arwenPanel);
+        if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
+    }
+    //------showSpecialSceneArwen---------------------------------------------------
+    public void showSpecialSceneArwen() { 
+        toggleVisibility(specialSceneArwenPanel);
+        if(gamePanel != null) gamePanel.updateUI();
+    }
+    //=========================================================================================================================================================================================
 
     // 4. แก้ไขฟังก์ชัน Mute ให้เรียกผ่าน Manager
     public void toggleMute(boolean isMute) {
@@ -257,10 +291,15 @@ public class MainFrame extends JFrame {
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
         if(neighbor != null) neighbor.setVisible(false);
+        //Lazel
         if(lazelPanel != null) lazelPanel.setVisible(false); 
         if(specialSceneLazelPanel != null) specialSceneLazelPanel.setVisible(false);
+        //Galadrie
         if(galadrielPanel != null) galadrielPanel.setVisible(false); 
         if(specialSceneGaladrielPanel != null) specialSceneGaladrielPanel.setVisible(false);
+        //Arwen
+        if(arwenPanel != null) arwenPanel.setVisible(false); 
+        if(specialSceneArwenPanel != null) specialSceneArwenPanel.setVisible(false);
 
         if(showPanel != null) showPanel.setVisible(true);
     }

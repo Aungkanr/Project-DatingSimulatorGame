@@ -199,6 +199,9 @@ public class GamePanel extends JPanel {
             setComponentZOrder(invPanel, 0); 
             invPanel.setVisible(true);
             disableAllGamePanel();
+
+            revalidate();//สั่งให้ Swing จัด Layout ทันที ของจะได้เด้งขึ้นมาเลยไม่ล่องหน!
+
             repaint();
         });
 

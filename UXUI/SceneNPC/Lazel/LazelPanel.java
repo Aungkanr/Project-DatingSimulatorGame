@@ -1,227 +1,68 @@
-    package UXUI.SceneNPC.Lazel;
+package UXUI.SceneNPC.Lazel;
 
-    import javax.swing.*;
-    import java.awt.*;
-    import java.awt.event.ActionListener;
-    import java.util.ArrayList;
-    import java.util.List;
-    import java.util.Map;
+import UXUI.MainFrame;
+import UXUI.SceneNPC.BaseNPCPanel; //Parent class 
+import UXUI.Scene.CreateTemplateScene;
+import UXUI.Scene.CreateTemplateScene.SceneOption;
 
-    import UXUI.MainFrame;
-    import UXUI.Scene.CreateTemplateScene;
-    import UXUI.Hovereffect;
-    import Utility.*;
-    import Relationship.Lazel;
-    import UXUI.Scene.CreateTemplateScene.SceneOption;
+public class LazelPanel extends BaseNPCPanel {
 
+    public LazelPanel(MainFrame mainFrame) {
+        super(mainFrame, mainFrame.getPlayer().getLazel(), "image\\Scene\\School\\Angryscene.png");
+    }
 
-    public class LazelPanel extends JPanel {
-        private MainFrame mainFrame;
-        private StdAuto stdScreen;
-        private Lazel lazel;
-        private JLabel lblBg;
+    @Override
+    public void returnBtn() {
+        mainFrame.createSchoolPanel();
+        mainFrame.showSchool();
+    }
 
-        public LazelPanel(MainFrame mainFrame) {
-            this.mainFrame = mainFrame;
-            this.lazel = mainFrame.getPlayer().getLazel();
-            
-            this.stdScreen = new StdAuto();
-            this.stdScreen.setBtnWHG(250, 60, 20, 0);
+    @Override
+    protected void triggerSpecialScene(String text, int sceneLevel) {
+        mainFrame.createSpecialSceneLazelPanel((Relationship.Lazel) targetNPC, text, sceneLevel);
+        mainFrame.showSpecialSceneLazel();
+    }
 
-            setLayout(null);
-            setBackground(Color.BLACK);
+    @Override
+    protected void processGift(String itemName) {
+        mainFrame.getPlayer().getInventory().removeItem(itemName);
+        targetNPC.markAsGifted();
 
-            showInteractionMenu();
-        }
-
-        // ==========================================
-        // STATE 1: เมนูหลัก (Talk / Give Gift)
-        // ==========================================
-        public void showInteractionMenu() {
-            removeAll();
-
-            // ปุ่ม Talk
-            createButton("Talk", 1, e -> {
-                String text = lazel.getDialogue();
-
-                // ถ้า dialogue นี้มาจาก Special Scene → ส่งไป SpecialScenePanel
-                if (lazel.isLastDialogueSpecial()) {
-                    int sceneLevel = lazel.getLastSpecialSceneLevel();
-                    lazel.resetSpecialSceneFlag();
-                    mainFrame.createSpecialSceneLazelPanel(lazel, text, sceneLevel);
-                    mainFrame.showSpecialSceneLazel();
-                } else {
-                    showDialogueMode(text);
-                }
-            });
-
-            // 2. ปุ่ม Give Gift
-            String giftText = lazel.isGiftedToday() ? "Gift Given (Daily Limit)" : "Give Gift";
-            JButton btnGift = createButton("Give Gift", 2, null);
-            btnGift.setText(giftText);
-            
-            if (lazel.isGiftedToday()) {
-                btnGift.setEnabled(false);
-            } else {
-                // *** เมื่อกดปุ่มนี้ ให้เรียกฟังก์ชันสร้างหน้าเลือกของ ***
-                btnGift.addActionListener(e -> showGiftSelectionMode());
-            }
-            add(btnGift);
-
-            // Status Label
-            JLabel lblStatus = new JLabel("Relationship: Lazel (Lv." + lazel.getHeartLevel() + ")");
-            lblStatus.setFont(new Font("Tahoma", Font.BOLD, 24));
-            lblStatus.setForeground(Color.WHITE);
-            lblStatus.setBounds(50, 50, 600, 40);
-            add(lblStatus);
-
-            // 4. ปุ่ม Back
-            JButton btnBack = new JButton("Back");
-            btnBack.setBounds(20, 20, 100, 30);
-            btnBack.addActionListener(e -> {
-                mainFrame.createSchoolPanel();
-                mainFrame.showSchool();
-            });
-            Hovereffect.HoverEffect(btnBack, 20, 20, 100, 30, new Color(48, 25, 82));
-            add(btnBack);
-
-            setupBackground("image\\Scene\\School\\Angryscene.png"); //ตอน interactionMenu
-            revalidate();
-            repaint();
-        }
-
-        // ==========================================
-        // STATE 2: โหมดบทสนทนาธรรมดา (ไม่มี Choice)
-        // ==========================================
-        private void showDialogueMode(String text) {
-            removeAll();
-
-            CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\Angryscene.png", "Lazel", text, null, null,  new CreateTemplateScene.SceneOption("Continue...", e -> showInteractionMenu()));
-            
-            scene.setBounds(0, 0, getWidth(), getHeight());
-            add(scene);
-            revalidate(); 
-            repaint();
-        }
-
-        // ==========================================
-        // STATE 3: โหมดเลือกของขวัญ (Dynamic Inventory Buttons)
-        // ==========================================
-        private void showGiftSelectionMode() {
-            removeAll();
-            // 1. ดึงข้อมูลของจาก Inventory
-            Map<String, Integer> items = mainFrame.getPlayer().getInventory().getItemsMap();
-            List<SceneOption> optionsList = new ArrayList<>();
-            if (items.isEmpty()) { // 2. ถ้าไม่มีของ
-                optionsList.add(new SceneOption("Back", e -> showInteractionMenu()));
-                CreateTemplateScene scene = new CreateTemplateScene(
-                    "image\\Scene\\School\\Angryscene.png", "System", 
-                    "กระเป๋าของคุณว่างเปล่า...", 
-                    null, null, 
-                    optionsList.toArray(new SceneOption[0])
-                );
-                scene.setBounds(0, 0, getWidth(), getHeight());
-                add(scene);
-            } 
-            // 3. ถ้ามีของ -> วนลูปสร้างปุ่ม
-            else {
-                for (String itemName : items.keySet()) {
-                    int qty = items.get(itemName); //get value (จำนวน)
-                    // สร้างปุ่ม: ชื่อของ (xจำนวน) -> กดแล้วเรียก processGift
-                    optionsList.add(new SceneOption(itemName + " (x" + qty + ")", e -> {
-                        processGift(itemName);
-                    }));
-                }
-                // เพิ่มปุ่ม Cancel
-                optionsList.add(new SceneOption("Cancel", e -> showInteractionMenu()));
-                // สร้าง Scene
-                CreateTemplateScene scene = new CreateTemplateScene(
-                    "image\\Scene\\School\\Angryscene.png", "System", 
-                    "เลือกของขวัญที่จะให้ Lazel:", 
-                    null, null, 
-                    optionsList.toArray(new SceneOption[0])
-                );
-                scene.setBounds(0, 0, getWidth(), getHeight());
-                add(scene);
-            }
-            revalidate();
-            repaint();
-        }
-
-        // ------------- Logic การให้ของขวัญ -------------
-        private void processGift(String itemName) {
-        
-        mainFrame.getPlayer().getInventory().removeItem(itemName);//remove item in bag
-        lazel.markAsGifted(); //mark gifted today
-
-        removeAll(); // clear 
+        removeAll(); 
         CreateTemplateScene scene;
-
+        
+        // Logic คะแนน Gift ของ Lazel
         if (itemName.equals("Fairy rose")) {
-            lazel.addAffection(20); 
-            
+            targetNPC.addAffection(20); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
-                "Lazel: (หน้าแดงก่ำ) นี่มัน... Fairy Rose! เจ้าไปหามันมาได้ยังไง? ...ข้าจะเก็บมันไว้อย่างดี ขอบใจนะ", 
-                null, null, 
-                new SceneOption("Continue...", e -> showInteractionMenu()) // กลับหน้าเมนู
-            );
-        } 
-        else if (itemName.equals("Tulip") || itemName.equals("Poppy")) {
-            lazel.addAffection(10); // คะแนนปานกลาง
-            
-            // *** ใส่รูปตอนยิ้ม หรือพอใจ ตรงนี้ ***
+                "โอ้... Fairy Rose ขอบใจนะ", 
+                null, 
+                null, 
+                new SceneOption("Continue...", e -> showInteractionMenu()));
+        } else if (itemName.equals("Tulip") || itemName.equals("Poppy")) {
+            targetNPC.addAffection(10); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
-                "Lazel: ดอกไม้นี่สวยดีนะ... ข้าไม่ค่อยได้รับของแบบนี้เท่าไหร่ แต่ก็ไม่เลว", 
-                null, null, 
-                new SceneOption("Continue...", e -> showInteractionMenu()) // กลับหน้าเมนู
-            );
-        } 
-        else {
-            lazel.addAffection(5); // คะแนนปกติ
-            
-            // *** ใส่รูปหน้าปกติ ตรงนี้ ***
+                "งดงามมาก...", 
+                null, 
+                null, 
+                new SceneOption("Continue...", e -> showInteractionMenu()));
+        } else {
+            targetNPC.addAffection(5); 
             scene = new CreateTemplateScene(
-                "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
+                "image\\Scene\\LazelScene1\\เขิน.png", 
                 "Lazel", 
-                "Lazel: ขยะ... แต่ข้าจะรับไว้พิจารณา", 
-                null, null, 
-                new SceneOption("Continue...", e -> showInteractionMenu()) // กลับหน้าเมนู
-            );
+                "ขยะ... แต่ข้าจะรับไว้พิจารณา", 
+                null, 
+                null, 
+                new SceneOption("Continue...", e -> showInteractionMenu()));
         }
         
         scene.setBounds(0, 0, getWidth(), getHeight());
         add(scene);
-        revalidate(); 
-        repaint();
+        revalidate(); repaint();
     }
-
-        // --- Helper Methods ---
-        private JButton createButton(String text, int order, ActionListener action) {
-            int btnW = stdScreen.buttonWidth;
-            int btnH = stdScreen.buttonHeight;
-            int gap  = 20;
-            int x    = stdScreen.centerX;
-            int y    = stdScreen.bottomY - ((3 - order) * (btnH + gap));
-
-            JButton btn = new JButton(text);
-            btn.setFont(new Font("Tahoma", Font.BOLD, 18));
-            btn.setBounds(x, y, btnW, btnH);
-            if(action != null) btn.addActionListener(action);
-            Hovereffect.HoverEffect(btn, x, y, btnW, btnH, new Color(85, 107, 47)); 
-            add(btn);
-            return btn;
-        }
-
-        private void setupBackground(String path) {
-            lblBg = new JLabel("");
-            ImageIcon icon = AssetManager.getInstance().getImage(path);
-            new Utility.CheckImage().checkImage(icon, lblBg, stdScreen.width, stdScreen.height);
-            lblBg.setBounds(0, 0, stdScreen.width, stdScreen.height);
-            add(lblBg);
-            setComponentZOrder(lblBg, getComponentCount() - 1);
-        }
-    }
+}

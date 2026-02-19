@@ -45,7 +45,7 @@ public class ShopPanel extends JPanel {
     private JButton btnchoice3;
     private JButton btnchoice4;
     private JButton btnBack;
-    private JButton Galadriel;     
+    private JButton Galadriel;
     private ConfirmPanel dialog;
     private MainFrame mainFrame ;
     

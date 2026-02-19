@@ -149,7 +149,7 @@ public class GamePanel extends JPanel {
         Hovereffect.HoverEffectRounded(btnShop, stdScreen.centerX-380, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
         add(btnShop);
 
-        btnOffice = createRoundedButton("Office");
+        btnOffice = createRoundedButton("Blacksmith");
         btnOffice.setFont(new Font("Tahoma", Font.BOLD, 14));
         Hovereffect.HoverEffectRounded(btnOffice, stdScreen.centerX+300, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);

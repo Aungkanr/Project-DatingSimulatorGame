@@ -1,26 +1,26 @@
-package UXUI.SceneNPC.Galadriel;
+package UXUI.SceneNPC.Arwen;
 
 import UXUI.MainFrame;
 import UXUI.SceneNPC.BaseNPCPanel; //Parent class 
 import UXUI.Scene.CreateTemplateScene;
 import UXUI.Scene.CreateTemplateScene.SceneOption;
 
-public class GaladrielPanel extends BaseNPCPanel {
+public class ArwenPanel extends BaseNPCPanel {
 
-    public GaladrielPanel(MainFrame mainFrame) {
-        super(mainFrame, mainFrame.getPlayer().getGaladriel(), "image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
+    public ArwenPanel(MainFrame mainFrame) {
+        super(mainFrame, mainFrame.getPlayer().getArwen(), "image\\Scene\\Bedroom\\ห้องนอน.png");
     }
 
     @Override
     public void returnBtn() {
-        mainFrame.createShopPanel();
-        mainFrame.showShop();
+        mainFrame.createNeightBorPanel();
+        mainFrame.showNeighbor();
     }
 
     @Override
     protected void triggerSpecialScene(String text, int sceneLevel) {
-        mainFrame.createSpecialSceneGaladrielPanel((Relationship.Galadriel) targetNPC, text, sceneLevel);
-        mainFrame.showSpecialSceneGaladriel();
+        mainFrame.createSpecialSceneArwenPanel((Relationship.Arwen) targetNPC, text, sceneLevel);
+        mainFrame.showSpecialSceneArwen();
     }
 
     @Override
@@ -31,12 +31,12 @@ public class GaladrielPanel extends BaseNPCPanel {
         removeAll(); 
         CreateTemplateScene scene;
         
-        // Logic คะแนน Gift ของ Galadriel
+        // Logic คะแนน Gift ของ Arwen
         if (itemName.equals("Fairy rose")) {
             targetNPC.addAffection(20); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
-                "Galadriel", 
+                "Arwen", 
                 "โอ้... Fairy Rose ขอบใจนะ", 
                 null, 
                 null, 
@@ -45,7 +45,7 @@ public class GaladrielPanel extends BaseNPCPanel {
             targetNPC.addAffection(10); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
-                "Galadriel", 
+                "Arwen", 
                 "งดงามมาก...", 
                 null, 
                 null, 
@@ -54,7 +54,7 @@ public class GaladrielPanel extends BaseNPCPanel {
             targetNPC.addAffection(5); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
-                "Galadriel", 
+                "Arwen", 
                 "ขยะ... แต่ข้าจะรับไว้พิจารณา", 
                 null, 
                 null, 

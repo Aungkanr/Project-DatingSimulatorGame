@@ -154,22 +154,38 @@ public class InventoryPanel extends JPanel {
 
         // 1. Icon (ซ้าย)
         JLabel lblIcon = new JLabel();
-        String path = "image\\Flower\\"; // Path ตามที่คุณระบุ (รบกวนตรวจสอบอีกทีว่าตอนรันจริง มันมองเห็น Drive E ไหม แนะนำให้ย้ายเข้าโฟลเดอร์โปรเจค เช่น "image/Flower/")
         
         // แปลงชื่อให้ตรงกับไฟล์ (ลบเว้นวรรค)
         String fileName = itemName.replace(" ", "") + ".png"; 
-        File imgFile = new File(path + fileName);
         
-        if (imgFile.exists()) {
+        // เพิ่ม Path ทั้งหมดที่มีโอกาสเก็บรูปไอเทมไว้ (ทั้งดอกไม้และดาบ)
+        String[] possiblePaths = {
+            "image/Flower/",
+            "image/Sword/",
+            "image/"
+        };
+        
+        File imgFile = null;
+        // วนลูปหาว่ารูปนี้อยู่ในโฟลเดอร์ไหน
+        for (String p : possiblePaths) {
+            File tempFile = new File(p + fileName);
+            if (tempFile.exists()) {
+                imgFile = tempFile;
+                break; // ถ้าเจอรูปแล้ว ให้หยุดหา
+            }
+        }
+        
+        if (imgFile != null && imgFile.exists()) {
             ImageIcon icon = new ImageIcon(imgFile.getPath());
             // ย่อรูปให้ขนาดพอดี
             Image img = icon.getImage().getScaledInstance(40, 60, Image.SCALE_SMOOTH); 
             lblIcon.setIcon(new ImageIcon(img));
         } else {
-            // ถ้าหารูปไม่เจอ ให้เว้นว่าง หรือใส่รูป default
+            // ถ้าหารูปไม่เจอ ให้เว้นว่าง หรือใส่รูป default (เครื่องหมาย ?)
             lblIcon.setPreferredSize(new Dimension(40, 60));
-            lblIcon.setText("?"); // กันเหนียว
+            lblIcon.setText("?"); 
             lblIcon.setForeground(Color.WHITE);
+            lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
         }
         row.add(lblIcon, BorderLayout.WEST);
 

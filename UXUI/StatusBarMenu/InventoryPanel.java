@@ -160,9 +160,9 @@ public class InventoryPanel extends JPanel {
         
         // เพิ่ม Path ทั้งหมดที่มีโอกาสเก็บรูปไอเทมไว้ (ทั้งดอกไม้และดาบ)
         String[] possiblePaths = {
-            "image/Flower/",
-            "image/Sword/",
-            "image/"
+            "image//Flower//",
+            "image//Sword//",
+            "image//"
         };
         
         File imgFile = null;

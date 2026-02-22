@@ -3,13 +3,19 @@ package UXUI.CheatPanel;
 import java.awt.*;
 import javax.swing.*;
 import UXUI.MainFrame;
+import Utility.Notify;
+import Utility.StdAuto;
 
 public class Cheat extends JFrame {
 
     private MainFrame mainFrame;
+    private StdAuto stdScreen;
+    private Notify realNotify;
 
     public Cheat(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+        this.stdScreen = new StdAuto();
+        this.stdScreen.setBtnWHG(250, 60, 20, 0);
 
         setTitle("Developer Cheat");
         setSize(350, 400);
@@ -22,6 +28,10 @@ public class Cheat extends JFrame {
 
         // พื้นหลังสีดำ
         getContentPane().setBackground(new Color(30, 30, 30));
+        //notify
+        realNotify = new Notify(stdScreen.width);
+        realNotify.setBounds(0, 50, stdScreen.width, 50); 
+        add(realNotify);
 
         initUI();
     }
@@ -36,7 +46,9 @@ public class Cheat extends JFrame {
         JButton btnAddMoney = createCheatButton("Add Money +1000");
         btnAddMoney.addActionListener(e -> {
             mainFrame.getPlayer().increaseMoney(1000);
-            mainFrame.getGamePanel().updateUI();
+            if (mainFrame.getGamePanel() != null) mainFrame.getGamePanel().updateUI();//Game Panel
+            if (mainFrame.getOfficePanel() != null) mainFrame.getOfficePanel().updateUI();//Office Panel
+
         });
         add(btnAddMoney);
 
@@ -44,46 +56,47 @@ public class Cheat extends JFrame {
         JButton btnMaxEnergy = createCheatButton("Reset Energy");
         btnMaxEnergy.addActionListener(e -> {
             mainFrame.getPlayer().setEnergy(100);
-            mainFrame.getGamePanel().updateUI();
+            if (mainFrame.getGamePanel() != null) mainFrame.getGamePanel().updateUI();//Game Panel
+            if (mainFrame.getOfficePanel() != null) mainFrame.getOfficePanel().updateUI();//Office Panel
         });
         add(btnMaxEnergy);
 
         // --- ข้ามเวลา ---
         JButton btnNextDay = createCheatButton("Skip to next time");
         btnNextDay.addActionListener(e -> {
-            mainFrame.getGameTime().nextTime();
-            mainFrame.getGamePanel().updateUI();
+            if (mainFrame.getGameTime().getTimeSlot() >= 3) {
+                realNotify.showNotify("Sleep to skip day!!!.", Color.RED, 2050);
+            } else mainFrame.getGameTime().nextTime();
+            if (mainFrame.getGamePanel() != null) mainFrame.getGamePanel().updateUI();//Game Panel
+            if (mainFrame.getOfficePanel() != null) mainFrame.getOfficePanel().updateUI();//Office Panel
+            if (mainFrame.getSchoolPanel() != null) mainFrame.getSchoolPanel().updateUI();//School Panel
+            if (mainFrame.getNeighBorPanel() != null) mainFrame.getNeighBorPanel().updateUI();//Neighbor Panel
+            if (mainFrame.getShopPanel() != null) mainFrame.getShopPanel().updateUI();//Shop Panel
         });
         add(btnNextDay);
 
         // --- เพิ่มความสัมพันธ์ ---
-        JButton btnLazel = createCheatButton("increaseAffection (Lazel +50 point)");
+        JButton btnLazel = createCheatButton("Affection(Lazel +50)");
         btnLazel.addActionListener(e -> {
             mainFrame.getPlayer().getLazel().addAffection(50);
-            mainFrame.getGamePanel().updateUI();
-            if (mainFrame.getLazelPanel() != null && mainFrame.getLazelPanel().isVisible()) {
-                mainFrame.getLazelPanel().updateStatusUI();
-            }
+            if (mainFrame.getLazelPanel() != null && mainFrame.getLazelPanel().isVisible()) mainFrame.getLazelPanel().updateStatusUI();//LazelPanel
+            
         });
         add(btnLazel);
 
-        JButton btnGaladriel = createCheatButton("increaseAffection (Galadriel +50 point)");
+        JButton btnGaladriel = createCheatButton("Affection(Galadriel +50)");
         btnGaladriel.addActionListener(e -> {
             mainFrame.getGaladriel().addAffection(50);
-            mainFrame.getGamePanel().updateUI();
-            if (mainFrame.getGaladrielPanel() != null && mainFrame.getGaladrielPanel().isVisible()) {
-                mainFrame.getGaladrielPanel().updateStatusUI();
-            }
+            if (mainFrame.getGaladrielPanel() != null && mainFrame.getGaladrielPanel().isVisible()) mainFrame.getGaladrielPanel().updateStatusUI();//GaladrielPanel
+    
         });
         add(btnGaladriel);
 
-        JButton btnArwen = createCheatButton("increaseAffection (Arwen +50 point)");
+        JButton btnArwen = createCheatButton("Affection(Arwen +50)");
         btnArwen.addActionListener(e -> {
             mainFrame.getArwen().addAffection(50);
-            mainFrame.getGamePanel().updateUI();
-            if (mainFrame.getArwenPanel() != null && mainFrame.getArwenPanel().isVisible()) {
-                mainFrame.getArwenPanel().updateStatusUI();
-            }
+            if (mainFrame.getArwenPanel() != null && mainFrame.getArwenPanel().isVisible()) mainFrame.getArwenPanel().updateStatusUI();//ArwenPanel
+
         });
         add(btnArwen);
 

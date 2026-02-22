@@ -324,11 +324,14 @@ public class MainFrame extends JFrame {
 
         if(showPanel != null) showPanel.setVisible(true);
     }
-
+    //Panel
     public Player getPlayer() { return this.player; }
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
     public ShopPanel getShopPanel() { return this.shop;}
+    public OfficePanel getOfficePanel() {return this.office;}
+    public SchoolPanel getSchoolPanel() {return this.school;}
+    public NeighBorPanel getNeighBorPanel () {return this.neighbor;}
     //NPC Panel
     public LazelPanel getLazelPanel() { return lazelPanel; }
     public GaladrielPanel getGaladrielPanel() { return galadrielPanel; }

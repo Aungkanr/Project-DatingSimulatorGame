@@ -17,20 +17,20 @@ public class NeighBorPanel extends JPanel {
         this.mainFrame = mainFrame;
         this.stdScreen = new StdAuto();
         this.stdScreen.setBtnWHG(250, 60, 20, 0);
+
         this.setLayout(new java.awt.BorderLayout());
         setBackground(Color.BLACK);
 
         this.realGameTime = mainFrame.getGameTime(); 
         this.realNotify = new Notify(stdScreen.width); 
-        this.realNotify.setBounds(0, 50, stdScreen.width, 50); 
-        add(realNotify); 
-        // ---------------------------------------------------------
-        initComponents();
-        setComponentZOrder(realNotify, 0);
+        this.realNotify.setBounds(0, 50, stdScreen.width, 50);
+
+        updateUI();
     }
 
     public void initComponents() {
-        CreateTemplateScene scene = new CreateTemplateScene("image\\Scene\\School\\โรงเรียนตอนเช้า.png", null, null, e -> mainFrame.showGame() , "Back to Town", 
+        String currentBgPath = getNeighborBgPath(realGameTime.getTimeString());
+        CreateTemplateScene scene = new CreateTemplateScene(currentBgPath, null, null, e -> mainFrame.showGame() , "Back to Town", 
         new CreateTemplateScene.SceneOption("Talk to Arwen", e -> {
             if (realGameTime.getTimeSlot() == 0 || realGameTime.getTimeSlot() == 2 ) {
                 mainFrame.createArwenPanel(); 
@@ -40,10 +40,26 @@ public class NeighBorPanel extends JPanel {
         }
         ));
 
-        add(scene, java.awt.BorderLayout.CENTER);
-        revalidate();
-        repaint();  
-        
+        add(scene, java.awt.BorderLayout.CENTER);        
     }
-
+    // --- เลือก Path รูปภาพตาม Time ---
+    private String getNeighborBgPath(String timeString) {
+        switch (timeString) {
+            case "Morning": return "image\\Scene\\NeighBor\\บ้านเพื่อนตอนเช้า.png";
+            case "Noon":    return "image\\Scene\\NeighBor\\บ้านเพื่อนตอนเที่ยง.png";
+            case "Evening": return "image\\Scene\\NeighBor\\บ้านเพื่อนตอนเย็น.png";
+            case "Night":   return "image\\Scene\\NeighBor\\บ้านเพื่อนตอนกลางคืน.png";
+            default:        return "image\\Scene\\NeighBor\\บ้านเพื่อนตอนเช้า.png";
+        }
+    }
+    // --- Real-time --- update
+    public void updateUI() {
+        if (mainFrame == null) return;
+        removeAll();
+        add(realNotify);
+        initComponents(); 
+        setComponentZOrder(realNotify, 0); 
+        revalidate(); 
+        repaint();    
+    }
 }

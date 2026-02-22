@@ -35,7 +35,9 @@ public class OfficePanel extends JPanel {
     private JLabel lblTime;
     private JLabel lblMoney;
     private Notify shopNotify;
+    private JLabel lblEnergy;  
     private StatusBar energyBar;
+    private JLabel lblMap ;
     private StdAuto stdScreen;
     private ConfirmPanel dialog;
     private JButton btnchoice1;
@@ -89,6 +91,12 @@ public class OfficePanel extends JPanel {
         energyBar.setBounds(20, 10, 410, 20);
         statusPanel.add(energyBar);
 
+        lblEnergy = new JLabel("Energy: " + mainFrame.getPlayer().getEnergy());
+        lblEnergy.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblEnergy.setForeground(Color.WHITE);
+        lblEnergy.setBounds(250, 40, 200, 35); // วางตำแหน่งข้างๆ lblMoney
+        statusPanel.add(lblEnergy);
+
         // money
         Player initialPlayer = mainFrame.getPlayer(); 
         lblMoney = new JLabel("Money: " + initialPlayer.getMoney());
@@ -140,28 +148,33 @@ public class OfficePanel extends JPanel {
         btnchoice1 = createRoundedButton("Iron Sword $150.");
         btnchoice1.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnchoice1.setBounds(startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice1.addActionListener(e -> { tryBuyItem("Iron Sword", 150, gameTime);});
+        btnchoice1.addActionListener(e -> { tryBuyItem("Iron Sword", 150 );});
         Hovereffect.HoverEffectRounded(btnchoice1,startX, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight , BUY_BUTTON);        
         add(btnchoice1);
 
         btnchoice2 = createRoundedButton("Zenith $400.");
         btnchoice2.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnchoice2.setBounds(startX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice2.addActionListener(e -> { tryBuyItem("Zenith", 400, gameTime);});
+        btnchoice2.addActionListener(e -> { tryBuyItem("Zenith", 400);});
         Hovereffect.HoverEffectRounded(btnchoice2,startX + stdScreen.buttonWidth + gap, btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice2);
 
         btnchoice3 = createRoundedButton("Excalibur $250.");
         btnchoice3.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnchoice3.setBounds(startX + (stdScreen.buttonWidth * 2) + (gap * 2), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice3.addActionListener(e -> {tryBuyItem("Excalibur", 250, gameTime);});
+        btnchoice3.addActionListener(e -> {tryBuyItem("Excalibur", 250);});
         Hovereffect.HoverEffectRounded(btnchoice3 , startX + (stdScreen.buttonWidth * 2) + (gap * 2), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice3);
 
         btnchoice4 = createRoundedButton(text);
         btnchoice4.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnchoice4.setBounds(startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnchoice4.addActionListener(e -> {Scene();});
+        btnchoice4.addActionListener(e -> {
+            if (gameTime.getTimeSlot() < 3) {
+                Scene();
+            } else shopNotify.showNotify("Night has fallen, go to sleep.", Color.RED, 2000);
+            
+        });
         Hovereffect.HoverEffectRounded(btnchoice4,startX + (stdScreen.buttonWidth * 3) + (gap * 3), btnY, stdScreen.buttonWidth, stdScreen.buttonHeight, BUY_BUTTON);        
         add(btnchoice4);
 
@@ -174,7 +187,7 @@ public class OfficePanel extends JPanel {
         add(btnBack);   
 
     //---------------------------Background หน้าร้าน---------------------------
-        JLabel lblMap = new JLabel("");
+        lblMap = new JLabel("");
         ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage("image\\Scene\\Office\\Barad-durWork.png");
         checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
@@ -376,7 +389,7 @@ public class OfficePanel extends JPanel {
     }
 
     //-------------Method to reduce code duplication-----------------
-    private void tryBuyItem(String itemName, int price, GameTime gameTime) {
+    private void tryBuyItem(String itemName, int price) {
         if (gameTime.getTimeSlot() < 3) {
             dialog.show("Buy " + itemName + " for $" + price + "?", null, "YES", e -> Detect(itemName, price));
         } else {
@@ -405,5 +418,22 @@ public class OfficePanel extends JPanel {
     public void updateEnergyBar() {
             Player player = mainFrame.getPlayer();
             energyBar.setEnergy(player.getEnergy());
+    }
+
+    public void updateUI() {
+        if (mainFrame == null ) return ;
+        Player player = mainFrame.getPlayer();
+        GameTime gTime = mainFrame.getGameTime(); 
+
+        energyBar.setEnergy(player.getEnergy());
+        lblEnergy.setText("Energy: " + player.getEnergy());
+
+        lblEnergy.setForeground(Color.white);
+        lblMoney.setText("Money: " + player.getMoney());
+        lblDay.setText("Day: " + gTime.getDay());
+        lblTime.setText("Time: " + gTime.getTimeString());
+        // [เพิ่มใหม่] อัปเดตไอคอนเวลาทุกครั้งที่เวลาเดิน
+        lblTime.setIcon(getTimeIcon(gTime.getTimeString()));
+        repaint();
     }
 }

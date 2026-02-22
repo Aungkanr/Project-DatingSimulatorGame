@@ -262,17 +262,17 @@ public class GamePanel extends JPanel {
         GameTime gTime = parent.getGameTime(); 
 
         energyBar.setEnergy(player.getEnergy());
-
         lblEnergy.setText("Energy: " + player.getEnergy());
+
         lblEnergy.setForeground(Color.white);
         lblMoney.setText("Money: " + player.getMoney());
         lblDay.setText("Day: " + gTime.getDay());
-        
         lblTime.setText("Time: " + gTime.getTimeString());
         // [เพิ่มใหม่] อัปเดตไอคอนเวลาทุกครั้งที่เวลาเดิน
         lblTime.setIcon(getTimeIcon(gTime.getTimeString()));
 
-        ChangeImageMap.updateMapImage(gTime.getTimeString(), lblMap, checkImageUtil, stdScreen);
+        Utility.ChangeImageMap.updateMapImage(gTime.getTimeString(), lblMap, checkImageUtil, stdScreen);
+        repaint();
     }
     
     public void updateEnergyBar() {

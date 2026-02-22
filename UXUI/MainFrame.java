@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
     // 2. ประกาศตัวแปร SoundManager
     private MusicManager soundManager;
     private SFXManager sfxManager;
-    //NPC
+    //NPC Panel 
     private LazelPanel lazelPanel;//X
     private GaladrielPanel galadrielPanel ; //x
     private ArwenPanel arwenPanel;//x
@@ -329,4 +329,12 @@ public class MainFrame extends JFrame {
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
     public ShopPanel getShopPanel() { return this.shop;}
+    //NPC Panel
+    public LazelPanel getLazelPanel() { return lazelPanel; }
+    public GaladrielPanel getGaladrielPanel() { return galadrielPanel; }
+    public ArwenPanel getArwenPanel() { return arwenPanel; }
+    //NPC UI status Ralationship
+    public Lazel getLazel() { return this.player.getLazel(); }
+    public Galadriel getGaladriel() { return this.player.getGaladriel() ;}
+    public Arwen getArwen() { return this.player.getArwen() ;}
 }

@@ -32,6 +32,10 @@ public class GameTime {
         this.timeSlot = 0 ; // reset to Moring 
     } 
 
+    public void nextTime () {
+        this.timeSlot ++ ; // reset to Moring 
+    } 
+
     // ------------------ Getters ------------------------
     public int getDay() {
         return day;

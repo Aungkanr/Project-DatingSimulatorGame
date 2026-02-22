@@ -20,22 +20,40 @@ public abstract class BaseNPCPanel extends JPanel {
     protected NPC targetNPC; // Lazel/Galadriel/Arwen
     protected String bgPath;
     protected JLabel lblBg;
+    protected JLabel lblStatus; 
 
     // Constructor (Parent class)  
     public BaseNPCPanel(MainFrame mainFrame, NPC targetNPC, String bgPath) {
         this.mainFrame = mainFrame;
         this.targetNPC = targetNPC;
         this.bgPath = bgPath;
-        
+                
         this.stdScreen = new StdAuto();
         this.stdScreen.setBtnWHG(250, 60, 20, 0);
 
         setLayout(null);
         setBackground(Color.BLACK);
 
+        initStatusLabel();
         showInteractionMenu();
+        
     }
 
+    private void initStatusLabel() {
+        lblStatus = new JLabel("Relationship: " + targetNPC.getName() + " (Lv." + targetNPC.getHeartLevel() + ")");
+        lblStatus.setFont(new Font("Tahoma", Font.BOLD, 24));
+        lblStatus.setForeground(Color.WHITE);
+        lblStatus.setBounds(50, 50, 600, 40);
+        add(lblStatus);
+    }
+
+    // screen NPC update (Relationship)
+    public void updateStatusUI() {
+        if (lblStatus != null && targetNPC != null) {
+            lblStatus.setText("Relationship: " + targetNPC.getName() + " (Lv." + targetNPC.getHeartLevel() + ")");
+            repaint();
+        }
+    }
     // ==========================================
     // abstract class --> child class เขียนเอง
     // ==========================================
@@ -72,12 +90,8 @@ public abstract class BaseNPCPanel extends JPanel {
         add(btnGift);
 
         // --------------------- Status Label ---------------------
-        JLabel lblStatus = new JLabel("Relationship: " + targetNPC.getName() + " (Lv." + targetNPC.getHeartLevel() + ")");
-        lblStatus.setFont(new Font("Tahoma", Font.BOLD, 24));
-        lblStatus.setForeground(Color.WHITE);
-        lblStatus.setBounds(50, 50, 600, 40);
+        updateStatusUI(); 
         add(lblStatus);
-
         // --------------------- ปุ่ม Back ---------------------
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(20, 20, 100, 30);

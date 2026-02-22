@@ -35,40 +35,55 @@ public class Cheat extends JFrame {
         // --- เสกเงิน ---
         JButton btnAddMoney = createCheatButton("Add Money +1000");
         btnAddMoney.addActionListener(e -> {
-            
+            mainFrame.getPlayer().increaseMoney(1000);
+            mainFrame.getGamePanel().updateUI();
         });
         add(btnAddMoney);
 
         // --- Reset พลังงาน ---
         JButton btnMaxEnergy = createCheatButton("Reset Energy");
         btnMaxEnergy.addActionListener(e -> {
-
+            mainFrame.getPlayer().setEnergy(100);
+            mainFrame.getGamePanel().updateUI();
         });
         add(btnMaxEnergy);
 
-        // --- ข้ามวัน ---
-        JButton btnNextDay = createCheatButton("Skip to Next Day");
+        // --- ข้ามเวลา ---
+        JButton btnNextDay = createCheatButton("Skip to next time");
         btnNextDay.addActionListener(e -> {
-
+            mainFrame.getGameTime().nextTime();
+            mainFrame.getGamePanel().updateUI();
         });
         add(btnNextDay);
 
         // --- เพิ่มความสัมพันธ์ ---
-        JButton btnLazel = createCheatButton("Max Relationship Champ");
+        JButton btnLazel = createCheatButton("increaseAffection (Lazel +50 point)");
         btnLazel.addActionListener(e -> {
-
+            mainFrame.getPlayer().getLazel().addAffection(50);
+            mainFrame.getGamePanel().updateUI();
+            if (mainFrame.getLazelPanel() != null && mainFrame.getLazelPanel().isVisible()) {
+                mainFrame.getLazelPanel().updateStatusUI();
+            }
         });
         add(btnLazel);
 
-        JButton btnGaladriel = createCheatButton("Max Relationship Beer");
+        JButton btnGaladriel = createCheatButton("increaseAffection (Galadriel +50 point)");
         btnGaladriel.addActionListener(e -> {
-
+            mainFrame.getGaladriel().addAffection(50);
+            mainFrame.getGamePanel().updateUI();
+            if (mainFrame.getGaladrielPanel() != null && mainFrame.getGaladrielPanel().isVisible()) {
+                mainFrame.getGaladrielPanel().updateStatusUI();
+            }
         });
         add(btnGaladriel);
 
-        JButton btnArwen = createCheatButton("Max Relationship อังคาร");
+        JButton btnArwen = createCheatButton("increaseAffection (Arwen +50 point)");
         btnArwen.addActionListener(e -> {
-
+            mainFrame.getArwen().addAffection(50);
+            mainFrame.getGamePanel().updateUI();
+            if (mainFrame.getArwenPanel() != null && mainFrame.getArwenPanel().isVisible()) {
+                mainFrame.getArwenPanel().updateStatusUI();
+            }
         });
         add(btnArwen);
 

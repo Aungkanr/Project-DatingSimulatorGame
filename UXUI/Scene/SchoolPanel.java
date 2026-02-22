@@ -22,7 +22,7 @@ public class SchoolPanel extends JPanel {
         this.realGameTime = mainFrame.getGameTime(); // ดึงเวลามาจาก MainFrame
         this.realNotify = new Notify(stdScreen.width); // สร้างตัวแจ้งเตือน
         this.realNotify.setBounds(0, 50, stdScreen.width, 50); // กำหนดตำแหน่ง
-        add(realNotify); // *** อย่าลืม add เข้า Panel ***
+        add(realNotify); 
 
         // ---------------------------------------------------------
         initComponents();

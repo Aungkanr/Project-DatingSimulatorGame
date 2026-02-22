@@ -73,7 +73,7 @@ public class SpecialSceneLazelPanel extends JPanel {
         int btnW = 200;
         int btnH = 50;
         int btnX = (stdScreen.width - btnW) / 2;
-        int btnY = stdScreen.height - 80;
+        int btnY = stdScreen.height - 80 - btnH;
 
         JButton btnContinue = new JButton("Continue...");
         btnContinue.setFont(new Font("Tahoma", Font.BOLD, 16));

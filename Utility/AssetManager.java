@@ -110,4 +110,9 @@ public class AssetManager {
         soundCache.clear();
         System.out.println("🧹 Memory Cleared!");
     }
+
+    public ImageIcon getScaledImage(String fullPath, int i, int j) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getScaledImage'");
+    }
 }

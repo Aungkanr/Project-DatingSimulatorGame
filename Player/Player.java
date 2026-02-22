@@ -6,8 +6,11 @@ public class Player {
     private Inventory inventory;
 
     private Lazel lazel;
-    // private Arwen arwen;     //X
+    private Arwen arwen;  
     private Galadriel galadriel; 
+
+    // Save Scene
+    private int officeStage = 0;
 
     // Constructor 
     public Player() {
@@ -16,7 +19,7 @@ public class Player {
         this.inventory = new Inventory() ; //create obj bag
 
         this.lazel = new Lazel();
-        // this.arwen = new Arwen();//X
+        this.arwen = new Arwen();
         this.galadriel = new Galadriel();
     }   
     //------------------------ (Getters & Setter)------------------------
@@ -43,8 +46,8 @@ public class Player {
     }
 
     public Lazel getLazel() { return lazel; }
-    //public Arwen getArwen() { return arwen; } //X
-    public Galadriel galadriel() { return galadriel ;} 
+    public Arwen getArwen() { return arwen; } 
+    public Galadriel getGaladriel() { return galadriel ;} 
 
     
     //-----------------------------เน้นใช้ ------------------------
@@ -73,9 +76,22 @@ public class Player {
     // เพิ่ม Method รีเซ็ตของขวัญประจำวัน 
     public void resetDailyRelationships() {
         lazel.resetDaily();
-        // arwen.resetDaily();//X
+        arwen.resetDaily();
         galadriel.resetDaily();
     }
 
     //-----------------------------------------------
+
+    ///////////////Office Save Scene////////////////////////
+    public int getOfficeStage() {
+        return officeStage;
+    }
+
+    public void setOfficeStage(int stage) {
+        this.officeStage = stage;
+    }
+
+    public void increaseOfficeStage() {
+        this.officeStage++;
+    }
 }

@@ -54,8 +54,6 @@ public class OfficePanel extends JPanel {
 
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
 
-
-
     public OfficePanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.setLayout(new java.awt.BorderLayout());
@@ -251,6 +249,7 @@ public class OfficePanel extends JPanel {
     public void showOfficeScene2_1() {
         this.removeAll();
 
+        
         CreateTemplateScene scene = new CreateTemplateScene(
             "image\\Scene\\Office\\Barad-durWorkWithPerson.png", // ตำเเหน่งของภาพพื้นหลัง
             "Manager", // ชื่อผู้พูด
@@ -277,6 +276,7 @@ public class OfficePanel extends JPanel {
     public void Work() {
         this.removeAll();
 
+        this.setLayout(new java.awt.BorderLayout());
         CreateTemplateScene scene = new CreateTemplateScene(
             "image\\Scene\\Office\\Barad-durWorkWithPerson.png", // ตำเเหน่งของภาพพื้นหลัง
             "Manager", // ชื่อผู้พูด
@@ -286,15 +286,43 @@ public class OfficePanel extends JPanel {
             "บิด",
 
             new CreateTemplateScene.SceneOption("work hard", e -> {
-                mainFrame.showGame();
-                realPlayer.increaseMoney(80);
-                if (realGamePanel != null) {
-                    realGamePanel.doActivity(40);
-                    DebugLog();
-                }
+                showMiniGame();
             })
         );
         add(scene, java.awt.BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    public void showMiniGame() {
+        this.removeAll();
+        this.setLayout(null); // บังคับ null layout ป้องกันบัคตำแหน่งเพี้ยน
+
+        BlacksmithMinigame minigame = new BlacksmithMinigame(mainFrame ,this);
+        minigame.setBounds(0, 0, stdScreen.width, stdScreen.height); 
+
+        CreateTemplateScene scene = new CreateTemplateScene(
+            "image\\Scene\\Office\\Barad-durWork.png", 
+            null, 
+            null, 
+            e -> {
+                minigame.stopGame(); 
+                Work();
+            },
+            "บิด"
+        );
+        scene.setBounds(0, 0, stdScreen.width, stdScreen.height);
+
+        scene.add(minigame);
+        scene.setComponentZOrder(minigame, 0); // ตั้งให้ Minigame อยู่หน้าสุด
+
+        for (java.awt.Component c : scene.getComponents()) {
+            if (c instanceof javax.swing.JButton) {
+                scene.setComponentZOrder(c, 0);
+            }
+        }
+
+        add(scene);
         revalidate();
         repaint();
     }

@@ -3,6 +3,7 @@ import Player.*;
 import Relationship.Arwen;
 import Relationship.Galadriel;
 import Relationship.Lazel;
+import UXUI.CheatPanel.Cheat;
 import UXUI.Scene.*;
 import UXUI.SceneNPC.Arwen.ArwenPanel;
 import UXUI.SceneNPC.Arwen.SpecialSceneArwenPanel;
@@ -15,8 +16,14 @@ import java.io.File;
 import java.awt.EventQueue;
 
 import javax.sound.sampled.Clip; // แก้เป็น Clip
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
 import Utility.*;
 
 public class MainFrame extends JFrame {
@@ -108,12 +115,26 @@ public class MainFrame extends JFrame {
         gamePanel.setVisible(false);
         contentPane.add(gamePanel);
 
+
+
+        // กด F12 เพื่อเปิกหน้าเมนู Cheat
+        InputMap inputMap = contentPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = contentPane.getActionMap();
+        inputMap.put(KeyStroke.getKeyStroke("F12"), "openCheat");
+        actionMap.put("openCheat", new AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                // เปิดหน้าต่าง Cheat
+                Cheat cheatPanel = new Cheat(MainFrame.this);
+                cheatPanel.setVisible(true);
+            }
+        });
     }
 
     public void PreLoad() {
         System.out.println("---------- Start Preloading ----------");
-        loadAssetsFromFolder("image"); // โหลดทุกรูปในโฟลเดอร์ image และลูกๆ ของมัน
-        loadAssetsFromFolder("Music"); // โหลดทุกเพลงในโฟลเดอร์ Music
+        asset.loadFolderParallel("image");
+        asset.loadFolderParallel("Music");
         System.out.println("---------- Preloading Finished ----------");
     }
 
@@ -308,57 +329,4 @@ public class MainFrame extends JFrame {
     public GameTime getGameTime() { return this.gameTime; }
     public GamePanel getGamePanel() { return this.gamePanel; }
     public ShopPanel getShopPanel() { return this.shop;}
-
-
-    private void loadAssetsFromFolder(String folderPath) {
-        File folder = new File(folderPath);
-
-        if (!folder.exists()) {
-            System.err.println("❌ Folder not found: " + folderPath);
-            return;
-        }
-
-        File[] listOfFiles = folder.listFiles();
-
-        if (listOfFiles != null) {
-            for (File file : listOfFiles) {
-                if (file.isDirectory()) {
-                    // ถ้าเป็นโฟลเดอร์ ให้วนลูปเข้าไปข้างใน (Recursion)
-                    loadAssetsFromFolder(file.getPath());
-                } else {
-                    String path = file.getPath();
-                    String lowerPath = path.toLowerCase(); // แปลงเป็นตัวเล็กหมดเพื่อเช็ค
-
-                    // -------------------------------------------------------------
-                    // 1. เช็คไฟล์รูปภาพ (Images) ที่ Java รองรับ
-                    // รองรับ: PNG, JPG, JPEG, GIF (ภาพดุ๊กดิ๊ก), BMP (บิตแมพ), WBMP
-                    // -------------------------------------------------------------
-                    if (lowerPath.endsWith(".png") || 
-                        lowerPath.endsWith(".jpg") || 
-                        lowerPath.endsWith(".jpeg") || 
-                        lowerPath.endsWith(".gif") || 
-                        lowerPath.endsWith(".bmp") || 
-                        lowerPath.endsWith(".wbmp")) {
-                        
-                        asset.getImage(path);
-                        // System.out.println("Found Image: " + file.getName());
-
-                    } 
-                    // -------------------------------------------------------------
-                    // 2. เช็คไฟล์เสียง (Audio) ที่ Java Sound รองรับ
-                    // รองรับ: WAV, AIFF, AU, SND (ไม่รองรับ MP3 โดยตรงถ้าไม่มี Plugin)
-                    // -------------------------------------------------------------
-                    else if (lowerPath.endsWith(".wav") || 
-                             lowerPath.endsWith(".aiff") || 
-                             lowerPath.endsWith(".aif") || 
-                             lowerPath.endsWith(".au") || 
-                             lowerPath.endsWith(".snd")) {
-                        
-                        asset.getSound(path);
-                        // System.out.println("Found Sound: " + file.getName());
-                    }
-                }
-            }
-        }
-    }
 }

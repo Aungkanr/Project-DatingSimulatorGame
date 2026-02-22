@@ -3,83 +3,105 @@ package Utility;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.sound.sampled.*;
 
 public class AssetManager {
 
-    // --- Singleton Pattern (สร้างตัวเดียวใช้ทั้งเกม) ---
-    private static AssetManager instance;
+    // --- Singleton Pattern ---
+    private static AssetManager instance = new AssetManager();
 
-    // ระบบ Cache:
-    // String (Key) = path ของไฟล์ (เช่น "image/bg.png")
-    // Value = ข้อมูลที่โหลดลง Ram แล้ว
+    // Using ConcurrentHashMap for thread-safe parallel loading
     private Map<String, ImageIcon> imageCache;
     private Map<String, Clip> soundCache;
 
-    // Private Constructor (ห้ามใคร new เล่น)
     private AssetManager() {
-        imageCache = new HashMap<>();
-        soundCache = new HashMap<>();
+        imageCache = new ConcurrentHashMap<>();
+        soundCache = new ConcurrentHashMap<>();
     }
 
-    // วิธีเรียกใช้: AssetManager.getInstance()
     public static AssetManager getInstance() {
-        if (instance == null) {
-            instance = new AssetManager();
-        }
         return instance;
     }
 
     // ==========================================
-    // ส่วนจัดการรูปภาพ (Images)
+    // Parallel Folder Loading
+    // ==========================================
+    public void loadFolderParallel(String folderPath) {
+        System.out.println("Starting parallel load for folder: " + folderPath);
+        long startTime = System.currentTimeMillis();
+
+        try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
+            paths
+                .parallel() // Use all available CPU cores
+                .filter(Files::isRegularFile) // Ignore directories
+                .forEach(path -> {
+                    String filePath = path.toString();
+                    String lowerPath = filePath.toLowerCase();
+
+                    // Load based on file extension
+                    if (lowerPath.endsWith(".png") || lowerPath.endsWith(".jpg") || lowerPath.endsWith(".jpeg")) {
+                        getImage(filePath);
+                    } else if (lowerPath.endsWith(".wav")) {
+                        getSound(filePath);
+                    }
+                });
+                
+            long endTime = System.currentTimeMillis();
+            System.out.println("Successfully loaded folder: " + folderPath + " | Time taken: " + (endTime - startTime) + " ms");
+
+        } catch (IOException e) {
+            System.err.println("Failed to access or open folder: " + folderPath);
+            e.printStackTrace();
+        }
+    }
+
+    // ==========================================
+    // Image Management
     // ==========================================
     public ImageIcon getImage(String path) {
-        // 1. เช็คว่าเคยโหลดรูปนี้หรือยัง?
         if (imageCache.containsKey(path)) {
-            return imageCache.get(path); // ส่งของที่มีใน Ram กลับไปเลย (เร็วมาก)
+            return imageCache.get(path);
         }
 
-        // 2. ถ้ายังไม่เคย ให้โหลดจากไฟล์
         try {
             File f = new File(path);
             if (!f.exists()) {
-                System.err.println("!Image not found: " + path);
+                System.err.println("! Image not found: " + path);
                 return null;
             }
-            // โหลดรูปภาพ
             BufferedImage img = ImageIO.read(f);
             ImageIcon icon = new ImageIcon(img);
 
-            // 3. เก็บลง Cache ไว้ใช้ครั้งหน้า
             imageCache.put(path, icon);
-            
-            System.out.println("Loaded Image to Memory: " + path);
             return icon;
 
         } catch (IOException e) {
+            System.err.println("! Error reading image: " + path);
             e.printStackTrace();
             return null;
         }
     }
 
     // ==========================================
-    // ส่วนจัดการเสียง (Sounds)
+    // Sound Management
     // ==========================================
     public Clip getSound(String path) {
-        // 1. เช็คว่ามีของในโกดัง (Cache) หรือยัง?
         if (soundCache.containsKey(path)) {
-            return soundCache.get(path); // เจอแล้ว! ส่ง Clip ไปให้เลย
+            return soundCache.get(path);
         }
 
-        // 2. ถ้าไม่มี ให้ไปโหลดจากไฟล์ (Load from Disk)
         try {
             File f = new File(path);
             if (!f.exists()) {
-                System.err.println("!Sound not found: " + path);
+                System.err.println("! Sound not found: " + path);
                 return null;
             }
 
@@ -87,20 +109,19 @@ public class AssetManager {
             Clip clip = AudioSystem.getClip();
             clip.open(ais);
 
-            // 3. เก็บเข้าโกดัง (Cache)
             soundCache.put(path, clip);
-            System.out.println("Loaded Sound to Memory: " + path);
-
-            return clip; // ส่ง Clip ที่เพิ่งโหลดเสร็จกลับไป
+            return clip;
 
         } catch (Exception e) {
+            System.err.println("! Error reading sound: " + path);
             e.printStackTrace();
             return null;
         }
     }
 
-
-    // สั่งเคลียร์ RAM (เช่น ตอนปิดเกม หรือเปลี่ยนด่านใหญ่ๆ)
+    // ==========================================
+    // Memory Management
+    // ==========================================
     public void clearCache() {
         imageCache.clear();
         for (Clip clip : soundCache.values()) {
@@ -108,11 +129,13 @@ public class AssetManager {
             clip.close();
         }
         soundCache.clear();
-        System.out.println("🧹 Memory Cleared!");
+        System.out.println("Memory Cleared!");
     }
 
+    // ==========================================
+    // Placeholder Methods
+    // ==========================================
     public ImageIcon getScaledImage(String fullPath, int i, int j) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getScaledImage'");
     }
 }

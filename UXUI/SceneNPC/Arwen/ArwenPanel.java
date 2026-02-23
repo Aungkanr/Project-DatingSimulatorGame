@@ -8,7 +8,7 @@ import UXUI.Scene.CreateTemplateScene.SceneOption;
 public class ArwenPanel extends BaseNPCPanel {
 
     public ArwenPanel(MainFrame mainFrame) {
-        super(mainFrame, mainFrame.getPlayer().getArwen(), "image\\Scene\\Bedroom\\ห้องนอน.png");
+        super(mainFrame, mainFrame.getPlayer().getArwen(), "image\\NPCPanel\\Arwen\\ArwenTalkScene.png");
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ArwenPanel extends BaseNPCPanel {
         CreateTemplateScene scene;
         
         // Logic คะแนน Gift ของ Arwen
-        if (itemName.equals("Fairy rose")) {
+        if (itemName.equals("Fairy Rose")) {
             targetNPC.addAffection(20); 
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 

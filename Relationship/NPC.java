@@ -2,7 +2,7 @@ package Relationship;
 
 public abstract class NPC {
     protected String name;
-    protected int affectionPoints = 90; // คะแนน 0 - 500
+    protected int affectionPoints = 0; // คะแนน 0 - 500
     protected int heartLevel = 0;      // 0 - 5
     
     // สถานะประจำวัน
@@ -32,16 +32,12 @@ public abstract class NPC {
         this.giftedToday = true;
     }
 
-    public String giveGift() {
-        if (giftedToday) {
-            return "ให้ไปแล้วนี่นา... ไว้พรุ่งนี้ค่อยให้ใหม่นะ";
-        }
-        giftedToday = true;
-        addAffection(20); // ให้ของขวัญ +20 แต้ม
-        return "มอบของขวัญให้ " + name + " เรียบร้อย! (+20 ความชอบ)";
+    public void addAffection(int amount) {
+        this.affectionPoints += amount;
+        updateHeartLevel();
     }
 
-    public void addAffection(int amount) {
+    public void decreaseAffection(int amount) {
         this.affectionPoints += amount;
         updateHeartLevel();
     }
@@ -116,4 +112,7 @@ public abstract class NPC {
     public void resetSpecialSceneFlag() {
         lastDialogueWasSpecial = false;
     }
+
+    protected abstract DialogueNode getDialogueTree(int sceneLevel);
+    
 }

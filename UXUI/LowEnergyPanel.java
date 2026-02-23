@@ -66,6 +66,9 @@ public class LowEnergyPanel extends JPanel {
                 // เริ่ม Effect
                 sleepEffect.startSleepSequence();
 
+                parent.getSFXManager().setVolume(0.05f);
+                parent.getSFXManager().playSFX("Music\\Snore Mimimimimimimi Sound Effect (Cartoon Sleeping Sound Effect).wav");
+
                 // ตั้งเวลาปิดหน้านี้
                 new javax.swing.Timer(4000, new ActionListener() {
                     @Override

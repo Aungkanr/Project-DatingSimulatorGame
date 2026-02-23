@@ -9,7 +9,7 @@ import java.awt.Color;
 public class CheckImage {
     // method เช็คภาพ
     public void checkImage(ImageIcon originalIcon, JLabel lblMap, int w, int h) {
-         if (originalIcon.getIconWidth() > 0) { 
+         if (originalIcon != null && originalIcon.getIconWidth() > 0) { 
             Image img = originalIcon.getImage();
             Image newImg = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
             lblMap.setIcon(new ImageIcon(newImg));

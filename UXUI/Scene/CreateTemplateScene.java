@@ -198,11 +198,17 @@ public class CreateTemplateScene extends JPanel {
     }
 
     private void initBackground() {
+        if (bgPath == null || bgPath.trim().isEmpty()) {
+            return; 
+        }
         JLabel lblMap = new JLabel("");
         ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(bgPath);
-        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
-        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
-        add(lblMap);
-        setComponentZOrder(lblMap, getComponentCount() - 1);
+
+        if (originalIcon != null) {
+            checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
+            lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
+            add(lblMap);
+            setComponentZOrder(lblMap, getComponentCount() - 1);
+        }
     }
 }

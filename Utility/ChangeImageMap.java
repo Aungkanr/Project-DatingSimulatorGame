@@ -4,48 +4,34 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class ChangeImageMap {
-
-    /**
-     * อัปเดตรูป Map ตามเวลา
+    /* อัปเดตรูป Map ตามเวลา
      * @param timeString เวลา เช่น "Morning", "Afternoon", "Evening", "Night"
      * @param lblMap JLabel ที่จะแสดงรูป
      * @param checkImageUtil Utility สำหรับ check image
      * @param screenWidth ความกว้างหน้าจอ
-     * @param screenHeight ความสูงหน้าจอ
-     */
+     * @param screenHeight ความสูงหน้าจอ */
     public static void updateMapImage(String timeString, JLabel lblMap, CheckImage checkImageUtil, int screenWidth, int screenHeight) {
         String imagePath = "";
-        
         switch (timeString) {
             case "Morning":
-                imagePath = "image\\Map\\Morning.png";
-                break;
+                imagePath = "image\\Map\\Morning.png"; break;
             case "Noon":
-                imagePath = "image\\Map\\Afternoon.png";
-                break;
+                imagePath = "image\\Map\\Afternoon.png"; break;
             case "Evening":
-                imagePath = "image\\Map\\Evening.png";
-                break;
+                imagePath = "image\\Map\\Evening.png"; break;
             case "Night":
-                imagePath = "image\\Map\\Night.png";
-                break;
+                imagePath = "image\\Map\\Night.png"; break;
             default:
-                imagePath = "image\\Map\\Morning.pn"; // ค่า default
-                break;
+                imagePath = "image\\Map\\Morning.png"; /* ค่า default*/ break;
         }
-        
         ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
         if (originalIcon != null) {
             checkImageUtil.checkImage(originalIcon, lblMap, screenWidth, screenHeight);
-            lblMap.repaint(); // วาดใหม่
-        } else {
-            System.err.println("Error: Image not found at " + imagePath);
-        }
+            lblMap.repaint(); 
+        } else System.err.println("Error: Image not found at " + imagePath);
     }
-    
-    /**
-     * เวอร์ชันที่รับ StdAuto แทน width/height แยก
-     */
+   
+    //use 
     public static void updateMapImage(String timeString, JLabel lblMap, CheckImage checkImageUtil, StdAuto stdScreen) {
         updateMapImage(timeString, lblMap, checkImageUtil,stdScreen.width, stdScreen.height);
     }

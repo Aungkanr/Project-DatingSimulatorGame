@@ -1,13 +1,16 @@
 package Player;
-import Relationship.*; // Import package ใหม่
+import Relationship.*; 
 public class Player {
     private int energy;
     private int money;
     private Inventory inventory;
 
     private Lazel lazel;
-    // private Arwen arwen;     
-    // private Galadriel galadriel; 
+    private Arwen arwen;  
+    private Galadriel galadriel; 
+
+    // Save Scene
+    private int officeStage = 0;
 
     // Constructor 
     public Player() {
@@ -16,8 +19,8 @@ public class Player {
         this.inventory = new Inventory() ; //create obj bag
 
         this.lazel = new Lazel();
-        // this.arwen = new Arwen();
-        // this.galadriel = new Galadriel();
+        this.arwen = new Arwen();
+        this.galadriel = new Galadriel();
     }   
     //------------------------ (Getters & Setter)------------------------
     public int getEnergy() {
@@ -43,8 +46,8 @@ public class Player {
     }
 
     public Lazel getLazel() { return lazel; }
-    // public Arwen getArwen() { return arwen; }
-    //public Galadriel galadriel() { return galadriel ;}
+    public Arwen getArwen() { return arwen; } 
+    public Galadriel getGaladriel() { return galadriel ;} 
 
     
     //-----------------------------เน้นใช้ ------------------------
@@ -60,6 +63,9 @@ public class Player {
     public void increaseMoney(int amount) {
         this.money += amount;
     }
+    public void increaseMoneyDouble(double amount) {
+        this.money += amount;       
+    }
 
     public boolean buyItem(String itemName, int price) {
         if (this.money >= price) {
@@ -73,9 +79,22 @@ public class Player {
     // เพิ่ม Method รีเซ็ตของขวัญประจำวัน 
     public void resetDailyRelationships() {
         lazel.resetDaily();
-        // arwen.resetDaily();
-        // galadriel.resetDaily();
+        arwen.resetDaily();
+        galadriel.resetDaily();
     }
 
     //-----------------------------------------------
+
+    ///////////////Office Save Scene////////////////////////
+    public int getOfficeStage() {
+        return officeStage;
+    }
+
+    public void setOfficeStage(int stage) {
+        this.officeStage = stage;
+    }
+
+    public void increaseOfficeStage() {
+        this.officeStage++;
+    }
 }

@@ -1,20 +1,23 @@
 package UXUI.StatusBarMenu;
+
 import Player.Player;
 import UXUI.Hovereffect;
 import UXUI.LowEnergyPanel;
 import UXUI.MainFrame;
-import Utility.ChangeImageMap;
-import Utility.GameTime;
-import Utility.Notify;
-import Utility.StatusBar;
-import Utility.StdAuto;
 import Utility.*;
 
+// เพิ่ม Import สำหรับวาดกราฟิก และ Image
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image; // [เพิ่มใหม่] สำหรับจัดการย่อขนาดรูปภาพ
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon; // [เพิ่มใหม่]
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,9 +38,11 @@ public class GamePanel extends JPanel {
     private JButton btnShop;
     private JButton btnHome;
     private JButton btnSchool;
+    private JButton btnNeighbor;
     private JButton btnExitGame;
 
     // ------------------ Object ---------------------
+    Utility.AssetManager asset = Utility.AssetManager.getInstance();
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     ScreenFader fader = new ScreenFader();
     // เพิ่มใหม่ ธีมสีชมพู (Pink Theme)
@@ -46,24 +51,20 @@ public class GamePanel extends JPanel {
 
     // ------------------ สีปุ่ม ---------------------
     public static final Color ExitGameColor = new Color(48, 25, 82);    
-    //Color MoneyColor = new Color(255, 215, 0);
     public static final Color MoneyColor = new Color(255, 215, 80);  // เหลืองทองสว่าง
     public static final Color schoolColor = new Color(41, 128, 185);     
-    public static final Color homeColor = new Color(230, 126, 34);        
-    public static final Color shopColor = new Color(46, 204, 113);        
-    public static final Color officeColor = new Color(142, 68, 173);    
+    public static final Color homeColor = new Color(230, 126, 34);
+    public static final Color shopColor = new Color(46, 204, 113); 
+    public static final Color officeColor = new Color(142, 68, 173);
+    public static final Color neightborColor = new Color(255, 192, 203);       
     public static final Color bagBtnColor = new Color(139, 69, 19);  // สีน้ำตาล
 
     public GamePanel(MainFrame mainFrame) {
         this.parent = mainFrame;
-        stdScreen = new StdAuto();
+        this.stdScreen = new StdAuto();
 
-        setBackground(new Color(245, 240, 240));//add
-        //setBackground(Color.DARK_GRAY);
+        setBackground(new Color(245, 240, 240));
         setLayout(null);
-        notification = new Notify(stdScreen.width);
-        add(notification);
-
         notification = new Notify(stdScreen.width);
         add(notification);
 
@@ -73,103 +74,96 @@ public class GamePanel extends JPanel {
         // ==========================================
         // 1. สร้างกล่องสถานะ (RoundedPanel)
         // ==========================================
-        // สร้าง Panel สีชมพูขึ้นมา
         RoundedPanel statusPanel = new RoundedPanel(30, themePink); 
-        statusPanel.setBounds(20, 60, 450, 120); // ตำแหน่งกล่องบนหน้าจอ (เพิ่มความสูงเป็น 120)
-        statusPanel.setLayout(null); // จัดวางของในกล่องเอง
+        statusPanel.setBounds(20, 60, 450, 120); 
+        statusPanel.setLayout(null); 
 
-        // --- ยัด Label เข้าไปใน statusPanel ---
-        
-        // Energy Bar (หลอดพลังงาน - เพิ่มใหม่)
-        energyBar = new StatusBar(100 , "Energy"); // สร้างหลอด Energy ที่มี max = 100
-        energyBar.setBounds(20, 12, 410, 22); // พิกัดเทียบกับกล่องชมพู
+        // Energy Bar
+        energyBar = new StatusBar(100 , "Energy"); 
+        energyBar.setBounds(20, 12, 410, 22); 
         statusPanel.add(energyBar);
 
-        // Energy (Label เก็บไว้แต่ซ่อน)
         lblEnergy = new JLabel("Energy: 0");
         lblEnergy.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblEnergy.setForeground(Color.WHITE);
-        lblEnergy.setBounds(20, 15, 200, 30); // พิกัดเทียบกับกล่องชมพู
-        lblEnergy.setVisible(false); // ซ่อนเพราะมี EnergyBar แล้ว
+        lblEnergy.setBounds(20, 15, 200, 30); 
+        lblEnergy.setVisible(false); 
         statusPanel.add(lblEnergy);
 
         // Money
         lblMoney = new JLabel("Money: 0");
         lblMoney.setFont(new Font("Tahoma", Font.BOLD, 15));
         lblMoney.setForeground(MoneyColor);
-        lblMoney.setBounds(20, 45, 200, 25);
+        lblMoney.setBounds(20, 40, 200, 35); // [แก้ไข] ปรับขนาดให้พอดีไอคอน
+        lblMoney.setIcon(getScaledIcon("image\\StatusBarIcon\\money.png", 32, 32)); // [เพิ่มใหม่] ใส่ไอคอนเงิน
         statusPanel.add(lblMoney);
 
-        // Day (อยู่ขวาบนของกล่อง)
+        // Day
         lblDay = new JLabel("Day: 1");
         lblDay.setFont(new Font("Tahoma", Font.BOLD, 15));
         lblDay.setForeground(Color.WHITE);
-        lblDay.setBounds(20, 75, 150, 25); // ย้ายลงมา
+        lblDay.setBounds(20, 80, 150, 35); // [แก้ไข] ปรับขนาดให้พอดีไอคอน
+        lblDay.setIcon(getScaledIcon("image\\StatusBarIcon\\day.png", 32, 32)); // [เพิ่มใหม่] ใส่ไอคอนวัน
         statusPanel.add(lblDay);
 
-        // Time (อยู่ขวาล่างของกล่อง)
+        // Time
+        GameTime gTime = mainFrame.getGameTime(); 
         lblTime = new JLabel("Time: Morning");
         lblTime.setFont(new Font("Tahoma", Font.BOLD, 15));
         lblTime.setForeground(Color.WHITE);
-        lblTime.setBounds(250, 75, 200, 25); // ย้ายข้างๆ Day
+        lblTime.setBounds(250, 80, 200, 35); // [แก้ไข] ปรับขนาดให้พอดีไอคอน
+        lblTime.setIcon(getTimeIcon(gTime.getTimeString())); // [เพิ่มใหม่] 
         statusPanel.add(lblTime);
 
-        // นำกล่อง statusPanel ไปแปะบนหน้าจอหลัก
         add(statusPanel);
 
         // ==========================================
         // 2. ปุ่ม Exit Game
         // ==========================================
-        btnExitGame = new JButton("Return to Menu");
-        btnExitGame.setBounds(20, 20, 150, 30);
-        Hovereffect.HoverEffect(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
+        btnExitGame = createRoundedButton("Return to Menu");
+        Hovereffect.HoverEffectRounded(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
         add(btnExitGame);
+        
         btnExitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
                 fader.fadeInOut(500, 500, ()->{parent.showMenu();}, null);
             }
         });
 
-    //------------------- ส่วนของปุ่มที่แสดงบนแมพ--------------
+    //------------------- ส่วนของปุ่มที่แสดงบนแมพ --------------
         stdScreen.setBtnWHG(200, 30, 20, 0);
 
-        btnSchool = new JButton("School");
-        btnSchool.setBounds(stdScreen.centerX-20, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnSchool.setBackground(schoolColor);
-        btnSchool.setForeground(Color.WHITE);
+        btnSchool = createRoundedButton("School");
         btnSchool.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffect(btnSchool, stdScreen.centerX-20, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight, schoolColor);
+        Hovereffect.HoverEffectRounded(btnSchool, stdScreen.centerX+80, stdScreen.currentY-280, stdScreen.buttonWidth, stdScreen.buttonHeight, schoolColor);
         add(btnSchool);
 
-        btnHome = new JButton("Home");
-        btnHome.setBounds(stdScreen.centerX-20, stdScreen.currentY+140, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnHome.setBackground(homeColor);
-        btnHome.setForeground(Color.WHITE);
+        btnHome = createRoundedButton("Home");
         btnHome.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffect(btnHome, stdScreen.centerX-20, stdScreen.currentY+140, stdScreen.buttonWidth, stdScreen.buttonHeight, homeColor);
+        Hovereffect.HoverEffectRounded(btnHome, stdScreen.centerX-20, stdScreen.currentY+180, stdScreen.buttonWidth, stdScreen.buttonHeight, homeColor);
         add(btnHome);
 
-        btnShop = new JButton("Shop");
-        btnShop.setBounds(stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnShop.setBackground(shopColor);
-        btnShop.setForeground(Color.WHITE);
+        btnShop = createRoundedButton("Shop");
         btnShop.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffect(btnShop, stdScreen.centerX-380, stdScreen.currentY-40, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
+        Hovereffect.HoverEffectRounded(btnShop, stdScreen.centerX-380, stdScreen.currentY, stdScreen.buttonWidth, stdScreen.buttonHeight, shopColor);
         add(btnShop);
 
-        btnOffice = new JButton("Office");
-        btnOffice.setBounds(stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight);
-        btnOffice.setBackground(officeColor);
-        btnOffice.setForeground(Color.WHITE);
+        btnOffice = createRoundedButton("Blacksmith");
         btnOffice.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffect(btnOffice, stdScreen.centerX+340, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
+        Hovereffect.HoverEffectRounded(btnOffice, stdScreen.centerX+300, stdScreen.currentY-100, stdScreen.buttonWidth, stdScreen.buttonHeight, officeColor);
         add(btnOffice);
+
+        btnNeighbor = createRoundedButton("Neighbor");
+        btnNeighbor.setFont(new Font("Tahoma", Font.BOLD, 14));
+        Hovereffect.HoverEffectRounded(btnNeighbor, stdScreen.centerX-300, stdScreen.currentY+240, stdScreen.buttonWidth, stdScreen.buttonHeight, neightborColor);
+        add(btnNeighbor);
         
-        btnBag = new JButton("Bag");
-        btnBag.setBounds(180, 20, 100, 30); // วางข้างๆ ปุ่ม Return Menu
+        btnBag = createRoundedButton("Bag");
         btnBag.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffect(btnBag, 180, 20, 100, 30, bagBtnColor); // ใช้ HoverEffect สีน้ำตาล
+        Hovereffect.HoverEffectRounded(btnBag, 180, 20, 100, 30, bagBtnColor); 
         add(btnBag);
+
         //--------------Action--------------------
         btnSchool.addActionListener(e ->  {
             fader.fadeInOut(500, 500, ()->{parent.createSchoolPanel(); parent.showSchool();}, null);
@@ -192,41 +186,95 @@ public class GamePanel extends JPanel {
                 fader.fadeInOut(500, 500, ()->{parent.createOfficePanel(); parent.showOffice();}, null);
             }
         });
+        
+        btnNeighbor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                fader.fadeInOut(500, 500, ()->{parent.createNeightBorPanel(); parent.showNeighbor();}, null);
+            }
+        });
 
-        btnBag.addActionListener(e -> {  //-------inventory----------------
-            InventoryPanel invPanel = new InventoryPanel(parent, stdScreen.width, stdScreen.height); // 1. สร้าง InventoryPanel
-            
-            add(invPanel); // 2. แปะลงไปใน GamePanel
-            
-            setComponentZOrder(invPanel, 0); // 3. ดึงมาหน้าสุด (Layer 0) และสั่งวาดใหม่
+        btnBag.addActionListener(e -> {  
+            InventoryPanel invPanel = new InventoryPanel(parent, stdScreen.width, stdScreen.height); 
+            add(invPanel); 
+            setComponentZOrder(invPanel, 0); 
             invPanel.setVisible(true);
             disableAllGamePanel();
+
+            revalidate();//สั่งให้ Swing จัด Layout ทันที ของจะได้เด้งขึ้นมาเลยไม่ล่องหน!
+
             repaint();
         });
-    //--------------------------image Map update ตามเวลา (โดยส่งข้อมูล StringของGame Time ไป)------------------
+
         lblMap = new JLabel("");  
         ChangeImageMap.updateMapImage("Morning", lblMap, checkImageUtil, stdScreen);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
     }
+
+    // [เพิ่มใหม่] ฟังก์ชันสำหรับโหลดและย่อขนาดรูปไอคอน
+    private ImageIcon getScaledIcon(String path, int width, int height) {
+        ImageIcon icon = Utility.AssetManager.getInstance().getImage(path);
+        if (icon != null) {
+            Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(img);
+        }
+        return null; // ถ้าไม่เจอรูป จะปล่อยว่างไม่แสดง Error ค้าง
+    }
+
+    // [แก้ไข] ฟังก์ชันเช็คเวลาเพื่อสลับรูปไอคอนเวลาให้ตรงกับไฟล์ที่คุณมี
+    private ImageIcon getTimeIcon(String timeString) {
+        if (timeString.equalsIgnoreCase("Morning")) {
+            return getScaledIcon("image\\StatusBarIcon\\sunrise.png", 32, 32); 
+        } else if (timeString.equalsIgnoreCase("noon")) { // [แก้ไข] แยก Noon/Afternoon ออกจาก Evening
+            return getScaledIcon("image\\StatusBarIcon\\sun.png", 32, 32);
+        } else if (timeString.equalsIgnoreCase("Evening")) {
+            return getScaledIcon("image\\StatusBarIcon\\sunset.png", 32, 32);
+        } else {
+            return getScaledIcon("image\\StatusBarIcon\\moon.png", 32, 32);
+        }
+    }
+
+    // Helper Method สำหรับสร้างปุ่มมน
+    private JButton createRoundedButton(String text) {
+        JButton btn = new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); 
+                g2.setColor(Color.WHITE);
+                g2.setStroke(new BasicStroke(2));
+                g2.drawRoundRect(1, 1, getWidth()-3, getHeight()-3, 30, 30);
+                super.paintComponent(g);
+            }
+        };
+        btn.setContentAreaFilled(false);
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        return btn;
+    }
+
     //------------update - ค่า--------------------
     public void updateUI() {
         if (parent == null ) return ;
         Player player = parent.getPlayer();
-        GameTime gTime = parent.getGameTime(); // เรียก Time มา
+        GameTime gTime = parent.getGameTime(); 
 
-        // อัพเดทหลอด Energy and Money
         energyBar.setEnergy(player.getEnergy());
-
         lblEnergy.setText("Energy: " + player.getEnergy());
+
         lblEnergy.setForeground(Color.white);
         lblMoney.setText("Money: " + player.getMoney());
         lblDay.setText("Day: " + gTime.getDay());
         lblTime.setText("Time: " + gTime.getTimeString());
-        ChangeImageMap.updateMapImage(gTime.getTimeString(), lblMap, checkImageUtil, stdScreen);
+        // [เพิ่มใหม่] อัปเดตไอคอนเวลาทุกครั้งที่เวลาเดิน
+        lblTime.setIcon(getTimeIcon(gTime.getTimeString()));
+
+        Utility.ChangeImageMap.updateMapImage(gTime.getTimeString(), lblMap, checkImageUtil, stdScreen);
+        repaint();
     }
     
-    // method energy bar //
     public void updateEnergyBar() {
         Player player = parent.getPlayer();
         energyBar.setEnergy(player.getEnergy());
@@ -235,31 +283,30 @@ public class GamePanel extends JPanel {
     public boolean doActivity(int energyCost) { 
         Player player = parent.getPlayer();
         GameTime gTime = parent.getGameTime();
-        lblEnergy.setForeground(Color.WHITE); // Reset สี Energy ก่อนตรวจสอบ
+        lblEnergy.setForeground(Color.WHITE); 
         if (player.getEnergy() < 10) {
-            // ... code แจ้งเตือน Energy หมด ...
             LowEnergyPanel energyPanel = new LowEnergyPanel(stdScreen.width, stdScreen.height, parent);
             add(energyPanel);
             energyPanel.setVisible(true);
             setComponentZOrder(energyPanel, 0);
             lblEnergy.setForeground(Color.red);
             
-            // อัพเดทหลอด Energy เป็น 0
             energyBar.setEnergy(0);
             
             return false;
         } 
-        gTime.advanceTime(player,energyCost);// ถ้า Time อยู่ที่ Night ให้ค้างที่ Night wait untill click Sleep.
+        gTime.advanceTime(player,energyCost);
         updateUI();
         return true;
     }
-    //-------ทำกันเผื่อ click ปุ่มอื่น while Bag is opening-----
+    
     public void enableAllGamePanel () {
         btnBag.setEnabled(true);
         btnOffice.setEnabled(true);
         btnShop.setEnabled(true);
         btnHome.setEnabled(true);
         btnSchool.setEnabled(true);
+        btnNeighbor.setEnabled(true);
         btnExitGame.setEnabled(true);
     }
     public void disableAllGamePanel() {
@@ -268,6 +315,7 @@ public class GamePanel extends JPanel {
         btnShop.setEnabled(false);
         btnHome.setEnabled(false);
         btnSchool.setEnabled(false);
+        btnNeighbor.setEnabled(false);
         btnExitGame.setEnabled(false);
     }
 }

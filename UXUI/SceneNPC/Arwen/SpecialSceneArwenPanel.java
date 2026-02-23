@@ -1,4 +1,4 @@
-package UXUI.SceneNPC.Lazel;
+package UXUI.SceneNPC.Arwen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,27 +7,27 @@ import java.awt.event.ActionListener;
 import UXUI.MainFrame;
 import UXUI.Hovereffect;
 import Utility.*;
-import Relationship.Lazel;
+import Relationship.Arwen;
 import Relationship.DialogueNode;
 
-public class SpecialScenePanel extends JPanel {
+public class SpecialSceneArwenPanel extends JPanel {
 
     private MainFrame mainFrame;
     private StdAuto stdScreen;
-    private Lazel lazel;
+    private Arwen arwen;
     private JLabel lblBg;
 
     private final String bgPath = "image\\Scene\\School\\Angryscene.png";
 
-    public SpecialScenePanel(MainFrame mainFrame, Lazel lazel, String sceneText, int sceneLevel) {
+    public SpecialSceneArwenPanel(MainFrame mainFrame, Arwen arwen, String sceneText, int sceneLevel) {
         this.mainFrame = mainFrame;
-        this.lazel     = lazel;
+        this.arwen = arwen;
         this.stdScreen = new StdAuto();
 
         setLayout(null);
         setBackground(Color.BLACK);
 
-        DialogueNode root = lazel.getDialogueTree(sceneLevel);
+        DialogueNode root = arwen.getDialogueTree(sceneLevel);
         showNode(root);
     }
 
@@ -79,8 +79,8 @@ public class SpecialScenePanel extends JPanel {
         btnContinue.setFont(new Font("Tahoma", Font.BOLD, 16));
         btnContinue.setBounds(btnX, btnY, btnW, btnH);
         btnContinue.addActionListener(e -> {
-            mainFrame.createLazelPanel();
-            mainFrame.showLazel();
+            mainFrame.createArwenPanel();
+            mainFrame.showArwen();
         });
         Hovereffect.HoverEffect(btnContinue, btnX, btnY, btnW, btnH, new Color(85, 107, 47));
         add(btnContinue);

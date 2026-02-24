@@ -7,8 +7,8 @@ public class Galadriel extends NPC {
 
     public Galadriel() {
         super("Galadriel");
-        heartLevel = 1;
-        affectionPoints = 190;
+        //heartLevel = 1;
+        //affectionPoints = 190;
     }
 
     @Override
@@ -209,7 +209,7 @@ public class Galadriel extends NPC {
         // 2.5A
         DialogueNode n2_5A = new DialogueNode("Galadriel",
             "(ยิ้มทั้งน้ำตา) \"ท่านคือฮีโร่ของข้าและเหล่าดอกไม้จริงๆ... สัญญาได้ไหมคะว่าจะคอยปกป้องพวกเราตลอดไป?\"");
-        n2_5A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(ยิ้มทั้งน้ำตา) _ท่านคือฮีโร่ของข้าและเหล่าดอกไม้จริงๆ... สัญญาได้ไหมคะว่าจะคอยปกป้องพวกเราตลอดไป_.png";
+        n2_5A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(ยิ้มทั้งน้ำตา) _ท่านคือฮีโร่ของข้าและเหล่าดอกไม้จริงๆ... สัญญาได้ไหมคะว่าจะคอยปกป้องพวกเราตลอดไป_ (2).png";
         n2_5A.addChoice("สัญญาด้วยชีวิตครับ องค์หญิงดอกไม้", endBest)  // +2
              .addChoice("จะพยายามนะครับ",                     endGood)  // +1
              .addChoice("ถ้าว่างจะมาช่วยนะ",                  endGood); // 0
@@ -217,7 +217,7 @@ public class Galadriel extends NPC {
         // 2.5B
         DialogueNode n2_5B = new DialogueNode("Galadriel",
             "\"ขอบคุณอีกครั้งนะคะ... วันนี้ข้ารู้สึกดีขึ้นมากเพราะท่านเลย ไว้แวะมาดูอาการน้องต้นไม้ด้วยกันอีกนะ\"");
-        n2_5B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ขอบคุณอีกครั้งนะคะ... วันนี้ข้ารู้สึกดีขึ้นมากเพราะท่านเลย ไว้แวะมาดูอาการน้องต้นไม้ด้วยกันอีกนะ_.png";
+        n2_5B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ขอบคุณอีกครั้งนะคะ... วันนี้ข้ารู้สึกดีขึ้นมากเพราะท่านเลย ไว้แวะมาดูอาการน้องต้นไม้ด้วยกันอีกนะ_ (2).png";
         n2_5B.addChoice("ได้เลยครับ ไว้เจอกัน", endGood)   // +1
              .addChoice("ครับผม",                endNormal) // 0
              .addChoice("ถ้าไม่ลืมนะ",           endNormal); // 0
@@ -225,7 +225,7 @@ public class Galadriel extends NPC {
         // 2.5C
         DialogueNode n2_5C = new DialogueNode("Galadriel",
             "\"ลาก่อนค่ะ...\" (หันหลังให้)");
-        n2_5C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ลาก่อนค่ะ..._ (หันหลังให้).png";
+        n2_5C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ลาก่อนค่ะ..._ (หันหลังให้) (2).png";
         n2_5C.addChoice("(เดินจากไป)", endBad)    // -1
              .addChoice("ขอโทษนะ...",   endNormal) // 0
              .addChoice("เฮ้อ...",       endBad);   // -1
@@ -234,7 +234,7 @@ public class Galadriel extends NPC {
         // 2.4A
         DialogueNode n2_4A = new DialogueNode("Galadriel",
             "(มองดูคุณช่วยดามกิ่งไม้อย่างตั้งใจ) \"ท่าน... มือเบาจัง... น้องต้องดีใจแน่ๆ ที่ท่านช่วย... ข้า... ข้าก็ดีใจค่ะ\"");
-        n2_4A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(มองดูคุณช่วยดามกิ่งไม้อย่างตั้งใจ) _ท่าน... มือเบาจัง... น้องต้องดีใจแน่ๆ ที่ท่านช่วย... ข้า... ข้าก็ดีใจค่ะ_.png";
+        n2_4A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(มองดูคุณช่วยดามกิ่งไม้อย่างตั้งใจ) _ท่าน... มือเบาจัง... น้องต้องดีใจแน่ๆ ที่ท่านช่วย... ข้า... ข้าก็ดีใจค่ะ_ (2).png";
         n2_4A.addChoice("เพื่อรอยยิ้มของคุณ ผมทำได้ทุกอย่างครับ", n2_5A) // +2
              .addChoice("แค่นี้เรื่องเล็กน้อยครับ",               n2_5B) // +1
              .addChoice("เสร็จแล้ว หวังว่าจะรอดนะ",               n2_5B); // 0
@@ -242,7 +242,7 @@ public class Galadriel extends NPC {
         // 2.4B
         DialogueNode n2_4B = new DialogueNode("Galadriel",
             "(เริ่มหยุดร้องไห้) \"ขอบคุณนะคะ... ที่ท่านไม่ทิ้งข้าไว้คนเดียว... ปกติใครๆ ก็หาว่าข้าบ้าที่ร้องไห้ให้ต้นไม้\"");
-        n2_4B.imagePath = "image\\Scene\\Galadriel\\Scene2\\(เริ่มหยุดร้องไห้) _ขอบคุณนะคะ... ที่ท่านไม่ทิ้งข้าไว้คนเดียว... ปกติใครๆ ก็หาว่าข้าบ้าที่ร้องไห้ให้ต้นไม้_.png";
+        n2_4B.imagePath = "image\\Scene\\Galadriel\\Scene2\\(เริ่มหยุดร้องไห้) _ขอบคุณนะคะ... ที่ท่านไม่ทิ้งข้าไว้คนเดียว... ปกติใครๆ ก็หาว่าข้าบ้าที่ร้องไห้ให้ต้นไม้_ (2).png";
         n2_4B.addChoice("ความอ่อนโยนคือเสน่ห์ของคุณนะ Galadriel", n2_5A) // +1
              .addChoice("ใครจะว่าไงก็ช่างเขา ผมอยู่ข้างคุณนะ",   n2_5B) // +1
              .addChoice("ก็มันแปลกจริงๆ นี่นา",                   n2_5C); // -1
@@ -250,7 +250,7 @@ public class Galadriel extends NPC {
         // 2.4C
         DialogueNode n2_4C = new DialogueNode("Galadriel",
             "\"ฮึก... ข้าจะจัดการเอง ท่านไม่ต้องมายุ่งแล้ว\"");
-        n2_4C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ฮึก... ข้าจะจัดการเอง ท่านไม่ต้องมายุ่งแล้ว_.png";
+        n2_4C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ฮึก... ข้าจะจัดการเอง ท่านไม่ต้องมายุ่งแล้ว_ (2).png";
         n2_4C.addChoice("งั้นผมไปนะ",             endNormal) // 0
              .addChoice("อย่าดื้อสิ ให้ผมช่วยเถอะ", n2_5B)   // 0
              .addChoice("ตามใจ",                   endBad);   // -1
@@ -259,7 +259,7 @@ public class Galadriel extends NPC {
         // 2.3A
         DialogueNode n2_3A = new DialogueNode("Galadriel",
             "\"จ...จริงๆ เหรอคะ? ท่านจะช่วยจริงๆ เหรอ? ...แต่ก้านหักขนาดนี้... จะรอดไหมคะ?\"");
-        n2_3A.imagePath = "image\\Scene\\Galadriel\\Scene2\\_จ...จริงๆ เหรอคะ_ ท่านจะช่วยจริงๆ เหรอ_ ...แต่ก้านหักขนาดนี้... จะรอดไหมคะ_.png";
+        n2_3A.imagePath = "image\\Scene\\Galadriel\\Scene2\\_จ...จริงๆ เหรอคะ_ ท่านจะช่วยจริงๆ เหรอ_ ...แต่ก้านหักขนาดนี้... จะรอดไหมคะ_ (2).png";
         n2_3A.addChoice("รอดสิ! เราจะดามกิ่งให้เขา เดี๋ยวก็หายดี",     n2_4A) // +2
              .addChoice("ลองดูไม่เสียหายครับ ดีกว่าไม่ทำอะไรเลย",       n2_4B) // +1
              .addChoice("ถ้าไม่รอดก็เผาทิ้งครับ เป็นปุ๋ย",              n2_4C); // -2
@@ -267,7 +267,7 @@ public class Galadriel extends NPC {
         // 2.3B
         DialogueNode n2_3B = new DialogueNode("Galadriel",
             "\"ข้า... ข้าสงสารเขา... เขาอุตส่าห์กำลังจะออกดอกแท้ๆ... (กอดเศษกระถางแน่น)\"");
-        n2_3B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ข้า... ข้าสงสารเขา... เขาอุตส่าห์กำลังจะออกดอกแท้ๆ... (กอดเศษกระถางแน่น)_.png";
+        n2_3B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ข้า... ข้าสงสารเขา... เขาอุตส่าห์กำลังจะออกดอกแท้ๆ... (กอดเศษกระถางแน่น)_ (2).png";
         n2_3B.addChoice("อย่าเศร้าไปเลยครับ เดี๋ยวเราปลูกใหม่ให้สวยกว่าเดิมนะ", n2_4A) // +1
              .addChoice("ทำใจเถอะครับ ของมันเสียไปแล้ว",                          n2_4C) // 0
              .addChoice("(ลูบหัวเธอเบาๆ) \"ไม่เป็นไรนะคนเก่ง\"",                n2_4A); // +1
@@ -275,7 +275,7 @@ public class Galadriel extends NPC {
         // 2.3C
         DialogueNode n2_3C = new DialogueNode("Galadriel",
             "\"ท่านมันคนไร้หัวใจ! ...ออกไปเลยนะ ข้าไม่อยากเห็นหน้าท่าน!\"");
-        n2_3C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ท่านมันคนไร้หัวใจ! ...ออกไปเลยนะ ข้าไม่อยากเห็นหน้าท่าน!_.png";
+        n2_3C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ท่านมันคนไร้หัวใจ! ...ออกไปเลยนะ ข้าไม่อยากเห็นหน้าท่าน!_ (2).png";
         n2_3C.addChoice("ขอโทษครับ ผมแค่พยายามจะปลอบ", n2_4B)  // 0
              .addChoice("ไปก็ได้ ยัยขี้แย",             endBad) // -2
              .addChoice("(ช่วยเก็บกวาดเงียบๆ)",          n2_4B); // +1
@@ -284,7 +284,7 @@ public class Galadriel extends NPC {
         // 2.2A
         DialogueNode n2_2A = new DialogueNode("Galadriel",
             "(เงยหน้าที่เต็มไปด้วยคราบน้ำตา) \"ท...ท่าน... (สะอื้น) มีเด็กวัยรุ่นมาวิ่งไล่จับกัน... แล้วชนน้องตกลงมา... ฮือ... ก้านหักเลย...\"");
-        n2_2A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(เงยหน้าที่เต็มไปด้วยคราบน้ำตา) _ท...ท่าน... (สะอื้น) มีเด็กวัยรุ่นมาวิ่งไล่จับกัน... แล้วชนน้องตกลงมา... ฮือ... ก้านหักเลย..._.png";
+        n2_2A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(เงยหน้าที่เต็มไปด้วยคราบน้ำตา) _ท...ท่าน... (สะอื้น) มีเด็กวัยรุ่นมาวิ่งไล่จับกัน... แล้วชนน้องตกลงมา... ฮือ... ก้านหักเลย..._ (2).png";
         n2_2A.addChoice("ไม่ต้องร้องนะ เดี๋ยวผมช่วยซ่อมเอง",  n2_3A) // +1
              .addChoice("แย่จังเลยนะ... เด็กพวกนั้นนิสัยไม่ดีเลย", n2_3B) // 0
              .addChoice("ซื้อใหม่สิครับ ง่ายจะตาย",              n2_3C); // -1
@@ -292,7 +292,7 @@ public class Galadriel extends NPC {
         // 2.2B
         DialogueNode n2_2B = new DialogueNode("Galadriel",
             "\"ข้าไม่ได้ทำนะ! ...ฮึก... มีคนชนน้องต่างหาก... ท่านไม่รู้อะไรอย่ามาว่าข้านะ!\"");
-        n2_2B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ข้าไม่ได้ทำนะ! ...ฮึก... มีคนชนน้องต่างหาก... ท่านไม่รู้อะไรอย่ามาว่าข้านะ!_.png";
+        n2_2B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ข้าไม่ได้ทำนะ! ...ฮึก... มีคนชนน้องต่างหาก... ท่านไม่รู้อะไรอย่ามาว่าข้านะ!_ (2).png";
         n2_2B.addChoice("โอเคๆ ผมขอโทษ แล้วใครทำล่ะ?",              n2_3B)  // 0
              .addChoice("ก็เห็นนั่งอยู่คนเดียว นึกว่าทำเอง",          endBad) // -2
              .addChoice("อย่าเพิ่งงอแง เล่ามาซิ",                     n2_3C); // 0
@@ -300,7 +300,7 @@ public class Galadriel extends NPC {
         // 2.2C
         DialogueNode n2_2C = new DialogueNode("Galadriel",
             "\"มันไม่ใช่แค่กระถางนะ! ...น้องเขาเจ็บ... ท่านดูสิ ก้านหักหมดเลย... ฮือออ\"");
-        n2_2C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_มันไม่ใช่แค่กระถางนะ! ...น้องเขาเจ็บ... ท่านดูสิ ก้านหักหมดเลย... ฮือออ_.png";
+        n2_2C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_มันไม่ใช่แค่กระถางนะ! ...น้องเขาเจ็บ... ท่านดูสิ ก้านหักหมดเลย... ฮือออ_ (2).png";
         n2_2C.addChoice("จริงด้วย... น่าสงสารจัง มาครับผมช่วยดู",           n2_3A) // +1
              .addChoice("ต้นไม้มันไม่เจ็บหรอกน่า คิดไปเอง",                 n2_3C) // -1
              .addChoice("(ยื่นผ้าเช็ดหน้าให้) \"เช็ดน้ำตาก่อนครับ\"",       n2_3B); // +1
@@ -308,7 +308,7 @@ public class Galadriel extends NPC {
         // === ROOT 2.1 ===
         DialogueNode root = new DialogueNode("Galadriel",
             "(นั่งคุกเข่าอยู่หน้ากระถางต้นไม้ที่แตกกระจาย ร้องไห้กระซิกๆ) \"ฮึก... น้อง... น้องเจ็บไหม... ข้าขอโทษ...\"");
-        root.imagePath = "image\\Scene\\Galadriel\\Scene2\\(นั่งคุกเข่าอยู่หน้ากระถางต้นไม้ที่แตกกระจาย ร้องไห้กระซิกๆ) _ฮึก... น้อง... น้องเจ็บไหม... ข้าขอโทษ..._.png";
+        root.imagePath = "image\\Scene\\Galadriel\\Scene2\\(นั่งคุกเข่าอยู่หน้ากระถางต้นไม้ที่แตกกระจาย ร้องไห้กระซิกๆ) _ฮึก... น้อง... น้องเจ็บไหม... ข้าขอโทษ..._ (2).png";
         root.addChoice("\"เกิดอะไรขึ้นครับ!? คุณเจ็บตรงไหนไหม?\"",    n2_2A) // +1
             .addChoice("\"ซุ่มซ่ามทำแตกอีกแล้วเหรอ?\"",               n2_2B) // -1
             .addChoice("\"ร้องไห้ทำไมครับ แค่กระถางแตกเอง\"",          n2_2C); // 0
@@ -431,7 +431,7 @@ public class Galadriel extends NPC {
         // === ROOT 3.1 ===
         DialogueNode root = new DialogueNode("Galadriel",
             "(เธอกำลังก้มหน้าก้มตาเขียนอะไรบางอย่างลงบนกระดาษแล้วขยำทิ้ง) \"โธ่... ทำไมมันคิดไม่ออกนะ! บทเพลงขอบคุณเทพเจ้าแห่งพฤกษา... ข้าแต่งมันไม่จบเสียที!\"");
-        root.imagePath = "image\\Scene\\Galadriel\\Scene3\\root.png";
+        root.imagePath = "image\\Scene\\Galadriel\\Scene3\\(เธอกำลังก้มหน้าก้มตาเขียนอะไรบางอย่างลงบนกระดาษแล้วขยำทิ้ง) โธ่... ทำไมมันคิดไม่ออกนะ! บทเพลงขอบคุณเทพเจ้าแห่งพฤกษา... ข้าแต่งมันไม่จบเสียที!.png";
         root.addChoice("ให้ผมช่วยคิดไหมครับ?",                        n3_2A) // +1
             .addChoice("พักผ่อนบ้างเถอะ ยิ่งเครียดยิ่งคิดไม่ออกนะ", n3_2B) // +1
             .addChoice("แต่งเพลงมันยากขนาดนั้นเลยเหรอ?",             n3_2C); // 0
@@ -448,8 +448,9 @@ public class Galadriel extends NPC {
         DialogueNode endBad    = new DialogueNode("Galadriel", "(หันหน้าหนี ไม่สนใจ)", true);
         DialogueNode endNormal = new DialogueNode("Galadriel", "(ยิ้มเบาๆ) \"ราตรีสวัสดิ์ค่ะ...\"", true);
         DialogueNode endGood   = new DialogueNode("Galadriel", "(โบกมือลาอย่างอบอุ่น) \"ราตรีสวัสดิ์ค่ะ ท่าน...\"", true);
-        DialogueNode endBest   = new DialogueNode("Galadriel",
-            "(กอดแขนคุณแน่นขึ้น) \"ข้ารักท่านค่ะ... สัญญาได้ไหมว่าจะไม่ลืมบทเพลงของเรา?\" \"สัญญาครับ ผมจะรักและจำคุณตลอดไป\"", true);
+        DialogueNode endBest   = new DialogueNode("Galadriel","(กอดแขนคุณแน่นขึ้น) \"ข้ารักท่านค่ะ... สัญญาได้ไหมว่าจะไม่ลืมบทเพลงของเรา?\" \"สัญญาครับ ผมจะรักและจำคุณตลอดไป\"", true);
+        endBest.imagePath = "image\\Scene\\Galadriel\\Scene4\\(กอดแขนคุณเบาๆ) ข้ารักท่านนะคะ... สัญญาได้ไหมว่าจะไม่ลืมบทเพลงของเรา.png";
+            
 
         // === 4.5 ===
         // 4.5A
@@ -480,7 +481,7 @@ public class Galadriel extends NPC {
         // 4.4A
         DialogueNode n4_4A = new DialogueNode("Galadriel",
             "(ยื่นกิ่งไม้เล็กๆ ที่มีแสงระยิบระยับให้) \"นี่คือ 'กิ่งไม้แห่งแสง' ค่ะ มันจะสว่างตราบเท่าที่ข้ายังคิดถึงท่าน... ท่านจะรับมันไว้ไหม?\"");
-        n4_4A.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ยื่นกิ่งไม้เล็กๆ ที่มีแสงระยิบระยับให้) นี่คือ กิ่งไม้แห่งแสง ค่ะ มันจะสว่างตราบเท่าที่ข้ายังคิดถึงท่าน... ท่านจะรับมันไว้ไหม.png";
+        n4_4A.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ยื่นกิ่งไม้เล็กๆ ที่มีแสงระยิบระยับให้) นี่คือ _กิ่งไม้แห่งแสง_ ค่ะ มันจะสว่างตราบเท่าที่ข้ายังคิดถึงท่าน... ท่านจะรับมันไว้ไหม.png";
         n4_4A.addChoice("(รับมาอย่างทะนุถนอม) \"ผมจะเก็บมันไว้ให้สว่างตลอดไป\"", n4_5A) // +2
              .addChoice("ขอบคุณนะ มันสวยมากเลย",                               n4_5B) // +1
              .addChoice("มันใช้ส่องทางตอนกลางคืนได้ดีเลยนะ",                   n4_5C); // +1
@@ -546,7 +547,7 @@ public class Galadriel extends NPC {
         // 4.2C
         DialogueNode n4_2C = new DialogueNode("Galadriel",
             "\"โน้ตตัวสุดท้ายคือ 'ความเชื่อใจ' ไงคะ... ถ้าไม่มีท่าน เพลงนี้ก็คงเป็นแค่เสียงลมพัดผ่านใบไม้ ท่านจะช่วยข้าจบเพลงนี้ได้ไหม?\"");
-        n4_2C.imagePath = "image\\Scene\\Galadriel\\Scene4\\โน้ตตัวสุดท้ายคือ ความเชื่อใจ ไงคะ... ถ้าไม่มีท่าน เพลงนี้ก็คงเป็นแค่เสียงลมพัดผ่านใบไม้ ท่านจะช่วยข้าจบเพลงนี้ได้ไหม.png";
+        n4_2C.imagePath = "image\\Scene\\Galadriel\\Scene4\\โน้ตตัวสุดท้ายคือ _ความเชื่อใจ_ ไงคะ... ถ้าไม่มีท่าน เพลงนี้ก็คงเป็นแค่เสียงลมพัดผ่านใบไม้ ท่านจะช่วยข้าจบเพลงนี้ได้ไหม.png";
         n4_2C.addChoice("ผมจะอยู่จบเพลงนี้... และเพลงต่อๆ ไปของคุณด้วย", n4_3A) // +2
              .addChoice("ได้สิ ผมจะช่วยเท่าที่ทำได้",                    n4_3B) // +1
              .addChoice("เริ่มจากตรงไหนดีล่ะ?",                          n4_3C); // +1
@@ -554,7 +555,7 @@ public class Galadriel extends NPC {
         // === ROOT 4.1 ===
         DialogueNode root = new DialogueNode("Galadriel",
             "(ถือพิณมองผิวน้ำ) \"ในที่สุดบทเพลงก็สมบูรณ์เสียที... ข้าไม่เคยคิดเลยว่ามนุษย์จะเข้าใจความหมายของธรรมชาติได้ลึกซึ้งเท่าท่าน ท่านพร้อมจะฟังท่วงทำนองสุดท้ายหรือยัง?\"");
-        root.imagePath = "image\\Scene\\Galadriel\\Scene4\\root.png";
+        root.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ถือพิณมองผิวน้ำ) ในที่สุดบทเพลงก็สมบูรณ์เสียที... ข้าไม่เคยคิดเลยว่ามนุษย์จะเข้าใจความหมายของธรรมชาติได้ลึกซึ้งเท่าท่าน ท่านพร้อมจะฟังท่วงทำนองสุดท้ายหรือยัง.png";
         root.addChoice("ผมพร้อมเสมอสำหรับบทเพลงของคุณ",                   n4_2A) // +2
             .addChoice("เพลงนี้จะทำให้ภูติทั้งป่าตื่นขึ้นไหมนะ?",        n4_2B) // +1
             .addChoice("เล่นเลยครับ ผมอยากรู้ว่าโน้ตตัวสุดท้ายคืออะไร", n4_2C); // +1
@@ -571,23 +572,23 @@ public class Galadriel extends NPC {
         // 5.5A  TRUE ENDING
         DialogueNode n5_5A = new DialogueNode("Galadriel",
             "\"ข้ารักท่านค่ะ... เจ้ามนุษย์ที่แสนวิเศษ\" (ภาพตัดไปที่ทั้งคู่ใช้ชีวิตร่วมกันในเมือง)\n— TRUE ENDING (Eternal Love) —", true);
-        n5_5A.imagePath = "image\\Scene\\Galadriel\\Scene5\\TRUE_ENDING.png";
+        n5_5A.imagePath = "image\\Scene\\Galadriel\\Scene5\\ข้ารักท่านค่ะ...  เจ้ามนุษย์ที่แสนวิเศษ (ภาพตัดไปที่ทั้งคู่ใช้ชีวิตร่วมกันในเมือง).png";
 
         // 5.5B  GOOD ENDING
         DialogueNode n5_5B = new DialogueNode("Galadriel",
             "\"อยู่กับข้าตลอดไปนะ... เจ้ามนุษย์ที่รัก\" (ภาพตัดไปที่ทั้งคู่นั่งเล่นดนตรีในป่า)\n— GOOD ENDING (Magical Bond) —", true);
-        n5_5B.imagePath = "image\\Scene\\Galadriel\\Scene5\\GOOD_ENDING.png";
+        n5_5B.imagePath = "image\\Scene\\Galadriel\\Scene5\\อยู่กับข้าตลอดไปนะ... เจ้ามนุษย์ที่รัก (ภาพตัดไปที่ทั้งคู่นั่งเล่นดนตรีในป่า).png";
 
         // 5.5C  SAD ENDING
         DialogueNode n5_5C = new DialogueNode("",
             "(คุณยืนอยู่ลำพัง แต่มีขนนกเรืองแสงตกอยู่ข้างกาย)\n— SAD ENDING (Memory) —", true);
-        n5_5C.imagePath = "image\\Scene\\Galadriel\\Scene5\\SAD_ENDING.png";
+        n5_5C.imagePath = "image\\Scene\\Galadriel\\Scene5\\(คุณยืนอยู่ลำพัง แต่มีขนนกเรืองแสงตกอยู่ข้างกาย).png";
 
         // === 5.4 ===
         // 5.4A
         DialogueNode n5_4A = new DialogueNode("Galadriel",
             "(เงยหน้ามองคุณ) \"ต่อจากนี้ไป ข้าจะหัดทำอาหาร หัดเย็บผ้า และหัดรักท่านในฐานะผู้หญิงคนหนึ่ง... ท่านจะช่วยสอนข้าไหม?\"");
-        n5_4A.imagePath = "image\\Scene\\Galadriel\\Scene5\\(เงยหน้ามองคุณ) ต่อจากนี้ไป ข้าจะหัดทำอาหาร หัดเย็บผ้า และหัดรักท่านในฐานะผู้หญิงคนหนึ่ง... ท่านจะช่วยสอนข้าไหม.png";
+        n5_4A.imagePath = "image\\Scene\\Galadriel\\Scene5\\(เงยหน้ามองคุณ) ต่อจากนี้ไป ข้าจะหัดทำอาหาร หัดเย็บผ้า และหัดรักท่านในฐานะผู้หญิงคนหนึ่ง... ท่านจะช่วยสอนข้าไหม (2).png";
         n5_4A.addChoice("ผมจะสอนคุณทุกอย่าง แม้กระทั่งวิธีรักผมให้มากขึ้น", n5_5A) // +2
              .addChoice("เราจะเรียนรู้ไปพร้อมๆ กันนะ",                       n5_5A) // +1
              .addChoice("ได้สิ ถ้าคุณตั้งใจนะ",                               n5_5B); // 0
@@ -595,7 +596,7 @@ public class Galadriel extends NPC {
         // 5.4B
         DialogueNode n5_4B = new DialogueNode("Galadriel",
             "\"เราจะไปร้องเพลงให้ทั่วโลกฟังเลยดีไหมคะ? เพลงแห่งความรักของเรา\"");
-        n5_4B.imagePath = "image\\Scene\\Galadriel\\Scene5\\เราจะไปร้องเพลงให้ทั่วโลกฟังเลยดีไหมคะ เพลงแห่งความรักของเรา.png";
+        n5_4B.imagePath = "image\\Scene\\Galadriel\\Scene5\\เราจะไปร้องเพลงให้ทั่วโลกฟังเลยดีไหมคะ เพลงแห่งความรักของเรา (2).png";
         n5_4B.addChoice("เป็นความคิดที่ดีมาก ไปกันเลย!", n5_5B) // +2
              .addChoice("เอาไว้ร้องให้ผมฟังคนเดียวก็พอ", n5_5B) // +1
              .addChoice("ผมร้องเพลงไม่เก่งนะ",            n5_5C); // 0
@@ -628,7 +629,7 @@ public class Galadriel extends NPC {
         // 5.3C
         DialogueNode n5_3C = new DialogueNode("Galadriel",
             "(ร่างค่อยๆ จางหายไปกับแสง) \"ขอบคุณสำหรับความทรงจำที่งดงามนะคะ... ข้าจะไม่ลืมท่านเลย\"");
-        n5_3C.imagePath = "image\\Scene\\Galadriel\\Scene5\\(ร่างค่อยๆ จางหายไปกับแสง) ขอบคุณสำหรับความทรงจำที่งดงามนะคะ... ข้าจะไม่ลืมท่านเลย.png";
+        n5_3C.imagePath = "image\\Scene\\Galadriel\\Scene5\\ข้าเลือกที่จะอยู่... แม้จะเหลือพลังเพียงน้อยนิด แต่ข้าขอใช้มันเพื่อปกป้องท่านจะได้ไหม.png";
         n5_3C.addChoice("ผมจะไม่ลืมคุณเช่นกัน", n5_4C) // +1
              .addChoice("ลาก่อน...",              n5_4C) // 0
              .addChoice("(ยืนมองเธอจากไปเงียบๆ)", n5_4C); // 0
@@ -661,7 +662,7 @@ public class Galadriel extends NPC {
         // === ROOT 5.1 ===
         DialogueNode root = new DialogueNode("Galadriel",
             "(แสงจากตัวเริ่มจางลงช้าๆ) \"ท่านคะ... ข้าต้องเลือกระหว่างกลับไปเป็นภูติผู้เป็นอมตะ หรือจะเป็นมนุษย์ธรรมดาที่มีเวลาจำกัดเพื่ออยู่กับท่าน...\"");
-        root.imagePath = "image\\Scene\\Galadriel\\Scene5\\root.png";
+        root.imagePath = "image\\Scene\\Galadriel\\Scene5\\(แสงจากตัวเริ่มจางลงช้าๆ) ท่านคะ... ข้าต้องเลือกระหว่างกลับไปเป็นภูติผู้เป็นอมตะ หรือจะเป็นมนุษย์ธรรมดาที่มีเวลาจำกัดเพื่ออยู่กับท่าน....png";
         root.addChoice("ไม่ว่าคุณจะเป็นอะไร ผมจะรักคุณไม่เปลี่ยน",         n5_2A) // +2
             .addChoice("อย่าทิ้งผมไปเลยนะ กาลา ผมอยู่ไม่ได้ถ้าไม่มีคุณ",  n5_2B) // +2
             .addChoice("คุณควรเลือกสิ่งที่ทำให้คุณมีความสุขที่สุดนะ",       n5_2C); // +1

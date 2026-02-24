@@ -18,7 +18,7 @@ public class BlacksmithMinigame extends JPanel {
     // ตั้งค่าเป้าหมาย
     private final int TARGET_RADIUS = 60;   
     private double currentRadius = 250;     
-    private double shrinkSpeed = 2.0;       
+    private double shrinkSpeed =2.0;       
     
     // พิกัดวงกลม (ใช้สำหรับสุ่ม)
     private int targetX;
@@ -46,6 +46,8 @@ public class BlacksmithMinigame extends JPanel {
     GamePanel realGamePanel ;
     MainFrame mainFrame;
     GameTime realGameTime ;
+    private double MultipleMoney = 1;
+    private double TotalMoney = 0;
 
     public BlacksmithMinigame(MainFrame mainFrame, OfficePanel office) {
         this.mainFrame = mainFrame;
@@ -70,7 +72,9 @@ public class BlacksmithMinigame extends JPanel {
                     
                     // ถ้าวงกลมหดเล็กกว่าเป้าหมายมากเกินไป = พลาด (Too Late)
                     if (currentRadius < TARGET_RADIUS - 15) {
-                        handleResult("Too Late! (0)", Color.RED, 0);
+                        MultipleMoney -= 0.05;
+                        handleResult("Multiple - 0.05", Color.RED, -1);
+                        mainFrame.getSFXManager().playSFX("Music\\Spongebob Fail - Sound Effect HD_01.wav");
                     }
                     repaint();
                 }
@@ -104,7 +108,6 @@ public class BlacksmithMinigame extends JPanel {
                         // กดโดนในวงเป้าหมาย -> เช็คความแม่นยำ!
                         checkTiming();
                     } else {
-                        // กดนอกวง -> เมินเฉย (ผู้เล่นต้องกดในวงเท่านั้น)
                         // (ถ้าอยากให้กดพลาดแล้วโดนหักแต้ม ให้เรียก handleResult("Miss Click", Color.RED, 0); ตรงนี้แทนได้)
                     }
                 }
@@ -143,18 +146,24 @@ public class BlacksmithMinigame extends JPanel {
             targetY = margin + (int)(Math.random() * (h - margin * 2));
         }
 
-        shrinkSpeed = 2.0 + (Math.random() * 2.5); // สุ่มความเร็วหด (2.0 ถึง 4.5)
+        shrinkSpeed = 3.0 + (Math.random() * 4.5); // สุ่มความเร็วหด (2.0 ถึง 4.5)
     }
 
     private void checkTiming() {
         double difference = Math.abs(currentRadius - TARGET_RADIUS);
 
         if (difference <= 10) {
-            handleResult("Perfect!! (+3)", Color.ORANGE, 3);
+            MultipleMoney += 0.25;
+            handleResult("Perfect!! Multiple + 0.25", Color.ORANGE, 3);
+            mainFrame.getSFXManager().playSFX("Music\\Hammer Hitting Anvil Sound Effect_01.wav");
         } else if (difference <= 30) {
-            handleResult("Good! (+1)", Color.GREEN, 1);
+            MultipleMoney += 0.05;
+            handleResult("Good! Multiple + 0.05", Color.GREEN, 1);
+            mainFrame.getSFXManager().playSFX("Music\\Hammer Hitting Anvil Sound Effect_01.wav");
         } else {
-            handleResult("Miss! (0)", Color.RED, 0);
+            MultipleMoney -= 0.05;
+            handleResult("Miss! Multiple - 0.05", Color.RED, 0);
+            mainFrame.getSFXManager().playSFX("Music\\Spongebob Fail - Sound Effect HD_01.wav");
         }
     }
 
@@ -174,12 +183,20 @@ public class BlacksmithMinigame extends JPanel {
             resultColor = Color.YELLOW;
             gameLoop.stop();
             repaint();
-            realPlayer.increaseMoney(80);
-            Notify.showNotify("Good boy  Money: " + realPlayer.getMoney(), Color.GREEN , 2000); 
+            TotalMoney = 50 * MultipleMoney;
+            realPlayer.increaseMoneyDouble(TotalMoney);
+            Notify.showNotify("Good boy  Money + " + (int) TotalMoney, Color.GREEN , 2000); 
             if (realGamePanel != null) {
                 realGamePanel.doActivity(40);
                 DebugLog();
             }
+        } else if (score <= -1 || MultipleMoney < 1) {
+            isGameOver = true;
+            isPaused = false;
+            resultMessage = "FAIL!";
+            resultColor = Color.RED;
+            gameLoop.stop();
+            repaint();
         } else {
             // หน่วงเวลาให้ผู้เล่นดูผลลัพธ์แปปนึง ก่อนสุ่มวงกลมใหม่
             Timer pauseTimer = new Timer(600, e -> {
@@ -195,6 +212,7 @@ public class BlacksmithMinigame extends JPanel {
             pauseTimer.setRepeats(false); 
             pauseTimer.start();
         }
+
     }
 
     @Override

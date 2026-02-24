@@ -288,20 +288,40 @@ public class OfficePanel extends JPanel {
 
     public void Work() {
         this.removeAll();
-
         this.setLayout(new java.awt.BorderLayout());
-        CreateTemplateScene scene = new CreateTemplateScene(
-            "image\\Scene\\Office\\Barad-durWorkWithPerson.png", // ตำเเหน่งของภาพพื้นหลัง
-            "Manager", // ชื่อผู้พูด
-            "จงทำงานซะ", // ข้อความที่ต้องการให้แสดงในกล่องข้อความ
-            // diaX, diaY, diaW, diaH, // กำหนดตำแหน่งและขนาดของ Dialogue Box
-            e -> {mainFrame.showGame();}, // ActionListener สำหรับปุ่ม "กลับไปที่เกม" (เมื่อกดปุ่มนี้จะกลับไปที่หน้าจอเกม)
+
+        // 🔥 1. สร้าง Array มารับค่าชั่วคราวเพื่อหลบ Error ของ Java
+        final CreateTemplateScene[] sceneRef = new CreateTemplateScene[1];
+
+        // 2. สร้าง Scene และเก็บลงใน Array ช่องที่ 0
+        sceneRef[0] = new CreateTemplateScene(
+            "image\\Scene\\Office\\Barad-durWorkWithPerson.png", 
+            "Manager", 
+            "จงทำงานซะ", 
+            e -> {mainFrame.showGame();}, 
             "บิด",
 
             new CreateTemplateScene.SceneOption("work hard", e -> {
-                showMiniGame();
+                if (realPlayer.getEnergy() < 40) {
+                    
+                    // 🔥 3. เรียกใช้ scene ผ่าน array แทน
+                    sceneRef[0].add(shopNotify);
+                    sceneRef[0].setComponentZOrder(shopNotify, 0);
+                    
+                    shopNotify.showNotify("Not Enough Energy to Work", Color.red, 3000);
+                    
+                    sceneRef[0].revalidate();
+                    sceneRef[0].repaint();
+                    
+                } else { 
+                    showMiniGame(); 
+                }
             })
         );
+
+        // 4. ดึงค่ากลับมาใส่ตัวแปร scene แบบปกติ เพื่อแอดเข้าหน้าต่าง
+        CreateTemplateScene scene = sceneRef[0];
+        
         add(scene, java.awt.BorderLayout.CENTER);
         revalidate();
         repaint();

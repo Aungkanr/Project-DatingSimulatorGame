@@ -48,6 +48,7 @@ public class Cheat extends JFrame {
             mainFrame.getPlayer().increaseMoney(1000);
             if (mainFrame.getGamePanel() != null) mainFrame.getGamePanel().updateUI();//Game Panel
             if (mainFrame.getOfficePanel() != null) mainFrame.getOfficePanel().updateUI();//Office Panel
+            if (mainFrame.getShopPanel() != null) mainFrame.getShopPanel().updateUI();//Shop Panel
 
         });
         add(btnAddMoney);
@@ -58,6 +59,7 @@ public class Cheat extends JFrame {
             mainFrame.getPlayer().setEnergy(100);
             if (mainFrame.getGamePanel() != null) mainFrame.getGamePanel().updateUI();//Game Panel
             if (mainFrame.getOfficePanel() != null) mainFrame.getOfficePanel().updateUI();//Office Panel
+            if (mainFrame.getShopPanel() != null) mainFrame.getShopPanel().updateUI();//Shop Panel
         });
         add(btnMaxEnergy);
 
@@ -72,6 +74,8 @@ public class Cheat extends JFrame {
             if (mainFrame.getSchoolPanel() != null) mainFrame.getSchoolPanel().updateUI();//School Panel
             if (mainFrame.getNeighBorPanel() != null) mainFrame.getNeighBorPanel().updateUI();//Neighbor Panel
             if (mainFrame.getShopPanel() != null) mainFrame.getShopPanel().updateUI();//Shop Panel
+            if (mainFrame.getLazelPanel() != null) mainFrame.getLazelPanel().updateUI();//Shop Panel
+
         });
         add(btnNextDay);
 

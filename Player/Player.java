@@ -63,6 +63,9 @@ public class Player {
     public void increaseMoney(int amount) {
         this.money += amount;
     }
+    public void increaseMoneyDouble(double amount) {
+        this.money += amount;       
+    }
 
     public boolean buyItem(String itemName, int price) {
         if (this.money >= price) {

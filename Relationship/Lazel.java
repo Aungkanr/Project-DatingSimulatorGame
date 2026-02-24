@@ -8,8 +8,8 @@ public class Lazel extends NPC {
 
     public Lazel() {
         super("Lazel");
-        //heartLevel =2;  
-        //affectionPoints = 290;  //ลองปรับตรงนี้ แยกของแต่ละคน 
+        //heartLevel =4;  
+        //affectionPoints = 490;  //ลองปรับตรงนี้ แยกของแต่ละคน 
     }
 
     @Override

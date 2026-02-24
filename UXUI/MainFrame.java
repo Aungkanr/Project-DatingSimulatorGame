@@ -198,7 +198,7 @@ public class MainFrame extends JFrame {
         if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
     }
     public void showSpecialSceneGaladriel() { 
-        toggleVisibility(specialSceneLazelPanel);
+        toggleVisibility(specialSceneGaladrielPanel);
         if(gamePanel != null) gamePanel.updateUI();
     }
     //=========================================================================================================================================================================================

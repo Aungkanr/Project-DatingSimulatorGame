@@ -15,7 +15,7 @@ public class Player {
     // Constructor 
     public Player() {
         this.energy = 100; // เริ่มต้น 100
-        this.money = 100;  // เริ่มต้น 500 บาท
+        this.money = 1000;  // เริ่มต้น 500 บาท
         this.inventory = new Inventory() ; //create obj bag
 
         this.lazel = new Lazel();

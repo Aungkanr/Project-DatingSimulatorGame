@@ -8,7 +8,7 @@ import UXUI.Scene.CreateTemplateScene.SceneOption;
 public class GaladrielPanel extends BaseNPCPanel {
 
     public GaladrielPanel(MainFrame mainFrame) {
-        super(mainFrame, mainFrame.getPlayer().getGaladriel(), "image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
+        super(mainFrame, mainFrame.getPlayer().getGaladriel(), "image\\Scene\\Galadriel\\ShyGaladriel.png");
     }
 
     @Override
@@ -35,27 +35,27 @@ public class GaladrielPanel extends BaseNPCPanel {
         if (itemName.equals("Fairy rose")) {
             targetNPC.addAffection(20); 
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
-                "โอ้... Fairy Rose ขอบใจนะ", 
+                "อะ... ให้ข้าหรอ Fairy rose นี้สวยจัง", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
         } else if (itemName.equals("Tulip") || itemName.equals("Poppy")) {
             targetNPC.addAffection(10); 
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
-                "งดงามมาก...", 
+                "ดอกไม้นี้งดงามดีนะข้าจะเก็บมันไว้", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
         } else {
             targetNPC.addAffection(5); 
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
-                "ขยะ... แต่ข้าจะรับไว้พิจารณา", 
+                "อะ..ข้าไม่ค่อยรู้จักมันแต่จะรับไว้ก็ได้เพื่อไม่ทำลายน้ำใจเจ้า", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));

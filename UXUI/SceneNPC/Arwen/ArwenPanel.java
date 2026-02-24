@@ -13,8 +13,14 @@ public class ArwenPanel extends BaseNPCPanel {
 
     @Override
     public void returnBtn() {
-        mainFrame.createNeightBorPanel();
-        mainFrame.showNeighbor();
+        // --- ใส่ Effect Fade ---
+        Utility.ScreenFader fader = new Utility.ScreenFader();
+        mainFrame.setGlassPane(fader);
+        fader.setVisible(true);
+        fader.fadeInOut(400, 200, () -> {
+            mainFrame.createNeightBorPanel();
+            mainFrame.showNeighbor();
+        }, () -> fader.setVisible(false));
     }
 
     @Override
@@ -37,7 +43,7 @@ public class ArwenPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
                 "Arwen", 
-                "โอ้... Fairy Rose ขอบใจนะ", 
+                "นี่มัน Fairy Rose... ดอกไม้เวทมนตร์ที่หายากมาก ท่านไปหามาได้ยังไงคะเนี่ย? ขอบคุณมากเลยนะคะ ข้าจะเก็บรักษามันไว้อย่างดีที่สุดเลยค่ะ", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
@@ -46,7 +52,7 @@ public class ArwenPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
                 "Arwen", 
-                "งดงามมาก...", 
+                "ดอกทิวลิปสีสวยจังเลยค่ะ... ท่านช่างใส่ใจรายละเอียดจริงๆ ข้าจะเอาไปปักแจกันไว้ที่โต๊ะปรุงยานะคะ จะได้มองเห็นมันทุกวัน", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
@@ -55,7 +61,7 @@ public class ArwenPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
                 "Arwen", 
-                "ขยะ... แต่ข้าจะรับไว้พิจารณา", 
+                "ขอบคุณสำหรับของขวัญนะคะ ท่านช่างมีน้ำใจจริงๆ... ข้าจะเก็บมันไว้อย่างดีค่ะ", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));

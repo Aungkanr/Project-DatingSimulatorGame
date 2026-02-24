@@ -13,8 +13,14 @@ public class GaladrielPanel extends BaseNPCPanel {
 
     @Override
     public void returnBtn() {
-        mainFrame.createShopPanel();
-        mainFrame.showShop();
+        // --- ใส่ Effect Fade ---
+        Utility.ScreenFader fader = new Utility.ScreenFader();
+        mainFrame.setGlassPane(fader);
+        fader.setVisible(true);
+        fader.fadeInOut(400, 200, () -> {
+            mainFrame.createShopPanel();
+            mainFrame.showShop();
+        }, () -> fader.setVisible(false));
     }
 
     @Override
@@ -37,16 +43,16 @@ public class GaladrielPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
                 "Galadriel", 
-                "โอ้... Fairy Rose ขอบใจนะ", 
+                "งื้อออ! Fairy Rose! ดอกไม้ของเหล่าภูติ! มันเปล่งประกายสวยมากเลย ท่านไปหามาได้ยังไงเนี่ย ข้ารักมันที่สุดเลย... รักท่านด้วย!", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
         } else if (itemName.equals("Tulip") || itemName.equals("Poppy")) {
-            targetNPC.addAffection(1); 
+            targetNPC.addAffection(10); // แก้ไขจาก 1 เป็น 10 ตามเงื่อนไขของคุณ
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
                 "Galadriel", 
-                "งดงามมาก...", 
+                "ว้าว ทิวลิป! สีสดใสเหมือนพระอาทิตย์ยามเช้าเลยค่ะ ขอบคุณนะคะ! ข้าจะเอามันไปทัดหูไว้ มันต้องเข้ากับชุดข้าแน่ๆ เลย", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
@@ -55,7 +61,7 @@ public class GaladrielPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\LazelScene1\\เขิน.png", 
                 "Galadriel", 
-                "ขอบใจแต่......ข้าไม่ชอบ", 
+                "เอ๊ะ ให้ข้าเหรอคะ? ดีใจจังเลย! แค่เป็นของที่ท่านตั้งใจให้ ข้าก็ชอบหมดแหละค่ะ ขอบคุณนะคะ!", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));

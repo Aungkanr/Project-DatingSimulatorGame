@@ -21,8 +21,14 @@ public class LazelPanel extends BaseNPCPanel {
 
     @Override
     public void returnBtn() {
-        mainFrame.createSchoolPanel();
-        mainFrame.showSchool();
+        // --- ใส่ Effect Fade ---
+        Utility.ScreenFader fader = new Utility.ScreenFader();
+        mainFrame.setGlassPane(fader);
+        fader.setVisible(true);
+        fader.fadeInOut(400, 200, () -> {
+            mainFrame.createSchoolPanel();
+            mainFrame.showSchool();
+        }, () -> fader.setVisible(false));
     }
 
     @Override
@@ -45,7 +51,7 @@ public class LazelPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
-                "โอ้... Zenith ขอบใจนะ", 
+                "น-นี่มันดาบ Zenith! ดาบสุดยอดแห่งตำนานที่หลอมรวมจากดาบนับไม่ถ้วน... เจ้าไปเอาของโคตรแรร์แบบนี้มาได้ยังไงเนี่ย! ข...ขอบใจนะ! ข้าจะใช้มันฟันศัตรูที่กล้าเข้ามาแตะต้องเจ้าให้ราบคาบเลย!", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
@@ -54,7 +60,7 @@ public class LazelPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
-                "งดงามมาก...ข้าชอบมัน", 
+                "โอ้โห Excalibur! สมดุลดาบดีเยี่ยม ประกายแสงก็แสบตาใช้ได้เลย หึ... รู้ใจข้าดีนี่นา ขอบใจนะ! วันนี้เราไปหาเรื่องพวกมอนสเตอร์มาเป็นกระสอบทรายลองดาบกันดีไหม?", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
@@ -63,7 +69,7 @@ public class LazelPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
-                "โอ้... Fairy Rose ขอบใจนะ", 
+                "ด-ดอกไม้? ให้ข้าเนี่ยนะ? ข้าเป็นนักรบนะเว้ย จะให้พกดอกไม้ไปฟันใคร... ต-แต่... กลิ่นมันก็หอมดี แสงก็สวยด้วย... ขอบใจละกัน! ห้ามเอาไปเล่าให้ใครฟังเด็ดขาดนะ!", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
@@ -72,7 +78,7 @@ public class LazelPanel extends BaseNPCPanel {
             scene = new CreateTemplateScene(
                 "image\\Scene\\Lazel\\ซีน1\\เขิน.png", 
                 "Lazel", 
-                "ขยะ... แต่ข้าจะรับไว้พิจารณา", 
+                "อะไรเนี่ย? ของฝากเรอะ... ปกติข้าไม่ค่อยสนใจของพวกนี้หรอกนะ แต่เอาเถอะ ขอบใจที่นึกถึงข้าละกัน", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));

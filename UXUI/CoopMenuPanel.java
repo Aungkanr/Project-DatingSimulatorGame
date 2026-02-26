@@ -7,8 +7,8 @@ import java.awt.event.FocusEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import Utility.ScreenFader;
-import Utility.StdAuto;
+
+import Utility.*;
 
 public class CoopMenuPanel extends JPanel {
 
@@ -36,6 +36,9 @@ public class CoopMenuPanel extends JPanel {
     private CardLayout hostCardLayout;
 
     private JButton btnTabJoin, btnTabHost;
+    
+    private CheckImage checkImageUtil;
+
 
     public CoopMenuPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -52,9 +55,7 @@ public class CoopMenuPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        // พื้นหลังสีดำจางๆ
-        g2.setColor(new Color(0, 0, 0, 100));
-        g2.fillRect(0, 0, getWidth(), getHeight());
+
     }
 
     private void initComponents() {
@@ -78,6 +79,8 @@ public class CoopMenuPanel extends JPanel {
 
         add(btnTabJoin);
         add(btnTabHost);
+
+        checkImageUtil = new CheckImage();
 
         // =========================================
         // 2. กล่องหลัก (Outer Box)
@@ -146,7 +149,38 @@ public class CoopMenuPanel extends JPanel {
         });
         add(btnMainBack);
 
-        setComponentZOrder(fader, 0);
+
+        // =========================================
+        // 6. แผ่นฟิล์มสีดำโปร่งใส (Dark Overlay)
+        // =========================================
+        JPanel darkOverlay = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                // ระบายสีดำ ความโปร่งใสระดับ 150 (ปรับมืด/สว่างได้ที่ตัวเลขนี้ 0-255)
+                g.setColor(new Color(0, 0, 0, 150)); 
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        darkOverlay.setOpaque(false); // ต้องตั้งเป็น false เพื่อไม่ให้จอกระพริบ (บัคของ Swing)
+        darkOverlay.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(darkOverlay);
+
+        // =========================================
+        // 7. รูปภาพ Background ของคุณ (อยู่ล่างสุด)
+        // =========================================
+        JLabel lblMap = new JLabel("");
+        String imagePath = "image\\MenuBackground.png";
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
+        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
+        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(lblMap);
+
+        // =========================================
+        // จัดลำดับชั้นความลึก (Z-Order) สำคัญมาก!
+        // =========================================
+        setComponentZOrder(fader, 0);                             // ชั้นที่ 0 (หน้าสุด): เอฟเฟกต์เฟดจอ
+        setComponentZOrder(darkOverlay, getComponentCount() - 1); // ชั้นเกือบสุดท้าย: แผ่นฟิล์มสีดำ
+        setComponentZOrder(lblMap, getComponentCount() - 1);      // ชั้นล่างสุด: รูปภาพพื้นหลัง (ดันฟิล์มดำขึ้นไป 1 สเตป)
     }
 
     // ===========================================================================

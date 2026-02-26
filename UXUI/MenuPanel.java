@@ -71,53 +71,7 @@ public class MenuPanel extends JPanel {
                 fader.fadeIn(250, null);
             });
         });
-        /* 
         
-            
-            // สร้างปุ่มตัวเลือก Host หรือ Join เหมือน Stardew Valley
-            Object[] options = {"Host Game (สร้างห้อง)", "Join Game (เข้าร่วม)", "Cancel"};
-            int choice = JOptionPane.showOptionDialog(
-                parent, 
-                "Do you want to Host a new game or Join an existing one?", 
-                "Co-op Mode",
-                JOptionPane.YES_NO_CANCEL_OPTION, 
-                JOptionPane.QUESTION_MESSAGE, 
-                null, options, options[0]
-            );
-
-            if (choice == 0) { 
-                // --- กรณีเลือก HOST (สร้างห้อง) ---
-                // 1. สั่งเปิดเซิร์ฟเวอร์เบื้องหลังทันที
-                Coop.Network.GameServer.startServerInBackground(9999); 
-                
-                // 2. พาตัวเองเข้าห้อง Lobby โดยต่อเข้า "localhost" อัตโนมัติ
-                fader.fadeOut(500, () -> {
-                    parent.showLobby();
-                    parent.getLobbyPanel().setHostMode(true); // <--- สั่งให้แสดง IP ตัวเอง
-                    parent.getLobbyPanel().connectToServer("localhost"); 
-                    fader.fadeIn(500, null);
-                });
-                
-            } else if (choice == 1) { 
-                // --- กรณีเลือก JOIN (เข้าร่วม) ---
-                String ipAddress = JOptionPane.showInputDialog(
-                    parent, 
-                    "Enter Host IP Address:", 
-                    "Join Game", 
-                    JOptionPane.QUESTION_MESSAGE
-                );
-                
-                if (ipAddress != null && !ipAddress.trim().isEmpty()) {
-                    fader.fadeOut(500, () -> {
-                        parent.showLobby();
-                        parent.getLobbyPanel().setHostMode(false); // <--- ซ่อนการแสดง IP
-                        parent.getLobbyPanel().connectToServer(ipAddress.trim());
-                        fader.fadeIn(500, null);
-                    });
-                }
-            }
-        });
-    */
         add(btnMulti);
 
         // 3. SETTING (เลื่อนลงมาเป็นตำแหน่งที่ 3)

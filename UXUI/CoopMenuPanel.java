@@ -2,18 +2,17 @@ package UXUI;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import Utility.ScreenFader;
-import Utility.StdAuto;
+
+import Utility.*;
 
 public class CoopMenuPanel extends JPanel {
 
-    private MainFrame parent;
+    private MainFrame mainFrame;
     private StdAuto stdScreen = new StdAuto();
     ScreenFader fader = new ScreenFader();
 
@@ -37,9 +36,12 @@ public class CoopMenuPanel extends JPanel {
     private CardLayout hostCardLayout;
 
     private JButton btnTabJoin, btnTabHost;
+    
+    private CheckImage checkImageUtil;
+
 
     public CoopMenuPanel(MainFrame mainFrame) {
-        this.parent = mainFrame;
+        this.mainFrame = mainFrame;
         setLayout(null);
         stdScreen.setBtnWHG(300, 60, 20, 2);
 
@@ -53,9 +55,7 @@ public class CoopMenuPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        // พื้นหลังสีดำจางๆ
-        g2.setColor(new Color(0, 0, 0, 100));
-        g2.fillRect(0, 0, getWidth(), getHeight());
+
     }
 
     private void initComponents() {
@@ -79,6 +79,8 @@ public class CoopMenuPanel extends JPanel {
 
         add(btnTabJoin);
         add(btnTabHost);
+
+        checkImageUtil = new CheckImage();
 
         // =========================================
         // 2. กล่องหลัก (Outer Box)
@@ -119,14 +121,14 @@ public class CoopMenuPanel extends JPanel {
         // 4. Logic การสลับ Tab
         // =========================================
         btnTabJoin.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             updateTabStyles(true); 
             joinCardLayout.show(joinCards, "JOIN_MENU");
             mainCardLayout.show(contentCards, "JOIN_TAB");
         });
 
         btnTabHost.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             updateTabStyles(false); 
             hostCardLayout.show(hostCards, "HOST_MENU");
             mainCardLayout.show(contentCards, "HOST_TAB");
@@ -142,12 +144,43 @@ public class CoopMenuPanel extends JPanel {
         btnMainBack.setFont(new Font("Tahoma", Font.BOLD, 20));
         Hovereffect.HoverEffectRounded(btnMainBack, centerX - (btnBackW/2), btnBackY, btnBackW, btnBackH, btnBackBgColor);
         btnMainBack.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
-            fader.fadeInOut(250, 250, ()-> {parent.showMenu();}, null);
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            fader.fadeInOut(250, 250, ()-> {mainFrame.showMenu();}, null);
         });
         add(btnMainBack);
 
-        setComponentZOrder(fader, 0);
+
+        // =========================================
+        // 6. แผ่นฟิล์มสีดำโปร่งใส (Dark Overlay)
+        // =========================================
+        JPanel darkOverlay = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                // ระบายสีดำ ความโปร่งใสระดับ 150 (ปรับมืด/สว่างได้ที่ตัวเลขนี้ 0-255)
+                g.setColor(new Color(0, 0, 0, 150)); 
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        darkOverlay.setOpaque(false); // ต้องตั้งเป็น false เพื่อไม่ให้จอกระพริบ (บัคของ Swing)
+        darkOverlay.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(darkOverlay);
+
+        // =========================================
+        // 7. รูปภาพ Background ของคุณ (อยู่ล่างสุด)
+        // =========================================
+        JLabel lblMap = new JLabel("");
+        String imagePath = "image\\MenuBackground.png";
+        ImageIcon originalIcon = Utility.AssetManager.getInstance().getImage(imagePath);
+        checkImageUtil.checkImage(originalIcon, lblMap, stdScreen.width, stdScreen.height);
+        lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(lblMap);
+
+        // =========================================
+        // จัดลำดับชั้นความลึก (Z-Order) สำคัญมาก!
+        // =========================================
+        setComponentZOrder(fader, 0);                             // ชั้นที่ 0 (หน้าสุด): เอฟเฟกต์เฟดจอ
+        setComponentZOrder(darkOverlay, getComponentCount() - 1); // ชั้นเกือบสุดท้าย: แผ่นฟิล์มสีดำ
+        setComponentZOrder(lblMap, getComponentCount() - 1);      // ชั้นล่างสุด: รูปภาพพื้นหลัง (ดันฟิล์มดำขึ้นไป 1 สเตป)
     }
 
     // ===========================================================================
@@ -218,7 +251,7 @@ public class CoopMenuPanel extends JPanel {
         btnJoin.setFont(new Font("Tahoma", Font.BOLD, 20));
         Hovereffect.HoverEffectRounded(btnJoin, 170, 240, 190, 50, btnActionColor);
         btnJoin.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             String ip = ipField.getText().trim();
             if (ip.isEmpty() || ip.equals("Enter IP ...")) {
                 lblError.setVisible(true); 
@@ -227,8 +260,8 @@ public class CoopMenuPanel extends JPanel {
                 fader.fadeOut(500, () -> {
                     // [อัปเดตใหม่] คน Join จะเปิดหน้า Lobby โดยมี 5 ช่องโชว์ไว้ก่อน 
                     // (อนาคตตอนเชื่อม Network เสร็จ Server จะเป็นคนสั่งอีกทีว่ามีกี่คน)
-                    parent.getLobbyPanel().setupRoom(5, false, ip);
-                    parent.showLobby();
+                    mainFrame.getLobbyPanel().setupRoom(5, false, ip);
+                    mainFrame.showLobby();
                     fader.fadeIn(500, null);
                 });
             }
@@ -239,7 +272,7 @@ public class CoopMenuPanel extends JPanel {
         btnCancel.setFont(new Font("Tahoma", Font.BOLD, 20));
         Hovereffect.HoverEffectRounded(btnCancel, 380, 240, 190, 50, btnBackBgColor);
         btnCancel.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             lblError.setVisible(false);
             joinCardLayout.show(joinCards, "JOIN_MENU");
         });
@@ -289,7 +322,7 @@ public class CoopMenuPanel extends JPanel {
         Hovereffect.HoverEffectRounded(btnCreate, 170, 220, 190, 50, btnActionColor);
         
         btnCreate.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             
             // ดึงค่าจำนวนคนที่ต้องการจาก Slider
             int maxP = slider.getValue(); 
@@ -297,8 +330,8 @@ public class CoopMenuPanel extends JPanel {
             Coop.Network.GameServer.startServerInBackground(9999); 
             fader.fadeOut(500, () -> {
                 // [อัปเดตใหม่] ส่งจำนวน maxP ไปบอกให้ LobbyPanel สร้างช่องผู้เล่นตามจำนวน
-                parent.getLobbyPanel().setupRoom(maxP, true, "localhost"); 
-                parent.showLobby();
+                mainFrame.getLobbyPanel().setupRoom(maxP, true, "localhost"); 
+                mainFrame.showLobby();
                 fader.fadeIn(500, null);
             });
         });
@@ -308,7 +341,7 @@ public class CoopMenuPanel extends JPanel {
         btnCancel.setFont(new Font("Tahoma", Font.BOLD, 20));
         Hovereffect.HoverEffectRounded(btnCancel, 380, 220, 190, 50, btnBackBgColor);
         btnCancel.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             hostCardLayout.show(hostCards, "HOST_MENU"); 
         });
         p.add(btnCancel);
@@ -400,7 +433,7 @@ public class CoopMenuPanel extends JPanel {
         btn.setBorderPainted(false);
         btn.setContentAreaFilled(false);
         btn.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
             action.actionPerformed(e);
         });
         return btn;

@@ -55,16 +55,57 @@ public class MenuPanel extends JPanel {
         });
         add(btnStart);
         
-        // 2. MULTIPLAYER (เพิ่มใหม่ - แทรกไว้ตำแหน่งที่ 2)
-        JButton btnMulti = createRoundedButton("MULTIPLAYER");
+        // 2. MULTIPLAYER (CO-OP)
+        JButton btnMulti = createRoundedButton("CO-OP (MULTIPLAYER)");
         btnMulti.setFont(new Font("Tahoma", Font.BOLD, 20));
-        int multiY = startY + btnH + gap; // คำนวณ Y ต่อจากปุ่ม Start
+        int multiY = startY + btnH + gap;
         Hovereffect.HoverEffectRounded(btnMulti, btnX, multiY, btnW, btnH, multiBtnColor);
+        
         btnMulti.addActionListener(e -> {
             parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
-            fader.fadeInOut(500, 500, ()->{                
-                parent.showLobby(); // เรียกหน้า Lobby
-            }, null);
+            
+            // สร้างปุ่มตัวเลือก Host หรือ Join เหมือน Stardew Valley
+            Object[] options = {"Host Game (สร้างห้อง)", "Join Game (เข้าร่วม)", "Cancel"};
+            int choice = JOptionPane.showOptionDialog(
+                parent, 
+                "Do you want to Host a new game or Join an existing one?", 
+                "Co-op Mode",
+                JOptionPane.YES_NO_CANCEL_OPTION, 
+                JOptionPane.QUESTION_MESSAGE, 
+                null, options, options[0]
+            );
+
+            if (choice == 0) { 
+                // --- กรณีเลือก HOST (สร้างห้อง) ---
+                // 1. สั่งเปิดเซิร์ฟเวอร์เบื้องหลังทันที
+                Coop.Network.GameServer.startServerInBackground(9999); 
+                
+                // 2. พาตัวเองเข้าห้อง Lobby โดยต่อเข้า "localhost" อัตโนมัติ
+                fader.fadeOut(500, () -> {
+                    parent.showLobby();
+                    parent.getLobbyPanel().setHostMode(true); // <--- สั่งให้แสดง IP ตัวเอง
+                    parent.getLobbyPanel().connectToServer("localhost"); 
+                    fader.fadeIn(500, null);
+                });
+                
+            } else if (choice == 1) { 
+                // --- กรณีเลือก JOIN (เข้าร่วม) ---
+                String ipAddress = JOptionPane.showInputDialog(
+                    parent, 
+                    "Enter Host IP Address:", 
+                    "Join Game", 
+                    JOptionPane.QUESTION_MESSAGE
+                );
+                
+                if (ipAddress != null && !ipAddress.trim().isEmpty()) {
+                    fader.fadeOut(500, () -> {
+                        parent.showLobby();
+                        parent.getLobbyPanel().setHostMode(false); // <--- ซ่อนการแสดง IP
+                        parent.getLobbyPanel().connectToServer(ipAddress.trim());
+                        fader.fadeIn(500, null);
+                    });
+                }
+            }
         });
         add(btnMulti);
 

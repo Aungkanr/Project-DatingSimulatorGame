@@ -341,6 +341,7 @@ public class MainFrame extends JFrame {
     public OfficePanel getOfficePanel() {return this.office;}
     public SchoolPanel getSchoolPanel() {return this.school;}
     public NeighBorPanel getNeighBorPanel () {return this.neighbor;}
+    public LobbyPanel getLobbyPanel() { return this.lobbyPanel; }
     //NPC Panel
     public LazelPanel getLazelPanel() { return lazelPanel; }
     public GaladrielPanel getGaladrielPanel() { return galadrielPanel; }

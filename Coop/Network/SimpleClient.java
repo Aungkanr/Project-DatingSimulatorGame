@@ -8,7 +8,7 @@ public class SimpleClient {
     public static void main(String[] args) {
         // 📌 ถ้าเทสในคอมเครื่องเดียวกัน ให้ใช้ "localhost"
         // 📌 ถ้าเล่นกับเพื่อนผ่าน LAN (Wi-Fi เดียวกัน) ให้เปลี่ยนเป็นเลข IP ของเพื่อน เช่น "192.168.1.45"
-        String serverIP = "localhost"; 
+        String serverIP = "10.24.177.58"; 
         int port = 9999;
 
         try (Socket socket = new Socket(serverIP, port)) {

@@ -19,8 +19,9 @@ public class MenuPanel extends JPanel {
     ScreenFader fader = new ScreenFader();
 
     Color startBtnColor = new Color(255, 105, 180);        
+    Color multiBtnColor = new Color(50, 205, 50);    // สีเขียวสำหรับปุ่ม Multiplayer
     Color settingBtnColor = new Color(138, 43, 226);       
-    Color exitBtnColor = new Color(70, 70, 90);           
+    Color exitBtnColor = new Color(70, 70, 90);          
 
     public MenuPanel(MainFrame mainFrame) {
         stdScreen = new StdAuto();
@@ -36,16 +37,13 @@ public class MenuPanel extends JPanel {
         int btnH = 60;
         int gap = 20;
 
+        // ตำแหน่งเดิมที่คุณตั้งไว้
         int btnX = stdScreen.width - btnW - 150; 
         int startY = 220; 
 
-        // ลบบรรทัดนี้ออก เพื่อไม่ให้เสียงถูกรีเซ็ตเบาลงทุกครั้งที่กลับมาหน้าเมนู
-        // parent.getSFXManager().setVolume(0.1f); 
-
-        // 1. START (ปรับเป็นปุ่มมน)
+        // 1. START (Solo)
         JButton btnStart = createRoundedButton("START");
         btnStart.setFont(new Font("Tahoma", Font.BOLD, 20));
-        // ใช้ HoverEffectRounded แทน
         Hovereffect.HoverEffectRounded(btnStart, btnX, startY, btnW, btnH, startBtnColor);
         btnStart.addActionListener(e -> {
             parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
@@ -57,11 +55,23 @@ public class MenuPanel extends JPanel {
         });
         add(btnStart);
         
-        // 2. SETTING (ปรับเป็นปุ่มมน)
+        // 2. MULTIPLAYER (เพิ่มใหม่ - แทรกไว้ตำแหน่งที่ 2)
+        JButton btnMulti = createRoundedButton("MULTIPLAYER");
+        btnMulti.setFont(new Font("Tahoma", Font.BOLD, 20));
+        int multiY = startY + btnH + gap; // คำนวณ Y ต่อจากปุ่ม Start
+        Hovereffect.HoverEffectRounded(btnMulti, btnX, multiY, btnW, btnH, multiBtnColor);
+        btnMulti.addActionListener(e -> {
+            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            fader.fadeInOut(500, 500, ()->{                
+                parent.showLobby(); // เรียกหน้า Lobby
+            }, null);
+        });
+        add(btnMulti);
+
+        // 3. SETTING (เลื่อนลงมาเป็นตำแหน่งที่ 3)
         JButton btnSetting = createRoundedButton("SETTING");
         btnSetting.setFont(new Font("Tahoma", Font.BOLD, 20));
-        int settingY = startY + btnH + gap;
-        // ใช้ HoverEffectRounded แทน
+        int settingY = multiY + btnH + gap; // คำนวณ Y ต่อจากปุ่ม Multiplayer
         Hovereffect.HoverEffectRounded(btnSetting, btnX, settingY, btnW, btnH, settingBtnColor);
         btnSetting.addActionListener(e -> {
             parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
@@ -72,11 +82,10 @@ public class MenuPanel extends JPanel {
         });
         add(btnSetting);
         
-        // 3. EXIT (ปรับเป็นปุ่มมน)
+        // 4. EXIT (เลื่อนลงมาเป็นตำแหน่งที่ 4)
         JButton btnExit = createRoundedButton("EXIT");
         btnExit.setFont(new Font("Tahoma", Font.BOLD, 20));
-        int exitY = settingY + btnH + gap;
-        // ใช้ HoverEffectRounded แทน
+        int exitY = settingY + btnH + gap; // คำนวณ Y ต่อจากปุ่ม Setting
         Hovereffect.HoverEffectRounded(btnExit, btnX, exitY, btnW, btnH, exitBtnColor);
         btnExit.addActionListener(e -> {
             parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
@@ -95,7 +104,6 @@ public class MenuPanel extends JPanel {
         setComponentZOrder(lblMap, getComponentCount() - 1);
     }
 
-    // [เพิ่มใหม่] Helper Method สำหรับสร้างปุ่มมน (เหมือนใน GamePanel)
     private JButton createRoundedButton(String text) {
         JButton btn = new JButton(text) {
             @Override
@@ -103,11 +111,9 @@ public class MenuPanel extends JPanel {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // วาดพื้นหลังมน (ใช้สีจาก getBackground() ซึ่งจะถูกเปลี่ยนโดย HoverEffectRounded)
                 g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); // ความโค้ง 30
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); 
 
-                // วาดขอบสีขาว
                 g2.setColor(Color.WHITE);
                 g2.setStroke(new BasicStroke(2));
                 g2.drawRoundRect(1, 1, getWidth()-3, getHeight()-3, 30, 30);
@@ -115,7 +121,6 @@ public class MenuPanel extends JPanel {
                 super.paintComponent(g);
             }
         };
-        // ตั้งค่าเริ่มต้นเพื่อไม่ให้ Swing วาดปุ่มสี่เหลี่ยมทับ
         btn.setContentAreaFilled(false);
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);

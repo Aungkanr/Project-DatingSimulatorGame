@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
     private GameTime gameTime;
 
     private MenuPanel menuPanel;
+    private LobbyPanel lobbyPanel;
     private OptionPanel optionPanel;
     private GamePanel gamePanel;
     private SchoolPanel school;
@@ -104,7 +105,13 @@ public class MainFrame extends JFrame {
         menuPanel = new MenuPanel(this); 
         menuPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         contentPane.add(menuPanel);
-        
+
+        //X
+        lobbyPanel = new LobbyPanel(this);
+        lobbyPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        lobbyPanel.setVisible(false);
+        contentPane.add(lobbyPanel);
+
         optionPanel = new OptionPanel(this);
         optionPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         optionPanel.setVisible(false);
@@ -301,6 +308,7 @@ public class MainFrame extends JFrame {
     public void showHome() { toggleVisibility(home); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showOffice() { toggleVisibility(office); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showNeighbor() { toggleVisibility(neighbor); if(gamePanel!=null) gamePanel.updateUI(); }
+    public void showLobby() { toggleVisibility(lobbyPanel); } 
 
     // Helper function เพื่อปิด panel อื่นๆ อัตโนมัติ
     private void toggleVisibility(JPanel showPanel) {
@@ -312,6 +320,7 @@ public class MainFrame extends JFrame {
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
         if(neighbor != null) neighbor.setVisible(false);
+        if(lobbyPanel != null) lobbyPanel.setVisible(false);
         //Lazel
         if(lazelPanel != null) lazelPanel.setVisible(false); 
         if(specialSceneLazelPanel != null) specialSceneLazelPanel.setVisible(false);

@@ -127,7 +127,6 @@ public class LobbyPanel extends JPanel {
 
     // ==========================================
     // ระบบ NETWORK (เชื่อมต่อและรับข้อมูล)
-    // ==========================================
     public void connectToServer(String ip) {
         new Thread(() -> {
             try {
@@ -137,17 +136,53 @@ public class LobbyPanel extends JPanel {
 
                 SwingUtilities.invokeLater(() -> {
                     lblStatus.setText("Connected! Waiting for other players...");
-                    setPlayerConnected(0, "Player 1 (You)");
                 });
 
                 String message;
+                // ลูปฟังข้อความจาก Server แบบ Real-time
                 while ((message = in.readLine()) != null) {
                     System.out.println("Server Broadcast: " + message);
+                    
+                    // [อัปเดต UI เมื่อมีคนเข้าหรือออก] ดักจับคำว่า UPDATE_PLAYERS:
+                    if (message.startsWith("UPDATE_PLAYERS:")) {
+                        // ดึงตัวเลขจำนวนคนปัจจุบันออกมา (เช่น ส่งมา UPDATE_PLAYERS:2 จะได้เลข 2)
+                        int playerCount = Integer.parseInt(message.split(":")[1]);
+                        
+                        SwingUtilities.invokeLater(() -> {
+                            currentPlayers = playerCount;
+                            lblStatus.setText("Waiting for players... (" + currentPlayers + "/" + maxPlayersInRoom + ")");
+                            
+                            // 1. รีเซ็ตสีทุกช่องให้กลับเป็นสีเทาก่อน
+                            for (int i = 0; i < maxPlayersInRoom; i++) {
+                                playerLabels[i].setText(" Player " + (i + 1) + " : Waiting...");
+                                playerLabels[i].setBackground(new Color(60, 65, 80));
+                                playerLabels[i].setForeground(Color.GRAY);
+                            }
+                            
+                            // 2. เปิดไฟสีเขียวไล่ตามจำนวนคนที่อยู่ในห้องจริงๆ
+                            for (int i = 0; i < currentPlayers; i++) {
+                                if (i < maxPlayersInRoom) { // กัน Error เวลาคนเกินขีดจำกัดห้อง
+                                    String playerName = (i == 0) ? "Host (Player 1)" : "Player " + (i + 1);
+                                    setPlayerConnected(i, playerName);
+                                }
+                            }
+                            
+                            // 3. ตรวจสอบปุ่ม START MATCH (ให้กดได้ก็ต่อเมื่อมี 2 คนขึ้นไป)
+                            if (currentPlayers >= 2) {
+                                btnStartMatch.setEnabled(true);
+                                btnStartMatch.setBackground(new Color(255, 140, 0)); // เปลี่ยนเป็นสีส้ม
+                            } else {
+                                btnStartMatch.setEnabled(false);
+                                btnStartMatch.setBackground(new Color(100, 100, 100)); // กลับเป็นสีเทา
+                            }
+                        });
+                    }
                 }
             } catch (Exception ex) {
+                // ถ้าหลุดเชื่อมต่อ ให้เด้งกลับไปหน้าเมนู
                 SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(this, "Connection Failed to IP: " + ip + "\nMake sure the Server is running!", "Error", JOptionPane.ERROR_MESSAGE);
-                    parent.showMenu();
+                    JOptionPane.showMessageDialog(this, "Connection Failed or Disconnected from IP: " + ip, "Network Error", JOptionPane.ERROR_MESSAGE);
+                    parent.showCoopMenu(); // เปลี่ยนให้เด้งกลับไปหน้าเมนู Co-op
                 });
             }
         }).start();
@@ -214,7 +249,7 @@ public class LobbyPanel extends JPanel {
                     // หาเฉพาะ IPv4 และต้องไม่ใช่ 127.0.0.1
                     if (!address.isLoopbackAddress() && address instanceof java.net.Inet4Address) {
                         String ip = address.getHostAddress();
-                        // 📌 Radmin VPN มักจะจ่ายแจก IP ที่ขึ้นต้นด้วย "26." เสมอ (เช่น 26.155.x.x)
+                        // Radmin VPN มักจะจ่ายแจก IP ที่ขึ้นต้นด้วย "26." เสมอ (เช่น 26.155.x.x)
                         if (ip.startsWith("26.")) {
                             return ip; // เจอแล้ว ส่งกลับไปเลย!
                         }

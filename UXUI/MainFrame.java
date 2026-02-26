@@ -32,7 +32,9 @@ public class MainFrame extends JFrame {
     private GameTime gameTime;
 
     private MenuPanel menuPanel;
+    private LobbyPanel lobbyPanel;
     private OptionPanel optionPanel;
+    private CoopMenuPanel coopMenuPanel; // <-- เพิ่มใหม่
     private GamePanel gamePanel;
     private SchoolPanel school;
     private ShopPanel shop;
@@ -104,11 +106,24 @@ public class MainFrame extends JFrame {
         menuPanel = new MenuPanel(this); 
         menuPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         contentPane.add(menuPanel);
-        
+
+        //X
+        lobbyPanel = new LobbyPanel(this);
+        lobbyPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        lobbyPanel.setVisible(false);
+        contentPane.add(lobbyPanel);
+
         optionPanel = new OptionPanel(this);
         optionPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         optionPanel.setVisible(false);
         contentPane.add(optionPanel);
+
+        // --- เพิ่ม CoopMenuPanel ---
+        coopMenuPanel = new CoopMenuPanel(this);
+        coopMenuPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        coopMenuPanel.setVisible(false);
+        contentPane.add(coopMenuPanel);
+        // --------------------------
         
         gamePanel = new GamePanel(this);
         gamePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
@@ -301,17 +316,21 @@ public class MainFrame extends JFrame {
     public void showHome() { toggleVisibility(home); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showOffice() { toggleVisibility(office); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showNeighbor() { toggleVisibility(neighbor); if(gamePanel!=null) gamePanel.updateUI(); }
+    public void showLobby() { toggleVisibility(lobbyPanel); } 
+    public void showCoopMenu() { toggleVisibility(coopMenuPanel); }
 
     // Helper function เพื่อปิด panel อื่นๆ อัตโนมัติ
     private void toggleVisibility(JPanel showPanel) {
         if(menuPanel != null) menuPanel.setVisible(false);
         if(optionPanel != null) optionPanel.setVisible(false);
+        if(coopMenuPanel != null) coopMenuPanel.setVisible(false); // <--- เพิ่มใหม่
         if(gamePanel != null) gamePanel.setVisible(false);
         if(school != null) school.setVisible(false);
         if(shop != null) shop.setVisible(false);
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
         if(neighbor != null) neighbor.setVisible(false);
+        if(lobbyPanel != null) lobbyPanel.setVisible(false);
         //Lazel
         if(lazelPanel != null) lazelPanel.setVisible(false); 
         if(specialSceneLazelPanel != null) specialSceneLazelPanel.setVisible(false);
@@ -332,6 +351,7 @@ public class MainFrame extends JFrame {
     public OfficePanel getOfficePanel() {return this.office;}
     public SchoolPanel getSchoolPanel() {return this.school;}
     public NeighBorPanel getNeighBorPanel () {return this.neighbor;}
+    public LobbyPanel getLobbyPanel() { return this.lobbyPanel; }
     //NPC Panel
     public LazelPanel getLazelPanel() { return lazelPanel; }
     public GaladrielPanel getGaladrielPanel() { return galadrielPanel; }

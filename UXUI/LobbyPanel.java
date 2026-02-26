@@ -152,15 +152,52 @@ public class LobbyPanel extends JPanel {
     public void setHostMode(boolean isHost) {
         if (isHost) {
             try {
-                // ดึง IPv4 ของเครื่องเรา (LAN / Wi-Fi)
-                String myIP = java.net.InetAddress.getLocalHost().getHostAddress();
-                lblIPAddress.setText("Room IP for friends to join: " + myIP);
+                // 1. ลองค้นหา IP ของ Radmin VPN ก่อน
+                String radminIP = getRadminIP(); 
+                
+                if (radminIP != null) {
+                    // ถ้าเจอ Radmin ให้โชว์ IP นี้ให้เพื่อน
+                    lblIPAddress.setText("Radmin IP for friends: " + radminIP);
+                    lblIPAddress.setForeground(new Color(50, 255, 100)); // สีเขียวสว่าง
+                } else {
+                    // 2. ถ้าไม่เปิด Radmin ไว้ ให้ดึง IP Wi-Fi/LAN ปกติ
+                    String localIP = java.net.InetAddress.getLocalHost().getHostAddress();
+                    lblIPAddress.setText("Local LAN IP: " + localIP);
+                    lblIPAddress.setForeground(new Color(173, 216, 230)); // สีฟ้าปกติ
+                }
             } catch (Exception e) {
                 lblIPAddress.setText("Room IP: Unknown (Check network)");
             }
         } else {
-            // ถ้าเป็นคนกด Join (Client) ไม่ต้องโชว์ IP ตัวเอง
             lblIPAddress.setText(""); 
         }
+    }
+
+    // --- ฟังก์ชันลับสำหรับควานหา IP ของ Radmin VPN โดยเฉพาะ ---
+    private String getRadminIP() {
+        try {
+            // ดึงรายชื่อ Network ทั้งหมดในเครื่อง (Wi-Fi, LAN, Virtual Network)
+            java.util.Enumeration<java.net.NetworkInterface> interfaces = java.net.NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                java.net.NetworkInterface networkInterface = interfaces.nextElement();
+                java.util.Enumeration<java.net.InetAddress> addresses = networkInterface.getInetAddresses();
+                
+                while (addresses.hasMoreElements()) {
+                    java.net.InetAddress address = addresses.nextElement();
+                    
+                    // หาเฉพาะ IPv4 และต้องไม่ใช่ 127.0.0.1
+                    if (!address.isLoopbackAddress() && address instanceof java.net.Inet4Address) {
+                        String ip = address.getHostAddress();
+                        // 📌 Radmin VPN มักจะจ่ายแจก IP ที่ขึ้นต้นด้วย "26." เสมอ (เช่น 26.155.x.x)
+                        if (ip.startsWith("26.")) {
+                            return ip; // เจอแล้ว ส่งกลับไปเลย!
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // ถ้าไม่เจอ Radmin ให้ส่งค่าว่างกลับไป
     }
 }

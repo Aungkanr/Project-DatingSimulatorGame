@@ -21,6 +21,8 @@ public class LobbyPanel extends JPanel {
     private int maxPlayersInRoom = 5; // ค่าเริ่มต้น
     private final int ABSOLUTE_MAX = 5; // รองรับสูงสุด 5 ช่อง
 
+    private boolean isHostMode = false;
+
     // --- ตัวแปร Network ---
     private Socket socket;
     private PrintWriter out;
@@ -97,6 +99,7 @@ public class LobbyPanel extends JPanel {
     public void setupRoom(int maxPlayers, boolean isHost, String ipToConnect) {
         this.maxPlayersInRoom = maxPlayers;
         this.currentPlayers = 1;
+        this.isHostMode = isHost;
 
         // โชว์กล่องผู้เล่นเท่ากับจำนวนที่ลากจาก Slider
         for (int i = 0; i < ABSOLUTE_MAX; i++) {
@@ -169,11 +172,22 @@ public class LobbyPanel extends JPanel {
                             
                             // 3. ตรวจสอบปุ่ม START MATCH (ให้กดได้ก็ต่อเมื่อมี 2 คนขึ้นไป)
                             if (currentPlayers >= 2) {
-                                btnStartMatch.setEnabled(true);
-                                btnStartMatch.setBackground(new Color(255, 140, 0)); // เปลี่ยนเป็นสีส้ม
+                                // ถ้ามี 2 คนขึ้นไป
+                                if (isHostMode) {
+                                    btnStartMatch.setEnabled(true);
+                                    btnStartMatch.setBackground(new Color(255, 140, 0)); // สีส้ม
+                                    btnStartMatch.setText("START MATCH");
+                                } else {
+                                    // ถ้าเป็น Client ปล่อยให้รอ
+                                    btnStartMatch.setEnabled(false);
+                                    btnStartMatch.setBackground(new Color(100, 100, 100)); // สีเทา
+                                    btnStartMatch.setText("WAITING FOR HOST...");
+                                }
                             } else {
+                                // ถ้ายังไม่มีคนเข้า
                                 btnStartMatch.setEnabled(false);
-                                btnStartMatch.setBackground(new Color(100, 100, 100)); // กลับเป็นสีเทา
+                                btnStartMatch.setBackground(new Color(100, 100, 100)); 
+                                btnStartMatch.setText(isHostMode ? "START MATCH" : "WAITING FOR HOST...");
                             }
                         });
                     }
@@ -190,14 +204,28 @@ public class LobbyPanel extends JPanel {
 
     private void disconnectAndReturn() {
         try {
-            if (socket != null && !socket.isClosed()) {
-                socket.close();
-            }
+            // ปิดช่องทางสตรีมให้หมดก่อนปิด Socket
+            if (out != null) out.close();
+            if (in != null) in.close();
+            if (socket != null && !socket.isClosed()) socket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        parent.showMenu();
+
+        // [สำคัญมาก] ถ้าคนที่กดออกคือ HOST ต้องสั่งระเบิดเซิร์ฟเวอร์ทิ้งด้วย!
+        if (isHostMode) {
+            Coop.Network.GameServer.stopServer();
+        }
+
+        parent.showCoopMenu(); // กลับไปหน้าเลือก Host/Join
+        
+        // รีเซ็ต UI
         lblStatus.setText("Waiting for players..."); 
+        for(int i=0; i<ABSOLUTE_MAX; i++) {
+            playerLabels[i].setText(" Player " + (i + 1) + " : Waiting...");
+            playerLabels[i].setBackground(new Color(60, 65, 80));
+            playerLabels[i].setVisible(false); // ซ่อนช่องไว้เผื่อรอบหน้าสุ่มจำนวนใหม่
+        }
     }
 
     public void setPlayerConnected(int index, String name) {

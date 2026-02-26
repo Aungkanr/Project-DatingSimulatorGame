@@ -10,44 +10,68 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameServer {
     private static boolean isRunning = false;
+    private static ServerSocket serverSocket; // <--- เพิ่มตัวแปรระดับคลาสเพื่อให้สั่งปิดได้
     private static List<ClientHandler> clients = new CopyOnWriteArrayList<>();
 
     public static void startServerInBackground(int port) {
         if (isRunning) return; 
         
         new Thread(() -> {
-            try (ServerSocket serverSocket = new ServerSocket(port)) {
+            try {
+                serverSocket = new ServerSocket(port);
                 isRunning = true;
-                System.out.println("[SERVER] Started in background on port: " + port);
+                System.out.println("🟢 [SERVER] Started in background on port: " + port);
 
-                while (true) {
+                while (isRunning) { // <--- เช็คเงื่อนไขก่อนรับคน
                     Socket clientSocket = serverSocket.accept();
-                    System.out.println("[SERVER] Player connected: " + clientSocket.getInetAddress());
+                    System.out.println("✅ [SERVER] Player connected: " + clientSocket.getInetAddress());
 
                     ClientHandler handler = new ClientHandler(clientSocket);
                     clients.add(handler);
                     new Thread(handler).start();
-                    // (ลบ broadcast ตรงนี้ออก เพื่อย้ายไปไว้ด้านล่างแทน)
                 }
             } catch (Exception e) {
-                System.out.println("[SERVER] Server closed.");
+                // จะเข้า catch เมื่อ serverSocket ถูกสั่ง .close() จากด้านนอก
+                System.out.println("🛑 [SERVER] Server has been shut down.");
                 isRunning = false;
             }
         }).start();
     }
 
-    // ฟังก์ชันตะโกนบอกทุกคน (Broadcast)
+    // ==========================================
+    // [เพิ่มใหม่] ฟังก์ชันสำหรับทำลาย Server ทิ้งเมื่อ Host ปิดห้อง
+    // ==========================================
+    public static void stopServer() {
+        isRunning = false;
+        try {
+            // เตะทุกคนออกจากเซิร์ฟเวอร์
+            for (ClientHandler client : clients) {
+                if (client.socket != null) client.socket.close();
+            }
+            clients.clear();
+            
+            // ปิดช่องทางการรับคนเข้า
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                serverSocket.close();
+            }
+            System.out.println("🧹 [SERVER] Cleared all threads and closed completely.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void broadcast(String message) {
         for (ClientHandler client : clients) {
             client.sendMessage(message);
         }
     }
 
-    // ฟังก์ชันลบผู้เล่นออกเวลามีคนปิดเกม
     public static void removeClient(ClientHandler client) {
         clients.remove(client);
-        System.out.println("[SERVER] Player disconnected. Remaining: " + clients.size());
-        broadcast("UPDATE_PLAYERS:" + clients.size()); // อัปเดตให้คนที่เหลือรู้เมื่อมีคนหลุด
+        System.out.println("⚠️ [SERVER] Player disconnected. Remaining: " + clients.size());
+        if (isRunning) {
+            broadcast("UPDATE_PLAYERS:" + clients.size()); 
+        }
     }
 
     // --- คลาสย่อยดูแลแต่ละผู้เล่น ---
@@ -63,24 +87,20 @@ public class GameServer {
         @Override
         public void run() {
             try {
-                // 1. เปิดช่องทางรับ-ส่งข้อความให้เสร็จเรียบร้อยก่อน
                 out = new PrintWriter(socket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 
-                // 2. ทักทายคนที่เพิ่งเข้ามา
                 out.println("WELCOME");
-
-                // 3.[แก้ปัญหา] พอมั่นใจว่าช่องทางเชื่อมต่อเสร็จสมบูรณ์ ค่อยตะโกนบอกทุกคน!
                 broadcast("UPDATE_PLAYERS:" + clients.size());
 
                 String message;
                 while ((message = in.readLine()) != null) {
-                    System.out.println("[SERVER] Received: " + message);
+                    System.out.println("💬 [SERVER] Received: " + message);
                 }
             } catch (Exception e) {
-                // ถ้าเกิด Error ตรงนี้แปลว่าผู้เล่นหลุดหรือกดออกเกม
+                // ผู้เล่นหลุด
             } finally {
-                removeClient(this); // เตะออกจากรายชื่อเมื่อออกเกม
+                removeClient(this); 
             }
         }
 

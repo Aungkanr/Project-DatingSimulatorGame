@@ -34,6 +34,7 @@ public class MainFrame extends JFrame {
     private MenuPanel menuPanel;
     private LobbyPanel lobbyPanel;
     private OptionPanel optionPanel;
+    private CoopMenuPanel coopMenuPanel; // <-- เพิ่มใหม่
     private GamePanel gamePanel;
     private SchoolPanel school;
     private ShopPanel shop;
@@ -116,6 +117,13 @@ public class MainFrame extends JFrame {
         optionPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         optionPanel.setVisible(false);
         contentPane.add(optionPanel);
+
+        // --- เพิ่ม CoopMenuPanel ---
+        coopMenuPanel = new CoopMenuPanel(this);
+        coopMenuPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        coopMenuPanel.setVisible(false);
+        contentPane.add(coopMenuPanel);
+        // --------------------------
         
         gamePanel = new GamePanel(this);
         gamePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
@@ -309,11 +317,13 @@ public class MainFrame extends JFrame {
     public void showOffice() { toggleVisibility(office); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showNeighbor() { toggleVisibility(neighbor); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showLobby() { toggleVisibility(lobbyPanel); } 
+    public void showCoopMenu() { toggleVisibility(coopMenuPanel); }
 
     // Helper function เพื่อปิด panel อื่นๆ อัตโนมัติ
     private void toggleVisibility(JPanel showPanel) {
         if(menuPanel != null) menuPanel.setVisible(false);
         if(optionPanel != null) optionPanel.setVisible(false);
+        if(coopMenuPanel != null) coopMenuPanel.setVisible(false); // <--- เพิ่มใหม่
         if(gamePanel != null) gamePanel.setVisible(false);
         if(school != null) school.setVisible(false);
         if(shop != null) shop.setVisible(false);

@@ -55,14 +55,24 @@ public class MenuPanel extends JPanel {
         });
         add(btnStart);
         
-        // 2. MULTIPLAYER (CO-OP)
+       // 2. MULTIPLAYER (CO-OP)
         JButton btnMulti = createRoundedButton("CO-OP (MULTIPLAYER)");
         btnMulti.setFont(new Font("Tahoma", Font.BOLD, 20));
         int multiY = startY + btnH + gap;
         Hovereffect.HoverEffectRounded(btnMulti, btnX, multiY, btnW, btnH, multiBtnColor);
-        
+
+        // --- แก้ไข Action ตรงนี้ (ลบ Popup เดิมทิ้ง เปลี่ยนเป็นเฟดหน้าจอ) ---
         btnMulti.addActionListener(e -> {
             parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            
+            // เปลี่ยนไปหน้า CoopMenuPanel แบบเต็มจอ
+            fader.fadeOut(250, () -> {
+                parent.showCoopMenu(); // เรียกหน้าต่าง Co-op ที่เราเพิ่งสร้าง
+                fader.fadeIn(250, null);
+            });
+        });
+        /* 
+        
             
             // สร้างปุ่มตัวเลือก Host หรือ Join เหมือน Stardew Valley
             Object[] options = {"Host Game (สร้างห้อง)", "Join Game (เข้าร่วม)", "Cancel"};
@@ -107,6 +117,7 @@ public class MenuPanel extends JPanel {
                 }
             }
         });
+    */
         add(btnMulti);
 
         // 3. SETTING (เลื่อนลงมาเป็นตำแหน่งที่ 3)

@@ -4,6 +4,7 @@ import Player.Player;
 import UXUI.Hovereffect;
 import UXUI.LowEnergyPanel;
 import UXUI.MainFrame;
+import UXUI.PauseMenuPanel;
 import Utility.*;
 
 // เพิ่ม Import สำหรับวาดกราฟิก และ Image
@@ -17,10 +18,13 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon; // [เพิ่มใหม่]
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 public class GamePanel extends JPanel {
 
@@ -39,9 +43,9 @@ public class GamePanel extends JPanel {
     private JButton btnHome;
     private JButton btnSchool;
     private JButton btnNeighbor;
-    private JButton btnExitGame;
 
     // ------------------ Object ---------------------
+    private InventoryPanel currentInvPanel;
     Utility.AssetManager asset = Utility.AssetManager.getInstance();
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
     ScreenFader fader = new ScreenFader();
@@ -117,20 +121,6 @@ public class GamePanel extends JPanel {
 
         add(statusPanel);
 
-        // ==========================================
-        // 2. ปุ่ม Exit Game
-        // ==========================================
-        btnExitGame = createRoundedButton("Return to Menu");
-        Hovereffect.HoverEffectRounded(btnExitGame, 20, 20, 150, 30, ExitGameColor);        
-        add(btnExitGame);
-        
-        btnExitGame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
-                fader.fadeInOut(500, 500, ()->{parent.showMenu();}, null);
-            }
-        });
-
     //------------------- ส่วนของปุ่มที่แสดงบนแมพ --------------
         stdScreen.setBtnWHG(200, 30, 20, 0);
 
@@ -161,7 +151,7 @@ public class GamePanel extends JPanel {
         
         btnBag = createRoundedButton("Bag");
         btnBag.setFont(new Font("Tahoma", Font.BOLD, 14));
-        Hovereffect.HoverEffectRounded(btnBag, 180, 20, 100, 30, bagBtnColor); 
+        Hovereffect.HoverEffectRounded(btnBag, 20, 20, 100, 30, bagBtnColor); 
         add(btnBag);
 
         //--------------Action--------------------
@@ -194,11 +184,13 @@ public class GamePanel extends JPanel {
         });
 
         btnBag.addActionListener(e -> {  
+            if (currentInvPanel != null && currentInvPanel.isVisible()) {return;}
             InventoryPanel invPanel = new InventoryPanel(parent, stdScreen.width, stdScreen.height); 
             add(invPanel); 
             setComponentZOrder(invPanel, 0); 
             invPanel.setVisible(true);
             disableAllGamePanel();
+
 
             revalidate();//สั่งให้ Swing จัด Layout ทันที ของจะได้เด้งขึ้นมาเลยไม่ล่องหน!
 
@@ -209,6 +201,40 @@ public class GamePanel extends JPanel {
         ChangeImageMap.updateMapImage("Morning", lblMap, checkImageUtil, stdScreen);
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
+
+        PauseMenuPanel pauseMenu = new PauseMenuPanel(mainFrame);
+        pauseMenu.setVisible(false); // เริ่มมาให้ซ่อนไว้ก่อน
+        add(pauseMenu);
+        setComponentZOrder(pauseMenu, 0); // ดันให้อยู่หน้าสุดเสมอ จะได้บังทุกอย่างตอนกด ESC
+
+        // ระบบจับปุ่ม ESC (Key Bindings - เสถียรกว่า KeyListener)
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "smartEsc");
+        this.getActionMap().put("smartEsc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                // 🔥 1. เช็คก่อนว่า "หน้า Option ลอยทับอยู่หรือเปล่า?"
+                if (mainFrame.getOptionPanel() != null && mainFrame.getOptionPanel().isVisible()) {
+                    // ถ้าลอยอยู่ -> ให้กด ESC เพื่อ "ปิดหน้า Option" อย่างเดียว
+                    mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+                    mainFrame.getOptionPanel().setVisible(false); 
+                } else if (currentInvPanel != null && currentInvPanel.isVisible()) {
+                    // ปิดหน้ากระเป๋า เคลียร์ออกจากหน้าจอ และปลดล็อคปุ่ม
+                    currentInvPanel.setVisible(false);
+                    remove(currentInvPanel);
+                    currentInvPanel = null;
+                    enableAllGamePanel(); // เปิดปุ่มต่างๆ บนแมพกลับมา
+                    
+                    revalidate();
+                    repaint();
+                }
+                // 🔥 2. ถ้า Option ไม่ได้เปิดอยู่ -> ค่อยสลับเปิด/ปิด หน้า Pause ตามปกติ
+                else {
+                    boolean isCurrentlyVisible = pauseMenu.isVisible();
+                    pauseMenu.setVisible(!isCurrentlyVisible);
+                }
+            }
+        });
     }
 
     // [เพิ่มใหม่] ฟังก์ชันสำหรับโหลดและย่อขนาดรูปไอคอน
@@ -307,7 +333,6 @@ public class GamePanel extends JPanel {
         btnHome.setEnabled(true);
         btnSchool.setEnabled(true);
         btnNeighbor.setEnabled(true);
-        btnExitGame.setEnabled(true);
     }
     public void disableAllGamePanel() {
         btnBag.setEnabled(false);
@@ -316,6 +341,5 @@ public class GamePanel extends JPanel {
         btnHome.setEnabled(false);
         btnSchool.setEnabled(false);
         btnNeighbor.setEnabled(false);
-        btnExitGame.setEnabled(false);
     }
 }

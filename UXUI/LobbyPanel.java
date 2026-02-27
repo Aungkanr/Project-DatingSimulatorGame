@@ -71,7 +71,12 @@ public class LobbyPanel extends JPanel {
         btnStartMatch.setForeground(Color.WHITE);
         btnStartMatch.setEnabled(false); 
         btnStartMatch.setBounds(stdScreen.width / 2 + 20, 550, 200, 60);
-        btnStartMatch.addActionListener(e -> parent.showGame());
+        btnStartMatch.addActionListener(e -> {
+            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            if (isHostMode) {
+                parent.getGameClient().sendMessage("CMD:START_GAME");
+            }
+        });
         add(btnStartMatch);
 
         JButton btnCancel = new JButton("DISCONNECT");

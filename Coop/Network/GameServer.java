@@ -96,6 +96,10 @@ public class GameServer {
                 String message;
                 while ((message = in.readLine()) != null) {
                     System.out.println("[SERVER] Received: " + message);
+                    if (message.equals("CMD:START_GAME")) {
+                        // สั่งกระจายคำว่า START_GAME_NOW ไปยัง Client ทุกคน (รวมถึง Host)
+                        broadcast("START_GAME_NOW");
+                    }
                 }
             } catch (Exception e) {
                 // ผู้เล่นหลุด

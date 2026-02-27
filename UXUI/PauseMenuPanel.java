@@ -93,10 +93,18 @@ public class PauseMenuPanel extends JPanel {
         JButton btnExit = createRoundedButton("EXIT DESKTOP");
         btnExit.setFont(new Font("Tahoma", Font.BOLD, 20));
         Hovereffect.HoverEffectRounded(btnExit, centerX - (btnW / 2), startY + (btnH + gap) * 3, btnW, btnH, btnExitColor);
+        
         btnExit.addActionListener(e -> {
             mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+
+            // --- สั่งเคลียร์ Network Threads ก่อนปิดโปรแกรม ---
+            if (mainFrame.getGameClient() != null) {
+                mainFrame.getGameClient().disconnect(); // บอกลาเซิร์ฟเวอร์
+            }
+            Coop.Network.GameServer.stopServer(); // ระเบิดเซิร์ฟเวอร์ตัวเองทิ้ง (ทำงานเฉพาะถ้าเป็น Host)
+
             Utility.AssetManager.getInstance().clearCache();
-            System.exit(0);
+            System.exit(0); // ปิดเกม
         });
         add(btnExit);
     }

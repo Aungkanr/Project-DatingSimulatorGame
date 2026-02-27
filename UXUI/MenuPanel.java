@@ -42,12 +42,12 @@ public class MenuPanel extends JPanel {
         int startY = 220; 
 
         // 1. START (Solo)
-        JButton btnStart = createRoundedButton("START");
+        JButton btnStart = createRoundedButton("SINGLE PLAYER");
         btnStart.setFont(new Font("Tahoma", Font.BOLD, 20));
         Hovereffect.HoverEffectRounded(btnStart, btnX, startY, btnW, btnH, startBtnColor);
         btnStart.addActionListener(e -> {
             parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
-            fader.fadeInOut(500, 500, ()->{                
+            fader.fadeInOut(500, 500, ()->{
             parent.showGame();
             if (parent.getSoundManager() != null) {
                 parent.getSoundManager().playMusic(musicPath);
@@ -56,7 +56,7 @@ public class MenuPanel extends JPanel {
         add(btnStart);
         
        // 2. MULTIPLAYER (CO-OP)
-        JButton btnMulti = createRoundedButton("CO-OP (MULTIPLAYER)");
+        JButton btnMulti = createRoundedButton("MULTIPLAYER");
         btnMulti.setFont(new Font("Tahoma", Font.BOLD, 20));
         int multiY = startY + btnH + gap;
         Hovereffect.HoverEffectRounded(btnMulti, btnX, multiY, btnW, btnH, multiBtnColor);

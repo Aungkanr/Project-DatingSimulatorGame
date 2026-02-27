@@ -21,6 +21,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
@@ -117,6 +118,8 @@ public class MainFrame extends JFrame {
         optionPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         optionPanel.setVisible(false);
         contentPane.add(optionPanel);
+
+        this.getLayeredPane().add(optionPanel, JLayeredPane.POPUP_LAYER);
 
         // --- เพิ่ม CoopMenuPanel ---
         coopMenuPanel = new CoopMenuPanel(this);
@@ -306,10 +309,12 @@ public class MainFrame extends JFrame {
     public Utility.SFXManager getSFXManager() {
         return sfxManager;
     }
+
+    public OptionPanel getOptionPanel() { return optionPanel; }
     
     public Clip getClip() { return clip; }
     public void showMenu() { toggleVisibility(menuPanel); }
-    public void showOption() { toggleVisibility(optionPanel); }
+    public void showOption() { optionPanel.setVisible(true); }
     public void showGame() { toggleVisibility(gamePanel); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showSchool() { toggleVisibility(school); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showShop() { toggleVisibility(shop); if(gamePanel!=null) gamePanel.updateUI(); }

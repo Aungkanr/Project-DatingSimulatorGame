@@ -20,11 +20,11 @@ public class GameServer {
             try {
                 serverSocket = new ServerSocket(port);
                 isRunning = true;
-                System.out.println("🟢 [SERVER] Started in background on port: " + port);
+                System.out.println("[SERVER] Started in background on port: " + port);
 
                 while (isRunning) { // <--- เช็คเงื่อนไขก่อนรับคน
                     Socket clientSocket = serverSocket.accept();
-                    System.out.println("✅ [SERVER] Player connected: " + clientSocket.getInetAddress());
+                    System.out.println("[SERVER] Player connected: " + clientSocket.getInetAddress());
 
                     ClientHandler handler = new ClientHandler(clientSocket);
                     clients.add(handler);
@@ -32,7 +32,7 @@ public class GameServer {
                 }
             } catch (Exception e) {
                 // จะเข้า catch เมื่อ serverSocket ถูกสั่ง .close() จากด้านนอก
-                System.out.println("🛑 [SERVER] Server has been shut down.");
+                System.out.println("[SERVER] Server has been shut down.");
                 isRunning = false;
             }
         }).start();
@@ -54,7 +54,7 @@ public class GameServer {
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
             }
-            System.out.println("🧹 [SERVER] Cleared all threads and closed completely.");
+            System.out.println("[SERVER] Cleared all threads and closed completely.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class GameServer {
 
     public static void removeClient(ClientHandler client) {
         clients.remove(client);
-        System.out.println("⚠️ [SERVER] Player disconnected. Remaining: " + clients.size());
+        System.out.println("[SERVER] Player disconnected. Remaining: " + clients.size());
         if (isRunning) {
             broadcast("UPDATE_PLAYERS:" + clients.size()); 
         }
@@ -95,7 +95,7 @@ public class GameServer {
 
                 String message;
                 while ((message = in.readLine()) != null) {
-                    System.out.println("💬 [SERVER] Received: " + message);
+                    System.out.println("[SERVER] Received: " + message);
                 }
             } catch (Exception e) {
                 // ผู้เล่นหลุด

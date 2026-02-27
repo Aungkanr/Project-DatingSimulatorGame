@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import Coop.Network.GameClient;
 import Utility.*;
 
 public class MainFrame extends JFrame {
@@ -56,7 +57,7 @@ public class MainFrame extends JFrame {
     private SpecialSceneGaladrielPanel specialSceneGaladrielPanel; //x
     private SpecialSceneLazelPanel specialSceneLazelPanel; //x
     private SpecialSceneArwenPanel specialSceneArwenPanel; //x
-    
+    private GameClient gameClient;
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.uiScale", "1.0");
@@ -73,7 +74,6 @@ public class MainFrame extends JFrame {
     
     public MainFrame() { 
         PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี) ***ควรอยู่ลำดับเเรกของโค้ดเสมอเพราะต้องโหลดก่อนเข้าเกม***
-
         // 1. โหลดค่ามาตรฐาน
         stdScreen = new StdAuto();
         
@@ -90,7 +90,7 @@ public class MainFrame extends JFrame {
 
         player = new Player(); 
         gameTime = new GameTime();
-        
+        gameClient = new GameClient(this);
         soundManager = new MusicManager();
         sfxManager = new SFXManager();
 
@@ -360,4 +360,6 @@ public class MainFrame extends JFrame {
     public Lazel getLazel() { return this.player.getLazel(); }
     public Galadriel getGaladriel() { return this.player.getGaladriel() ;}
     public Arwen getArwen() { return this.player.getArwen() ;}
+    //
+    public GameClient getGameClient() { return this.gameClient; }   
 }

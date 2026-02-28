@@ -17,25 +17,28 @@ public class GameClient {
     public void connect(String ip, int port) {
         new Thread(() -> {
             try {
-                socket = new Socket(ip, port);
+                socket = new Socket();
+                socket.connect(new InetSocketAddress(ip, port), 2000); 
+                
                 out = new PrintWriter(socket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 
                 System.out.println("[Client] Successfully connected to the room!");
 
-                // ถ้าต่อสำเร็จ สั่งให้หน้า Lobby โชว์ว่า Connected
                 javax.swing.SwingUtilities.invokeLater(() -> {
-                    // (ถ้าคุณสร้างเมธอด setStatusText ไว้ใน LobbyPanel)
-                    // mainFrame.getLobbyPanel().setStatusText("Connected! Waiting for other players...");
+            
                 });
 
                 listenForMessages();
 
             } catch (Exception e) {
-                System.err.println("[Client] Connection failed. Please check the IP address.");
+                // ถ้าหาห้องไม่เจอใน 2 วินาที !
+                System.err.println("[Client] Connection failed. Room not found.");
+                
                 javax.swing.SwingUtilities.invokeLater(() -> {
-                    javax.swing.JOptionPane.showMessageDialog(mainFrame, "Connection Failed to IP: " + ip, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    mainFrame.showCoopMenu(); // กลับไปหน้าเลือกโหมด
+                    // โชว์แจ้งเตือนว่าหาห้องไม่เจอ
+                    javax.swing.JOptionPane.showMessageDialog(mainFrame, "Room not found or Server is offline! (IP: " + ip + ")", "Connection Failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    mainFrame.showCoopMenu(); 
                 });
             }
         }).start();
@@ -89,7 +92,7 @@ public class GameClient {
         }
     }
 
-    // [เพิ่มใหม่] ฟังก์ชันตัดการเชื่อมต่ออย่างถูกต้อง
+    // ฟังก์ชันตัดการเชื่อมต่อ
     public void disconnect() {
         try {
             if (out != null) out.close();

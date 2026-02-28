@@ -47,25 +47,47 @@ public class GameClient {
     private void listenForMessages() {
         try {
             String message;
+            // ลูปนี้จะหลุดทันทีเมื่อ Host ปิด Server (message จะกลายเป็น null หรือเกิด Exception)
             while ((message = in.readLine()) != null) {
                 final String finalMsg = message;
-                // โยนเข้า SwingUtilities เพื่อความปลอดภัยเวลาแก้อินเตอร์เฟส
                 javax.swing.SwingUtilities.invokeLater(() -> {
                     processCommand(finalMsg);
                 });
             }
+            handleServerDisconnect();
+            
         } catch (Exception e) {
+            // ถ้าเกิด Error
             System.out.println("[Client] Disconnected from the server.");
+            handleServerDisconnect();
         }
     }
 
+    // --- ฟังก์ชันจัดการเวลาโดนเตะ หรือ Host ปิดห้อง ---
+    private void handleServerDisconnect() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            // แจ้งเตือนผู้เล่นว่าห้องโดนปิดแล้ว
+            javax.swing.JOptionPane.showMessageDialog(
+                mainFrame, 
+                "The Host has closed the room or connection was lost.", 
+                "Disconnected", 
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            
+            disconnect();
+            // เตะกลับไปหน้าเมนู Co-op
+            mainFrame.showCoopMenu(); 
+        });
+    }
+
+    
     // ==========================================
     // ศูนย์กลางกระจายคำสั่งจาก Server ไปสู่หน้าจอต่างๆ
     // ==========================================
     private void processCommand(String cmd) {
         System.out.println("[UI needs to update]: " + cmd);
         
-        System.out.println("📺 [UI needs to update]: " + cmd);
+        System.out.println("[UI needs to update]: " + cmd);
         
         if (cmd.startsWith("UPDATE_PLAYERS:")) {
             int count = Integer.parseInt(cmd.split(":")[1]);

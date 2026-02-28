@@ -72,7 +72,7 @@ public class LobbyPanel extends JPanel {
         btnStartMatch.setEnabled(false); 
         btnStartMatch.setBounds(stdScreen.width / 2 + 20, 550, 200, 60);
         btnStartMatch.addActionListener(e -> {
-            parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            parent.getSFXManager().playSFX("Music\\Harvest Dawn.wav");
             if (isHostMode) {
                 parent.getGameClient().sendMessage("CMD:START_GAME");
             }

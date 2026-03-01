@@ -1,5 +1,7 @@
 package Relationship;
 
+import UXUI.MainFrame;
+
 public abstract class NPC {
     protected String name;
     protected int affectionPoints = 0; // คะแนน 0 - 500
@@ -43,9 +45,9 @@ public abstract class NPC {
     }
 
     private void updateHeartLevel() {
-        int oldLevel = this.heartLevel;
         this.heartLevel = this.affectionPoints / POINTS_PER_HEART;
-        if (this.heartLevel > 5) this.heartLevel = 5; // Max 5
+        if (this.heartLevel > 5) this.heartLevel = 5;
+        if (this.heartLevel < 0) this.heartLevel = 0; // level ไม่ติดลบ แต่ affection ติดลบได้
     }
 
     public void resetDaily() {
@@ -113,6 +115,6 @@ public abstract class NPC {
         lastDialogueWasSpecial = false;
     }
 
-    protected abstract DialogueNode getDialogueTree(int sceneLevel);
+    protected abstract DialogueNode getDialogueTree(int sceneLevel, MainFrame mainFrame);
     
 }

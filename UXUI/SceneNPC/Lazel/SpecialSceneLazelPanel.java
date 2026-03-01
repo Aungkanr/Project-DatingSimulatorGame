@@ -1,14 +1,13 @@
 package UXUI.SceneNPC.Lazel;
 
-import javax.swing.*;
+import Relationship.DialogueNode;
+import Relationship.Lazel;
+import UXUI.Hovereffect;
+import UXUI.MainFrame;
+import Utility.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-
-import UXUI.MainFrame;
-import UXUI.Hovereffect;
-import Utility.*;
-import Relationship.Lazel;
-import Relationship.DialogueNode;
+import javax.swing.*;
 
 public class SpecialSceneLazelPanel extends JPanel {
 
@@ -27,7 +26,7 @@ public class SpecialSceneLazelPanel extends JPanel {
         setLayout(null);
         setBackground(Color.BLACK);
 
-        DialogueNode root = lazel.getDialogueTree(sceneLevel);
+        DialogueNode root = lazel.getDialogueTree(sceneLevel , mainFrame);
         showNode(root);
     }
 
@@ -55,10 +54,15 @@ public class SpecialSceneLazelPanel extends JPanel {
             add(lblPrompt);
 
             for (int i = 0; i < node.choices.size(); i++) {
-                final DialogueNode.Choice choice = node.choices.get(i);
-                JButton btn = createChoiceButton(choice.label, i, e -> showNode(choice.next));
-                add(btn);
-            }
+            final DialogueNode.Choice choice = node.choices.get(i);
+            JButton btn = createChoiceButton(choice.label, i, e -> {
+                if (choice.onSelect != null) {
+                    choice.onSelect.run();
+                }
+                showNode(choice.next);
+            });
+            add(btn);
+        }
         }
 
         setComponentZOrder(lblBg, getComponentCount() - 1);

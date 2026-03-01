@@ -28,6 +28,8 @@ public class DialogueNode {
     public static class Choice {
         public String label;          // ข้อความบนปุ่ม (สิ่งที่ผู้เล่นพูด)
         public DialogueNode next;     // node ถัดไปหลังเลือก
+        public Runnable onSelect;   // (ไม่บังคับ) action ที่เกิดขึ้นตอนเลือก (เช่น เพิ่มคะแนน)
+
 
         public Choice(String label, DialogueNode next) {
             this.label = label;
@@ -56,8 +58,11 @@ public class DialogueNode {
     // ======================================
     // Helper: เพิ่ม choice
     // ======================================
-    public DialogueNode addChoice(String label, DialogueNode next) {
-        choices.add(new Choice(label, next));
-        return this; // คืน this เพื่อ chain ได้
+    //  เพิ่ม overload addChoice ที่รับ Runnable
+    public DialogueNode addChoice(String label, DialogueNode next, Runnable onSelect) {
+        Choice c = new Choice(label, next);
+        c.onSelect = onSelect;
+        choices.add(c);
+        return this;
     }
 }

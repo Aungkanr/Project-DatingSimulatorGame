@@ -66,6 +66,15 @@ public class GameServer {
         }
     }
 
+    public static void broadcastLobbyState() {
+        StringBuilder sb = new StringBuilder("UPDATE_LOBBY:");
+        for (int i = 0; i < clients.size(); i++) {
+            sb.append(clients.get(i).playerName);
+            if (i < clients.size() - 1) sb.append(","); // คั่นชื่อด้วยลูกน้ำ
+        }
+        broadcast(sb.toString()); // จะได้ข้อความเช่น UPDATE_LOBBY:Champ,Somchai,Ploy
+    }
+
     public static void removeClient(ClientHandler client) {
         clients.remove(client);
         System.out.println("[SERVER] Player disconnected. Remaining: " + clients.size());
@@ -79,6 +88,10 @@ public class GameServer {
         private Socket socket;
         private PrintWriter out;
         private BufferedReader in;
+        public String playerName = "Unknown";
+        public int scoreLazel = 0;
+        public int scoreGaladriel = 0;
+        public int scoreArwen = 0;
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
@@ -101,8 +114,7 @@ public class GameServer {
                         broadcast("START_GAME_NOW");
                     }
                 }
-            } catch (Exception e) {
-                // ผู้เล่นหลุด
+            } catch (Exception e) {// ผู้เล่นหลุด
             } finally {
                 removeClient(this); 
             }

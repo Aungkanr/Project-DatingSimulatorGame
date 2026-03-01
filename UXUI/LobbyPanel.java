@@ -108,7 +108,18 @@ public class LobbyPanel extends JPanel {
             }
         }
 
-        // จัดการ IP และสั่ง GameClient เชื่อมต่อ
+        // ---------------------------------------------------------
+        //  ให้เด้งขึ้นมาก่อนทำการเชื่อมต่อ
+        String myName = JOptionPane.showInputDialog(this, "Enter your Name:", "Player Setup", JOptionPane.QUESTION_MESSAGE);
+        
+        // ถ้าผู้เล่นกด Cancel หรือไม่ยอมพิมพ์ชื่อ ให้ตั้งชื่ออัตโนมัติให้ 
+        if (myName == null || myName.trim().isEmpty()) {
+            myName = isHost ? "HostPlayer" : "Guest_" + (int)(Math.random() * 1000);
+        }
+        // บันทึกชื่อลง Player ของเครื่องเรา
+        parent.getPlayer().setPlayerName(myName); 
+        // ---------------------------------------------------------
+
         if (isHost) {
             try {
                 String radminIP = getRadminIP(); 
@@ -124,13 +135,13 @@ public class LobbyPanel extends JPanel {
                 lblIPAddress.setText("Room IP: Unknown");
             }
             
-            // สั่ง GameClient ให้เชื่อมต่อเข้าเครื่องตัวเอง (Host)
-            parent.getGameClient().connect("localhost", 9999);
+            // สั่ง GameClient ให้เชื่อมต่อเข้าเครื่องตัวเอง (Host) + ส่งชื่อไปด้วย
+            parent.getGameClient().connect("localhost", 9999, myName);
         } else {
             lblIPAddress.setText(""); 
             
-            // สั่ง GameClient ให้เชื่อมต่อไปยังเครื่องเพื่อน (Client)
-            parent.getGameClient().connect(ipToConnect, 9999);
+            // สั่ง GameClient ให้เชื่อมต่อไปยังเครื่องเพื่อน (Client) + ส่งชื่อไปด้วย
+            parent.getGameClient().connect(ipToConnect, 9999, myName);
         }
     }
 
@@ -166,24 +177,28 @@ public class LobbyPanel extends JPanel {
     }
 
     // ==========================================
-    // ฟังก์ชันอัปเดต UI เมื่อคนเข้า/ออก (ถูกเรียกจาก GameClient)
+    // ฟังก์ชันอัปเดต UI แบบแสดงชื่อจริง
     // ==========================================
-    public void updatePlayerCountUI(int count) {
-        this.currentPlayers = count;
-        lblStatus.setText("Waiting for players... (" + count + "/" + maxPlayersInRoom + ")");
+    public void updateLobbyNamesUI(String[] playerNames) {
+        this.currentPlayers = playerNames.length;
+        lblStatus.setText("Waiting for players... (" + currentPlayers + "/" + maxPlayersInRoom + ")");
         
-        // 1. รีเซ็ตสี
+        // 1. รีเซ็ตสีทุกช่อง
         for (int i = 0; i < maxPlayersInRoom; i++) {
             playerLabels[i].setText(" Player " + (i + 1) + " : Waiting...");
             playerLabels[i].setBackground(new Color(60, 65, 80));
             playerLabels[i].setForeground(Color.GRAY);
         }
         
-        // 2. เปิดไฟสีเขียว
+        // 2. เปิดไฟสีเขียวและใส่ "ชื่อผู้เล่นจริงๆ"
         for (int i = 0; i < currentPlayers; i++) {
             if (i < maxPlayersInRoom) { 
-                String playerName = (i == 0) ? "Host (Player 1)" : "Player " + (i + 1);
-                setPlayerConnected(i, playerName);
+                String role = (i == 0) ? "[HOST] " : "";
+                String actualName = playerNames[i];
+                
+                playerLabels[i].setText(" " + role + actualName + " : CONNECTED! ");
+                playerLabels[i].setBackground(new Color(50, 205, 50)); 
+                playerLabels[i].setForeground(Color.WHITE);
             }
         }
         

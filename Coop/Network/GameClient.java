@@ -14,7 +14,7 @@ public class GameClient {
         this.mainFrame = mainFrame;
     }
 
-    public void connect(String ip, int port) {
+    public void connect(String ip, int port ,String playerName ) {
         new Thread(() -> {
             try {
                 socket = new Socket();
@@ -22,7 +22,8 @@ public class GameClient {
                 
                 out = new PrintWriter(socket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                
+                out.println("SET_NAME:" + playerName);
+
                 System.out.println("[Client] Successfully connected to the room!");
 
                 javax.swing.SwingUtilities.invokeLater(() -> {
@@ -88,13 +89,14 @@ public class GameClient {
         System.out.println("[UI needs to update]: " + cmd);
         
         System.out.println("[UI needs to update]: " + cmd);
-        
-        if (cmd.startsWith("UPDATE_PLAYERS:")) {
-            int count = Integer.parseInt(cmd.split(":")[1]);
+        // ดักจับ UPDATE_LOBBY ที่ส่งชื่อมา
+        if (cmd.startsWith("UPDATE_LOBBY:")) {
+            // ตัดคำว่า "UPDATE_LOBBY:" ออก จะเหลือรายชื่อ คั่นด้วยลูกน้ำ
+            String nameData = cmd.substring(13); 
+            String[] playerNames = nameData.split(","); // แยกรายชื่อเป็น Array
             
-            // [แก้ตรงนี้] สั่งอัปเดตหน้า LobbyPanel ทันที
             if (mainFrame.getLobbyPanel() != null) {
-                mainFrame.getLobbyPanel().updatePlayerCountUI(count); 
+                mainFrame.getLobbyPanel().updateLobbyNamesUI(playerNames); 
             }
         }
         else if (cmd.startsWith("ADD_MONEY:")) {

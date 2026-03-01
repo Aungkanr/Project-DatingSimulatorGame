@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 import Utility.*;
 
 public class CoopMenuPanel extends JPanel {
-
+    
     private MainFrame mainFrame;
     private StdAuto stdScreen = new StdAuto();
     ScreenFader fader = new ScreenFader();
@@ -39,7 +39,7 @@ public class CoopMenuPanel extends JPanel {
     
     private CheckImage checkImageUtil;
 
-
+    
     public CoopMenuPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(null);

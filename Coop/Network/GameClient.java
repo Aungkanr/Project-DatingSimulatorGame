@@ -93,6 +93,12 @@ public class GameClient {
         else if (cmd.equals("START_GAME_NOW")) {
             mainFrame.showGame(); 
         }
+        else if (cmd.startsWith("LEADERBOARD:")) {
+            String data = cmd.substring(12);
+            if (mainFrame.getLeaderboardPanel() != null) {
+                mainFrame.getLeaderboardPanel().updateData(data); // ส่งข้อมูลไปวาดลงตาราง
+            }
+        }
     }
 
     public void sendMessage(String msg) {

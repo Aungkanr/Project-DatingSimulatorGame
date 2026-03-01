@@ -114,6 +114,30 @@ public class PauseMenuPanel extends JPanel {
             System.exit(0); // ปิดเกม
         });
         add(btnExit);
+
+        // [เพิ่มปุ่มใหม่] LEADERBOARD
+        JButton btnLeaderboard = createRoundedButton("VIEW LEADERBOARD");
+        btnLeaderboard.setFont(new Font("Tahoma", Font.BOLD, 20));
+        Hovereffect.HoverEffectRounded(btnLeaderboard, centerX - (btnW / 2), startY + (btnH + gap) * 1, btnW, btnH, new Color(50, 150, 200));
+        
+        btnLeaderboard.addActionListener(e -> {
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+            
+            // 1. ดึงคะแนนสาวๆ ของตัวเองมา
+            int lScore = mainFrame.getPlayer().getLazel().getAffection();
+            int gScore = mainFrame.getPlayer().getGaladriel().getAffection();
+            int aScore = mainFrame.getPlayer().getArwen().getAffection();
+            
+            // 2. ส่งให้ Server (อัปเดต + ขอข้อมูลล่าสุด)
+            if(mainFrame.getGameClient() != null) {
+                mainFrame.getGameClient().sendMessage("SYNC_SCORE:" + lScore + "," + gScore + "," + aScore);
+            }
+            
+            // 3. ปิดหน้า Pause และเปิดหน้า Leaderboard
+            this.setVisible(false);
+            mainFrame.getLeaderboardPanel().setVisible(true);
+        });
+        add(btnLeaderboard);
     }
 
     private JButton createRoundedButton(String text) {

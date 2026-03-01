@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
     private JPanel contentPane;
     private Player player;
     private GameTime gameTime;
-
+    private UXUI.StatusBarMenu.LeaderboardPanel leaderboardPanel;
     private MenuPanel menuPanel;
     private LobbyPanel lobbyPanel;
     private OptionPanel optionPanel;
@@ -96,6 +96,9 @@ public class MainFrame extends JFrame {
         sfxManager = new SFXManager();
 
         setLayout(null);
+
+        leaderboardPanel = new UXUI.StatusBarMenu.LeaderboardPanel(this, stdScreen.width, stdScreen.height);
+        this.getLayeredPane().add(leaderboardPanel, JLayeredPane.POPUP_LAYER); 
 
         contentPane = new JPanel();
         contentPane.setLayout(null);
@@ -348,6 +351,7 @@ public class MainFrame extends JFrame {
 
         if(showPanel != null) showPanel.setVisible(true);
     }
+    public UXUI.StatusBarMenu.LeaderboardPanel getLeaderboardPanel() { return leaderboardPanel; }
     //Panel
     public Player getPlayer() { return this.player; }
     public GameTime getGameTime() { return this.gameTime; }

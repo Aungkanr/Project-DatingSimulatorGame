@@ -82,9 +82,11 @@ public class GameServer {
         private Socket socket;
         private PrintWriter out;
         private BufferedReader in;
-        
-        // ตัวแปรจดจำชื่อ
+
         public String playerName = "Unknown";
+        public int scoreLazel = 0;       
+        public int scoreGaladriel = 0;  
+        public int scoreArwen = 0;       
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
@@ -109,6 +111,24 @@ public class GameServer {
                     else if (message.startsWith("SET_NAME:")) {
                         this.playerName = message.substring(9);
                         broadcastLobbyState(); // พอคนนี้ตั้งชื่อเสร็จ ให้บอกทุกคน!
+                    } else if (message.startsWith("SYNC_SCORE:")) {
+                        // แยกคะแนนออกมา: SYNC_SCORE:10,20,30
+                        String[] scores = message.substring(11).split(",");
+                        this.scoreLazel = Integer.parseInt(scores[0]);
+                        this.scoreGaladriel = Integer.parseInt(scores[1]);
+                        this.scoreArwen = Integer.parseInt(scores[2]);
+                        
+                        // สร้างประโยคสรุปคะแนนทุกคน แล้วกระจายกลับไป
+                        StringBuilder sb = new StringBuilder("LEADERBOARD:");
+                        for (int i = 0; i < clients.size(); i++) {
+                            ClientHandler c = clients.get(i);
+                            sb.append(c.playerName).append(",")
+                              .append(c.scoreLazel).append(",")
+                              .append(c.scoreGaladriel).append(",")
+                              .append(c.scoreArwen);
+                            if (i < clients.size() - 1) sb.append("|");
+                        }
+                        broadcast(sb.toString()); // ส่งให้ทุกคน!
                     }
                 }
             } catch (Exception e) {

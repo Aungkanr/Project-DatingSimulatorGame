@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameServer {
     private static boolean isRunning = false;
-    private static ServerSocket serverSocket; // <--- เพิ่มตัวแปรระดับคลาสเพื่อให้สั่งปิดได้
+    private static ServerSocket serverSocket; 
     private static List<ClientHandler> clients = new CopyOnWriteArrayList<>();
 
     public static void startServerInBackground(int port) {
@@ -22,7 +22,7 @@ public class GameServer {
                 isRunning = true;
                 System.out.println("[SERVER] Started in background on port: " + port);
 
-                while (isRunning) { // <--- เช็คเงื่อนไขก่อนรับคน
+                while (isRunning) { 
                     Socket clientSocket = serverSocket.accept();
                     System.out.println("[SERVER] Player connected: " + clientSocket.getInetAddress());
 
@@ -31,29 +31,22 @@ public class GameServer {
                     new Thread(handler).start();
                 }
             } catch (Exception e) {
-                // จะเข้า catch เมื่อ serverSocket ถูกสั่ง .close() จากด้านนอก
                 System.out.println("[SERVER] Server has been shut down.");
                 isRunning = false;
             }
         }).start();
     }
 
-    // ==========================================
-    // [เพิ่มใหม่] ฟังก์ชันสำหรับทำลาย Server ทิ้งเมื่อ Host ปิดห้อง
-    // ==========================================
     public static void stopServer() {
-        isRunning = false;
         try {
-            // เตะทุกคนออกจากเซิร์ฟเวอร์
-            for (ClientHandler client : clients) {
-                if (client.socket != null) client.socket.close();
-            }
-            clients.clear();
-            
-            // ปิดช่องทางการรับคนเข้า
+            isRunning = false;
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
             }
+            for (ClientHandler client : clients) {
+                client.socket.close();
+            }
+            clients.clear();
             System.out.println("[SERVER] Cleared all threads and closed completely.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,20 +59,21 @@ public class GameServer {
         }
     }
 
+
     public static void broadcastLobbyState() {
         StringBuilder sb = new StringBuilder("UPDATE_LOBBY:");
         for (int i = 0; i < clients.size(); i++) {
             sb.append(clients.get(i).playerName);
             if (i < clients.size() - 1) sb.append(","); // คั่นชื่อด้วยลูกน้ำ
         }
-        broadcast(sb.toString()); // จะได้ข้อความเช่น UPDATE_LOBBY:Champ,Somchai,Ploy
+        broadcast(sb.toString()); 
     }
 
     public static void removeClient(ClientHandler client) {
         clients.remove(client);
         System.out.println("[SERVER] Player disconnected. Remaining: " + clients.size());
         if (isRunning) {
-            broadcast("UPDATE_PLAYERS:" + clients.size()); 
+            broadcastLobbyState(); // อัปเดตรายชื่อใหม่ตอนมีคนออก
         }
     }
 
@@ -88,10 +82,9 @@ public class GameServer {
         private Socket socket;
         private PrintWriter out;
         private BufferedReader in;
+        
+        // ตัวแปรจดจำชื่อ
         public String playerName = "Unknown";
-        public int scoreLazel = 0;
-        public int scoreGaladriel = 0;
-        public int scoreArwen = 0;
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
@@ -104,17 +97,21 @@ public class GameServer {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 
                 out.println("WELCOME");
-                broadcast("UPDATE_PLAYERS:" + clients.size());
 
                 String message;
                 while ((message = in.readLine()) != null) {
                     System.out.println("[SERVER] Received: " + message);
+                    
                     if (message.equals("CMD:START_GAME")) {
-                        // สั่งกระจายคำว่า START_GAME_NOW ไปยัง Client ทุกคน (รวมถึง Host)
                         broadcast("START_GAME_NOW");
                     }
+                    // ดักจับคำสั่งตั้งชื่อ
+                    else if (message.startsWith("SET_NAME:")) {
+                        this.playerName = message.substring(9);
+                        broadcastLobbyState(); // พอคนนี้ตั้งชื่อเสร็จ ให้บอกทุกคน!
+                    }
                 }
-            } catch (Exception e) {// ผู้เล่นหลุด
+            } catch (Exception e) {
             } finally {
                 removeClient(this); 
             }

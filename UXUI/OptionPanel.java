@@ -177,7 +177,6 @@ public class OptionPanel extends JPanel {
         setComponentZOrder(titlePill, 1);  
         setComponentZOrder(outerPanel, 2); 
     }
-
     private void createSliderControl(JPanel panel, String labelText, int yPos, boolean isSFX) {
         JLabel lbl = new JLabel(labelText);
         lbl.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -249,5 +248,6 @@ public class OptionPanel extends JPanel {
     
     public void setBackAction(Runnable action) {
         this.backAction = action;
+        System.out.println("set BG");
     }
 }

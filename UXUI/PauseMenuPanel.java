@@ -50,6 +50,12 @@ public class PauseMenuPanel extends JPanel {
         int totalHeight = (btnH * 5) + (gap * 4);
         int startY = (stdScreen.height - totalHeight) / 2;
 
+        JLabel lblTitle = new JLabel("GAME PAUSED", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
+        lblTitle.setForeground(Color.WHITE);
+        lblTitle.setBounds(0, startY - 80, stdScreen.width, 50);
+        add(lblTitle);
+
         // 1. ปุ่ม RESUME (เล่นต่อ)
         JButton btnResume = createRoundedButton("RESUME");
         btnResume.setFont(new Font("Tahoma", Font.BOLD, 20));

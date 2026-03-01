@@ -63,7 +63,7 @@ public class LeaderboardPanel extends JPanel {
 
         // 3. หัวข้อ
         g2.setFont(new Font("Tahoma", Font.BOLD, 30));
-        String title = "🏆 ROMANCE LEADERBOARD 🏆";
+        String title = " ROMANCE LEADERBOARD ";
         FontMetrics fm = g2.getFontMetrics();
         g2.drawString(title, startX + (boxW - fm.stringWidth(title))/2, startY + 50);
 

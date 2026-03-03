@@ -1,0 +1,761 @@
+package Relationship;
+
+import UXUI.MainFrame;
+import java.util.Random;
+
+public class LazelNoon extends Lazel {
+
+    public String imagePath;
+
+    public LazelNoon() {
+        super();
+        // heartLevel = 4;
+        // affectionPoints = 490;
+    }
+
+    @Override
+    protected String getRandomDialogue(int level) {
+        String[] dialogues;
+        if (level < 2) {
+            dialogues = new String[]{
+                "มองหน้าทำไม? อยากโดนดาบเฉือนจมูกเล่นหรือไงฮะ?",
+                "หลีกไป! ข้าต้องรีบไปลับดาบ... อย่ามาเกะกะขวางทาง!",
+                "เจ้า... ดูท่าทางอ่อนแอชะมัด จะรอดคืนนี้ไหมเนี่ย?",
+                "ถ้าเจอสไลม์ก็อย่าร้องไห้ล่ะ... ข้าไม่ว่างไปช่วยเช็ดน้ำตาหรอกนะ",
+                "ดาบของเจ้า... สนิมเขรอะเชียว... ดูแลอาวุธบ้างนะเจ้าบื้อ",
+                "ข้าคือ Lazel นักล่ามังกรที่เก่งที่สุด! จำชื่อใส่กะโหลกไว้ซะ!",
+                "อย่ามาเดินตามข้า! ข้าไม่ใช่พี่เลี้ยงเด็กนะเว้ย!",
+                "อะไร? จะท้าดวลเหรอ? เข้ามาสิ... ข้าต่อให้ใช้มือเดียวเลย!",
+                "น่ารำคาญจริง... ไปให้พ้นหน้าข้าได้แล้ว!",
+                "หมู่นี้พวกมือสมัครเล่นเยอะจริง... เจ้าก็หนึ่งในนั้นสินะ"
+            };
+        } else if (level < 4) {
+            dialogues = new String[]{
+                "ไง! วันนี้เราจะไปล่าตัวอะไรกันดี? มังกรดิน หรือ ไวเวิร์น?",
+                "เฮ้ย... แผลที่แขนเจ้าหายดียัง? ...ข้าไม่ได้ห่วงนะ! แค่กลัวเจ้าเป็นตัวถ่วง!",
+                "ฝีมือดาบของเจ้าพัฒนาขึ้นนี่หว่า... เริ่มจะตามข้าทันแล้วนะ",
+                "วันนี้ข้าย่างเนื้อมาแบ่ง... เอ้า! กินซะ! จะได้มีแรงแบกของให้ข้า",
+                "เจ้าเนี่ย... บ้าบิ่นกว่าที่คิดแฮะ ข้าเริ่มถูกใจเจ้าแล้วสิ",
+                "ถ้ามีใครมารังแกเจ้า บอกข้านะ... ข้าจะไปถล่มมันให้เละ!",
+                "เชื่อใจข้า! ข้าจะระวังหลังให้เจ้าเอง... เราจะไม่ทิ้งกันกลางสนามรบ",
+                "นั่งดื่มเบียร์ฉลองชัยชนะด้วยกันหน่อยไหมสหาย? มื้อนี้ข้าเลี้ยงเอง!",
+                "ดาบของข้า กับโล่ของเจ้า... เป็นคู่ที่สมบูรณ์แบบว่ะ ว่าไหม?",
+                "อยู่กับเจ้าแล้ว... ข้ารู้สึกว่าเลือดในกายมันสูบฉีดพล่านไปหมด!"
+            };
+        } else {
+            dialogues = new String[]{
+                "มาช้าจังวะ! ...ข้ารอเจ้าตั้งนาน... (หน้าแดง) คิดถึงเว้ย!",
+                "อย่ายิ้มแบบนั้นดิ... ข้าแพ้รอยยิ้มโง่ๆ ของเจ้า... รู้ตัวบ้างไหมเนี่ย!",
+                "เจ้าคือคู่หูคนเดียวที่ข้ายอมฝากชีวิตไว้... ห้ามตายก่อนข้านะ เข้าใจไหม!",
+                "เลิกเป็นคู่หูเถอะ... มาเป็นคู่ชีวิตข้าดีกว่า... กล้าปฏิเสธแม่จะฟันให้!",
+                "เวลาข้าเหนื่อย... ขอกอดเจ้าหน่อยได้ไหม? ...แค่แปปเดียวพอน่า!",
+                "ใครหน้าไหนกล้าแตะต้องเจ้า... มันต้องข้ามศพข้าไปก่อน!",
+                "เจ้าทำให้ข้า... อยากวางดาบแล้วมานั่งดูดาวโง่ๆ แบบนี้... บ้าชะมัด",
+                "รักนะเว้ย! ...ได้ยินไหม! ต้องให้ตะโกนบอกทั่งหมู่บ้านเลยไหมฮะ!",
+                "ต่อให้มังกรพันตัวบุกมา... ข้าก็ไม่กลัว... ถ้ามีเจ้าอยู่ข้างๆ",
+                "เจ้าเป็นของข้า... คนเดียว... ตลอดไป... เข้าใจตรงกันนะ!"
+            };
+        }
+        return dialogues[new Random().nextInt(dialogues.length)];
+    }
+
+    @Override
+    protected String getSpecialScene(int level) {
+        return switch (level) {
+            case 1 -> "— พบกับ Lazel เป็นครั้งแรก —";
+            case 2 -> "— Lazel เริ่มไว้ใจเจ้า —";
+            case 3 -> "— Lazel ยอมรับเจ้าเป็นสหาย —";
+            case 4 -> "— Lazel เปิดใจให้เจ้า —";
+            case 5 -> "— Lazel สารภาพรัก —";
+            default -> "...";
+        };
+    }
+
+    // ============================================================
+    // ระบบ Dialogue Tree
+    // ============================================================
+    @Override
+    public DialogueNode getDialogueTree(int level, MainFrame mainFrame) {
+        return switch (level) {
+            case 1 -> buildLevel1Tree(mainFrame);
+            case 2 -> buildLevel2Tree(mainFrame);
+            case 3 -> buildLevel3Tree(mainFrame);
+            case 4 -> buildLevel4Tree(mainFrame);
+            case 5 -> buildLevel5Tree(mainFrame);
+            default -> buildLevel1Tree(mainFrame);
+        };
+    }
+
+    // ============================================================
+    // Level 1 Dialogue Tree
+    // ============================================================
+    private DialogueNode buildLevel1Tree(MainFrame mainFrame) {
+
+        DialogueNode endBad   = new DialogueNode("Lazel", "(สายตาเย็นชา) ไม่มีอะไรจะพูดแล้ว... หลีกทางด้วย", true);
+        endBad.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\(สายตาเย็นชา) ไม่มีอะไรจะพูดแล้ว... หลีกทางด้วย.png";
+        DialogueNode endGood  = new DialogueNode("Lazel", "(ผายมือ) ก็ได้... เจอกันใหม่นะ ถ้าไม่ตายเสียก่อน", true);
+        endGood.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\_(ผายมือ) ก็ได้... เจอกันใหม่นะ ถ้าไม่ตายเสียก่อน_.png";
+        DialogueNode endNormal = new DialogueNode("Lazel", "(เดินจากไป) ...", true);
+        endNormal.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\เดินจากไป.png";
+        DialogueNode endBest  = new DialogueNode("Lazel", "(ตบหลังแรงๆ แล้วเดินนำ) ตามมาได้เลย! อย่าเตะตีนข้าล่ะ!", true);
+        endBest.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\(ตบหลังแรงๆ แล้วเดินนำ) ตามมาได้เลย! อย่าเตะตีนข้าล่ะ!_.png";
+
+        DialogueNode n1_5A = new DialogueNode("Lazel",
+            "\"เออ! พูดได้ดี! ...อย่าทำให้ข้าผิดหวังล่ะคู่หู! เจอกันเย็นนี้!\" (ตบหลังคุณดังปึก)");
+        n1_5A.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\ตบหลัง.png";
+        n1_5A.addChoice("โอ้ย! มือหนักชะมัด... แต่ก็เจอกันครับ!", endBest,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ครับผม", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("เริ่มไม่อยากไปละ", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n1_5B = new DialogueNode("Lazel",
+            "\"เออ... ไปละ ข้าต้องไปซ้อมต่อ\" (เดินจากไปแบบหงุดหงิดนิดๆ)");
+        n1_5B.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\เดินจากไป.png";
+        n1_5B.addChoice("ไว้เจอกัน", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("(เดินแยกทาง)", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("อย่าลืมอาบน้ำนะ!", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20));
+
+        DialogueNode n1_5C = new DialogueNode("Lazel",
+            "\"ธิ... เสียอารมณ์ชะมัด เจอแต่พวกไม่ได้เรื่อง\" (เดินกระแทกไหล่คุณผ่านไป)");
+        n1_5C.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\เดินจากไป.png";
+        n1_5C.addChoice("นิสัยเสีย!", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("(ไม่สนใจ)", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("เดี๋ยวสิ!", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n1_4A = new DialogueNode("Lazel",
+            "(หน้าแดงเล็กน้อย) \"อะ... อะไรของเจ้า... ชมกันโต้งๆ แบบนี้เลยเหรอ... ธิ... ก็ไม่เลว\"");
+        n1_4A.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\หน้าแดงเล็กน้อย.png";
+        n1_4A.addChoice("เย็นนี้ว่าง? ไปหาโรกันเถอะ", n1_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("งั้นไว้เจอกันนะ", n1_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("เป็นเหรอครับ?", n1_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        DialogueNode n1_4B = new DialogueNode("Lazel",
+            "\"ฮ่า! เตรียมตัวแพ้ได้เลย... แต่ถ้าเจ้าฝีมือดีจริง ข้าอาจจะพิจารณาให้มาร่วมปาร์ตี้ก็ได้นะ\"");
+        n1_4B.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\_หึ! เตรียมตัวแพ้ได้เลย... แต่ถ้าเจ้าฝีมือดีจริง ข้าอาจจะพิจารณาให้มาร่วมปาร์ตี้ก็ได้นะ_.png";
+        n1_4B.addChoice("ผมจะทำให้ท่านยอมรับเอง", n1_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ใครอยากอยู่กับเธอกัน", n1_5C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20))
+             .addChoice("ถ้าข้าชนะ เธอต้องมาเข้าปาร์ตี้บ้านนะ", n1_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3));
+
+        DialogueNode n1_4C = new DialogueNode("Lazel",
+            "\"ปากดีนักนะ... หวังว่าฝีมือดาบจะดีเหมือนฝีปากละกัน อย่าตายคาดาบข้าชะก่อนนะ\"");
+        n1_4C.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\_หา!_ ...กล้าดียังไงมาเรียกข้าแบบนั้นฮะ! อยากลองชิมรสชาติดาบข้าหน่อยไหม!_.png";
+        n1_4C.addChoice("สบายมาก", n1_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เธอนั่นแหละระวังตัวไว้", n1_5C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("ออมมือให้ด้วยนะครับ", n1_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        DialogueNode n1_3A = new DialogueNode("Lazel",
+            "\"เออ! พูดจาเข้าหูดีนี่หว่า... ข้าชื่อ Lazel เป็นเองของที่นี่ จำชื่อนี้ใส่กะโหลกไว้ซะ!\"");
+        n1_3A.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\_เออ! พูดจาเข้าหูดีนี่หว่า... ข้าชื่อ Lazel เป็นเอซของที่นี่ จำชื่อนี้ใส่กะโหลกไว้ซะล่ะ!_.png";
+        n1_3A.addChoice("ยินดีที่ได้รู้จัก Lazel ผมชื่อ...", n1_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เจ้อ? โปรเปล่าเนี่ย?", n1_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("ครับ คุณเอง", n1_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n1_3B = new DialogueNode("Lazel",
+            "\"ฮะ? ระดับตำนาน? สภาพแท้งๆ อย่างเจ้าเนี่ยนะ? (หัวเราะลั่น) มุกตลกใช้ได้นี่หว่า! ข้าชอบคนตลกนะเว้ย!\"");
+        n1_3B.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\_ฮะ_ ระดับตำนาน_ สภาพแห้งๆ อย่างเจ้าเนี่ยนะ_ (หัวเราะลั่น) มุกตลกใช้ได้นี่หว่า! ข้าชอบคนตลกนะเว้ย!_.png";
+        n1_3B.addChoice("หัวเราะแล้วนำรักดีนะครับ ยิ้มบ่อยๆ สิ", n1_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("เดี๋ยวกรู้ว่าตลกหรือของจริง", n1_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ข้าจะมังกรด้วยมือเปล่ามาแล้ว", n1_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3));
+
+        DialogueNode n1_3C = new DialogueNode("Lazel",
+            "(แววตาวาวโรจน์) \"โธ่... ท้าทายข้าเหรอ? Lazel ผู้นี้ไม่เคยปฏิเสธคำท้านะ... เย็นนี้เจอกันที่ลานประลอง ห้ามหนีนะเว้ย!\"");
+        n1_3C.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\(แววตาวาวโรจน์) _โฮ่... ท้าทายข้าเหรอ_ Lazel ผู้นี้ไม่เคยปฏิเสธคำท้านะ... เย็นนี้เจอกันที่ลานประลอง ห้ามหนีนะเว้ย!_1.png";
+        n1_3C.addChoice("รับคำท้า! ใครแพ้เลี้ยงข้าว!", n1_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ไม่เอาอะ ยี้เกียจ", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("แน่ใจนะ? เดี๋ยวร้องให้ยิ่งมูกโป่งนะ", n1_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3));
+
+        DialogueNode n1_2A = new DialogueNode("Lazel",
+            "\"ฮึ! ...รู้จักขอโทษก็ดี (ปัดฝุ่น) นึกว่าจะปากเก่งเหมือนพวกหน้าใหม่คนอื่น... เจ้าเป็นเด็กใหม่เหรอ? ไม่คุ้นหน้าเลย\"");
+        n1_2A.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\_หึ! ...รู้จักขอโทษก็ดี (ปัดฝุ่น) นึกว่าจะปากเก่งเหมือนพวกหน้าใหม่คนอื่น... เจ้าเป็นเด็กใหม่เหรอ_ ไม่คุ้นหน้าเลย_.png";
+        n1_2A.addChoice("ใช่ครับ เพิ่งย้ายมาเรียนล่ามังกร ฝากตัวด้วยนะ", n1_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ข้าเป็นนักล่าระดับตำนาน แค่ปลอมตัวมาดูงาน", n1_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("ไม่ใช่เรื่องของเจ้า", n1_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n1_2B = new DialogueNode("Lazel",
+            "\"หา!? ...กล้าดียังไงมาเรียกข้าแบบนั้นฮะ! อยากลองชิมรสชาติดาบข้าหน่อยไหม!?\"");
+        n1_2B.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\_หา!_ ...กล้าดียังไงมาเรียกข้าแบบนั้นฮะ! อยากลองชิมรสชาติดาบข้าหน่อยไหม!_.png";
+        n1_2B.addChoice("กัมาดีครับ คิดว่ากล้าเหรอ?", n1_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("เฮ้ย ใจเย็นๆ ผมล้อเล่นครับพี่สาว", n1_2A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("(วิ่งหนีสุดชีวิต)", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20));
+
+        DialogueNode n1_2C = new DialogueNode("Lazel",
+            "(ยิ้มมุมปาก ภูมิใจ) \"ตาถึงนี่หว่า... นี่คือดาบเขี้ยวมังกร ของตกทอดจากพ่อข้าเอง อยากดูใกล้ๆ ไหมล่ะ?\"");
+        n1_2C.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\(ยิ้มมุมปาก ภูมิใจ) _ตาถึงนี่หว่า... นี่คือดาบเขี้ยวมังกร ของตกทอดจากพ่อข้าเอง อยากดูใกล้ๆ ไหมล่ะ_.png";
+        n1_2C.addChoice("เท่ามาก เหมาะกับนักรบอย่างท่านเลย", n1_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ดูเก่าไปหน่อยนะ สนิมขึ้นแล้วมั้ง", n1_2B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("กิ้งก่า แหละ นึกว่าดาบเทพ", n1_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode root = new DialogueNode("Lazel",
+            "(วิ่งชนคุณเต็มแรงจนล้ม) \"โอ๊ย! ...เฮ้ย! เดินดูตาม้าตาเรือหน่อยสิวะ! ดาบข้าเกือบจะทิ่มตาเจ้าบอดแล้วเห็นไหมเนี่ย!?\"");
+        root.imagePath = "image\\Scene\\Lazel\\Even\\Scene1\\(วิ่งชนคุณเต็มแรงจนล้ม) _โอ๊ย! ...เฮ้ย! เดินดูตาม้าตาเรือหน่อยสิวะ! ดาบข้าเกือบจะทิ่มตาเจ้าบอดแล้วเห็นไหมเนี่ย!_.png";
+        root.addChoice("ขอโทษครับ ผมไม่ทันระวังเอง คุณเจ็บตรงไหนไหม?", n1_2A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+            .addChoice("เจ้าแหละวิ่งไม่ดูทาง ยัยม้าดีดกะโหลก!", n1_2B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+            .addChoice("โว้ว! ดาบสวยดีนี่... ขอดูหน่อยสิ", n1_2C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3));
+
+        return root;
+    }
+
+    // ============================================================
+    // Level 2 Dialogue Tree
+    // ============================================================
+    private DialogueNode buildLevel2Tree(MainFrame mainFrame) {
+
+        DialogueNode endBad    = new DialogueNode("Lazel", "(หันหลังเดินหนี ไม่มองหน้า)", true);
+        endBad.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\(หันหลังเดินหนี ไม่มองหน้า).png";
+        DialogueNode endNormal = new DialogueNode("Lazel", "(โบกมือ แล้วเดินจากไป)", true);
+        endNormal.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\(โบกมือ แล้วเดินจากไป).png";
+        DialogueNode endGood   = new DialogueNode("Lazel", "(ยิ้มนิดๆ) เจอกันใหม่นะ", true);
+        endGood.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\(ยิ้มนิดๆ) เจอกันใหม่นะ.png";
+        DialogueNode endBest   = new DialogueNode("Lazel", "(ตบไหล่แรงๆ) ไว้เจอกันอีกนะคู่หู!", true);
+        endBest.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\(ตบไหล่แรงๆ) ไว้เจอกันอีกนะคู่หู.png";
+
+        DialogueNode n2_5A = new DialogueNode("Lazel",
+            "\"ชิ... ปากหวานชะมัด... แต่ก็... ขอบใจนะ\"");
+        n2_5A.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_ชิ... ปากหวานชะมัด... แต่ก็... ขอบใจนะ_.png";
+        n2_5A.addChoice("ถ้าเจ็บอีกก็บอกนะ ผมพร้อมดูแลเสมอ", endBest,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("หายไวๆ ล่ะ จะได้ไปลุยกันต่อ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("ทีหลังระวังตัวหน่อยสิ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3));
+
+        DialogueNode n2_5B = new DialogueNode("Lazel",
+            "\"เออๆ ขอบใจที่ช่วย... ห้ามไปบอกใครนะเว้ย เสียlookหมด\"");
+        n2_5B.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_เออๆ ขอบใจที่ช่วย... ห้ามไปบอกใครนะเว้ย เสียลุคหมด_.png";
+        n2_5B.addChoice("ความลับคับอกครับท่านเอซ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("อาจจะหลุดปากก็ได้นะ ใครจะรู้", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("จ้างปิดปากด้วยข้าวหนึ่งมื้อ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3));
+
+        DialogueNode n2_5C = new DialogueNode("Lazel",
+            "\"ไอ้คนทรยศ! ...จำไว้เลยนะ!\"");
+        n2_5C.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_ไอ้คนทรยศ! ...จำไว้เลยนะ!_.png";
+        n2_5C.addChoice("เดี๋ยว Lazel! ผมล้อเล่น!", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("(ปล่อยให้เธอวิ่งไป)", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20))
+             .addChoice("วิ่งระวังล้มหัวทิ่มอีกล่ะ!", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20));
+
+        DialogueNode n2_4A = new DialogueNode("Lazel",
+            "(หน้าแดงเล็กน้อย) \"อึก... เบาๆ สิวะ... ทำไมเจ้าต้องมาทำดีกับข้าด้วยวะ?\"");
+        n2_4A.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\(หน้าแดงเล็กน้อย) _อึก... เบาๆ สิวะ... ทำไมเจ้าต้องมาทำดีกับข้าด้วยวะ_.png";
+        n2_4A.addChoice("เพราะเราเป็นคู่หูกันไง... คู่หูไม่ทิ้งกันหรอก", n2_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เพราะผมเป็นห่วงคุณไง ยัยบ๊อง", n2_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ก็เห็นนั่งหมาหงอยอยู่คนเดียว สงสาร", n2_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n2_4B = new DialogueNode("Lazel",
+            "\"ไม่ไป! ...ถ้าอาจารย์รู้ ข้าโดนสั่งพักการเรียนแน่... ข้าต้องรีบหายให้ทันสอบ\"");
+        n2_4B.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_ไม่ไป! ...ถ้าอาจารย์รู้ ข้าโดนสั่งพักการเรียนแน่... ข้าต้องรีบหายให้ทันสอบ_.png";
+        n2_4B.addChoice("งั้นให้ผมทำแผลให้เถอะ สัญญาว่าจะไม่บอกใคร", n2_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("ห่วงตัวเองก่อนเถอะ การเรียนช่างมัน", n2_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("งั้นผมไปฟ้องอาจารย์นะ", n2_5C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n2_3A = new DialogueNode("Lazel",
+            "\"โว้ย! ...เออๆ! ดูได้แต่อย่าโวยวายนะ! ...ไอ้มังกรนั่นมันลอบกัดข้า...\"");
+        n2_3A.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_โว้ย! ...เออๆ! ดูได้แต่อย่าโวยวายนะ! ...ไอ้มังกรนั่นมันลอบกัดข้า..._.png";
+        n2_3A.addChoice("อยู่นิ่งๆ นะ เดี๋ยวผมจัดการเอง... อดทนหน่อยนะ", n2_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("แผลลึกนะเนี่ย... ไปห้องพยาบาลเถอะ", n2_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("อี๋... น่ากลัวว่ะ", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n2_4C = new DialogueNode("Lazel",
+            "\"กลัวก็ไสหัวไป! ...ข้าทำเองได้!\"");
+        n2_4C.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_กลัวก็ไสหัวไป! ...ข้าทำเองได้!_.png";
+        n2_4C.addChoice("(แย่งผ้าพันแผลมา) มานี่ ผมทำเอง อย่าดื้อ", n2_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("ตามใจ งั้นโชคดี", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("พันแบบนั้นทั้งชาติก็ไม่เสร็จหรอก ยัยบื้อ", n2_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n2_3C = new DialogueNode("Lazel",
+            "\"เออ! ไปเลย! ...ใครจะไปต้องการความช่วยเหลือจากเจ้ากัน!\"");
+        n2_3C.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_เออ! ไปเลย! ...ใครจะไปต้องการความช่วยเหลือจากเจ้ากัน!_.png";
+
+        DialogueNode n2_2B = new DialogueNode("Lazel",
+            "\"อู้บ้านป้าเจ้าสิ! ...คนกำลังพักผ่อน! ไปให้พ้นหน้าข้าเลยไป!\"");
+        n2_2B.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_อู้บ้านป้าเจ้าสิ! ...คนกำลังพักผ่อน! ไปให้พ้นหน้าข้าเลยไป!_.png";
+        n2_2B.addChoice("เดี๋ยวนะ... นั่นเลือดนี่! บาดเจ็บเหรอ?", n2_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ดุจังแฮะ งั้นไปดีกว่า", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("สมน้ำหน้า อยากอู้ดีนัก", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20));
+
+        DialogueNode n2_2A = new DialogueNode("Lazel",
+            "(สะดุ้ง) \"เฮ้ย! ...ยุ่งน่า! ไม่ใช่เรื่องของเจ้า! ...แค่... มดกัดนิดหน่อยเว้ย!\"");
+        n2_2A.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\(สะดุ้ง) _เฮ้ย! ...ยุ่งน่า! ไม่ใช่เรื่องของเจ้า! ...แค่... มดกัดนิดหน่อยเว้ย!_2.png";
+        n2_2A.addChoice("มดบ้าอะไรกัดเลือดสาด! ขอดูแผลเดี๋ยวนี้!", n2_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("อย่ามาโกหก! เป็นห่วงนะเว้ย เอามือมาดู!", n2_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("โอเคๆ ไม่ยุ่งก็ได้ ไปละ", n2_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20));
+
+        DialogueNode root = new DialogueNode("Lazel",
+            "(นั่งกุมแขนที่มีเลือดซึมออกมา) \"ซี๊ดดด... บ้าเอ๊ย... พลาดท่าจนได้... อย่าให้ใครเห็นเชียวนะ Lazel\"");
+        root.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\(นั่งกุมแขนที่มีเลือดซึมออกมา) _ซี๊ดดด... บ้าเอ๊ย... พลาดท่าจนได้... อย่าให้ใครเห็นเชียวนะ Lazel_.png";
+        root.addChoice("Lazel! นั่นเลือดนี่! เกิดอะไรขึ้น?", n2_2A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+            .addChoice("แอบมาอู้งานตรงนี้นี่เอง", n2_2B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20))
+            .addChoice("(แกล้งทำเป็นไม่เห็นแล้วเดินผ่าน)", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        return root;
+    }
+
+    // ============================================================
+    // Level 3 Dialogue Tree
+    // ============================================================
+    private DialogueNode buildLevel3Tree(MainFrame mainFrame) {
+
+        DialogueNode endBad    = new DialogueNode("Lazel", "(หันหลังเดินหนี ไม่พูดอะไร)", true);
+        endBad.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(หันหลังเดินหนี ไม่พูดอะไร).png";
+        DialogueNode endNormal = new DialogueNode("Lazel", "(โบกมือแล้วเดินจากไป)", true);
+        endNormal.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(โบกมือแล้วเดินจากไป).png";
+        DialogueNode endGood   = new DialogueNode("Lazel", "(ยิ้มและโบกมือ) เจอกันพรุ่งนี้นะ!", true);
+        endGood.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(ยิ้มและโบกมือ) เจอกันพรุ่งนี้นะ!.png";
+        DialogueNode endBest   = new DialogueNode("Lazel", "(กอดคุณแน่นๆ) ขอบใจที่เป็นเพื่อนที่ดีที่สุดของข้า!", true);
+        endBest.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(กอดคุณแน่นๆ) ขอบใจที่เป็นเพื่อนที่ดีที่สุดของข้า!.png";
+
+        DialogueNode n3_5A = new DialogueNode("Lazel",
+            "\"สัญญาแล้วนะว่าจะอยู่ข้างข้า... ใครผิดคำสัญญาขอให้ดาบหัก!\"");
+        n3_5A.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\_สัญญาแล้วนะว่าจะอยู่ข้างข้า... ใครผิดคำสัญญาขอให้ดาบหัก!_.png";
+        n3_5A.addChoice("สัญญาครับ! จะไม่มีวันทิ้งกัน", endBest,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("สัญญาครับ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("จะพยายามละกันนะ", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n3_5B = new DialogueNode("Lazel",
+            "\"เออ! เจอกันพรุ่งนี้ ห้ามสายนะเว้ยคู่หู! ...ถ้าสายข้าจะตามไปถีบถึงบ้านเลย!\"");
+        n3_5B.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\_เออ! เจอกันพรุ่งนี้ ห้ามสายนะเว้ยคู่หู! ...ถ้าสายข้าจะตามไปถีบถึงบ้านเลย!_.png";
+        n3_5B.addChoice("ครับๆ ไม่สายแน่นอน", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("โหดจังนะ บายครับ", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("มาถีบสิ จะได้ตื่น", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        DialogueNode n3_4A = new DialogueNode("Lazel",
+            "(เธอหน้าแดงและก้มหน้ามองพื้น) \"เออ... ขอบใจนะ... ข้าไม่เคยมีใครมายืนเคียงข้างแบบนี้มาก่อนเลย... มัน... รู้สึกดีเหมือนกันนะ\"");
+        n3_4A.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(เธอหน้าแดงและก้มหน้ามองพื้น) _เออ... ขอบใจนะ... ข้าไม่เคยมีใครมายืนเคียงข้างแบบนี้มาก่อนเลย... มัน... รู้สึกดีเหมือนกันนะ_2.png";
+        n3_4A.addChoice("จากนี้ไป ผมจะเป็นโล่ปกป้องคุณเอง", n3_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เราเป็นคู่หูกันนี่นา ไม่ต้องคิดมาก", n3_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ซึ้งล่ะสิ ฮ่าๆ", n3_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n3_4B = new DialogueNode("Lazel",
+            "\"หึ! ก็แค่ฟลุ๊คน่ะ อย่าหลงตัวเองไปหน่อยเลย... แต่ข้าจะยอมให้เจ้าเลี้ยงข้าวเป็นการฉลองชัยชนะละกัน\"");
+        n3_4B.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\_หึ! ก็แค่ฟลุ๊คน่ะ อย่าหลงตัวเองไปหน่อยเลย... แต่ข้าจะยอมให้เจ้าเลี้ยงข้าวเป็นการฉลองชัยชนะละกัน_.png";
+        n3_4B.addChoice("ได้เลย! อยากกินอะไรสั่งเต็มที่", n3_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เลี้ยงข้าว? เงินผมยิ่งน้อยอยู่", n3_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("เธอต้องเลี้ยงข้าสิ ข้าเป็นคนช่วยนะ", n3_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n3_4C = new DialogueNode("Lazel",
+            "\"สำออยจริงนะเจ้าเนี่ย! ...แต่เอาเถอะ เห็นแก่ที่ช่วยพูด ข้าจะปล่อยผ่านไปครั้งหนึ่งละกัน\"");
+        n3_4C.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\_สำออยจริงนะเจ้าเนี่ย! ...แต่เอาเถอะ เห็นแก่ที่ช่วยพูด ข้าจะปล่อยผ่านไปครั้งหนึ่งละกัน_.png";
+        n3_4C.addChoice("ขอบคุณครับที่เมตตา", n3_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("งั้นผมไปพักก่อนนะ", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("เธอนี่เอาใจยากจัง", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n3_3A = new DialogueNode("Lazel",
+            "(พวกคุณสู้ชนะพวกนักเลง) \"ฮ่าๆ! เห็นไหมล่ะ! ฝีมือคู่หูข้าไม่ธรรมดา! ...เจ้าสู้ได้ใจข้ามากเลยว่ะ (ตบไหล่คุณ)\"");
+        n3_3A.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(พวกคุณสู้ชนะพวกนักเลง) _ฮ่าๆ! เห็นไหมล่ะ! ฝีมือคู่หูข้าไม่ธรรมดา! ...เจ้าสู้ได้ใจข้ามากเลยว่ะ (ตบไหล่คุณ)_.png";
+        n3_3A.addChoice("เพื่อคุณ ผมสู้ถวายหัวอยู่แล้ว", n3_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("สะใจชะมัด! ทีหลังอย่ามาซ่า", n3_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("มือผมเจ็บไปหมดแล้วเนี่ย", n3_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n3_3B = new DialogueNode("Lazel",
+            "(พวกนักเลงยอมถอยเพราะคุณช่วยพูดและท่าทางที่มั่นคง) \"ชิ... รอดตัวไปนะพวกแก... เจ้าเนี่ย... มีวิธีจัดการปัญหาที่แปลกดีนะ แต่ก็ได้ผล\"");
+        n3_3B.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(พวกนักเลงยอมถอยเพราะคุณช่วยพูดและท่าทางที่มั่นคง) _ชิ... รอดตัวไปนะพวกแก... เจ้าเนี่ย... มีวิธีจัดการปัญหาที่แปลกดีนะ แต่ก็ได้ผล_1.png";
+        n3_3B.addChoice("ใช้สมองบ้างก็ดีกว่าใช้กำลังอย่างเดียวนะ", n3_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("ขอบคุณที่ยอมฟังผมนะ Lazel", n3_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("กลัวล่ะสิ ถึงได้ยอมทำตาม", n3_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n2_3A_ref = new DialogueNode("Lazel",
+            "\"โว้ย! ...เออๆ! ดูได้แต่อย่าโวยวายนะ! ...ไอ้มังกรนั่นมันลอบกัดข้า...\"");
+        n2_3A_ref.imagePath = "image\\Scene\\Lazel\\Even\\Scene2\\_โว้ย! ...เออๆ! ดูได้แต่อย่าโวยวายนะ! ...ไอ้มังกรนั่นมันลอบกัดข้า..._.png";
+        n2_3A_ref.addChoice("ผมขอโทษ... ให้ผมช่วยทำแผลนะ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("บอกแล้วไงว่าอย่าไปมีเรื่อง", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-10))
+             .addChoice("นิสัยเสียแบบนี้ไง ถึงไม่มีใครคบ", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n3_3C = new DialogueNode("Lazel",
+            "(เธอสู้คนเดียวจนสะบักสะบอม) \"ไปให้พ้นหน้าข้าซะ... ข้าไม่อยากเห็นหน้าคนทรยศแบบเจ้าอีก!\"");
+        n3_3C.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(เธอสู้คนเดียวจนสะบักสะบอม) _ไปให้พ้นหน้าข้าซะ... ข้าไม่อยากเห็นหน้าคนทรยศแบบเจ้าอีก!_.png";
+        n3_3C.addChoice("ผมขอโทษ... ให้ผมช่วยทำแผลนะ", n2_3A_ref,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("บอกแล้วไงว่าอย่าไปมีเรื่อง", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20))
+             .addChoice("นิสัยเสียแบบนี้ไง ถึงไม่มีใครคบ", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n3_2A = new DialogueNode("Lazel",
+            "(เหลือบมองคุณด้วยความซึ้งใจแวบหนึ่ง) \"หึ! มาได้จังหวะพอดีนะคู่หู... พวกสุนัขหมู่พวกนี้มันดูถูกข้ากับครอบครัวข้า เจ้าจะช่วยข้าสั่งสอนมันไหม?\"");
+        n3_2A.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(เหลือบมองคุณด้วยความซึ้งใจแวบหนึ่ง) _หึ! มาได้จังหวะพอดีนะคู่หู... พวกสุนัขหมู่พวกนี้มันดูถูกข้ากับครอบครัวข้า เจ้าจะช่วยข้าสั่งสอนมันไหม_.png";
+        n3_2A.addChoice("จัดไปครับ! อยากลองฝีมืออยู่พอดี", n3_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เราใช้วิธีคุยกันดีกว่าไหม?", n3_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ผมขอตัวนะ ไม่อยากเจ็บตัว", n3_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-10));
+
+        DialogueNode n3_2B = new DialogueNode("Lazel",
+            "\"จะให้ข้าเย็นได้ไง! มันหยามเกียรตินักรบนะเว้ย! เจ้าเป็นพวกขี้ขลาดแบบนี้ตั้งแต่เมื่อไหร่ฮะ!?\"");
+        n3_2B.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\_จะให้ข้าเย็นได้ไง! มันหยามเกียรตินักรบนะเว้ย! เจ้าเป็นพวกขี้ขลาดแบบนี้ตั้งแต่เมื่อไหร่ฮะ!_.png";
+        n3_2B.addChoice("ผมไม่ได้ขี้ขลาด แต่ผมเป็นห่วงคุณนะ", n3_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เออๆ สู้ก็สู้! มาเลย!", n3_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ด่าผมเหรอ? งั้นสู้เองคนเดียวไปเลย!", n3_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n3_2C = new DialogueNode("Lazel",
+            "(ถูกพวกมันรุมล้อม) \"เหอะ! นึกว่าจะมีน้ำใจ... สุดท้ายเจ้าก็เหมือนคนอื่น กลัวจนหัวหด!\"");
+        n3_2C.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(ถูกพวกมันรุมล้อม) _เหอะ! นึกว่าจะมีน้ำใจ... สุดท้ายเจ้าก็เหมือนคนอื่น กลัวจนหัวหด!_.png";
+        n3_2C.addChoice("(พุ่งเข้าไปแทรก) \"ใครว่าผมกลัว! แค่ดูลาดเลาเฉยๆ", n3_2A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("(ยังยืนเฉยๆ)", n3_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15))
+             .addChoice("สู้ๆ นะ Lazel ผมเชียร์อยู่", endBad,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20));
+
+        DialogueNode root = new DialogueNode("Lazel",
+            "(ยืนประจันหน้ากับกลุ่มนักเรียนนักเลง 3 คน) \"พวกแกกล้าดียังไงมาว่าดาบพ่อข้าเป็นขยะ! ถอนคำพูดเดี๋ยวนี้ ไม่งั้นอย่าหาว่าข้าไม่เตือน!\"");
+        root.imagePath = "image\\Scene\\Lazel\\Even\\Scene3\\(ยืนประจันหน้ากับกลุ่มนักเรียนนักเลง 3 คน) _พวกแกกล้าดียังไงมาว่าดาบพ่อข้าเป็นขยะ! ถอนคำพูดเดี๋ยวนี้ ไม่งั้นอย่าหาว่าข้าไม่เตือน!_.png";
+        root.addChoice("(เดินไปยืนข้างเธอ) \"ใครมีปัญหาอะไรกับคู่หูผมรึเปล่า?\"", n3_2A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+            .addChoice("Lazel ใจเย็นๆ อย่าไปมีเรื่องเลย", n3_2B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+            .addChoice("(ยืนดูอยู่ห่างๆ)", n3_2C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-10));
+
+        return root;
+    }
+
+    // ============================================================
+    // Level 4 Dialogue Tree
+    // ============================================================
+    private DialogueNode buildLevel4Tree(MainFrame mainFrame) {
+
+        DialogueNode endGood = new DialogueNode("Lazel", "(โบกมือ) ฝันดีนะ คู่หู", true);
+        endGood.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\(โบกมือ) ฝันดีนะ คู่หู.png";
+        DialogueNode endBest = new DialogueNode("Lazel", "(กอดแน่นๆ) ขอบใจที่อยู่เคียงข้างข้าเสมอ", true);
+        endBest.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\(กอดแน่นๆ) ขอบใจที่อยู่เคียงข้างข้าเสมอ.png";
+
+        DialogueNode n4_5A = new DialogueNode("Lazel",
+            "(พึมพำเบาๆ ก่อนเจ้าจะหลับ) \"เจ้าเป็นคนเดียวที่ข้ายอมเปิดใจให้... อย่าทิ้งข้าไปนะ...\"");
+        n4_5A.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\(พึมพำเบาๆ ก่อนเจ้าจะหลับ) _เจ้าเป็นคนเดียวที่ข้ายอมเปิดใจให้... อย่าทิ้งข้าไปนะ..._.png";
+        n4_5A.addChoice("ผมรักคุณนะ ลีเซล", endBest,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ผมจะอยู่ตรงนี้เสมอครับ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("(แกล้งหลับแต่แอบยิ้ม)", endBest,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        DialogueNode n4_5B = new DialogueNode("Lazel",
+            "(นอนลงข้างกองไฟ) \"ฝันดีนะ คู่หู... เจอกันพรุ่งนี้\"");
+        n4_5B.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\_(นอนลงข้างกองไฟ) _ฝันดีนะ คู่หู... เจอกันพรุ่งนี้__.png";
+        n4_5B.addChoice("ฝันดีครับ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ขอบคุณที่ดูแลนะ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("(หลับไป)", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        DialogueNode n4_5C = new DialogueNode("Lazel",
+            "(เดินไปนั่งเฝ้ายามต่อ) \"...\"");
+        n4_5C.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\เดินไปเฝ้ายาม.png";
+        n4_5C.addChoice("ฝันดีครับ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("(นอนหลับ)", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("...", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n4_4A = new DialogueNode("Lazel",
+            "(พยายามยิ้มที่ดูขัดๆ แต่จริงใจ) \"แบบนี้พอใช้ได้ไหม? เจ้าบ้า... ข้าทำเพื่อเจ้าคนเดียวเลยนะ... รับสิ่งนี้ไปสิ มันคือผ้าพันคอที่ข้าพกติดตัวตลอด\"");
+        n4_4A.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\(พยายามยิ้มที่ดูขัดๆ แต่จริงใจ) _แบบนี้พอใช้ได้ไหม_ เจ้าบ้า... ข้าทำเพื่อเจ้าคนเดียวเลยนะ... รับสิ่งนี้ไปสิ มันคือผ้าพันคอที่ข้าพกติดตัวตลอด_.png";
+        n4_4A.addChoice("ผมจะใส่มันไว้ตลอดเวลาเลย", n4_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ขอบคุณนะ มันอุ่นมากเลย", n4_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ผ้าผืนนี้มีกลิ่นคุณด้วยนะ", n4_5C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n4_4B = new DialogueNode("Lazel",
+            "\"เกียรติยศของข้าตอนนี้... ข้าขอฝากไว้ที่เจ้าแล้วกันนะ อย่าทำให้ข้าผิดหวังล่ะ! เข้าใจไหม!\"");
+        n4_4B.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\_เกียรติยศของข้าตอนนี้... ข้าขอฝากไว้ที่เจ้าแล้วกันนะ อย่าทำให้ข้าผิดหวังล่ะ! เข้าใจไหม!_.png";
+        n4_4B.addChoice("ผมจะรักษาชื่อเสียงของคุณด้วยชีวิต", n4_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ผมจะพยายามครับ", n4_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("กดดันกันจังเลยนะ", n4_5C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n4_4C = new DialogueNode("Lazel",
+            "\"เจ้ามันกวนประสาท... แต่ข้าก็ชอบที่เจ้าเป็นแบบนี้... คืนนี้ข้าจะเฝ้ายามให้เอง เจ้าพักผ่อนเถอะ\"");
+        n4_4C.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\_เจ้ามันกวนประสาท... แต่ข้าก็ชอบที่เจ้าเป็นแบบนี้... คืนนี้ข้าจะเฝ้ายามให้เอง เจ้าพักผ่อนเถอะ_.png";
+        n4_4C.addChoice("นอนด้วยกันนี่แหละ อุ่นดีนะ", n4_5A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ฝากด้วยนะ ลีเซล ฝันดีครับ", n4_5B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("ผมยังไม่หิว เอ๊ย! ผมยังไม่นอนหรอก", n4_5C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n4_3A = new DialogueNode("Lazel",
+            "(วางดาบลงแล้วก้มหน้า) \"ข้าถูกสอนว่าความรักคือจุดอ่อน... แต่พออยู่กับเจ้า ข้ากลับรู้สึกว่า... ข้าอยากจะปกป้องเจ้า มากกว่าปกป้องเกียรติยศของตัวเองเสียอีก...\"");
+        n4_3A.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\(วางดาบลงแล้วก้มหน้า) _ข้าถูกสอนว่าความรักคือจุดอ่อน... แต่พออยู่กับเจ้า ข้ากลับรู้สึกว่า... ข้าอยากจะปกป้องเจ้า มากกว่าปกป้องเกียรติยศของตัวเองเสียอีก..._.png";
+        n4_3A.addChoice("งั้นเรามาปกป้องกันและกันเถอะนะ", n4_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ผมต่างหากที่ต้องเป็นฝ่ายปกป้องคุณ", n4_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("พูดซะซึ้งเลยนะ ลีเซล", n4_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n4_3B = new DialogueNode("Lazel",
+            "\"เจ้าพูดจาเลี่ยนๆ อีกแล้วนะ! แต่... ข้าก็ไม่ได้เกลียดมันหรอก... ถ้าวันหนึ่งเราต้องแยกทางกัน เจ้าจะลืมยัยนักรบปากเสียคนนี้ไหม?\"");
+        n4_3B.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\_เจ้าพูดจาเลี่ยนๆ อีกแล้วนะ! แต่... ข้าก็ไม่ได้เกลียดมันหรอก... ถ้าวันหนึ่งเราต้องแยกทางกัน เจ้าจะลืมยัยนักรบปากเสียคนนี้ไหม_.png";
+        n4_3B.addChoice("ไม่มีวันลืมแน่นอน ผมจะจดจำทุกรอยแผลที่เราสู้มาด้วยกัน", n4_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เสียงคุณดังขนาดนี้ ใครจะลืมลงล่ะ", n4_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ผมจำแต่เรื่องดีๆ ของเราก็พอ", n4_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        DialogueNode n4_3C = new DialogueNode("Lazel",
+            "(ขยับมานั่งใกล้กองไฟมากขึ้น) \"หึ... เจ้ามนุษย์ใจกล้า... ข้าจะให้โอกาสเจ้าอีกครั้ง ถ้าเจ้าสามารถขออะไรข้าได้หนึ่งอย่างตอนนี้ เจ้าจะขออะไร?\"");
+        n4_3C.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\(ขยับมานั่งใกล้กองไฟมากขึ้น) _หึ... เจ้ามนุษย์ใจกล้า... ข้าจะให้โอกาสเจ้าอีกครั้ง ถ้าเจ้าสามารถขออะไรข้าได้หนึ่งอย่างตอนนี้ เจ้าจะขออะไร_.png";
+        n4_3C.addChoice("ขอให้คุณเลิกดุผม และลองยิ้มให้ผมดูสักครั้ง", n4_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ขอให้เราชนะทุกศึกหลังจากนี้", n4_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ขอเนื้อย่างเพิ่มอีกนิดสิ", n4_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n4_2A = new DialogueNode("Lazel",
+            "(หน้าแดงวูบหนึ่งก่อนจะรีบทำหน้าดุ) \"มุมอ่อนโยนงั้นเรอะ? อย่ามาพูดจาเพ้อเจ้อ! ข้าเป็นนักรบนะ... แต่... ที่เจ้าพูดน่ะ... หมายความว่ายังไง?\"");
+        n4_2A.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\(หน้าแดงวูบหนึ่งก่อนจะรีบทำหน้าดุ) _มุมอ่อนโยนงั้นเรอะ_ อย่ามาพูดจาเพ้อเจ้อ! ข้าเป็นนักรบนะ... แต่... ที่เจ้าพูดน่ะ... หมายความว่ายังไง_.png";
+        n4_2A.addChoice("หมายความว่าผมชอบที่คุณเป็นตัวเองแบบนี้ไง", n4_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("หมายความว่าคุณก็น่ารักดีเวลาไม่ดุดัน", n4_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ช่างมันเถอะ ผมแค่ล้อเล่น", n4_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20));
+
+        DialogueNode n4_2B = new DialogueNode("Lazel",
+            "\"ฝีมือข้ามันแน่นอนอยู่แล้ว! แต่เจ้าเองก็... ไม่เลวนะ สำหรับมนุษย์ธรรมดาคนหนึ่ง ข้าเริ่มจะ... ยอมรับเจ้าเป็นคู่หูจริงๆ แล้วสิ\"");
+        n4_2B.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\_ฝีมือข้ามันแน่นอนอยู่แล้ว! แต่เจ้าเองก็... ไม่เลวนะ สำหรับมนุษย์ธรรมดาคนหนึ่ง ข้าเริ่มจะ... ยอมรับเจ้าเป็นคู่หูจริงๆ แล้วสิ_.png";
+        n4_2B.addChoice("คู่หูตลอดไปเลยได้ไหม?", n4_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("เป็นเกียรติอย่างยิ่งครับ ท่านนักรบ", n4_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("แค่คู่หูเองเหรอ? นึกว่าเป็นมากกว่านั้น", n4_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3));
+
+        DialogueNode n4_2C = new DialogueNode("Lazel",
+            "\"คนรักษาคำพูดงั้นเรอะ? หายากนะในยุคสมัยนี้... เจ้ามนุษย์ ข้ามีเรื่องจะถาม... เจ้าคิดว่าข้า... ดูแข็งกระด้างเกินไปสำหรับผู้หญิงทั่วไปหรือเปล่า?\"");
+        n4_2C.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\_คนรักษาคำพูดงั้นเรอะ_ หายากนะในยุคสมัยนี้... เจ้ามนุษย์ ข้ามีเรื่องจะถาม... เจ้าคิดว่าข้า... ดูแข็งกระด้างเกินไปสำหรับผู้หญิงทั่วไปหรือเปล่า_.png";
+        n4_2C.addChoice("คุณแข็งแกร่งและเท่มาก นั่นคือเสน่ห์ของคุณ", n4_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ก็นิดหน่อยนะ แต่ผมว่ามันโอเค", n4_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(3))
+             .addChoice("ผู้หญิงนุ่มนวลกว่านี้ก็น่าจะดีนะ", n4_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-20));
+
+        DialogueNode root = new DialogueNode("Lazel",
+            "(ขัดดาบด้วยจังหวะที่ช้าลง) \"เฮอะ... ขอบใจที่อยู่ช่วยจนจบนะ ข้าไม่นึกว่าเจ้าจะทนฟังคำด่าข้าได้นานขนาดนี้ ทำไมเจ้าถึงยังไม่หนีไปอีกล่ะ?\"");
+        root.imagePath = "image\\Scene\\Lazel\\Even\\Scene4\\(ขัดดาบด้วยจังหวะที่ช้าลง) _เฮอะ... ขอบใจที่อยู่ช่วยจนจบนะ ข้าไม่นึกว่าเจ้าจะทนฟังคำด่าข้าได้นานขนาดนี้ ทำไมเจ้าถึงยังไม่หนีไปอีกล่ะ_.png";
+        root.addChoice("ก็เพราะผมอยากเห็นมุมอ่อนโยนของคุณแบบนี้ไง", n4_2A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+            .addChoice("หนีไปก็อดเห็นฝีมือดาบขั้นเทพของคุณสิ", n4_2B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+            .addChoice("ผมเป็นคนรักษาคำพูดน่ะ บอกว่าจะช่วยก็คือช่วย", n4_2C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        return root;
+    }
+
+    // ============================================================
+    // Level 5 Dialogue Tree
+    // ============================================================
+    private DialogueNode buildLevel5Tree(MainFrame mainFrame) {
+
+        DialogueNode endBest = new DialogueNode("Lazel", "\"ไปกันเถอะ... ไปสร้างตำนานของเราด้วยกัน!\" (ภาพตัดไปที่ทั้งคู่ควบม้าออกเดินทางไปด้วยกันในฐานะคนรัก)\n\n— GRAND ENDING: Warriors Soulmate —", true);
+        endBest.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\_ไปกันเถอะ... ไปสร้างตำนานของเราด้วยกัน!_ (ภาพตัดไปที่ทั้งคู่ควบม้าออกเดินทางไปด้วยกันในฐานะคนรัก).png";
+        DialogueNode endGood = new DialogueNode("Lazel", "\"อย่าเดินช้าล่ะ คู่หู!\" (ภาพตัดไปที่ทั้งคู่เดินเคียงบ่าเคียงไหล่กัน)\n\n— GOOD ENDING: Best Partner —", true);
+        endGood.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\_อย่าเดินช้าล่ะ คู่หู!_ (ภาพตัดไปที่ทั้งคู่เดินเคียงบ่าเคียงไหล่กัน).png";
+        DialogueNode endNormal = new DialogueNode("Lazel", "(ขี่ม้าหายไปในแสงอาทิตย์อัสดง)\n\n— NORMAL ENDING: Warrior's Path —", true);
+        endNormal.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\(ขี่ม้าหายไปในแสงอาทิตย์อัสดง).png";
+
+        DialogueNode n5_4A = new DialogueNode("Lazel",
+            "(ขยับเข้ามากอดคุณแบบเขินๆ) \"ข้าไม่ถนัดพูดคำหวาน... แต่ข้าอยากให้เจ้ารู้ว่า... เจ้าคือคนเดียวที่ข้ายอมคุกเข่าให้... รักนะ เจ้ามนุษย์กวนประสาท\"");
+        n5_4A.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\(ขยับเข้ามากอดคุณแบบเขินๆ) _ข้าไม่ถนัดพูดคำหวาน... แต่ข้าอยากให้เจ้ารู้ว่า... เจ้าคือคนเดียวที่ข้ายอมคุกเข่าให้... รักนะ เจ้ามนุษย์กวนประสาท_.png";
+        n5_4A.addChoice("รักคุณเหมือนกัน ยัยนักรบสุดที่รัก", endBest,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("ในที่สุดก็พูดออกมาซะทีนะ", endBest,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("(กอดตอบเธอให้แน่นกว่าเดิม)", endBest,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        DialogueNode n5_4B = new DialogueNode("Lazel",
+            "\"มองอะไร! รีบๆ เดินสิ เดี๋ยวก็มืดค่ำกันพอดี... (แอบยิ้มมุมปาก)\"");
+        n5_4B.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\_มองอะไร! รีบๆ เดินสิ เดี๋ยวก็มืดค่ำกันพอดี... (แอบยิ้มมุมปาก)_.png";
+        n5_4B.addChoice("(จับมือเธอเดินไปด้วยกัน)", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ครับๆ ไปเดี๋ยวนี้แหละ", endGood,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ดุจังเลยนะ", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n5_4C = new DialogueNode("Lazel",
+            "\"รักษาตัวด้วย... หวังว่าเราจะได้ประดาบกันอีกสักวัน\"");
+        n5_4C.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\_รักษาตัวด้วย... หวังว่าเราจะได้ประดาบกันอีกสักวัน_.png";
+        n5_4C.addChoice("เช่นกันครับ", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("ลาก่อน", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("...", endNormal,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+
+        DialogueNode n5_3A = new DialogueNode("Lazel",
+            "(หยิบมีดสั้นเล่มโปรดส่งให้คุณ) \"รับไป... นี่คือสัญลักษณ์แห่งความภักดีของข้า ข้ามอบชีวิตและหัวใจให้เจ้าดูแล... อย่าทำมันพังล่ะ เจ้าบ้า!\"");
+        n5_3A.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\(หยิบมีดสั้นเล่มโปรดส่งให้คุณ) _รับไป... นี่คือสัญลักษณ์แห่งความภักดีของข้า ข้ามอบชีวิตและหัวใจให้เจ้าดูแล... อย่าทำมันพังล่ะ เจ้าบ้า!_1.png";
+        n5_3A.addChoice("ผมจะรักษาชื่อเสียงและหัวใจคุณเท่าชีวิต", n5_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("ขอบคุณที่เชื่อใจผมนะ ลาเซล", n5_4A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("มันหนักนะเนี่ย แต่ผมจะพกไว้", n5_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n5_3B = new DialogueNode("Lazel",
+            "\"เอาล่ะ! เตรียมตัวให้พร้อม การเดินทางครั้งใหม่ของเราจะไม่น่าเบื่อแน่นอน เพราะมีข้าอยู่ด้วย!\"");
+        n5_3B.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\_เอาล่ะ! เตรียมตัวให้พร้อม การเดินทางครั้งใหม่ของเราจะไม่น่าเบื่อแน่นอน เพราะมีข้าอยู่ด้วย!_.png";
+        n5_3B.addChoice("ผมตื่นเต้นที่จะได้ไปกับคุณนะ", n5_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("หวังว่าคงไม่ต้องสู้เยอะนะ", n5_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0))
+             .addChoice("นำทางไปเลย ลูกพี่", n5_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(0));
+
+        DialogueNode n5_3C = new DialogueNode("Lazel",
+            "\"ถ้าเจ้าไม่พร้อม ก็แยกกันตรงนี้แหละ... ข้าไม่ชอบคนลังเล\"");
+        n5_3C.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\_ถ้าเจ้าไม่พร้อม ก็แยกกันตรงนี้แหละ... ข้าไม่ชอบคนลังเล_.png";
+        n5_3C.addChoice("เดี๋ยวสิ! ผมไปกับคุณด้วย", n5_4B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("โชคดีนะ ลาเซล", n5_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-5))
+             .addChoice("(เดินจากไป)", n5_4C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-10));
+
+        DialogueNode n5_2A = new DialogueNode("Lazel",
+            "(หน้าแดงจัดแต่พยายามทำเสียงดุ) \"พูดจาเลี่ยนๆ อีกแล้ว! ข้าไม่ได้อ่อนแอขนาดต้องให้เจ้ามาดูแลนะ! ...แต่ถ้าเจ้าตื๊อขนาดนี้... ข้าจะยอมให้ดูแลก็ได้\"");
+        n5_2A.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\(หน้าแดงจัดแต่พยายามทำเสียงดุ) _พูดจาเลี่ยนๆ อีกแล้ว! ข้าไม่ได้อ่อนแอขนาดต้องให้เจ้ามาดูแลนะ! ...แต่ถ้าเจ้าตื๊อขนาดนี้... ข้าจะยอมให้ดูแลก็ได้_.png";
+        n5_2A.addChoice("งั้นมัดจำด้วยการจับมือหน่อยสิ", n5_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("ยอมรับซักทีนะ ยัยซึนเดเระ", n5_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("สัญญาแล้วนะ ห้ามคืนคำล่ะ", n5_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        DialogueNode n5_2B = new DialogueNode("Lazel",
+            "\"หึ... ถ้าขาดข้าไป เจ้าคงตายตั้งแต่หน้าประตูเมืองแล้วมั้ง ก็ได้! ข้าจะยอมลดตัวลงมาปกป้องเจ้าต่อไปก็ได้\"");
+        n5_2B.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\_หึ... ถ้าขาดข้าไป เจ้าคงตายตั้งแต่หน้าประตูเมืองแล้วมั้ง ก็ได้! ข้าจะยอมลดตัวลงมาปกป้องเจ้าต่อไปก็ได้_.png";
+        n5_2B.addChoice("ขอบคุณครับ คุณองครักษ์ส่วนตัว", n5_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("ปากร้ายแต่ใจดีเหมือนเดิมนะ", n5_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(10))
+             .addChoice("ผมดูแลตัวเองได้น่า", n5_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-10));
+
+        DialogueNode n5_2C = new DialogueNode("Lazel",
+            "\"ข้าจะกลับไปฟื้นฟูตระกูล... หนทางมันอันตรายนะ เจ้าแน่ใจเหรอว่าจะตามข้าไป?\"");
+        n5_2C.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\_ข้าจะกลับไปฟื้นฟูตระกูล... หนทางมันอันตรายนะ เจ้าแน่ใจเหรอว่าจะตามข้าไป_.png";
+        n5_2C.addChoice("ที่ไหนมีคุณ ที่นั่นคือที่ของผม", n5_3A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("ผมชอบความท้าทายอยู่แล้ว", n5_3B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+             .addChoice("งั้นขอคิดดูก่อนนะ", n5_3C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(-10));
+
+        DialogueNode root = new DialogueNode("Lazel",
+            "(ยืนอยู่บนหน้าผามองดูเมืองที่สงบสุข) \"จบสิ้นเสียที... หน้าที่ของนักรบอย่างข้าสิ้นสุดลงแล้ว แต่หน้าที่ในฐานะ 'คู่หู' ของเจ้า... มันเพิ่งจะเริ่มต้นขึ้นใช่ไหม?\"");
+        root.imagePath = "image\\Scene\\Lazel\\Even\\Scene5\\(ยืนอยู่บนหน้าผามองดูเมืองที่สงบสุข) _จบสิ้นเสียที... หน้าที่ของนักรบอย่างข้าสิ้นสุดลงแล้ว แต่หน้าที่ในฐานะ _คู่หู_ ของเจ้า... มันเพิ่งจะเริ่มต้นขึ้นใช่ไหม__.png";
+        root.addChoice("มันคือหน้าที่ที่ต้องดูแลกันไปตลอดชีวิตครับ", n5_2A,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+            .addChoice("แน่นอน ผมยังต้องการคุณอยู่ข้างๆ เสมอ", n5_2B,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5))
+            .addChoice("คุณจะไปไหนต่อล่ะ? ผมตามไปด้วยนะ", n5_2C,
+                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+
+        return root;
+    }
+}

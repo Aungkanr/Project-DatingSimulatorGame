@@ -17,7 +17,6 @@ public class OptionPanel extends JPanel {
     // รูปพื้นหลัง
     private Image bgImage;
 
-    private Runnable backAction;
 
     // --- ธีมสีใหม่ (โทนม่วง/น้ำเงิน) ---
     Color boxOuterColor = new Color(30, 30, 60, 230); // สีน้ำเงินเข้มอมม่วง (โปร่งแสง)
@@ -244,10 +243,5 @@ public class OptionPanel extends JPanel {
             g2.setColor(Color.WHITE);
             g2.fillOval(thumbRect.x, thumbRect.y + (thumbRect.height/2) - 8, 16, 16);
         }
-    }
-    
-    public void setBackAction(Runnable action) {
-        this.backAction = action;
-        System.out.println("set BG");
     }
 }

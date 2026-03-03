@@ -6,11 +6,9 @@ import UXUI.Hovereffect;
 import UXUI.MainFrame;
 
 public class LeaderboardPanel extends JPanel {
-    private MainFrame mainFrame;
     private String leaderboardData = ""; // เก็บข้อมูลรอดึงมาวาด
 
     public LeaderboardPanel(MainFrame mainFrame, int screenWidth, int screenHeight) {
-        this.mainFrame = mainFrame;
         setLayout(null);
         setBounds(0, 0, screenWidth, screenHeight);
         setOpaque(false); // พื้นหลังโปร่งแสง

@@ -18,6 +18,7 @@ import UXUI.StatusBarMenu.RoundedPanel;
 import Utility.ConfirmPanel;
 import Utility.GameTime;
 import Utility.Notify;
+import Utility.ScreenFader;
 import Utility.StdAuto;
 import Utility.StatusBar;
 
@@ -40,6 +41,7 @@ public class ShopPanel extends JPanel {
     public static final Color BUY_BUTTON = new Color(90, 50, 30);
     public static final Color BACK_BUTTON = new Color(48, 25, 82);    
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    ScreenFader fader = new ScreenFader();
     DialoguePanel dialogueBox;
     PauseMenuPanel pauseMenu;
 
@@ -60,6 +62,7 @@ public class ShopPanel extends JPanel {
 
         shopNotify = new Notify(stdScreen.width);
         shopNotify.setBounds(0, 50, stdScreen.width, 50); 
+
         
         updateUI();
     }
@@ -70,6 +73,9 @@ public class ShopPanel extends JPanel {
         
         dialog = new ConfirmPanel(stdScreen.width, stdScreen.height , mainFrame);
         add(dialog);
+
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
 
         // ----------------Status Energy Money Day Time -----------------------------------
         RoundedPanel statusPanel = new RoundedPanel(30, GamePanel.themePink); 
@@ -175,10 +181,12 @@ public class ShopPanel extends JPanel {
         btnBack.setBounds(20, 20, 100, 30);
         
         btnBack.addActionListener(e -> {
-            if(mainFrame.getGamePanel() != null) {
-                mainFrame.getGamePanel().updateUI(); 
-            }
-            mainFrame.showGame();
+            fader.fadeInOut(250, 250, ()->{
+                if(mainFrame.getGamePanel() != null) {
+                    mainFrame.getGamePanel().updateUI(); 
+                }
+                mainFrame.showGame();
+            }, null);
         });
         
         Hovereffect.HoverEffectRounded(btnBack,20, 20, 100, 30, BACK_BUTTON);        

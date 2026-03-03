@@ -14,6 +14,7 @@ public class SchoolPanel extends JPanel {
     private GameTime realGameTime;
     private Notify realNotify;
     PauseMenuPanel pauseMenu;
+    ScreenFader fader = new ScreenFader();
 
     public SchoolPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -34,8 +35,11 @@ public class SchoolPanel extends JPanel {
 
     private void initComponents() {
 
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
+
         String currentBgPath = getSchoolBgPath(realGameTime.getTimeString());
-        CreateTemplateScene scene = new CreateTemplateScene(currentBgPath, null, null, e -> mainFrame.showGame() , "Back to Town", 
+        CreateTemplateScene scene = new CreateTemplateScene(currentBgPath, null, null, e -> {fader.fadeInOut(250, 250, ()->{mainFrame.showGame();}, null);} , "Back to Town", 
         new CreateTemplateScene.SceneOption("Talk to Lazel", e -> {
             if (realGameTime.getTimeSlot() < 2) {
                 mainFrame.createLazelPanel(); 

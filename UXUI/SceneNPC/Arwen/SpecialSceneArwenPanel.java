@@ -13,14 +13,12 @@ public class SpecialSceneArwenPanel extends JPanel {
 
     private MainFrame mainFrame;
     private StdAuto stdScreen;
-    private Arwen arwen;
     private JLabel lblBg;
 
     private final String bgPath = "image\\Scene\\School\\Angryscene.png";
 
     public SpecialSceneArwenPanel(MainFrame mainFrame, Arwen arwen, String sceneText, int sceneLevel) {
         this.mainFrame = mainFrame;
-        this.arwen = arwen;
         this.stdScreen = new StdAuto();
 
         setLayout(null);

@@ -16,6 +16,8 @@ public class PauseMenuPanel extends JPanel {
     private Color btnExitColor = new Color(200, 50, 50);    
     private Color btnLeaderboardColor = new Color(50, 150, 200); // สีฟ้าสว่างสำหรับตารางคะแนน
 
+    ScreenFader fader = new ScreenFader();
+
     public PauseMenuPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(null);
@@ -24,6 +26,8 @@ public class PauseMenuPanel extends JPanel {
         // [อัปเดต] เปลี่ยนเลข 2 เป็น 5 เพราะตอนนี้เรามี 5 ปุ่มแล้ว
         stdScreen.setBtnWHG(300, 60, 20, 5); 
         setBounds(0, 0, stdScreen.width, stdScreen.height);
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
 
         // ดักจับเมาส์ไม่ให้คลิกทะลุไปโดนปุ่มของเกมด้านหลัง
         addMouseListener(new MouseAdapter() {});
@@ -107,10 +111,12 @@ public class PauseMenuPanel extends JPanel {
         Hovereffect.HoverEffectRounded(btnExitMenu, centerX - (btnW / 2), startY + (btnH + gap) * 3, btnW, btnH, btnNormalColor);
         btnExitMenu.addActionListener(e -> {
             mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
-            if (mainFrame.getGameClient() != null) mainFrame.getGameClient().disconnect(); 
-            Coop.Network.GameServer.stopServer(); 
-            this.setVisible(false);
-            mainFrame.showMenu(); 
+            fader.fadeInOut(250, 250, ()->{
+                if (mainFrame.getGameClient() != null) mainFrame.getGameClient().disconnect(); 
+                Coop.Network.GameServer.stopServer(); 
+                this.setVisible(false);
+                mainFrame.showMenu(); 
+            }, null);
         });
         add(btnExitMenu);
 

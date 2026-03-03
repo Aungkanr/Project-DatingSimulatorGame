@@ -17,6 +17,7 @@ import UXUI.StatusBarMenu.RoundedPanel;
 import Utility.ConfirmPanel;
 import Utility.GameTime;
 import Utility.Notify;
+import Utility.ScreenFader;
 import Utility.StatusBar;
 import Utility.StdAuto;
 import Player.Player;
@@ -54,6 +55,7 @@ public class OfficePanel extends JPanel {
     public static final Color BACK_BUTTON = new Color(48, 25, 82);    
     public static final Color btn1 = new Color(55, 55, 55);
     private MainFrame mainFrame;
+    ScreenFader fader = new ScreenFader();
 
     
 
@@ -85,6 +87,9 @@ public class OfficePanel extends JPanel {
     // ----------------Status Energy Money Day Time -----------------------------------
         dialog = new ConfirmPanel(stdScreen.width, stdScreen.height , mainFrame);
         add(dialog);
+
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
 
         setBackground(new Color(12, 51, 204));
 
@@ -194,7 +199,7 @@ public class OfficePanel extends JPanel {
         btnBack = createRoundedButton("Back");
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnBack.setBounds(20, 20, 100, 30);
-        btnBack.addActionListener(e -> mainFrame.showGame());;
+        btnBack.addActionListener(e -> fader.fadeInOut(250, 250, ()->{mainFrame.showGame();}, null));;
         Hovereffect.HoverEffectRounded(btnBack,20, 20, 100, 30, BACK_BUTTON);        
         add(btnBack);   
 

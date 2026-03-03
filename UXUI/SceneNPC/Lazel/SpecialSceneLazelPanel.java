@@ -13,14 +13,12 @@ public class SpecialSceneLazelPanel extends JPanel {
 
     private MainFrame mainFrame;
     private StdAuto stdScreen;
-    private Lazel lazel;
     private JLabel lblBg;
 
     private final String bgPath = "image\\Scene\\School\\Angryscene.png";
 
     public SpecialSceneLazelPanel(MainFrame mainFrame, Lazel lazel, String sceneText, int sceneLevel) {
         this.mainFrame = mainFrame;
-        this.lazel     = lazel;
         this.stdScreen = new StdAuto();
 
         setLayout(null);

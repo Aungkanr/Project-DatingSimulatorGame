@@ -9,6 +9,7 @@ import UXUI.MainFrame;
 import UXUI.PauseMenuPanel;
 import Utility.GameTime;
 import Utility.Notify;
+import Utility.ScreenFader;
 import Utility.StdAuto;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ public class NeighBorPanel extends JPanel {
     private GameTime realGameTime ;
     private Notify realNotify ;
     PauseMenuPanel pauseMenu;
+    ScreenFader fader = new ScreenFader();
 
     public NeighBorPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -38,8 +40,11 @@ public class NeighBorPanel extends JPanel {
     }
 
     public void initComponents() {
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
+
         String currentBgPath = getNeighborBgPath(realGameTime.getTimeString());
-        CreateTemplateScene scene = new CreateTemplateScene(currentBgPath, null, null, e -> mainFrame.showGame() , "Back to Town", 
+        CreateTemplateScene scene = new CreateTemplateScene(currentBgPath, null, null, e -> {fader.fadeInOut(250, 250, ()->{mainFrame.showGame();}, null);} , "Back to Town", 
         new CreateTemplateScene.SceneOption("Talk to Arwen", e -> {
             if (realGameTime.getTimeSlot() == 0 || realGameTime.getTimeSlot() == 2 ) {
                 mainFrame.createArwenPanel(); 

@@ -13,14 +13,12 @@ public class SpecialSceneGaladrielPanel extends JPanel {
 
     private MainFrame mainFrame;
     private StdAuto stdScreen;
-    private Galadriel galadriel;
     private JLabel lblBg;
 
     private final String bgPath = "image\\Scene\\Galadriel\\ShyGaladriel.png";
 
     public SpecialSceneGaladrielPanel(MainFrame mainFrame, Galadriel galadriel, String sceneText, int sceneLevel) {
         this.mainFrame = mainFrame;
-        this.galadriel = galadriel;
         this.stdScreen = new StdAuto();
 
         setLayout(null);

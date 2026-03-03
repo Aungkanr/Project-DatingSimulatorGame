@@ -11,11 +11,12 @@ public class Player {
 
     // Save Scene
     private int officeStage = 0;
+    private String playerName = "Player";  // variable (name)
 
     // Constructor 
     public Player() {
         this.energy = 100; // เริ่มต้น 100
-        this.money = 100;  // เริ่มต้น 500 บาท
+        this.money = 1000;  // เริ่มต้น 500 บาท
         this.inventory = new Inventory() ; //create obj bag
 
         this.lazel = new Lazel();
@@ -23,6 +24,13 @@ public class Player {
         this.galadriel = new Galadriel();
     }   
     //------------------------ (Getters & Setter)------------------------
+    public String getPlayerName() { 
+        return playerName; 
+    }
+    public void setPlayerName(String name) { 
+        this.playerName = name; 
+    }
+
     public int getEnergy() {
         return energy;
     }

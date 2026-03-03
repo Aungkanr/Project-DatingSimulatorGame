@@ -1,15 +1,19 @@
 package UXUI.Scene;
 import UXUI.Hovereffect;
 import UXUI.MainFrame;
+import UXUI.PauseMenuPanel;
 import Utility.GameTime;
 import Utility.SleepEffect;
 import Player.Player;
 import Utility.StdAuto;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
 import java.awt.Color;
@@ -91,6 +95,33 @@ public class HomePanel extends JPanel {
                 }
             });
         add(btnSleep);
+
+        //---------------------------ESC Event---------------------------------------
+        PauseMenuPanel pauseMenu = new PauseMenuPanel(mainFrame);
+        pauseMenu.setVisible(false); // เริ่มมาให้ซ่อนไว้ก่อน
+        add(pauseMenu);
+        setComponentZOrder(pauseMenu, 0); // ดันให้อยู่หน้าสุดเสมอ จะได้บังทุกอย่างตอนกด ESC
+
+        // ระบบจับปุ่ม ESC (Key Bindings - เสถียรกว่า KeyListener)
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "smartEsc");
+        this.getActionMap().put("smartEsc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                // 🔥 1. เช็คก่อนว่า "หน้า Option ลอยทับอยู่หรือเปล่า?"
+                if (mainFrame.getOptionPanel() != null && mainFrame.getOptionPanel().isVisible()) {
+                    // ถ้าลอยอยู่ -> ให้กด ESC เพื่อ "ปิดหน้า Option" อย่างเดียว
+                    mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+                    mainFrame.getOptionPanel().setVisible(false); 
+                } 
+                // 🔥 2. ถ้า Option ไม่ได้เปิดอยู่ -> ค่อยสลับเปิด/ปิด หน้า Pause ตามปกติ
+                else {
+                    boolean isCurrentlyVisible = pauseMenu.isVisible();
+                    pauseMenu.setVisible(!isCurrentlyVisible);
+                }
+                
+            }
+        });
 
         
         //---------Background-----------------//

@@ -1,5 +1,7 @@
 package UXUI.SceneNPC.Lazel;
 
+import Relationship.Lazel;
+import Relationship.LazelNoon;
 import UXUI.MainFrame;
 import UXUI.SceneNPC.BaseNPCPanel; //Parent class 
 import UXUI.Scene.CreateTemplateScene;
@@ -33,7 +35,14 @@ public class LazelPanel extends BaseNPCPanel {
 
     @Override
     protected void triggerSpecialScene(String text, int sceneLevel) {
-        mainFrame.createSpecialSceneLazelPanel((Relationship.Lazel) targetNPC, text, sceneLevel);
+        String time = mainFrame.getGameTime().getTimeString();
+        if (time.equals("Morning")) {
+            mainFrame.createSpecialSceneLazelPanel(
+                (Lazel) targetNPC, text, sceneLevel);
+        } else {
+            LazelNoon noonVersion = new LazelNoon();
+            mainFrame.createSpecialSceneLazelPanel( noonVersion, text, sceneLevel);
+        }
         mainFrame.showSpecialSceneLazel();
     }
 

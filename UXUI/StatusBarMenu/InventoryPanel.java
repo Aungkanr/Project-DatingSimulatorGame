@@ -1,6 +1,7 @@
 package UXUI.StatusBarMenu;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Map;
 import javax.swing.*;
@@ -139,7 +140,14 @@ public class InventoryPanel extends JPanel {
         
         // ใช้ HoverEffect ธรรมดา หรือ Rounded ก็ได้
         Hovereffect.HoverEffectRounded(btnClose, (boxWidth - btnW) / 2, boxHeight - 70, btnW, btnH, btnRed);
-        
+                // ระบบจับปุ่ม ESC (Key Bindings - เสถียรกว่า KeyListener)
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "smartEsc");
+        this.getActionMap().put("smartEsc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closePanel();
+            }
+        });
         btnClose.addActionListener(e -> closePanel());
         bgBox.add(btnClose);
     }

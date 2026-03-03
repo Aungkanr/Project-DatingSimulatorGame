@@ -1,14 +1,13 @@
 package UXUI.SceneNPC.Arwen;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import UXUI.MainFrame;
-import UXUI.Hovereffect;
-import Utility.*;
 import Relationship.Arwen;
 import Relationship.DialogueNode;
+import UXUI.Hovereffect;
+import UXUI.MainFrame;
+import Utility.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class SpecialSceneArwenPanel extends JPanel {
 
@@ -27,7 +26,7 @@ public class SpecialSceneArwenPanel extends JPanel {
         setLayout(null);
         setBackground(Color.BLACK);
 
-        DialogueNode root = arwen.getDialogueTree(sceneLevel);
+        DialogueNode root = arwen.getDialogueTree(sceneLevel , mainFrame);
         showNode(root);
     }
 

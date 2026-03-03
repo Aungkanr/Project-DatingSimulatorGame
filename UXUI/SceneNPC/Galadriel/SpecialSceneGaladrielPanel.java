@@ -1,14 +1,13 @@
 package UXUI.SceneNPC.Galadriel;
 
-import javax.swing.*;
+import Relationship.DialogueNode;
+import Relationship.Galadriel;
+import UXUI.Hovereffect;
+import UXUI.MainFrame;
+import Utility.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-
-import UXUI.MainFrame;
-import UXUI.Hovereffect;
-import Utility.*;
-import Relationship.Galadriel;
-import Relationship.DialogueNode;
+import javax.swing.*;
 
 public class SpecialSceneGaladrielPanel extends JPanel {
 
@@ -17,7 +16,7 @@ public class SpecialSceneGaladrielPanel extends JPanel {
     private Galadriel galadriel;
     private JLabel lblBg;
 
-    private final String bgPath = "image\\Scene\\School\\Angryscene.png";
+    private final String bgPath = "image\\Scene\\Galadriel\\ShyGaladriel.png";
 
     public SpecialSceneGaladrielPanel(MainFrame mainFrame, Galadriel galadriel, String sceneText, int sceneLevel) {
         this.mainFrame = mainFrame;
@@ -27,7 +26,7 @@ public class SpecialSceneGaladrielPanel extends JPanel {
         setLayout(null);
         setBackground(Color.BLACK);
 
-        DialogueNode root = galadriel.getDialogueTree(sceneLevel);
+        DialogueNode root = galadriel.getDialogueTree(sceneLevel , mainFrame);
         showNode(root);
     }
 
@@ -39,7 +38,7 @@ public class SpecialSceneGaladrielPanel extends JPanel {
 
         // ถ้า node มี imagePath → ใช้รูปนั้น, ถ้าไม่มี → ใช้ default
         String currentBg = (node.imagePath != null) ? node.imagePath : bgPath;
-        setupBackground(currentBg);
+        setupBackground(currentBg);  
 
         // --- กล่อง Dialogue ด้านบน ---
         JPanel dialogueBox = createDialogueBox(node.speaker, node.text);
@@ -56,8 +55,13 @@ public class SpecialSceneGaladrielPanel extends JPanel {
 
             for (int i = 0; i < node.choices.size(); i++) {
                 final DialogueNode.Choice choice = node.choices.get(i);
-                JButton btn = createChoiceButton(choice.label, i, e -> showNode(choice.next));
-                add(btn);
+                JButton btn = createChoiceButton(choice.label, i, e -> {
+                if (choice.onSelect != null) {
+                    choice.onSelect.run();
+                }
+                showNode(choice.next);
+            });
+            add(btn);
             }
         }
 
@@ -73,7 +77,7 @@ public class SpecialSceneGaladrielPanel extends JPanel {
         int btnW = 200;
         int btnH = 50;
         int btnX = (stdScreen.width - btnW) / 2;
-        int btnY = stdScreen.height - 80;
+        int btnY = stdScreen.height - 80 - btnH;  
 
         JButton btnContinue = new JButton("Continue...");
         btnContinue.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -143,11 +147,12 @@ public class SpecialSceneGaladrielPanel extends JPanel {
     }
 
     // ==========================================
-    // Helper: Background
+    // Helper: Background  เหมือน Lazel ทุกอย่าง
     // ==========================================
     private void setupBackground(String path) {
         lblBg = new JLabel("");
         ImageIcon icon = AssetManager.getInstance().getImage(path);
+        System.out.println("[DEBUG] BG path: " + path + " | icon null?: " + (icon == null));
         new Utility.CheckImage().checkImage(icon, lblBg, stdScreen.width, stdScreen.height);
         lblBg.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblBg);

@@ -41,25 +41,33 @@ public class GaladrielPanel extends BaseNPCPanel {
         if (itemName.equals("Fairy Rose")) {
             targetNPC.addAffection(20); 
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
+<<<<<<< HEAD
                 "งื้อออ! Fairy Rose! ดอกไม้ของเหล่าภูติ! มันเปล่งประกายสวยมากเลย ท่านไปหามาได้ยังไงเนี่ย ข้ารักมันที่สุดเลย... รักท่านด้วย!", 
+=======
+                "อะ... ให้ข้าหรอ Fairy rose นี้สวยจัง", 
+>>>>>>> origin/CO-OP/Bell
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
         } else if (itemName.equals("Tulip") || itemName.equals("Poppy")) {
             targetNPC.addAffection(10); // แก้ไขจาก 1 เป็น 10 ตามเงื่อนไขของคุณ
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
+<<<<<<< HEAD
                 "ว้าว ทิวลิป! สีสดใสเหมือนพระอาทิตย์ยามเช้าเลยค่ะ ขอบคุณนะคะ! ข้าจะเอามันไปทัดหูไว้ มันต้องเข้ากับชุดข้าแน่ๆ เลย", 
+=======
+                "ดอกไม้นี้งดงามดีนะข้าจะเก็บมันไว้", 
+>>>>>>> origin/CO-OP/Bell
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
         } else {
             targetNPC.addAffection(5); 
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
                 "เอ๊ะ ให้ข้าเหรอคะ? ดีใจจังเลย! แค่เป็นของที่ท่านตั้งใจให้ ข้าก็ชอบหมดแหละค่ะ ขอบคุณนะคะ!", 
                 null, 

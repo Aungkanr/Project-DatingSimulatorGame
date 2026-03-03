@@ -17,6 +17,8 @@ public class OptionPanel extends JPanel {
     // รูปพื้นหลัง
     private Image bgImage;
 
+    private Runnable backAction;
+
     // --- ธีมสีใหม่ (โทนม่วง/น้ำเงิน) ---
     Color boxOuterColor = new Color(30, 30, 60, 230); // สีน้ำเงินเข้มอมม่วง (โปร่งแสง)
     Color boxInnerColor = new Color(20, 20, 40);      // สีน้ำเงินเข้มจัด (สำหรับกล่องใน)
@@ -126,7 +128,7 @@ public class OptionPanel extends JPanel {
         createSliderControl(innerPanel, "MUSIC", 120, false);
 
         // 4. ปุ่มกลับเมนูหลัก (แก้ไขให้เป็นปุ่มมนสีทึบ) --------------------------------------
-        JButton btnBack = new JButton("กลับเมนูหลัก") {
+        JButton btnBack = new JButton("BACK") {
             // Override การวาดเพื่อให้ปุ่มเป็นทรงมน
             @Override
             protected void paintComponent(Graphics g) {
@@ -155,14 +157,17 @@ public class OptionPanel extends JPanel {
         btnBack.setFocusPainted(false);
         btnBack.setBorderPainted(false);
         
-        int btnY = outerH - 65; 
+        int btnY = outerH - 65;
         
         // ** เรียกใช้ HoverEffectRounded **
         Hovereffect.HoverEffectRounded(btnBack, (outerW - 250)/2, btnY, 250, 50, btnBackBgColor);
         
         btnBack.addActionListener(e -> {
             parent.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
-            fader.fadeInOut(250, 250, ()-> {parent.showMenu();}, null);
+            fader.fadeInOut(250, 250, ()-> {
+                this.setVisible(false);
+                
+            }, null);
         });
         outerPanel.add(btnBack);
         // --------------------------------------------------------------------------
@@ -172,7 +177,6 @@ public class OptionPanel extends JPanel {
         setComponentZOrder(titlePill, 1);  
         setComponentZOrder(outerPanel, 2); 
     }
-
     private void createSliderControl(JPanel panel, String labelText, int yPos, boolean isSFX) {
         JLabel lbl = new JLabel(labelText);
         lbl.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -240,5 +244,10 @@ public class OptionPanel extends JPanel {
             g2.setColor(Color.WHITE);
             g2.fillOval(thumbRect.x, thumbRect.y + (thumbRect.height/2) - 8, 16, 16);
         }
+    }
+    
+    public void setBackAction(Runnable action) {
+        this.backAction = action;
+        System.out.println("set BG");
     }
 }

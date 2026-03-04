@@ -677,45 +677,84 @@ public class Arwen extends NPC {
     // ============================================================
     private DialogueNode buildLevel5Tree(MainFrame mainFrame) {
 
+        // 🟢 1. สร้างฉากจบและใส่ 'true' เพื่อให้มันรู้ว่าเป็นจุดสิ้นสุด
         DialogueNode endBad    = new DialogueNode("Arwen", "(ยืนมองตามหลัง เงียบ)", true);
         endBad.imagePath = "image\\Scene\\Arwen\\Scene5\\ENDBAD.png";
+
         DialogueNode endNormal = new DialogueNode("Arwen", "(ภาพตัดไปที่ทั้งคู่ช่วยกันปรุงยาแบบเพื่อน)\n\n— NORMAL ENDING: Friendship —", true);
         endNormal.imagePath = "image\\Scene\\Arwen\\Scene5\\_ขอบคุณที่รักษาสัญญาค่ะ..._ (ภาพตัดไปที่ทั้งคู่ช่วยกันปรุงยาแบบเพื่อน).png";
+
         DialogueNode endGood   = new DialogueNode("Arwen", "(ภาพตัดไปที่ทั้งคู่นั่งดูดาวด้วยกัน)\n\n— GOOD ENDING: Partner —", true);
         endGood.imagePath = "image\\Scene\\Arwen\\Scene5\\_ท่านนี่ตลกเสมอเลยนะ... แต่ข้าก็ชอบ_ (ภาพตัดไปที่ทั้งคู่นั่งดูดาวด้วยกัน).png";
+
         DialogueNode endBest   = new DialogueNode("Arwen", "ข้ารักท่านที่สุดเลยค่ะ (ภาพตัดไปที่ทั้งคู่สร้างบ้านหลังใหม่ด้วยกัน)\n\n— HAPPY ENDING: Marriage —", true);
         endBest.imagePath = "image\\Scene\\Arwen\\Scene5\\_ข้ารักท่านที่สุดเลยค่ะ แชมป์..._ (ภาพตัดไปที่ทั้งคู่สร้างบ้านหลังใหม่ด้วยกัน).png";
 
+        // 🟢 2. เพิ่มคำสั่งสลับเพลงเข้าไปในปุ่มช้อยส์สุดท้ายก่อนขึ้นฉากจบ
+        // 5.4A 
         DialogueNode n5_4A = new DialogueNode("Arwen",
             "(ซบลงที่อกคุณ) ข้าแอบทำน้ำหอมกลิ่น 'นิรันดร์' ไว้ให้ท่านด้วย... กลิ่นนี้จะติดตัวเราไปจนแก่เฒ่า ท่านจะอยู่ดมกลิ่นนี้กับข้าทุกวันไหม?");
         n5_4A.imagePath = "image\\Scene\\Arwen\\Scene5\\(ซบลงที่อกคุณ) _ข้าแอบทำน้ำหอมกลิ่น _นิรันดร์_ ไว้ให้ท่านด้วย... กลิ่นนี้จะติดตัวเราไปจนแก่เฒ่า ท่านจะอยู่ดมกลิ่นนี้กับข้าทุกวันไหม_.png";
-        n5_4A.addChoice("ทุกวัน ทุกนาที และตลอดไปครับ", endBest,
-                () -> mainFrame.getPlayer().getArwen().addAffection(5))
-             .addChoice("ถ้าผมไม่จมูกดับไปก่อนนะ (หัวเราะ)", endBest,
-                () -> mainFrame.getPlayer().getArwen().addAffection(5))
-             .addChoice("แน่นอนสิ ผมสัญญาแล้วนี่นา", endGood,
-                () -> mainFrame.getPlayer().getArwen().addAffection(3));
+        
+        n5_4A.addChoice("ทุกวัน ทุกนาที และตลอดไปครับ", endBest, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(5);
+                mainFrame.getSoundManager().stopMusic(); // หยุดเพลงเมือง
+                mainFrame.getSoundManager().playMusic("Music\\TrueEndingMusic.wav"); // เล่นเพลงฉากจบ True
+             })
+             .addChoice("ถ้าผมไม่จมูกดับไปก่อนนะ (หัวเราะ)", endBest, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(5);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\TrueEndingMusic.wav"); 
+             })
+             .addChoice("แน่นอนสิ ผมสัญญาแล้วนี่นา", endGood, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(3);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav"); // เล่นเพลงฉากจบ Good
+             });
 
+        // 5.4B 
         DialogueNode n5_4B = new DialogueNode("Arwen",
             "ข้าจะปลูกดอกไม้ให้เต็มสวนเลย... เพื่อต้อนรับทุกเช้าวันใหม่ของเรา ท่านอยากช่วยข้าเลือกเมล็ดพันธุ์ไหม?");
         n5_4B.imagePath = "image\\Scene\\Arwen\\Scene5\\_ข้าจะปลูกดอกไม้ให้เต็มสวนเลย... เพื่อต้อนรับทุกเช้าวันใหม่ของเรา ท่านอยากช่วยข้าเลือกเมล็ดพันธุ์ไหม_.png";
-        n5_4B.addChoice("ด้วยความยินดีครับ ที่รัก", endBest,
-                () -> mainFrame.getPlayer().getArwen().addAffection(5))
-             .addChoice("เอาไว้พรุ่งนี้นะ", endGood,
-                () -> mainFrame.getPlayer().getArwen().addAffection(3))
-             .addChoice("ตามใจคุณเลย", endNormal,
-                () -> mainFrame.getPlayer().getArwen().addAffection(0));
+        
+        n5_4B.addChoice("ด้วยความยินดีครับ ที่รัก", endBest, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(5);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\TrueEndingMusic.wav");
+             })
+             .addChoice("เอาไว้พรุ่งนี้นะ", endGood, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(3);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav");
+             })
+             .addChoice("ตามใจคุณเลย", endNormal, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(0);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav"); // เล่นเพลงฉากจบ Sad/Normal
+             });
 
+        // 5.4C 
         DialogueNode n5_4C = new DialogueNode("Arwen",
             "ขอให้โชคดีนะคะ... และจำไว้ว่า ที่นี่ต้อนรับท่านเสมอ ไม่ว่าเมื่อไหร่");
         n5_4C.imagePath = "image\\Scene\\Arwen\\Scene5\\_ขอให้โชคดีนะคะ... และจำไว้ว่า ที่นี่ต้อนรับท่านเสมอ ไม่ว่าเมื่อไหร่_.png";
-        n5_4C.addChoice("ลาก่อนนะ Arwen", endNormal,
-                () -> mainFrame.getPlayer().getArwen().addAffection(0))
-             .addChoice("ดูแลตัวเองด้วย", endNormal,
-                () -> mainFrame.getPlayer().getArwen().addAffection(0))
-             .addChoice("(พยักหน้าแล้วเดินจากไป)", endNormal,
-                () -> mainFrame.getPlayer().getArwen().addAffection(-15));
+        
+        n5_4C.addChoice("ลาก่อนนะ Arwen", endNormal, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(0);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             })
+             .addChoice("ดูแลตัวเองด้วย", endNormal, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(0);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             })
+             .addChoice("(พยักหน้าแล้วเดินจากไป)", endBad, () -> {
+                mainFrame.getPlayer().getArwen().addAffection(-15);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             });
 
+        // 5.3A
         DialogueNode n5_3A = new DialogueNode("Arwen",
             "(หยิบแหวนเถาวัลย์สวมให้คุณ) นี่ไม่ใช่แค่ของที่ระลึกแล้วนะ แต่มันคือพันธสัญญา... ว่าข้าจะเป็นของท่าน และท่านจะเป็นของข้าตลอดไป");
         n5_3A.imagePath = "image\\Scene\\Arwen\\Scene5\\(หยิบแหวนเถาวัลย์สวมให้คุณ) _นี่ไม่ใช่แค่ของที่ระลึกแล้วนะ แต่มันคือพันธสัญญา... ว่าข้าจะเป็นของท่าน และท่านจะเป็นของข้าตลอดไป_.png";
@@ -726,6 +765,7 @@ public class Arwen extends NPC {
              .addChoice("แหวนสวยจัง ขอบคุณนะ", n5_4B,
                 () -> mainFrame.getPlayer().getArwen().addAffection(3));
 
+        // 5.3B
         DialogueNode n5_3B = new DialogueNode("Arwen",
             "แค่ได้ยินว่าท่านจะอยู่... ข้าก็ดีใจมากแล้วค่ะ ข้าจะทำทุกวันให้ดีที่สุด เพื่อให้ท่านมีความสุขที่นี่");
         n5_3B.imagePath = "image\\Scene\\Arwen\\Scene5\\แค่ได้ยินว่าท่านจะอยู่... ข้าก็ดีใจมากแล้วค่ะ ข้าจะทำทุกวันให้ดีที่สุด เพื่อให้ท่านมีความสุขที่นี่_.png";
@@ -736,6 +776,7 @@ public class Arwen extends NPC {
              .addChoice("ขอบคุณครับ", n5_4C,
                 () -> mainFrame.getPlayer().getArwen().addAffection(0));
 
+        // 5.3C
         DialogueNode n5_3C = new DialogueNode("Arwen",
             "(ยิ้มเศร้าๆ) ข้าเข้าใจค่ะ... วิถีของนักเดินทางคงหยุดนิ่งไม่ได้ ข้าจะเตรียมเสบียงไว้ให้ท่านสำหรับการเดินทางนะคะ");
         n5_3C.imagePath = "image\\Scene\\Arwen\\Scene5\\(ยิ้มเศร้าๆ) _ข้าเข้าใจค่ะ... วิถีของนักเดินทางคงหยุดนิ่งไม่ได้ ข้าจะเตรียมเสบียงไว้ให้ท่านสำหรับการเดินทางนะคะ_.png";
@@ -746,6 +787,7 @@ public class Arwen extends NPC {
              .addChoice("ไม่ต้องลำบากหรอก", n5_4C,
                 () -> mainFrame.getPlayer().getArwen().addAffection(-15));
 
+        // 5.2A
         DialogueNode n5_2A = new DialogueNode("Arwen",
             "(หน้าแดงระเรื่อ) สวนของเรา... ฟังแล้วอบอุ่นหัวใจจังค่ะ ท่าน... พร้อมที่จะทิ้งการเดินทางที่แสนวุ่นวาย เพื่อมาอยู่ที่นี่กับข้าไหม?");
         n5_2A.imagePath = "image\\Scene\\Arwen\\Scene5\\(หน้าแดงระเรื่อ) _สวนของเรา... ฟังแล้วอบอุ่นหัวใจจังค่ะ ท่าน... พร้อมที่จะทิ้งการเดินทางที่แสนวุ่นวาย เพื่อมาอยู่ที่นี่กับข้าไหม_.png";
@@ -756,6 +798,7 @@ public class Arwen extends NPC {
              .addChoice("ขอผมลองใช้ชีวิตแบบนี้ไปสักพักนะ", n5_3B,
                 () -> mainFrame.getPlayer().getArwen().addAffection(3));
 
+        // 5.2B
         DialogueNode n5_2B = new DialogueNode("Arwen",
             "ขอบคุณค่ะ... ถ้าไม่มีท่าน ข้าคงทำไม่ได้แน่ๆ ท่านคะ... จากนี้ไปท่านมีแผนจะเดินทางไปที่ไหนต่อหรือเปล่า?");
         n5_2B.imagePath = "image\\Scene\\Arwen\\Scene5\\_ขอบคุณค่ะ... ถ้าไม่มีท่าน ข้าคงทำไม่ได้แน่ๆ ท่านคะ... จากนี้ไปท่านมีแผนจะเดินทางไปที่ไหนต่อหรือเปล่า_.png";
@@ -766,6 +809,7 @@ public class Arwen extends NPC {
              .addChoice("คงต้องออกเดินทางต่อเร็วๆ นี้", n5_3C,
                 () -> mainFrame.getPlayer().getArwen().addAffection(-15));
 
+        // 5.2C
         DialogueNode n5_2C = new DialogueNode("Arwen",
             "นั่นสินะคะ... ท่านคงเหนื่อยมามาก เชิญท่านพักตามสบายเถอะค่ะ ข้าเตรียมชาสมุนไพรไว้ให้แล้ว");
         n5_2C.imagePath = "image\\Scene\\Arwen\\Scene5\\นั่นสินะคะ... ท่านคงเหนื่อยมามาก เชิญท่านพักตามสบายเถอะค่ะ ข้าเตรียมชาสมุนไพรไว้ให้แล้ว_.png";
@@ -776,6 +820,7 @@ public class Arwen extends NPC {
              .addChoice("ผมขอดื่มแล้วรีบไปนะ", n5_3C,
                 () -> mainFrame.getPlayer().getArwen().addAffection(-15));
 
+        // ROOT — 5.1
         DialogueNode root = new DialogueNode("Arwen",
             "(ยืนอยู่กลางสวนยาที่บานสะพรั่ง) \"ในที่สุดสวนที่ข้าฝันถึงก็สำเร็จแล้ว ข้าไม่เคยคิดเลยว่าจะมีวันที่ได้ยืนอยู่ตรงนี้พร้อมกับท่าน...\"");
         root.imagePath = "image\\Scene\\Arwen\\Scene5\\(ยืนอยู่กลางสวนยาที่บานสะพรั่ง) _แชมป์คะ... ในที่สุดสวนที่ข้าฝันถึงก็สำเร็จแล้ว ข้าไม่เคยคิดเลยว่าจะมีวันที่ได้ยืนอยู่ตรงนี้พร้อมกับท่าน..._.png";

@@ -32,8 +32,8 @@ public class SpecialSceneGaladrielPanel extends JPanel {
     // Core: แสดง node ปัจจุบัน
     // ==========================================
     private void showNode(DialogueNode node) {
-        removeAll();
-
+        if (node == null) return;
+        removeAll(); 
         // ถ้า node มี imagePath → ใช้รูปนั้น, ถ้าไม่มี → ใช้ default
         String currentBg = (node.imagePath != null) ? node.imagePath : bgPath;
         setupBackground(currentBg);  
@@ -73,7 +73,7 @@ public class SpecialSceneGaladrielPanel extends JPanel {
     // ==========================================
     private void showContinueButton() {
         int btnW = 200;
-        int btnH = 50;
+        int btnH = 30;
         int btnX = (stdScreen.width - btnW) / 2;
         int btnY = stdScreen.height - 80 - btnH;  
 

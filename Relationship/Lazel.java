@@ -647,42 +647,84 @@ public class Lazel extends NPC {
     // ============================================================
     private DialogueNode buildLevel5Tree(MainFrame mainFrame) {
 
-        DialogueNode endBest = new DialogueNode("Lazel", "\"ไปกันเถอะ... ไปสร้างตำนานของเราด้วยกัน!\" (ภาพตัดไปที่ทั้งคู่ควบม้าออกเดินทางไปด้วยกันในฐานะคนรัก)\n\n— GRAND ENDING: Warriors Soulmate —", true);
+        DialogueNode endBest = new DialogueNode("Lazel", "\"ไปกันเถอะ... ไปสร้างตำนานของเราด้วยกัน!\" (ภาพตัดไปที่ทั้งคู่ควบม้าออกเดินทางไปด้วยกันในฐานะคนรัก)\n\n— GRAND ENDING: Warriors Soulmate —");
         endBest.imagePath = "image\\Scene\\Lazel\\Scene5\\_ไปกันเถอะ... ไปสร้างตำนานของเราด้วยกัน!_ (ภาพตัดไปที่ทั้งคู่ควบม้าออกเดินทางไปด้วยกันในฐานะคนรัก).png";
-        DialogueNode endGood = new DialogueNode("Lazel", "\"อย่าเดินช้าล่ะ คู่หู!\" (ภาพตัดไปที่ทั้งคู่เดินเคียงบ่าเคียงไหล่กัน)\n\n— GOOD ENDING: Best Partner —", true);
+        endBest.addChoice("จบการสนทนา", null, () -> {
+            mainFrame.finishSpecialScene(); 
+        });
+
+        DialogueNode endGood = new DialogueNode("Lazel", "\"อย่าเดินช้าล่ะ คู่หู!\" (ภาพตัดไปที่ทั้งคู่เดินเคียงบ่าเคียงไหล่กัน)\n\n— GOOD ENDING: Best Partner —");
         endGood.imagePath = "image\\Scene\\Lazel\\Scene5\\_อย่าเดินช้าล่ะ คู่หู!_ (ภาพตัดไปที่ทั้งคู่เดินเคียงบ่าเคียงไหล่กัน).png";
-        DialogueNode endNormal = new DialogueNode("Lazel", "(ขี่ม้าหายไปในแสงอาทิตย์อัสดง)\n\n— NORMAL ENDING: Warrior's Path —", true);
+        endGood.addChoice("จบการสนทนา", null, () -> {
+            mainFrame.finishSpecialScene(); 
+        });
+
+        DialogueNode endNormal = new DialogueNode("Lazel", "(ขี่ม้าหายไปในแสงอาทิตย์อัสดง)\n\n— NORMAL ENDING: Warrior's Path —");
         endNormal.imagePath = "image\\Scene\\Lazel\\Scene5\\(ขี่ม้าหายไปในแสงอาทิตย์อัสดง).png";
+        endNormal.addChoice("จบการสนทนา", null, () -> {
+            mainFrame.finishSpecialScene(); 
+        });
 
         DialogueNode n5_4A = new DialogueNode("Lazel",
             "(ขยับเข้ามากอดคุณแบบเขินๆ) \"ข้าไม่ถนัดพูดคำหวาน... แต่ข้าอยากให้เจ้ารู้ว่า... เจ้าคือคนเดียวที่ข้ายอมคุกเข่าให้... รักนะ เจ้ามนุษย์กวนประสาท\"");
         n5_4A.imagePath = "image\\Scene\\Lazel\\Scene5\\(ขยับเข้ามากอดคุณแบบเขินๆ) _ข้าไม่ถนัดพูดคำหวาน... แต่ข้าอยากให้เจ้ารู้ว่า... เจ้าคือคนเดียวที่ข้ายอมคุกเข่าให้... รักนะ เจ้ามนุษย์กวนประสาท_.png";
-        n5_4A.addChoice("รักคุณเหมือนกัน ยัยนักรบสุดที่รัก", endBest,
-                () -> mainFrame.getPlayer().getLazel().addAffection(10))
-             .addChoice("ในที่สุดก็พูดออกมาซะทีนะ", endBest,
-                () -> mainFrame.getPlayer().getLazel().addAffection(5))
-             .addChoice("(กอดตอบเธอให้แน่นกว่าเดิม)", endBest,
-                () -> mainFrame.getPlayer().getLazel().addAffection(5));
+        
+        n5_4A.addChoice("รักคุณเหมือนกัน ยัยนักรบสุดที่รัก", endBest, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(10);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\TrueEndingMusic.wav");
+             })
+             .addChoice("ในที่สุดก็พูดออกมาซะทีนะ", endBest, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(5);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\TrueEndingMusic.wav");
+             })
+             .addChoice("(กอดตอบเธอให้แน่นกว่าเดิม)", endBest, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(5);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\TrueEndingMusic.wav");
+             });
 
         DialogueNode n5_4B = new DialogueNode("Lazel",
             "\"มองอะไร! รีบๆ เดินสิ เดี๋ยวก็มืดค่ำกันพอดี... (แอบยิ้มมุมปาก)\"");
         n5_4B.imagePath = "image\\Scene\\Lazel\\Scene5\\_มองอะไร! รีบๆ เดินสิ เดี๋ยวก็มืดค่ำกันพอดี... (แอบยิ้มมุมปาก)_.png";
-        n5_4B.addChoice("(จับมือเธอเดินไปด้วยกัน)", endGood,
-                () -> mainFrame.getPlayer().getLazel().addAffection(5))
-             .addChoice("ครับๆ ไปเดี๋ยวนี้แหละ", endGood,
-                () -> mainFrame.getPlayer().getLazel().addAffection(5))
-             .addChoice("ดุจังเลยนะ", endNormal,
-                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+        
+        n5_4B.addChoice("(จับมือเธอเดินไปด้วยกัน)", endGood, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(5);
+
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav");
+             })
+             .addChoice("ครับๆ ไปเดี๋ยวนี้แหละ", endGood, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(5);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav");
+             })
+             .addChoice("ดุจังเลยนะ", endNormal, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(-15);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav");
+             });
 
         DialogueNode n5_4C = new DialogueNode("Lazel",
             "\"รักษาตัวด้วย... หวังว่าเราจะได้ประดาบกันอีกสักวัน\"");
         n5_4C.imagePath = "image\\Scene\\Lazel\\Scene5\\_รักษาตัวด้วย... หวังว่าเราจะได้ประดาบกันอีกสักวัน_.png";
-        n5_4C.addChoice("เช่นกันครับ", endNormal,
-                () -> mainFrame.getPlayer().getLazel().addAffection(0))
-             .addChoice("ลาก่อน", endNormal,
-                () -> mainFrame.getPlayer().getLazel().addAffection(0))
-             .addChoice("...", endNormal,
-                () -> mainFrame.getPlayer().getLazel().addAffection(-15));
+        
+        n5_4C.addChoice("เช่นกันครับ", endNormal, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(0);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             })
+             .addChoice("ลาก่อน", endNormal, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(0);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             })
+             .addChoice("...", endNormal, () -> {
+                mainFrame.getPlayer().getLazel().addAffection(-15);
+                mainFrame.getSoundManager().stopMusic(); 
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             });
 
         DialogueNode n5_3A = new DialogueNode("Lazel",
             "(หยิบมีดสั้นเล่มโปรดส่งให้คุณ) \"รับไป... นี่คือสัญลักษณ์แห่งความภักดีของข้า ข้ามอบชีวิตและหัวใจให้เจ้าดูแล... อย่าทำมันพังล่ะ เจ้าบ้า!\"");

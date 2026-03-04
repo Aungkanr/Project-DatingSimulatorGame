@@ -59,6 +59,8 @@ public class MainFrame extends JFrame {
     private SpecialSceneLazelPanel specialSceneLazelPanel; //x
     private SpecialSceneArwenPanel specialSceneArwenPanel; //x
     private GameClient gameClient;
+    private UXUI.Scene.EndCreditPanel endCreditPanel;
+    private boolean isEndCreditPlayed = false; // ตัวดักว่าเคยเล่นเครดิตไปหรือยัง?
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.uiScale", "1.0");
@@ -100,11 +102,14 @@ public class MainFrame extends JFrame {
         leaderboardPanel = new UXUI.StatusBarMenu.LeaderboardPanel(this, stdScreen.width, stdScreen.height);
         this.getLayeredPane().add(leaderboardPanel, JLayeredPane.POPUP_LAYER); 
 
+        
         contentPane = new JPanel();
         contentPane.setLayout(null);
-        // [สำคัญ] บังคับ contentPane ให้เต็มจอ
         contentPane.setBounds(0, 0, stdScreen.width, stdScreen.height);
         setContentPane(contentPane);
+
+        endCreditPanel = new UXUI.Scene.EndCreditPanel(this, stdScreen.width, stdScreen.height);
+        contentPane.add(endCreditPanel);
         
         // --- สร้าง Panel ลูกๆ โดยส่งขนาดที่ถูกต้องไป ---
         menuPanel = new MenuPanel(this); 
@@ -318,7 +323,13 @@ public class MainFrame extends JFrame {
     public Clip getClip() { return clip; }
     public void showMenu() { toggleVisibility(menuPanel); }
     public void showOption() { optionPanel.setVisible(true); }
-    public void showGame() { toggleVisibility(gamePanel); if(gamePanel!=null) gamePanel.updateUI(); }
+    public void showGame() { 
+        if (endCreditPanel != null && endCreditPanel.isVisible()) {
+            return; 
+        }
+        toggleVisibility(gamePanel); 
+        if(gamePanel!=null) gamePanel.updateUI(); 
+    }
     public void showSchool() { toggleVisibility(school); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showShop() { toggleVisibility(shop); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showHome() { toggleVisibility(home); if(gamePanel!=null) gamePanel.updateUI(); }
@@ -326,12 +337,25 @@ public class MainFrame extends JFrame {
     public void showNeighbor() { toggleVisibility(neighbor); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showLobby() { toggleVisibility(lobbyPanel); } 
     public void showCoopMenu() { toggleVisibility(coopMenuPanel); }
+    public void finishSpecialScene() {
+        if (!isEndCreditPlayed) {
+            isEndCreditPlayed = true; // บันทึกว่าเล่นแล้ว (ครั้งหน้าจะได้ไม่ขึ้นอีก)
+            toggleVisibility(endCreditPanel); // สลับหน้าไปฉายเครดิต
+            endCreditPanel.startCredits();
+        } else {
+            showGame(); // ถ้าเคยฉายเครดิตไปแล้ว ให้ตัดกลับหน้าเกมตามปกติ
+        }
+    }   
 
     // Helper function เพื่อปิด panel อื่นๆ อัตโนมัติ
     private void toggleVisibility(JPanel showPanel) {
+        if (endCreditPanel != null && endCreditPanel.isVisible() && showPanel != endCreditPanel) {
+            return; 
+        }
+
         if(menuPanel != null) menuPanel.setVisible(false);
         if(optionPanel != null) optionPanel.setVisible(false);
-        if(coopMenuPanel != null) coopMenuPanel.setVisible(false); // <--- เพิ่มใหม่
+        if(coopMenuPanel != null) coopMenuPanel.setVisible(false); 
         if(gamePanel != null) gamePanel.setVisible(false);
         if(school != null) school.setVisible(false);
         if(shop != null) shop.setVisible(false);
@@ -339,6 +363,8 @@ public class MainFrame extends JFrame {
         if(office != null) office.setVisible(false);
         if(neighbor != null) neighbor.setVisible(false);
         if(lobbyPanel != null) lobbyPanel.setVisible(false);
+        if(endCreditPanel != null) endCreditPanel.setVisible(false); 
+
         //Lazel
         if(lazelPanel != null) lazelPanel.setVisible(false); 
         if(specialSceneLazelPanel != null) specialSceneLazelPanel.setVisible(false);

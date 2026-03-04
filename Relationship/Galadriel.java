@@ -1,16 +1,15 @@
 package Relationship;
 
+import UXUI.MainFrame;
 import java.util.Random;
 
 public class Galadriel extends NPC {
-    public String imagePath; // null = ใช้รูปเดิม, ใส่ path = เปลี่ยนรูป
+    public String imagePath;
 
     public Galadriel() {
         super("Galadriel");
-        heartLevel = 0;  
-        affectionPoints = 90;  //ลองปรับตรงนี้ แยกของแต่ละคน 
     }
-    //แก้บท
+
     @Override
     protected String getRandomDialogue(int level) {
         String[] dialogues;
@@ -19,39 +18,39 @@ public class Galadriel extends NPC {
                 "อ...อย่าเดินเสียงดังนะคะ... เดี๋ยวน้องดอกไม้จะตกใจกลัว...",
                 "งื้อ... (สะดุ้ง) ท...ท่านนักเดินทาง? ต...ต้องการดอกไม้หรือคะ?",
                 "ข...ข้าเป็นแค่คนขายดอกไม้ธรรมดา... ไม่มีอะไรน่าสนใจหรอกค่ะ...",
-                "ท่าน... ท่านไม่ได้จะมาเหยียบย่ำสวนของข้าใช่ไหมคะ?" ,
-                "ถ้าท่านเหนื่อย... นั่งพักตรงเก้าอี้ไม้ได้นะคะ... ข้าไม่คิดเงิน..." ,
-                "ก...กลิ่นตัวท่าน... เหมือนกลิ่นเหล็กและเลือดเลย... (ถอยห่าง)" ,
-                "ทะ...ท่านมองเห็นภูติตัวน้อยๆ ตรงนั้นไหมคะ? ...อ้อ ท่านคงไม่เห็น..." ,
-                "ข้า... ข้าคุยไม่เก่งหรอกค่ะ... ท่านไปคุยกับคนอื่นเถอะ..." ,
-                "ยะ...ยินดีต้อนรับสู่ร้านดอกไม้เล็กๆ ของข้าค่ะ..." ,
-                "ดอกกุหลาบสีแดง... หมายถึงความรัก... (หน้าแดง) ข้าแค่บอกเฉยๆ นะ!" ,
+                "ท่าน... ท่านไม่ได้จะมาเหยียบย่ำสวนของข้าใช่ไหมคะ?",
+                "ถ้าท่านเหนื่อย... นั่งพักตรงเก้าอี้ไม้ได้นะคะ... ข้าไม่คิดเงิน...",
+                "ก...กลิ่นตัวท่าน... เหมือนกลิ่นเหล็กและเลือดเลย... (ถอยห่าง)",
+                "ทะ...ท่านมองเห็นภูติตัวน้อยๆ ตรงนั้นไหมคะ? ...อ้อ ท่านคงไม่เห็น...",
+                "ข้า... ข้าคุยไม่เก่งหรอกค่ะ... ท่านไปคุยกับคนอื่นเถอะ...",
+                "ยะ...ยินดีต้อนรับสู่ร้านดอกไม้เล็กๆ ของข้าค่ะ...",
+                "ดอกกุหลาบสีแดง... หมายถึงความรัก... (หน้าแดง) ข้าแค่บอกเฉยๆ นะ!",
             };
         } else if (level < 4) {
             dialogues = new String[]{
-                "อ๊ะ! ท่านมาแล้ว... วันนี้ดอกทานตะวันบานรับท่านด้วยล่ะค่ะ" ,
-                "ข้า... ข้าลองคุยกับต้นไม้เรื่องท่านดู... พวกเขาบอกว่าท่านเป็นคนดีนะ" ,
-                "ท่าน... อยากลองฟังเสียงกระซิบของสายลมกับข้าไหมคะ?" ,
-                "วันนี้ท่านดูสดใสจัง... เหมือนดอกเดซี่แรกแย้มเลย (ยิ้มเขินๆ)" ,
-                "ป่าแห่งนี้... ดูปลอดภัยขึ้นเมื่อมีท่านเดินเป็นเพื่อนข้าค่ะ" ,
-                "ข้าทำมงกุฎดอกไม้ไว้... ท...ท่านจะรังเกียจไหมถ้าข้าจะมอบให้?" ,
-                "เล่าเรื่องการผจญภัยให้ข้าฟังอีกได้ไหมคะ? ข้าชอบฟังท่านเล่า..." ,
-                "ข้า... ข้าเริ่มชินกับกลิ่นดาบของท่านแล้วล่ะ... มันดูอบอุ่นดีนะ" ,
-                "ถ้าท่านหายไปนานๆ... ดอกไม้คงเหี่ยวเฉาแน่ๆ... ข้าหมายถึงดอกไม้นะ! ไม่ใช่ข้า!" ,
-                "ท่านรู้ไหมคะ... ท่านเป็นมนุษย์คนแรกที่ข้าคุยด้วยได้นานขนาดนี้..." 
+                "อ๊ะ! ท่านมาแล้ว... วันนี้ดอกทานตะวันบานรับท่านด้วยล่ะค่ะ",
+                "ข้า... ข้าลองคุยกับต้นไม้เรื่องท่านดู... พวกเขาบอกว่าท่านเป็นคนดีนะ",
+                "ท่าน... อยากลองฟังเสียงกระซิบของสายลมกับข้าไหมคะ?",
+                "วันนี้ท่านดูสดใสจัง... เหมือนดอกเดซี่แรกแย้มเลย (ยิ้มเขินๆ)",
+                "ป่าแห่งนี้... ดูปลอดภัยขึ้นเมื่อมีท่านเดินเป็นเพื่อนข้าค่ะ",
+                "ข้าทำมงกุฎดอกไม้ไว้... ท...ท่านจะรังเกียจไหมถ้าข้าจะมอบให้?",
+                "เล่าเรื่องการผจญภัยให้ข้าฟังอีกได้ไหมคะ? ข้าชอบฟังท่านเล่า...",
+                "ข้า... ข้าเริ่มชินกับกลิ่นดาบของท่านแล้วล่ะ... มันดูอบอุ่นดีนะ",
+                "ถ้าท่านหายไปนานๆ... ดอกไม้คงเหี่ยวเฉาแน่ๆ... ข้าหมายถึงดอกไม้นะ! ไม่ใช่ข้า!",
+                "ท่านรู้ไหมคะ... ท่านเป็นมนุษย์คนแรกที่ข้าคุยด้วยได้นานขนาดนี้...",
             };
         } else {
             dialogues = new String[]{
-                "งื้อออ... (วิ่งมากอด) ท่านกลับมาแล้ว! ข้าคิดถึงท่านจนดอกไม้แทบลืมบานเลย!" ,
-                "ท่านคือราชาแห่งป่าของข้า... และข้าคือราชินีดอกไม้ของท่าน... ใช่ไหมคะ?" ,
-                "อย่าไปใกล้นางไม้ตนอื่นนะ! ...ข้าหวง! ข้าจะให้เถาว์วัลย์มัดท่านไว้เลย!" ,
-                "หัวใจของข้า... เต้นแรงกว่าปีกผีเสื้อเวลาอยู่ใกล้ท่านอีก..." ,
-                "ข้าอยากปลูกดอกไม้แห่งความรักไปตลอดเส้นทางที่ท่านเดิน... ท่านจะได้รู้ว่าข้ารักท่าน" ,
-                "ท่านสัญญาแล้วนะว่าจะไม่ทิ้งข้า... ถ้าผิดสัญญา ข้าจะสาปให้ท่านกลายเป็นกบ!" ,
-                "กอดข้าหน่อยสิคะ... ข้าอยากเติมพลังเวทมนตร์แห่งความสุข..." ,
-                "ท่าน... ท่านทำให้โลกสีเขียวของข้า กลายเป็นสีชมพูไปหมดแล้ว..." ,
-                "ไม่ว่าท่านจะไปที่ไหน... วิญญาณแห่งป่าและหัวใจของข้าจะติดตามท่านไปเสมอค่ะ" ,
-                "รักท่านที่สุดเลย... เจ้ามนุษย์บ้าของข้า!" 
+                "งื้อออ... (วิ่งมากอด) ท่านกลับมาแล้ว! ข้าคิดถึงท่านจนดอกไม้แทบลืมบานเลย!",
+                "ท่านคือราชาแห่งป่าของข้า... และข้าคือราชินีดอกไม้ของท่าน... ใช่ไหมคะ?",
+                "อย่าไปใกล้นางไม้ตนอื่นนะ! ...ข้าหวง! ข้าจะให้เถาว์วัลย์มัดท่านไว้เลย!",
+                "หัวใจของข้า... เต้นแรงกว่าปีกผีเสื้อเวลาอยู่ใกล้ท่านอีก...",
+                "ข้าอยากปลูกดอกไม้แห่งความรักไปตลอดเส้นทางที่ท่านเดิน... ท่านจะได้รู้ว่าข้ารักท่าน",
+                "ท่านสัญญาแล้วนะว่าจะไม่ทิ้งข้า... ถ้าผิดสัญญา ข้าจะสาปให้ท่านกลายเป็นกบ!",
+                "กอดข้าหน่อยสิคะ... ข้าอยากเติมพลังเวทมนตร์แห่งความสุข...",
+                "ท่าน... ท่านทำให้โลกสีเขียวของข้า กลายเป็นสีชมพูไปหมดแล้ว...",
+                "ไม่ว่าท่านจะไปที่ไหน... วิญญาณแห่งป่าและหัวใจของข้าจะติดตามท่านไปเสมอค่ะ",
+                "รักท่านที่สุดเลย... เจ้ามนุษย์บ้าของข้า!",
             };
         }
         return dialogues[new Random().nextInt(dialogues.length)];
@@ -59,127 +58,864 @@ public class Galadriel extends NPC {
 
     @Override
     protected String getSpecialScene(int level) {
-        // ใช้ getDialogueTree แทนแล้ว แต่เก็บไว้เผื่อ fallback
         return switch (level) {
-            case 1 -> "— พบกับ Lazel เป็นครั้งแรก —";
-            case 2 -> "— Lazel เริ่มไว้ใจเจ้า —";
-            case 3 -> "— Lazel ยอมรับเจ้าเป็นสหาย —";
-            case 4 -> "— Lazel เปิดใจให้เจ้า —";
-            case 5 -> "— Lazel สารภาพรัก —";
+            case 1 -> "— พบกับ Galadriel เป็นครั้งแรก —";
+            case 2 -> "— Galadriel เริ่มไว้ใจเจ้า —";
+            case 3 -> "— Galadriel ยอมรับเจ้าเป็นสหาย —";
+            case 4 -> "— Galadriel เปิดใจให้เจ้า —";
+            case 5 -> "— Galadriel สารภาพรัก —";
             default -> "...";
         };
     }
 
-    // ============================================================
-    // ระบบ Dialogue Tree
-    // ============================================================
-
-    /**
-     * คืนค่า root node ของ Dialogue Tree ตาม heartLevel
-     * SpecialScenePanel จะรับ node นี้แล้ว traverse ไปเรื่อยๆ
-     */
-    public DialogueNode getDialogueTree(int level) {
+    @Override
+    public DialogueNode getDialogueTree(int level, MainFrame mainFrame) {
         return switch (level) {
-            case 1 -> buildLevel1Tree();
-            // level อื่นๆ เพิ่มทีหลัง
-            default -> buildLevel1Tree();
+            case 1 -> buildLevel1Tree(mainFrame);
+            case 2 -> buildLevel2Tree(mainFrame);
+            case 3 -> buildLevel3Tree(mainFrame);
+            case 4 -> buildLevel4Tree(mainFrame);
+            case 5 -> buildLevel5Tree(mainFrame);
+            default -> buildLevel1Tree(mainFrame);
         };
     }
 
     // ============================================================
-    // Level 1 Dialogue Tree (ตามตาราง)
+    // Level 1 — Scene1
     // ============================================================
-    private DialogueNode buildLevel1Tree() {
+    private DialogueNode buildLevel1Tree(MainFrame mainFrame) {
 
-    // === END NODES ===
-    DialogueNode endBad = new DialogueNode("Galadriel", "(หันหน้าหนี ไม่สนใจ)", true);
-    DialogueNode endNormal = new DialogueNode("Galadriel", "(ยิ้มเบาๆ แล้วก้มหน้าดูแลต้นไม้ต่อ)", true);
-    DialogueNode endGood = new DialogueNode("Galadriel", "(โบกมือลาพร้อมรอยยิ้มอ่อนๆ) \"ขอบคุณที่แวะมานะคะ...\"", true);
-    DialogueNode endBest = new DialogueNode("Galadriel", "(ตบมือดีใจ หน้าสว่างมาก) \"ยินดีต้อนรับสู่ครอบครัวต้นไม้นะคะ!!\"", true);
+        // End Nodes — Scene1
+        DialogueNode endBad = new DialogueNode("Galadriel",
+            "(หันหน้าหนี ไม่สนใจ)", true);
+        endBad.imagePath = "image\\Scene\\Galadriel\\Scene1\\หันหน้าหนี ไม่สนใจ.png";
 
-    // === LEVEL 5 ===
-    DialogueNode n1_5A = new DialogueNode("Galadriel",
-        "(ยิ้มกว้างจนแก้มปริ) \"เย้! ...เราเป็นพวกเดียวกันแล้วสินะคะ! สัญญาได้ไหมว่าจะแวะมาฟังเสียงพวกเขากับข้าบ่อยๆ?\"");
-    n1_5A.addChoice("สัญญาครับ ผมจะมาหาทุกวันเลย", endBest)
-         .addChoice("ถ้าว่างจะมานะ", endGood)
-         .addChoice("ขอดอกไม้นั่นฟรีได้ไหม?", endNormal);
+        DialogueNode endNormal = new DialogueNode("Galadriel",
+            "(ยิ้มเบาๆ แล้วก้มหน้าดูแลต้นไม้ต่อ)", true);
+        endNormal.imagePath = "image\\Scene\\Galadriel\\Scene1\\ก้มหน้าดูแลต้นไม้ต่อ.png";
 
-    DialogueNode n1_5B = new DialogueNode("Galadriel",
-        "(รีบชักมือกลับหน้าแดง) \"งื้อ... วันนี้พอก่อนดีกว่าค่ะ... ข้าเริ่มเวียนหัวแล้ว ท่าน... กลับดีๆ นะคะ\"");
-    n1_5B.addChoice("พักผ่อนนะ ไว้เจอกันครับ", endGood)
-         .addChoice("ครับ บาย", endNormal)
-         .addChoice("เสียเวลาชะมัด", endBad);
+        DialogueNode endGood = new DialogueNode("Galadriel",
+            "(โบกมือลาพร้อมรอยยิ้มอ่อนๆ) \"ขอบคุณที่แวะมานะคะ...\"", true);
+        endGood.imagePath = "image\\Scene\\Galadriel\\Scene1\\โบกมือลาพร้อมรอยยิ้มอ่อนๆ ขอบคุณที่แวะมานะคะ.png";
 
-    DialogueNode n1_5C = new DialogueNode("Galadriel",
-        "\"ค่ะ... เชิญท่านตามสบายเถอะค่ะ\" (หันไปคุยกับดอกไม้ไม่สนใจคุณ)");
-    n1_5C.addChoice("ไปละ", endNormal)
-         .addChoice("คุยคนเดียวอีกละ", endBad)
-         .addChoice("(เดินจากไป)", endNormal);
+        DialogueNode endBest = new DialogueNode("Galadriel",
+            "(ตบมือดีใจ หน้าสว่างมาก) \"ยินดีต้อนรับสู่ครอบครัวต้นไม้นะคะ!!\"", true);
+        endBest.imagePath = "image\\Scene\\Galadriel\\Scene1\\ตบมือดีใจ หน้าสว่างมาก ยินดีต้อนรับสู่ครอบครัวต้นไม้นะคะ.png";
 
-    // === LEVEL 4 ===
-    DialogueNode n1_4A = new DialogueNode("Galadriel",
-        "(เธอยื่นมือกุมมือคุณไปแตะที่ใบไม้เบาๆ) \"หลับตานะคะ... หายใจเข้าลึกๆ... ท่านได้ยินเสียงหัวใจของมันไหม?\"");
-    n1_4A.addChoice("ได้ยินแล้ว... เสียงเหมือนดนตรีเบาๆ เลย", n1_5A)
-         .addChoice("ไม่ได้ยินอะไรเลย... แต่ว่า มือท่านนุ่มจังนะ", n1_5A)
-         .addChoice("เงียบกริบเลยครับ", n1_5B);
+        // 1.5A
+        DialogueNode n1_5A = new DialogueNode("Galadriel",
+            "(ยิ้มกว้างจนแก้มปริ) \"เย้! ...เราเป็นพวกเดียวกันแล้วสินะคะ! สัญญาได้ไหมว่าจะแวะมาฟังเสียงพวกเขากับข้าบ่อยๆ?\"");
+        n1_5A.imagePath = "image\\Scene\\Galadriel\\Scene1\\(ยิ้มกว้างจนแก้มปริ) เย้! ...เราเป็นพวกเดียวกันแล้วสินะคะ! สัญญาได้ไหมว่าจะแวะมาฟังเสียงพวกเขากับข้าบ่อยๆ (2).png";
+        n1_5A.addChoice("สัญญาครับ ผมจะมาหาทุกวันเลย", endBest,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ถ้าว่างจะมานะ", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ขอดอกไม้นั่นฟรีได้ไหม?", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
 
-    DialogueNode n1_4B = new DialogueNode("Galadriel",
-        "\"ว้า... เสียดายจัง... สงสัยท่านต้องฝึกสมาธิเพิ่มอีกหน่อย... แต่ไม่เป็นไรค่ะ ข้าจะแปลให้ท่านฟังเอง\"");
-    n1_4B.addChoice("รบกวนด้วยนะครับ ล่ามคนสวย", n1_5A)
-         .addChoice("ขอบคุณครับ วันหลังจะมาฟังใหม่", n1_5B)
-         .addChoice("พอเถอะครับ ผมไม่อิน", n1_5C);
+        // 1.5B
+        DialogueNode n1_5B = new DialogueNode("Galadriel",
+            "(รีบชักมือกลับหน้าแดง) \"งื้อ... วันนี้พอก่อนดีกว่าค่ะ... ข้าเริ่มเวียนหัวแล้ว ท่าน... กลับดีๆ นะคะ\"");
+        n1_5B.imagePath = "image\\Scene\\Galadriel\\Scene1\\(รีบชักมือกลับหน้าแดง) งื้อ... วันนี้พอก่อนดีกว่าค่ะ... ข้าเริ่มเวียนหัวแล้ว ท่าน... กลับดีๆ นะคะ (2).png";
+        n1_5B.addChoice("พักผ่อนนะ ไว้เจอกันครับ", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ครับ บาย", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("เสียเวลาชะมัด", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15));
 
-    DialogueNode n1_4C = new DialogueNode("Galadriel",
-        "\"ท่านนี่... เข้าใจยากจังเลยนะคะ... (ทำหน้ามุ่ย)\"");
-    n1_4C.addChoice("อย่าโกรธสิครับ ผมแค่ล้อเล่น", n1_5B)
-         .addChoice("ผมเป็นคนแบบนี้แหละ", n1_5C)
-         .addChoice("ท่านนั่นแหละที่เข้าใจยาก", endBad);
+        // 1.5C
+        DialogueNode n1_5C = new DialogueNode("Galadriel",
+            "\"ค่ะ... เชิญท่านตามสบายเถอะค่ะ\" (หันไปคุยกับดอกไม้ไม่สนใจคุณ)");
+        n1_5C.imagePath = "image\\Scene\\Galadriel\\Scene1\\ค่ะ... เชิญท่านตามสบายเถอะค่ะ (หันไปคุยกับดอกไม้ไม่สนใจคุณ) (2).png";
+        n1_5C.addChoice("ไปละ", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("คุยคนเดียวอีกละ", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)) 
+             .addChoice("(เดินจากไป)", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
 
-    // === LEVEL 3 ===
-    DialogueNode n1_3A = new DialogueNode("Galadriel",
-        "(เงยหน้ามองตาแป๋ว) \"ท่าน... ท่านไม่รังเกียจคนแปลกๆ แบบข้าเหรอคะ? ...งั้น... ท่านอยากลองฟังเสียงพวกเขาดูไหม?\"");
-    n1_3A.addChoice("อยากสิครับ ต้องทำยังไงบ้าง?", n1_4A)
-         .addChoice("ไม่ล่ะครับ ผมหูไม่ดี", n1_4B)
-         .addChoice("ท่านได้ยินคนเดียวรึเปล่า?", n1_3A); // loop ไปถามต่อ -> redirect ไป 3B
+        // 1.4A
+        DialogueNode n1_4A = new DialogueNode("Galadriel",
+            "(เธอยื่นมือกุมมือคุณไปแตะที่ใบไม้เบาๆ) \"หลับตานะคะ... หายใจเข้าลึกๆ... ท่านได้ยินเสียงหัวใจของมันไหม?\"");
+        n1_4A.imagePath = "image\\Scene\\Galadriel\\Scene1\\(เธอยื่นมือกุมมือคุณไปแตะที่ใบไม้เบาๆ) หลับตานะคะ... หายใจเข้าลึกๆ... ท่านได้ยินเสียงหัวใจของมันไหม.png";
+        n1_4A.addChoice("ได้ยินแล้ว... เสียงเหมือนดนตรีเบาๆ เลย", n1_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ไม่ได้ยินอะไรเลย... แต่ว่า มือท่านนุ่มจังนะ", n1_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("เงียบกริบเลยครับ", n1_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
 
-    DialogueNode n1_3B = new DialogueNode("Galadriel",
-        "\"เขาบอกว่า... หิวน้ำค่ะ แล้วก็... บอกว่าท่านดูเป็นคนใจดีนะ... (แอบมอง)\"");
-    n1_3B.addChoice("ต้นไม้มองแม่นนะเนี่ย", n1_4A)
-         .addChoice("เหรอครับ แปลกดีนะ", n1_4B)
-         .addChoice("ต้นไม้ขี้โม้แฮะ", n1_4C);
+        // 1.4B
+        DialogueNode n1_4B = new DialogueNode("Galadriel",
+            "\"ว้า... เสียดายจัง... สงสัยท่านต้องฝึกสมาธิเพิ่มอีกหน่อย... แต่ไม่เป็นไรค่ะ ข้าจะแปลให้ท่านฟังเอง\"");
+        n1_4B.imagePath = "image\\Scene\\Galadriel\\Scene1\\ว้า... เสียดายจัง... สงสัยท่านต้องฝึกสมาธิเพิ่มอีกหน่อย... แต่ไม่เป็นไรค่ะ ข้าจะแปลให้ท่านฟังเอง.png";
+        n1_4B.addChoice("รบกวนด้วยนะครับ ล่ามคนสวย", n1_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ขอบคุณครับ วันหลังจะมาฟังใหม่", n1_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))  
+             .addChoice("พอเถอะครับ ผมไม่อิน", n1_5C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
 
-    DialogueNode n1_3C = new DialogueNode("Galadriel",
-        "(ปาดน้ำตา) \"ฮึก... เห็นแก่ที่ท่านขอโทษ... ข้าจะยกโทษให้ครั้งนึงก็ได้ค่ะ... แต่ท่านต้องสัญญานะว่าจะไม่ล้อข้าอีก\"");
-    n1_3C.addChoice("สัญญาด้วยเกียรติลูกเสือครับ", n1_4B)
-         .addChoice("ครับๆ สัญญา", n1_4C)
-         .addChoice("ไม่รับปากนะ", endBad);
+        // 1.4C
+        DialogueNode n1_4C = new DialogueNode("Galadriel",
+            "\"ท่านนี่... เข้าใจยากจังเลยนะคะ... (ทำหน้ามุ่ย)\"");
+        n1_4C.imagePath = "image\\Scene\\Galadriel\\Scene1\\ท่านนี่... เข้าใจยากจังเลยนะคะ... (ทำหน้ามุ่ย).png";
+        n1_4C.addChoice("อย่าโกรธสิครับ ผมแค่ล้อเล่น", n1_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("ผมเป็นคนแบบนี้แหละ", n1_5C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("ท่านนั่นแหละที่เข้าใจยาก", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
 
-    // === LEVEL 2 ===
-    DialogueNode n1_2A = new DialogueNode("Galadriel",
-        "(หน้าแดงก่ำ ก้มหน้างุด) \"งื้อ... ท่านต้องหาว่าข้าบ้าแน่ๆ... ข้าแค่... ต้นไม้มักจะขี้เหงาน่ะค่ะ ข้าเลยต้องชวนคุย...\"");
-    n1_2A.addChoice("ไม่บ้าหรอกครับ ผมว่าน่ารักดีออก", n1_3A)
-         .addChoice("แล้วต้นกุหลาบมันตอบว่าไงบ้างล่ะ?", n1_3B)
-         .addChoice("แล้วต้นไม้คุยตอบไหมครับ?", n1_3B);
+        // 1.3B
+        DialogueNode n1_3B = new DialogueNode("Galadriel",
+            "\"เขาบอกว่า... หิวน้ำค่ะ แล้วก็... บอกว่าท่านดูเป็นคนใจดีนะ... (แอบมอง)\"");
+        n1_3B.imagePath = "image\\Scene\\Galadriel\\Scene1\\เขาบอกว่า... หิวน้ำค่ะ แล้วก็... บอกว่าท่านดูเป็นคนใจดีนะ... (แอบมอง).png";
+        n1_3B.addChoice("ต้นไม้มองแม่นนะเนี่ย", n1_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("เหรอครับ แปลกดีนะ", n1_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))  
+             .addChoice("ต้นไม้ขี้โม้แฮะ", n1_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
 
-    DialogueNode n1_2B = new DialogueNode("Galadriel",
-        "(ถอนหายใจโล่งอก) \"ฟู่ว์... โชคดีจัง... คือข้า... ข้าแค่ซ้อมบทละครน่ะค่ะ! ใช่ๆ ซ้อมละคร!\"");
-    n1_2B.addChoice("อ๋อ... แสดงเก่งนะเนี่ย นึกว่าคุยกับต้นไม้จริงๆ", n1_3A)
-         .addChoice("โกหกไม่เก่งเลยนะแม่สาวดอกไม้ บอกความจริงมาเถอะ", n1_2A)
-         .addChoice("ละครอะไร บทแปลกดีนะ", n1_3C);
+        // 1.3A
+        DialogueNode n1_3A = new DialogueNode("Galadriel",
+            "(เงยหน้ามองตาแป๋ว) \"ท่าน... ท่านไม่รังเกียจคนแปลกๆ แบบข้าเหรอคะ? ...งั้น... ท่านอยากลองฟังเสียงพวกเขาดูไหม?\"");
+        n1_3A.imagePath = "image\\Scene\\Galadriel\\Scene1\\(เงยหน้ามองตาแป๋ว) ท่าน... ท่านไม่รังเกียจคนแปลกๆ แบบข้าเหรอคะ ...งั้น... ท่านอยากลองฟังเสียงพวกเขาดูไหม.png";
+        n1_3A.addChoice("อยากสิครับ ต้องทำยังไงบ้าง?", n1_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ไม่ล่ะครับ ผมหูไม่ดี", n1_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))  
+             .addChoice("ท่านได้ยินคนเดียวรึเปล่า?", n1_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
 
-    DialogueNode n1_2C = new DialogueNode("Galadriel",
-        "(น้ำตาคลอเบ้า) \"ข้าไม่ได้เพี้ยนนะ! ...ท่านออกไปเลยนะ! ร้านข้าไม่ต้อนรับคนใจร้าย!\"");
-    n1_2C.addChoice("ขอโทษครับ! ผมปากเสียเอง ยกโทษให้ผมนะ", n1_3C)
-         .addChoice("ไปก็ได้ ร้านก็แคบ", endBad)
-         .addChoice("ก็มันจริงนี่นา", endBad);
+        // 1.3C
+        DialogueNode n1_3C = new DialogueNode("Galadriel",
+            "(ปาดน้ำตา) \"ฮึก... เห็นแก่ที่ท่านขอโทษ... ข้าจะยกโทษให้ครั้งนึงก็ได้ค่ะ... แต่ท่านต้องสัญญานะว่าจะไม่ล้อข้าอีก\"");
+        n1_3C.imagePath = "image\\Scene\\Galadriel\\Scene1\\((ปาดน้ำตา) ฮึก... เห็นแก่ที่ท่านขอโทษ... ข้าจะยกโทษให้ครั้งนึงก็ได้ค่ะ... แต่ท่านต้องสัญญานะว่าจะไม่ล้อข้าอีก.png";
+        n1_3C.addChoice("สัญญาด้วยเกียรติลูกเสือครับ", n1_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ครับๆ สัญญา", n1_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0)) 
+             .addChoice("ไม่รับปากนะ", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-20));
 
-    // === ROOT (1.1) ===
-    DialogueNode root = new DialogueNode("Galadriel",
-        "(สะดุ้งโหยงเมื่อเห็นคุณเดินเข้ามาในร้าน) \"งื้อ! ...ท...ท่าน! ท...ท่านได้ยินอะไรไหมคะ? ข้า... ข้าไม่ได้คุยกับต้นกุหลาบนะ! จ...จริงๆ นะ!\"");
-    root.addChoice("ผมได้ยินเต็มสองหูเลยว่าคุยกับต้นไม้", n1_2A)
-        .addChoice("เปล่านี่ครับ ผมเพิ่งเดินมาถึง ไม่ได้ยินอะไรเลย", n1_2B)
-        .addChoice("คุยกับต้นไม้? เพี้ยนรึเปล่าเนี่ย?", n1_2C);
+        // 1.2A
+        DialogueNode n1_2A = new DialogueNode("Galadriel",
+            "(หน้าแดงก่ำ ก้มหน้างุด) \"งื้อ... ท่านต้องหาว่าข้าบ้าแน่ๆ... ข้าแค่... ต้นไม้มักจะขี้เหงาน่ะค่ะ ข้าเลยต้องชวนคุย...\"");
+        n1_2A.imagePath = "image\\Scene\\Galadriel\\Scene1\\(หน้าแดงก่ำ ก้มหน้างุด) งื้อ... ท่านต้องหาว่าข้าบ้าแน่ๆ... ข้าแค่... ต้นไม้มักจะขี้เหงาน่ะค่ะ ข้าเลยต้องชวนคุย....png";
+        n1_2A.addChoice("ไม่บ้าหรอกครับ ผมว่าน่ารักดีออก", n1_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("แล้วต้นกุหลาบมันตอบว่าไงบ้างล่ะ?", n1_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("แล้วต้นไม้คุยตอบไหมครับ?", n1_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
 
-    return root;
-}
+        // 1.2B
+        DialogueNode n1_2B = new DialogueNode("Galadriel",
+            "(ถอนหายใจโล่งอก) \"ฟู่ว์... โชคดีจัง... คือข้า... ข้าแค่ซ้อมบทละครน่ะค่ะ! ใช่ๆ ซ้อมละคร!\"");
+        n1_2B.imagePath = "image\\Scene\\Galadriel\\Scene1\\(ถอนหายใจโล่งอก) ฟู่ว์... โชคดีจัง... คือข้า... ข้าแค่ซ้อมบทละครน่ะค่ะ! ใช่ๆ ซ้อมละคร!.png";
+        n1_2B.addChoice("อ๋อ... แสดงเก่งนะเนี่ย นึกว่าคุยกับต้นไม้จริงๆ", n1_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("โกหกไม่เก่งเลยนะแม่สาวดอกไม้ บอกความจริงมาเถอะ", n1_2A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ละครอะไร บทแปลกดีนะ", n1_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 1.2C
+        DialogueNode n1_2C = new DialogueNode("Galadriel",
+            "(น้ำตาคลอเบ้า) \"ข้าไม่ได้เพี้ยนนะ! ...ท่านออกไปเลยนะ! ร้านข้าไม่ต้อนรับคนใจร้าย!\"");
+        n1_2C.imagePath = "image\\Scene\\Galadriel\\Scene1\\(น้ำตาคลอเบ้า) ข้าไม่ได้เพี้ยนนะ! ...ท่านออกไปเลยนะ! ร้านข้าไม่ต้อนรับคนใจร้าย!.png";
+        n1_2C.addChoice("ขอโทษครับ! ผมปากเสียเอง ยกโทษให้ผมนะ", n1_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ไปก็ได้ ร้านก็แคบ", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-20)) 
+             .addChoice("ก็มันจริงนี่นา", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // ROOT — 1.1
+        DialogueNode root = new DialogueNode("Galadriel",
+            "(สะดุ้งโหยงเมื่อเห็นคุณเดินเข้ามาในร้าน) \"งื้อ! ...ท...ท่าน! ท...ท่านได้ยินอะไรไหมคะ? ข้า... ข้าไม่ได้คุยกับต้นกุหลาบนะ! จ...จริงๆ นะ!\"");
+        root.imagePath = "image\\Scene\\Galadriel\\Scene1\\root.png";
+        root.addChoice("ผมได้ยินเต็มสองหูเลยว่าคุยกับต้นไม้", n1_2A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))  
+            .addChoice("เปล่านี่ครับ ผมเพิ่งเดินมาถึง ไม่ได้ยินอะไรเลย", n1_2B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+            .addChoice("คุยกับต้นไม้? เพี้ยนรึเปล่าเนี่ย?", n1_2C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+        return root;
+    }
+
+    // ============================================================
+    // Level 2 — Scene2
+    // ============================================================
+    private DialogueNode buildLevel2Tree(MainFrame mainFrame) {
+
+        // End Nodes — Scene2
+        DialogueNode endBad = new DialogueNode("Galadriel",
+            "(หันหน้าหนี ไม่สนใจ)", true);
+        endBad.imagePath = "image\\Scene\\Galadriel\\Scene1\\หันหน้าหนี ไม่สนใจ.png";
+
+        DialogueNode endNormal = new DialogueNode("Galadriel",
+            "(เดินกลับไปดูแลต้นไม้อย่างเงียบๆ)", true);
+        endNormal.imagePath = "image\\Scene\\Galadriel\\Scene2\\(เดินกลับไปดูแลต้นไม้อย่างเงียบๆ).png";
+
+        DialogueNode endGood = new DialogueNode("Galadriel",
+            "(โบกมือลาด้วยรอยยิ้มอิ่มเอม) \"ขอบคุณที่ช่วยนะคะ...\"", true);
+        endGood.imagePath = "image\\Scene\\Galadriel\\Scene2\\โบกมือ.png";
+
+        DialogueNode endBest = new DialogueNode("Galadriel",
+            "(ยิ้มทั้งน้ำตา) \"ท่านคือฮีโร่ของข้าและเหล่าดอกไม้จริงๆ\"", true);
+        endBest.imagePath = "image\\Scene\\Galadriel\\Scene2\\c75296aa-66e4-498a-82d4-8012e2d1f7ca.png";
+
+        // 2.5A
+        DialogueNode n2_5A = new DialogueNode("Galadriel",
+            "(ยิ้มทั้งน้ำตา) \"ท่านคือฮีโร่ของข้าและเหล่าดอกไม้จริงๆ... สัญญาได้ไหมคะว่าจะคอยปกป้องพวกเราตลอดไป?\"");
+        n2_5A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(ยิ้มทั้งน้ำตา) _ท่านคือฮีโร่ของข้าและเหล่าดอกไม้จริงๆ... สัญญาได้ไหมคะว่าจะคอยปกป้องพวกเราตลอดไป_.png";
+        n2_5A.addChoice("สัญญาด้วยชีวิตครับ องค์หญิงดอกไม้", endBest,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("จะพยายามนะครับ", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ถ้าว่างจะมาช่วยนะ", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 2.5B
+        DialogueNode n2_5B = new DialogueNode("Galadriel",
+            "\"ขอบคุณอีกครั้งนะคะ... วันนี้ข้ารู้สึกดีขึ้นมากเพราะท่านเลย ไว้แวะมาดูอาการน้องต้นไม้ด้วยกันอีกนะ\"");
+        n2_5B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ขอบคุณอีกครั้งนะคะ... วันนี้ข้ารู้สึกดีขึ้นมากเพราะท่านเลย ไว้แวะมาดูอาการน้องต้นไม้ด้วยกันอีกนะ_ (2).png";
+        n2_5B.addChoice("ได้เลยครับ ไว้เจอกัน", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ครับผม", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("ถ้าไม่ลืมนะ", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 2.5C
+        DialogueNode n2_5C = new DialogueNode("Galadriel",
+            "\"ลาก่อนค่ะ...\" (หันหลังให้)");
+        n2_5C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ลาก่อนค่ะ..._ (หันหลังให้) (2).png";
+        n2_5C.addChoice("(เดินจากไป)", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)) 
+             .addChoice("ขอโทษนะ...", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("เฮ้อ...", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // 2.4A
+        DialogueNode n2_4A = new DialogueNode("Galadriel",
+            "(มองดูคุณช่วยดามกิ่งไม้อย่างตั้งใจ) \"ท่าน... มือเบาจัง... น้องต้องดีใจแน่ๆ ที่ท่านช่วย... ข้า... ข้าก็ดีใจค่ะ\"");
+        n2_4A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(มองดูคุณช่วยดามกิ่งไม้อย่างตั้งใจ) _ท่าน... มือเบาจัง... น้องต้องดีใจแน่ๆ ที่ท่านช่วย... ข้า... ข้าก็ดีใจค่ะ_ (2).png";
+        n2_4A.addChoice("เพื่อรอยยิ้มของคุณ ผมทำได้ทุกอย่างครับ", n2_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("แค่นี้เรื่องเล็กน้อยครับ", n2_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("เสร็จแล้ว หวังว่าจะรอดนะ", n2_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 2.4B
+        DialogueNode n2_4B = new DialogueNode("Galadriel",
+            "(เริ่มหยุดร้องไห้) \"ขอบคุณนะคะ... ที่ท่านไม่ทิ้งข้าไว้คนเดียว... ปกติใครๆ ก็หาว่าข้าบ้าที่ร้องไห้ให้ต้นไม้\"");
+        n2_4B.imagePath = "image\\Scene\\Galadriel\\Scene2\\(เริ่มหยุดร้องไห้) _ขอบคุณนะคะ... ที่ท่านไม่ทิ้งข้าไว้คนเดียว... ปกติใครๆ ก็หาว่าข้าบ้าที่ร้องไห้ให้ต้นไม้_ (2).png";
+        n2_4B.addChoice("ความอ่อนโยนคือเสน่ห์ของคุณนะ Galadriel", n2_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ใครจะว่าไงก็ช่างเขา ผมอยู่ข้างคุณนะ", n2_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ก็มันแปลกจริงๆ นี่นา", n2_5C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // 2.4C
+        DialogueNode n2_4C = new DialogueNode("Galadriel",
+            "\"ฮึก... ข้าจะจัดการเอง ท่านไม่ต้องมายุ่งแล้ว\"");
+        n2_4C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ฮึก... ข้าจะจัดการเอง ท่านไม่ต้องมายุ่งแล้ว_ (2).png";
+        n2_4C.addChoice("งั้นผมไปนะ", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0)) 
+             .addChoice("อย่าดื้อสิ ให้ผมช่วยเถอะ", n2_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("ตามใจ", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15));
+
+        // 2.3A
+        DialogueNode n2_3A = new DialogueNode("Galadriel",
+            "\"จ...จริงๆ เหรอคะ? ท่านจะช่วยจริงๆ เหรอ? ...แต่ก้านหักขนาดนี้... จะรอดไหมคะ?\"");
+        n2_3A.imagePath = "image\\Scene\\Galadriel\\Scene2\\_จ...จริงๆ เหรอคะ_ ท่านจะช่วยจริงๆ เหรอ_ ...แต่ก้านหักขนาดนี้... จะรอดไหมคะ_ (2).png";
+        n2_3A.addChoice("รอดสิ! เราจะดามกิ่งให้เขา เดี๋ยวก็หายดี", n2_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ลองดูไม่เสียหายครับ ดีกว่าไม่ทำอะไรเลย", n2_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ถ้าไม่รอดก็เผาทิ้งครับ เป็นปุ๋ย", n2_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-20)); 
+
+        // 2.3B
+        DialogueNode n2_3B = new DialogueNode("Galadriel",
+            "\"ข้า... ข้าสงสารเขา... เขาอุตส่าห์กำลังจะออกดอกแท้ๆ... (กอดเศษกระถางแน่น)\"");
+        n2_3B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ข้า... ข้าสงสารเขา... เขาอุตส่าห์กำลังจะออกดอกแท้ๆ... (กอดเศษกระถางแน่น)_ (2).png";
+        n2_3B.addChoice("อย่าเศร้าไปเลยครับ เดี๋ยวเราปลูกใหม่ให้สวยกว่าเดิมนะ", n2_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ทำใจเถอะครับ ของมันเสียไปแล้ว", n2_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("(ลูบหัวเธอเบาๆ) \"ไม่เป็นไรนะคนเก่ง\"", n2_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5));  
+
+        // 2.3C
+        DialogueNode n2_3C = new DialogueNode("Galadriel",
+            "\"ท่านมันคนไร้หัวใจ! ...ออกไปเลยนะ ข้าไม่อยากเห็นหน้าท่าน!\"");
+        n2_3C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ท่านมันคนไร้หัวใจ! ...ออกไปเลยนะ ข้าไม่อยากเห็นหน้าท่าน!_ (2).png";
+        n2_3C.addChoice("ขอโทษครับ ผมแค่พยายามจะปลอบ", n2_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ไปก็ได้ ยัยขี้แย", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-20)) 
+             .addChoice("(ช่วยเก็บกวาดเงียบๆ)", n2_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+
+        // 2.2A
+        DialogueNode n2_2A = new DialogueNode("Galadriel",
+            "(เงยหน้าที่เต็มไปด้วยคราบน้ำตา) \"ท...ท่าน... (สะอื้น) มีเด็กวัยรุ่นมาวิ่งไล่จับกัน... แล้วชนน้องตกลงมา... ฮือ... ก้านหักเลย...\"");
+        n2_2A.imagePath = "image\\Scene\\Galadriel\\Scene2\\(เงยหน้าที่เต็มไปด้วยคราบน้ำตา) _ท...ท่าน... (สะอื้น) มีเด็กวัยรุ่นมาวิ่งไล่จับกัน... แล้วชนน้องตกลงมา... ฮือ... ก้านหักเลย..._ (2).png";
+        n2_2A.addChoice("ไม่ต้องร้องนะ เดี๋ยวผมช่วยซ่อมเอง", n2_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("แย่จังเลยนะ... เด็กพวกนั้นนิสัยไม่ดีเลย", n2_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ซื้อใหม่สิครับ ง่ายจะตาย", n2_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // 2.2B
+        DialogueNode n2_2B = new DialogueNode("Galadriel",
+            "\"ข้าไม่ได้ทำนะ! ...ฮึก... มีคนชนน้องต่างหาก... ท่านไม่รู้อะไรอย่ามาว่าข้านะ!\"");
+        n2_2B.imagePath = "image\\Scene\\Galadriel\\Scene2\\_ข้าไม่ได้ทำนะ! ...ฮึก... มีคนชนน้องต่างหาก... ท่านไม่รู้อะไรอย่ามาว่าข้านะ!_ (2).png";
+        n2_2B.addChoice("โอเคๆ ผมขอโทษ แล้วใครทำล่ะ?", n2_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("ก็เห็นนั่งอยู่คนเดียว นึกว่าทำเอง", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-20)) 
+             .addChoice("อย่าเพิ่งงอแง เล่ามาซิ", n2_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 2.2C
+        DialogueNode n2_2C = new DialogueNode("Galadriel",
+            "\"มันไม่ใช่แค่กระถางนะ! ...น้องเขาเจ็บ... ท่านดูสิ ก้านหักหมดเลย... ฮือออ\"");
+        n2_2C.imagePath = "image\\Scene\\Galadriel\\Scene2\\_มันไม่ใช่แค่กระถางนะ! ...น้องเขาเจ็บ... ท่านดูสิ ก้านหักหมดเลย... ฮือออ_ (2).png";
+        n2_2C.addChoice("จริงด้วย... น่าสงสารจัง มาครับผมช่วยดู", n2_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ต้นไม้มันไม่เจ็บหรอกน่า คิดไปเอง", n2_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)) 
+             .addChoice("(ยื่นผ้าเช็ดหน้าให้) \"เช็ดน้ำตาก่อนครับ\"", n2_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+
+        // ROOT — 2.1
+        DialogueNode root = new DialogueNode("Galadriel",
+            "(นั่งคุกเข่าอยู่หน้ากระถางต้นไม้ที่แตกกระจาย ร้องไห้กระซิกๆ) \"ฮึก... น้อง... น้องเจ็บไหม... ข้าขอโทษ...\"");
+        root.imagePath = "image\\Scene\\Galadriel\\Scene2\\(นั่งคุกเข่าอยู่หน้ากระถางต้นไม้ที่แตกกระจาย ร้องไห้กระซิกๆ) _ฮึก... น้อง... น้องเจ็บไหม... ข้าขอโทษ..._ (2).png";
+        root.addChoice("\"เกิดอะไรขึ้นครับ!? คุณเจ็บตรงไหนไหม?\"", n2_2A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+            .addChoice("\"ซุ่มซ่ามทำแตกอีกแล้วเหรอ?\"", n2_2B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)) 
+            .addChoice("\"ร้องไห้ทำไมครับ แค่กระถางแตกเอง\"", n2_2C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+        return root;
+    }
+
+    // ============================================================
+    // Level 3 — Scene3
+    // ============================================================
+    private DialogueNode buildLevel3Tree(MainFrame mainFrame) {
+
+        // End Nodes — Scene3
+        DialogueNode endBad = new DialogueNode("Galadriel",
+            "(หันหน้าหนี ไม่สนใจ)", true);
+        endBad.imagePath = "image\\Scene\\Galadriel\\Scene1\\หันหน้าหนี ไม่สนใจ.png";
+
+        DialogueNode endNormal = new DialogueNode("Galadriel",
+            "(โบกมือลาเบาๆ แล้วกลับไปนั่งแต่งเพลงต่อ)", true);
+        endNormal.imagePath = "image\\Scene\\Galadriel\\Scene3\\แต่งเพลงต่อ.png";
+
+        DialogueNode endGood = new DialogueNode("Galadriel",
+            "(โบกมือลาพร้อมรอยยิ้มสดใส) \"ขอบคุณที่แวะมานะคะ...\"", true);
+        endGood.imagePath = "image\\Scene\\Galadriel\\Scene3\\โบกมือลาพร้อมรอยยิ้ม.png";
+
+        DialogueNode endBest = new DialogueNode("Galadriel",
+            "(ประสานมือ ยิ้มสว่าง) \"ขอบคุณที่เป็นทั้งแรงบันดาลใจและเพื่อนที่ดีนะคะ\"", true);
+        endBest.imagePath = "image\\Scene\\Galadriel\\Scene3\\5e92b5e8-4843-466a-a6cd-c4301d535748.png";
+
+        // 3.5A
+        DialogueNode n3_5A = new DialogueNode("Galadriel",
+            "(เธอประสานมือกับคุณหลังจากร้องจบ) \"เป็นเพลงที่เพราะที่สุดในชีวิตข้าเลยค่ะ! ขอบคุณที่เป็นทั้งแรงบันดาลใจและเพื่อนที่ดีนะคะ\"");
+        n3_5A.imagePath = "image\\Scene\\Galadriel\\Scene3\\(เธอประสานมือกับคุณหลังจากร้องจบ) เป็นเพลงที่เพราะที่สุดในชีวิตข้าเลยค่ะ! ขอบคุณที่เป็นทั้งแรงบันดาลใจและเพื่อนที่ดีนะคะ.png";
+        n3_5A.addChoice("ผมจะเป็นแรงบันดาลใจให้คุณตลอดไปครับ", endBest,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ยินดีด้วยนะที่แต่งจบแล้ว", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3)) 
+             .addChoice("เหนื่อยคอจัง", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 3.5B
+        DialogueNode n3_5B = new DialogueNode("Galadriel",
+            "\"ขอบคุณที่อยู่เป็นเพื่อนนะคะ อย่างน้อยข้าก็ไม่รู้สึกโดดเดี่ยวเวลาทำงานศิลปะ... ท่านแวะมาฟังข้าร้องเพลงบ่อยๆ นะ\"");
+        n3_5B.imagePath = "image\\Scene\\Galadriel\\Scene3\\ขอบคุณที่อยู่เป็นเพื่อนนะคะ อย่างน้อยข้าก็ไม่รู้สึกโดดเดี่ยวเวลาทำงานศิลปะ... ท่านแวะมาฟังข้าร้องเพลงบ่อยๆ นะ.png";
+        n3_5B.addChoice("แน่นอนครับ จะมาทุกวันเลย", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ถ้าว่างจะมานะครับ", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ขอฟังเพลงฟรีนะ", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0)); 
+        // 3.5C
+        DialogueNode n3_5C = new DialogueNode("Galadriel",
+            "\"ขอโทษที่เพลงข้าไม่ถูกปากท่านนะ... ข้าจะพยายามพัฒนาตัวเองต่อไปค่ะ\"");
+        n3_5C.imagePath = "image\\Scene\\Galadriel\\Scene3\\ขอโทษที่เพลงข้าไม่ถูกปากท่านนะ... ข้าจะพยายามพัฒนาตัวเองต่อไปค่ะ.png";
+        n3_5C.addChoice("สู้ๆ นะ ผมเป็นกำลังใจให้", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("อืม บาย", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))  
+             .addChoice("เปลืองเวลาชะมัด", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // 3.4A
+        DialogueNode n3_4A = new DialogueNode("Galadriel",
+            "(ที่น้ำตก เธอเริ่มฮัมเพลงตามเสียงน้ำทิพย์) \"ลา ลา ลา... ท่อนนี้ดูเข้าท่าไหมคะ? ท่านลองร้องคู่กับข้าดูสิ!\"");
+        n3_4A.imagePath = "image\\Scene\\Galadriel\\Scene3\\(ที่น้ำตก เธอเริ่มฮัมเพลงตามเสียงน้ำทิพย์) ลา ลา ลา... ท่อนนี้ดูเข้าท่าไหมคะ ท่านลองร้องคู่กับข้าดูสิ!.png";
+        n3_4A.addChoice("รบกวนแก้วหูหน่อยนะครับ... (เริ่มร้องเพลงคู่กัน)", n3_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ผมร้องเพลงไม่เก่ง ฟังเฉยๆ ได้ไหม?", n3_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("เพลงอะไรเนี่ย ฟังไม่รู้เรื่องเลย", n3_5C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // 3.4B
+        DialogueNode n3_4B = new DialogueNode("Galadriel",
+            "\"ดีล่ะ! ข้าได้ไอเดียแล้ว! ข้าจะใช้เสียงหัวใจของข้าเป็นจังหวะหลัก... ท่านอยากลองฟังไหม?\"");
+        n3_4B.imagePath = "image\\Scene\\Galadriel\\Scene3\\ดีล่ะ! ข้าได้ไอเดียแล้ว! ข้าจะใช้เสียงหัวใจของข้าเป็นจังหวะหลัก... ท่านอยากลองฟังไหม.png";
+        n3_4B.addChoice("อยากสิครับ ยิ่งเป็นเสียงหัวใจคุณยิ่งอยากฟัง", n3_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ลองดูครับ", n3_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("หัวใจเต้นเป็นเพลงได้ด้วยเหรอ?", n3_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 3.4C
+        DialogueNode n3_4C = new DialogueNode("Galadriel",
+            "\"ว้า... ท่านดูไม่สนุกเลย... งั้นเรากลับกันเถอะค่ะ ข้าไม่อยากรบกวนเวลาท่านแล้ว\"");
+        n3_4C.imagePath = "image\\Scene\\Galadriel\\Scene3\\ว้า... ท่านดูไม่สนุกเลย... งั้นเรากลับกันเถอะค่ะ ข้าไม่อยากรบกวนเวลาท่านแล้ว.png";
+        n3_4C.addChoice("อย่าเพิ่งกลับเลย ผมอยากอยู่ต่อ", n3_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ครับ กลับกันเถอะ", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("เออ ดีเหมือนกัน", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // 3.3A
+        DialogueNode n3_3A = new DialogueNode("Galadriel",
+            "\"สดใสเหมือนรอยยิ้มข้า... (หน้าแดง) ท่านนี่พูดจาน่ารักจัง... งั้น... เราลองไปหาแรงบันดาลใจที่น้ำตกท้ายหมู่บ้านกันไหมคะ?\"");
+        n3_3A.imagePath = "image\\Scene\\Galadriel\\Scene3\\สดใสเหมือนรอยยิ้มข้า... (หน้าแดง) ท่านนี่พูดจาน่ารักจัง... งั้น... เราลองไปหาแรงบันดาลใจที่น้ำตกท้ายหมู่บ้านกันไหมคะ.png";
+        n3_3A.addChoice("ไปสิครับ ผมอยากไปกับคุณพอดี", n3_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("น้ำตกเหรอ? ก็น่าจะดีนะ", n3_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("ไกลนะนั่น ขี้เกียจเดินจัง", n3_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // 3.3B
+        DialogueNode n3_3B = new DialogueNode("Galadriel",
+            "(หลับตาฟังตามที่คุณบอก) \"จริงด้วย... เสียงน้ำไหล... เสียงนก... มันมีจังหวะของมันอยู่จริงๆ ด้วย! ท่านอัจฉริยะมากเลย!\"");
+        n3_3B.imagePath = "image\\Scene\\Galadriel\\Scene3\\(หลับตาฟังตามที่คุณบอก) จริงด้วย... เสียงน้ำไหล... เสียงนก... มันมีจังหวะของมันอยู่จริงๆ ด้วย! ท่านอัจฉริยะมากเลย!.png";
+        n3_3B.addChoice("อัจฉริยะเพราะมีแรงบันดาลใจดีๆ อย่างคุณไง", n3_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("เห็นไหมล่ะ บอกแล้ว", n3_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("เพิ่งรู้เหรอ?", n3_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0)); 
+
+        // 3.2A (สร้างก่อน แต่ addChoice ทีหลัง)
+        DialogueNode n3_2A = new DialogueNode("Galadriel",
+            "(เงยหน้าขึ้นมาด้วยตาเป็นประกาย) \"จริงเหรอคะ? ท่านจะช่วยข้าจริงๆ ใช่ไหม? ...ท่านคิดว่าท่วงทำนองที่เหมาะกับดอกไม้ผลิบานควรเป็นยังไงคะ?\"");
+        n3_2A.imagePath = "image\\Scene\\Galadriel\\Scene3\\(เงยหน้าขึ้นมาด้วยตาเป็นประกาย) จริงเหรอคะ ท่านจะช่วยข้าจริงๆ ใช่ไหม ...ท่านคิดว่าท่วงทำนองที่เหมาะกับดอกไม้ผลิบานควรเป็นยังไงคะ.png";
+
+        // 3.3C
+        DialogueNode n3_3C = new DialogueNode("Galadriel",
+            "(ทำหน้ามุ่ย) \"ถ้าท่านจะมากวนประสาทข้า... เชิญท่านกลับไปก่อนเลยค่ะ ข้าไม่มีอารมณ์สุนทรีย์แล้ว\"");
+        n3_3C.imagePath = "image\\Scene\\Galadriel\\Scene3\\(ทำหน้ามุ่ย) ถ้าท่านจะมากวนประสาทข้า... เชิญท่านกลับไปก่อนเลยค่ะ ข้าไม่มีอารมณ์สุนทรีย์แล้ว.png";
+        n3_3C.addChoice("ขอโทษครับ ผมจะจริงจังแล้ว", n3_2A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("โอเค งั้นไปละ", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))  
+             .addChoice("เรื่องเยอะจริงๆ", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+        // 3.2C
+        DialogueNode n3_2C = new DialogueNode("Galadriel",
+            "\"มันคือชีวิตของข้านะคะ! ดนตรีคือสิ่งที่เชื่อมข้ากับธรรมชาติ... ท่านไม่เข้าใจดนตรีเลยสักนิด!\"");
+        n3_2C.imagePath = "image\\Scene\\Galadriel\\Scene3\\มันคือชีวิตของข้านะคะ! ดนตรีคือสิ่งที่เชื่อมข้ากับธรรมชาติ... ท่านไม่เข้าใจดนตรีเลยสักนิด!.png";
+        n3_2C.addChoice("ขอโทษครับ ผมแค่ล้อเล่น... ไหนลองเล่าเนื้อหาให้ฟังหน่อย", n3_2A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ครับๆ ไม่เข้าใจก็ไม่เข้าใจ", n3_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)) 
+             .addChoice("งั้นก็แต่งไปคนเดียวเถอะ", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-20)); 
+
+        // addChoice ให้ n3_2A (ตอนนี้ n3_3C และ n3_2C ถูกสร้างแล้ว)
+        n3_2A.addChoice("ควรจะสดใสเหมือนรอยยิ้มของคุณไง", n3_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("น่าจะเป็นทำนองที่นุ่มนวลและอ่อนโยนนะ", n3_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ผมก็ไม่รู้เหมือนกัน ลองมั่วๆ ไปก่อน", n3_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); 
+
+        // 3.2B
+        DialogueNode n3_2B = new DialogueNode("Galadriel",
+            "\"แต่ข้าต้องส่งพรุ่งนี้แล้วนะคะ! ถ้าแต่งไม่เสร็จ เทพเจ้าจะไม่ประทานพรให้ดอกไม้ในร้านข้า... ฮือออ\"");
+        n3_2B.imagePath = "image\\Scene\\Galadriel\\Scene3\\แต่ข้าต้องส่งพรุ่งนี้แล้วนะคะ! ถ้าแต่งไม่เสร็จ เทพเจ้าจะไม่ประทานพรให้ดอกไม้ในร้านข้า... ฮือออ.png";
+        n3_2B.addChoice("ใจเย็นๆ ครับ มา... เรามาลองฟังเสียงลมหายใจของป่ากัน", n3_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("งั้นผมจะอยู่เป็นเพื่อนจนกว่าจะเสร็จนะ", n3_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ก็แค่ดอกไม้เหี่ยว ซื้อใหม่ก็ได้", n3_2C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-20)); 
+
+        // ROOT — 3.1
+        DialogueNode root = new DialogueNode("Galadriel",
+            "(เธอกำลังก้มหน้าก้มตาเขียนอะไรบางอย่างลงบนกระดาษแล้วขยำทิ้ง) \"โธ่... ทำไมมันคิดไม่ออกนะ! บทเพลงขอบคุณเทพเจ้าแห่งพฤกษา... ข้าแต่งมันไม่จบเสียที!\"");
+        root.imagePath = "image\\Scene\\Galadriel\\Scene3\\(เธอกำลังก้มหน้าก้มตาเขียนอะไรบางอย่างลงบนกระดาษแล้วขยำทิ้ง) โธ่... ทำไมมันคิดไม่ออกนะ! บทเพลงขอบคุณเทพเจ้าแห่งพฤกษา... ข้าแต่งมันไม่จบเสียที!.png";
+        root.addChoice("ให้ผมช่วยคิดไหมครับ?", n3_2A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+            .addChoice("พักผ่อนบ้างเถอะ ยิ่งเครียดยิ่งคิดไม่ออกนะ", n3_2B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+            .addChoice("แต่งเพลงมันยากขนาดนั้นเลยเหรอ?", n3_2C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+        return root;
+    }
+
+    // ============================================================
+    // Level 4 — Scene4
+    // ============================================================
+    private DialogueNode buildLevel4Tree(MainFrame mainFrame) {
+
+        // End Nodes — Scene4
+        DialogueNode endBad = new DialogueNode("Galadriel",
+            "(พยักหน้ารับคำแล้วเดินกลับไปพักผ่อนเงียบๆ)", true);
+        endBad.imagePath = "image\\Scene\\Galadriel\\Scene4\\(พยักหน้ารับคำแล้วเดินกลับไปพักผ่อนเงียบๆ).png";
+
+        DialogueNode endNormal = new DialogueNode("Galadriel",
+            "(ถอนหายใจเบาๆ แล้วก้มมองพิณในมือ) \"ถึงแม้ค่ำคืนนี้จะจบลง... อย่าลืมแวะมาทักทายข้าบ้างนะคะ\"", true);
+        endNormal.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ถอนหายใจเบาๆ แล้วก้มมองพิณในมือ) ถึงแม้ค่ำคืนนี้จะจบลง... แต่ข้าจะยังคงร้องเพลงอยู่ที่ป่าแห่งนี้เสมอ หากวันหน้าท่านเดินทางผ่านมา... อย่าลืมแวะมาทักทายข้าบ้างนะคะ.png";
+
+        DialogueNode endGood = new DialogueNode("Galadriel",
+            "(ยิ้มบางๆ แล้วมองดูแสงจันทร์สะท้อนผิวน้ำ) \"คืนนี้เป็นคืนที่วิเศษที่สุดเลยค่ะ\"", true);
+        endGood.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ยิ้มบางๆ แล้วมองดูแสงจันทร์สะท้อนผิวน้ำ) คืนนี้เป็นคืนที่วิเศษที่สุดเลยค่ะ... หวังว่าบทเพลงนี้จะคอยอยู่เป็นเพื่อนท่าน ไม่ว่าเราจะอยู่ห่างไกลกันแค่ไหนนะคะ.png";
+
+        DialogueNode endBest = new DialogueNode("Galadriel",
+            "(กอดแขนคุณแน่นขึ้น) \"ข้ารักท่านค่ะ... สัญญาครับ ผมจะรักและจำคุณตลอดไป\"", true);
+        endBest.imagePath = "image\\Scene\\Galadriel\\Scene4\\(กอดแขนคุณเบาๆ) ข้ารักท่านนะคะ... สัญญาได้ไหมว่าจะไม่ลืมบทเพลงของเรา.png";
+
+        // 4.5A
+        DialogueNode n4_5A = new DialogueNode("Galadriel",
+            "(กอดแขนคุณเบาๆ) \"ข้ารักท่านนะคะ... สัญญาได้ไหมว่าจะไม่ลืมบทเพลงของเรา?\"");
+        n4_5A.imagePath = "image\\Scene\\Galadriel\\Scene4\\(กอดแขนคุณเบาๆ) ข้ารักท่านนะคะ... สัญญาได้ไหมว่าจะไม่ลืมบทเพลงของเรา.png";
+        n4_5A.addChoice("สัญญาครับ ผมจะรักและจำคุณตลอดไป", endBest,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ผมไม่ลืมแน่นอน ราตรีสวัสดิ์นะ", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("(พยักหน้าสัญญา)", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));
+
+        // 4.5B
+        DialogueNode n4_5B = new DialogueNode("Galadriel",
+            "(ยิ้มบางๆ แล้วมองดูแสงจันทร์สะท้อนผิวน้ำ) \"คืนนี้เป็นคืนที่วิเศษที่สุดเลยค่ะ... หวังว่าบทเพลงนี้จะคอยอยู่เป็นเพื่อนท่าน ไม่ว่าเราจะอยู่ห่างไกลกันแค่ไหนนะคะ\"");
+        n4_5B.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ยิ้มบางๆ แล้วมองดูแสงจันทร์สะท้อนผิวน้ำ) คืนนี้เป็นคืนที่วิเศษที่สุดเลยค่ะ... หวังว่าบทเพลงนี้จะคอยอยู่เป็นเพื่อนท่าน ไม่ว่าเราจะอยู่ห่างไกลกันแค่ไหนนะคะ (1).png";
+        n4_5B.addChoice("มันจะดังอยู่ในใจผมตลอดไปครับ Galadriel", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ขอบคุณสำหรับคืนที่แสนวิเศษนี้นะ", endGood,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ดึกแล้ว คุณเองก็ควรพักผ่อนได้แล้วนะ", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 4.5C
+        DialogueNode n4_5C = new DialogueNode("Galadriel",
+            "(ถอนหายใจเบาๆ แล้วก้มมองพิณในมือ) \"ถึงแม้ค่ำคืนนี้จะจบลง... แต่ข้าจะยังคงร้องเพลงอยู่ที่ป่าแห่งนี้เสมอ หากวันหน้าท่านเดินทางผ่านมา... อย่าลืมแวะมาทักทายข้าบ้างนะคะ\"");
+        n4_5C.imagePath = "image\\Scene\\Galadriel\\Scene4\\ถอนหายใจเบาๆ แล้วก้มมองพิณในมือ ถึงแม้ค่ำคืนนี้จะจบลง... แต่ข้าจะยังคงร้องเพลงอยู่ที่ป่าแห่งนี้เสมอ หากวันหน้าท่านเดินทางผ่านมา... อย่าลืมแวะมาทักทายข้าบ้างนะคะ.png";
+        n4_5C.addChoice("ผมจะต้องหาโอกาสกลับมาเยี่ยมคุณอีกแน่นอน", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("ดูแลตัวเองและป่านี้ให้ดีนะ ภูติน้อย", endNormal,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("(พยักหน้ารับคำแล้วเดินกลับไปพักผ่อนเงียบๆ)", endBad,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15)); // Bad
+        // 4.4A
+        DialogueNode n4_4A = new DialogueNode("Galadriel",
+            "(ยื่นกิ่งไม้เล็กๆ ที่มีแสงระยิบระยับให้) \"นี่คือ 'กิ่งไม้แห่งแสง' ค่ะ มันจะสว่างตราบเท่าที่ข้ายังคิดถึงท่าน... ท่านจะรับมันไว้ไหม?\"");
+        n4_4A.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ยื่นกิ่งไม้เล็กๆ ที่มีแสงระยิบระยับให้) นี่คือ _กิ่งไม้แห่งแสง_ ค่ะ มันจะสว่างตราบเท่าที่ข้ายังคิดถึงท่าน... ท่านจะรับมันไว้ไหม.png";
+        n4_4A.addChoice("(รับมาอย่างทะนุถนอม) \"ผมจะเก็บมันไว้ให้สว่างตลอดไป\"", n4_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ขอบคุณนะ มันสวยมากเลย", n4_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("มันใช้ส่องทางตอนกลางคืนได้ดีเลยนะ", n4_5C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 4.4B
+        DialogueNode n4_4B = new DialogueNode("Galadriel",
+            "\"ข้าแอบทำของขวัญไว้ให้ท่านด้วยนะ... ถึงมันจะดูธรรมดาแต่มันอัดแน่นด้วยเวทมนตร์แห่งความหวัง ท่านอยากเห็นไหมคะ?\"");
+        n4_4B.imagePath = "image\\Scene\\Galadriel\\Scene4\\ข้าแอบทำของขวัญไว้ให้ท่านด้วยนะ... ถึงมันจะดูธรรมดาแต่มันอัดแน่นด้วยเวทมนตร์แห่งความหวัง ท่านอยากเห็นไหมคะ.png";
+        n4_4B.addChoice("อยากเห็นสิ ของที่คุณให้มีค่าเสมอ", n4_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("อะไรเหรอ? ตื่นเต้นจัง", n4_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("ไว้วันหลังก็ได้นะ ผมยังไม่อยากรีบ", n4_5C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 4.4C
+        DialogueNode n4_4C = new DialogueNode("Galadriel",
+            "\"ไม่ว่ายังไง... ข้าจะขอจดจำใบหน้าของท่านไว้ในใจตลอดไปนะคะ... ท่านเป็นมนุษย์ที่พิเศษที่สุดที่ข้าเคยเจอเลย\"");
+        n4_4C.imagePath = "image\\Scene\\Galadriel\\Scene4\\ไม่ว่ายังไง... ข้าจะขอจดจำใบหน้าของท่านไว้ในใจตลอดไปนะคะ... ท่านเป็นมนุษย์ที่พิเศษที่สุดที่ข้าเคยเจอเลย.png";
+        n4_4C.addChoice("คุณเองก็เป็นภูติที่พิเศษที่สุดสำหรับผม", n4_5A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ขอบคุณที่ชมนะ เขินเลย", n4_5B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("(ยิ้มตอบแบบเขินๆ)", n4_5C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 4.3A
+        DialogueNode n4_3A = new DialogueNode("Galadriel",
+            "(หยุดเล่นเพลงแล้วสบตา) \"ถ้าวันหนึ่งข้าต้องกลายเป็นต้นไม้เพื่อปกป้องป่า... ท่านจะยังจำท่วงทำนองนี้ได้ไหมคะ? ท่านจะลืมภูติตัวน้อยคนนี้หรือเปล่า?\"");
+        n4_3A.imagePath = "image\\Scene\\Galadriel\\Scene4\\(หยุดเล่นเพลงแล้วสบตา) ถ้าวันหนึ่งข้าต้องกลายเป็นต้นไม้เพื่อปกป้องป่า... ท่านจะยังจำท่วงทำนองนี้ได้ไหมคะ ท่านจะลืมภูติตัวน้อยคนนี้หรือเปล่า.png";
+        n4_3A.addChoice("ผมจะจำคุณไว้ในทุกจังหวะหัวใจของผม", n4_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ผมจะหาทางไม่ให้คุณต้องกลายเป็นต้นไม้เด็ดขาด", n4_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ป่านี้จะเตือนใจผมถึงคุณเสมอ", n4_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+
+        // 4.3B
+        DialogueNode n4_3B = new DialogueNode("Galadriel",
+            "\"ท่านพูดเหมือนจะไม่อยู่กับข้าตลอดไปเลย... แต่ไม่เป็นไรค่ะ แค่ตอนนี้เราได้อยู่ด้วยกัน ข้าก็มีความสุขที่สุดแล้ว... ท่านมีความสุขไหม?\"");
+        n4_3B.imagePath = "image\\Scene\\Galadriel\\Scene4\\ท่านพูดเหมือนจะไม่อยู่กับข้าตลอดไปเลย... แต่ไม่เป็นไรค่ะ แค่ตอนนี้เราได้อยู่ด้วยกัน ข้าก็มีความสุขที่สุดแล้ว... ท่านมีความสุขไหม.png";
+        n4_3B.addChoice("ความสุขของผมคือการเห็นคุณยิ้มนะ", n4_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("มีความสุขสิ งานเทศกาลวันนี้สนุกมาก", n4_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("ก็โอเคครับ บรรยากาศดีมาก", n4_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 4.3C
+        DialogueNode n4_3C = new DialogueNode("Galadriel",
+            "\"ท่านดูเป็นคนมีเหตุผลจัง... บางทีข้าก็อิจฉามนุษย์นะที่มีเวลาจำกัดแต่กลับใช้มันได้อย่างคุ้มค่า ท่านอยากใช้เวลาที่เหลือคืนนี้ทำอะไรคะ?\"");
+        n4_3C.imagePath = "image\\Scene\\Galadriel\\Scene4\\ท่านดูเป็นคนมีเหตุผลจัง... บางทีข้าก็อิจฉามนุษย์นะที่มีเวลาจำกัดแต่กลับใช้มันได้อย่างคุ้มค่า ท่านอยากใช้เวลาที่เหลือคืนนี้ทำอะไรคะ.png";
+        n4_3C.addChoice("นั่งดูดาวและฟังความฝันของคุณต่อ", n4_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("พักผ่อนเถอะ พรุ่งนี้ต้องเดินทางต่อ", n4_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))   
+             .addChoice("หาอะไรสนุกๆ ทำในป่านี้กันไหม?", n4_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+
+        // 4.2A
+        DialogueNode n4_2A = new DialogueNode("Galadriel",
+            "(ยิ้มหวาน) \"ท่านนี่น่ารักจริงๆ... เพลงนี้คือความขอบคุณที่ท่านดึงข้าออกมาจากความเศร้า ฟังนะ...\" (บรรเลงเพลงที่แสนอบอุ่น)");
+        n4_2A.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ยิ้มหวาน) ท่านนี่น่ารักจริงๆ... เพลงนี้คือความขอบคุณที่ท่านดึงข้าออกมาจากความเศร้า ฟังนะ... (บรรเลงเพลงที่แสนอบอุ่น).png";
+        n4_2A.addChoice("(นั่งลงข้างๆ และฮัมเพลงตามเบาๆ)", n4_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("\"เพลงเพราะจัง... เหมือนโลกทั้งใบหยุดหมุนเลย\"", n4_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("\"คุณเล่นเก่งขึ้นเยอะเลยนะเนี่ย\"", n4_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+
+        // 4.2B
+        DialogueNode n4_2B = new DialogueNode("Galadriel",
+            "(หัวเราะคิกคัก) \"ภูติไม่ตื่นหรอกค่ะ แต่หัวใจของป่าจะเต้นไปพร้อมกับเรา... ท่านอยากลองเล่นคู่กับข้าดูไหม?\"");
+        n4_2B.imagePath = "image\\Scene\\Galadriel\\Scene4\\(หัวเราะคิกคัก) ภูติไม่ตื่นหรอกค่ะ แต่หัวใจของป่าจะเต้นไปพร้อมกับเรา... ท่านอยากลองเล่นคู่กับข้าดูไหม.png";
+        n4_2B.addChoice("ผมเล่นไม่เก่งนะ แต่จะพยายามครับ", n4_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))   
+             .addChoice("แค่ได้ฟังคุณเล่น ผมก็พอใจแล้วล่ะ", n4_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ถ้าผมทำพิณพัง อย่าว่ากันนะ", n4_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 4.2C
+        DialogueNode n4_2C = new DialogueNode("Galadriel",
+            "\"โน้ตตัวสุดท้ายคือ 'ความเชื่อใจ' ไงคะ... ถ้าไม่มีท่าน เพลงนี้ก็คงเป็นแค่เสียงลมพัดผ่านใบไม้ ท่านจะช่วยข้าจบเพลงนี้ได้ไหม?\"");
+        n4_2C.imagePath = "image\\Scene\\Galadriel\\Scene4\\โน้ตตัวสุดท้ายคือ _ความเชื่อใจ_ ไงคะ... ถ้าไม่มีท่าน เพลงนี้ก็คงเป็นแค่เสียงลมพัดผ่านใบไม้ ท่านจะช่วยข้าจบเพลงนี้ได้ไหม.png";
+        n4_2C.addChoice("ผมจะอยู่จบเพลงนี้... และเพลงต่อๆ ไปของคุณด้วย", n4_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+             .addChoice("ได้สิ ผมจะช่วยเท่าที่ทำได้", n4_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("เริ่มจากตรงไหนดีล่ะ?", n4_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+
+        // ROOT — 4.1
+        DialogueNode root = new DialogueNode("Galadriel",
+            "(ถือพิณมองผิวน้ำ) \"ในที่สุดบทเพลงก็สมบูรณ์เสียที... ข้าไม่เคยคิดเลยว่ามนุษย์จะเข้าใจความหมายของธรรมชาติได้ลึกซึ้งเท่าท่าน ท่านพร้อมจะฟังท่วงทำนองสุดท้ายหรือยัง?\"");
+        root.imagePath = "image\\Scene\\Galadriel\\Scene4\\(ถือพิณมองผิวน้ำ) ในที่สุดบทเพลงก็สมบูรณ์เสียที... ข้าไม่เคยคิดเลยว่ามนุษย์จะเข้าใจความหมายของธรรมชาติได้ลึกซึ้งเท่าท่าน ท่านพร้อมจะฟังท่วงทำนองสุดท้ายหรือยัง.png";
+        root.addChoice("ผมพร้อมเสมอสำหรับบทเพลงของคุณ", n4_2A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))   
+            .addChoice("เพลงนี้จะทำให้ภูติทั้งป่าตื่นขึ้นไหมนะ?", n4_2B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+            .addChoice("เล่นเลยครับ ผมอยากรู้ว่าโน้ตตัวสุดท้ายคืออะไร", n4_2C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+        return root;
+    }
+
+    // ============================================================
+    // Level 5 — Scene5
+    // ============================================================
+    private DialogueNode buildLevel5Tree(MainFrame mainFrame) {
+        
+        DialogueNode endTrueEnding = new DialogueNode("Galadriel",
+            "\"ข้ารักท่านค่ะ... เจ้ามนุษย์ที่แสนวิเศษ\" (ภาพตัดไปที่ทั้งคู่ใช้ชีวิตร่วมกันในเมือง)\n— TRUE ENDING (Eternal Love) —"); 
+        endTrueEnding.imagePath = "image\\Scene\\Galadriel\\Scene5\\ข้ารักท่านค่ะ...  เจ้ามนุษย์ที่แสนวิเศษ (ภาพตัดไปที่ทั้งคู่ใช้ชีวิตร่วมกันในเมือง).png";
+        endTrueEnding.addChoice("จบการสนทนา", null, () -> {
+            mainFrame.finishSpecialScene(); 
+        });
+
+        DialogueNode endGoodEnding = new DialogueNode("Galadriel",
+            "\"อยู่กับข้าตลอดไปนะ... เจ้ามนุษย์ที่รัก\" (ภาพตัดไปที่ทั้งคู่นั่งเล่นดนตรีในป่า)\n— GOOD ENDING (Magical Bond) —"); 
+        endGoodEnding.imagePath = "image\\Scene\\Galadriel\\Scene5\\อยู่กับข้าตลอดไปนะ... เจ้ามนุษย์ที่รัก (ภาพตัดไปที่ทั้งคู่นั่งเล่นดนตรีในป่า).png";
+        endGoodEnding.addChoice("จบการสนทนา", null, () -> {
+            mainFrame.finishSpecialScene(); 
+        });
+
+        DialogueNode endSadEnding = new DialogueNode("",
+            "(คุณยืนอยู่ลำพัง แต่มีขนนกเรืองแสงตกอยู่ข้างกาย)\n— SAD ENDING (Memory) —"); 
+        endSadEnding.imagePath = "image\\Scene\\Galadriel\\Scene5\\(คุณยืนอยู่ลำพัง แต่มีขนนกเรืองแสงตกอยู่ข้างกาย).png";
+        endSadEnding.addChoice("จบการสนทนา", null, () -> {
+            mainFrame.finishSpecialScene(); 
+        });
+
+        // 5.5A → TRUE ENDING
+        DialogueNode n5_5A = endTrueEnding;
+        // 5.5B → GOOD ENDING
+        DialogueNode n5_5B = endGoodEnding;
+        // 5.5C → SAD ENDING
+        DialogueNode n5_5C = endSadEnding;
+
+        // 5.4A
+        DialogueNode n5_4A = new DialogueNode("Galadriel",
+            "(เงยหน้ามองคุณ) \"ต่อจากนี้ไป ข้าจะหัดทำอาหาร หัดเย็บผ้า และหัดรักท่านในฐานะผู้หญิงคนหนึ่ง... ท่านจะช่วยสอนข้าไหม?\"");
+        n5_4A.imagePath = "image\\Scene\\Galadriel\\Scene5\\(เงยหน้ามองคุณ) ต่อจากนี้ไป ข้าจะหัดทำอาหาร หัดเย็บผ้า และหัดรักท่านในฐานะผู้หญิงคนหนึ่ง... ท่านจะช่วยสอนข้าไหม (2).png";
+        n5_4A.addChoice("ผมจะสอนคุณทุกอย่าง แม้กระทั่งวิธีรักผมให้มากขึ้น", n5_5A, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(5);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\TrueEndingMusic.wav"); 
+             })   
+             .addChoice("เราจะเรียนรู้ไปพร้อมๆ กันนะ", n5_5A, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(5);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\TrueEndingMusic.wav");
+             })   
+             .addChoice("ได้สิ ถ้าคุณตั้งใจนะ", n5_5B, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(3);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav");
+             }); 
+
+        // 5.4B
+        DialogueNode n5_4B = new DialogueNode("Galadriel",
+            "\"เราจะไปร้องเพลงให้ทั่วโลกฟังเลยดีไหมคะ? เพลงแห่งความรักของเรา\"");
+        n5_4B.imagePath = "image\\Scene\\Galadriel\\Scene5\\เราจะไปร้องเพลงให้ทั่วโลกฟังเลยดีไหมคะ เพลงแห่งความรักของเรา (2).png";
+        n5_4B.addChoice("เป็นความคิดที่ดีมาก ไปกันเลย!", n5_5B, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(5);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav");
+             })   
+             .addChoice("เอาไว้ร้องให้ผมฟังคนเดียวก็พอ", n5_5B, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(5);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav");
+             })   
+             .addChoice("ผมร้องเพลงไม่เก่งนะ", n5_5C, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(0);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             });  
+
+        // 5.4C 
+        DialogueNode n5_4C = new DialogueNode("Galadriel",
+            "\"...\" (เสียงบทเพลงแว่วมาตามสายลม เป็นครั้งสุดท้าย)");
+        n5_4C.imagePath = "image\\Scene\\Galadriel\\Scene5\\... (เสียงบทเพลงแว่วมาตามสายลม เป็นครั้งสุดท้าย).png";
+        n5_4C.addChoice("(ยิ้มทั้งน้ำตา)", n5_5C, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(0);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             })   
+             .addChoice("(เดินหน้าต่อไป)", n5_5C, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(0);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             })   
+             .addChoice("...", n5_5C, () -> {
+                mainFrame.getPlayer().getGaladriel().addAffection(0);
+                mainFrame.getSoundManager().stopMusic();
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
+             });
+
+        // 5.3A
+        DialogueNode n5_3A = new DialogueNode("Galadriel",
+            "(แสงสว่างวูบสุดท้ายหายไป เธอกลายเป็นมนุษย์เต็มตัว) \"ว้าว... ข้าสัมผัสได้ถึงความหนาว และจังหวะหัวใจที่เต้นแรง... นี่คือความรู้สึกของมนุษย์สินะคะ?\"");
+        n5_3A.imagePath = "image\\Scene\\Galadriel\\Scene5\\(แสงสว่างวูบสุดท้ายหายไป เธอกลายเป็นมนุษย์เต็มตัว) ว้าว... ข้าสัมผัสได้ถึงความหนาว และจังหวะหัวใจที่เต้นแรง... นี่คือความรู้สึกของมนุษย์สินะคะ.png";
+        n5_3A.addChoice("(โอบกอดเธอไว้) \"ใช่ครับ และนี่คือความอบอุ่นของอ้อมกอด\"", n5_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ยินดีต้อนรับสู่โลกมนุษย์นะ Galadriel", n5_4A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("หัวใจคุณเต้นแรงเหมือนกลองเลยนะ", n5_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+
+        // 5.3B
+        DialogueNode n5_3B = new DialogueNode("Galadriel",
+            "\"ข้าเลือกที่จะอยู่... แม้จะเหลือพลังเพียงน้อยนิด แต่ข้าขอใช้มันเพื่อปกป้องท่านจะได้ไหม?\"");
+        n5_3B.imagePath = "image\\Scene\\Galadriel\\Scene5\\ข้าเลือกที่จะอยู่... แม้จะเหลือพลังเพียงน้อยนิด แต่ข้าขอใช้มันเพื่อปกป้องท่านจะได้ไหม.png";
+        n5_3B.addChoice("แค่มีคุณอยู่ ก็เป็นพลังที่ยิ่งใหญ่ที่สุดของผมแล้ว", n5_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ขอบคุณนะ เราจะสู้ไปด้วยกัน", n5_4B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3))  
+             .addChoice("อย่าฝืนตัวเองเลยนะ", n5_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 5.3C
+        DialogueNode n5_3C = new DialogueNode("Galadriel",
+            "(ร่างค่อยๆ จางหายไปกับแสง) \"ขอบคุณสำหรับความทรงจำที่งดงามนะคะ... ข้าจะไม่ลืมท่านเลย\"");
+        n5_3C.imagePath = "image\\Scene\\Galadriel\\Scene5\\(ร่างค่อยๆ จางหายไปกับแสง) ขอบคุณสำหรับความทรงจำที่งดงามนะคะ... ข้าจะไม่ลืมท่านเลย.png";
+        n5_3C.addChoice("ผมจะไม่ลืมคุณเช่นกัน", n5_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3)) 
+             .addChoice("ลาก่อน...", n5_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))  
+             .addChoice("(ยืนมองเธอจากไปเงียบๆ)", n5_4C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 5.2A
+        DialogueNode n5_2A = new DialogueNode("Galadriel",
+            "(น้ำตาคลอเบ้า) \"ท่านช่างแสนดีเหลือเกิน... ถ้าข้าเลือกเป็นมนุษย์ ข้าจะไม่มีเวทมนตร์อีกแล้ว ท่านจะรับได้ไหมที่ข้าเป็นแค่ผู้หญิงธรรมดา?\"");
+        n5_2A.imagePath = "image\\Scene\\Galadriel\\Scene5\\(น้ำตาคลอเบ้า) ท่านช่างแสนดีเหลือเกิน... ถ้าข้าเลือกเป็นมนุษย์ ข้าจะไม่มีเวทมนตร์อีกแล้ว ท่านจะรับได้ไหมที่ข้าเป็นแค่ผู้หญิงธรรมดา.png";
+        n5_2A.addChoice("ผมรักที่คุณเป็นคุณ ไม่ใช่รักที่คุณเป็นภูติ", n5_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ผมจะดูแลคุณเอง ไม่ต้องพึ่งเวทมนตร์หรอก", n5_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("มันก็น่าเสียดายนะ แต่ผมโอเค", n5_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0));  
+
+        // 5.2B
+        DialogueNode n5_2B = new DialogueNode("Galadriel",
+            "\"ข้าก็ไม่อยากไป... ข้าอยากสัมผัสความอบอุ่นของท่าน... ข้าตัดสินใจแล้ว ข้าจะสละปีกเพื่อท่าน!\"");
+        n5_2B.imagePath = "image\\Scene\\Galadriel\\Scene5\\ข้าก็ไม่อยากไป... ข้าอยากสัมผัสความอบอุ่นของท่าน... ข้าตัดสินใจแล้ว ข้าจะสละปีกเพื่อท่าน!.png";
+        n5_2B.addChoice("ขอบคุณที่เสียสละเพื่อผมนะ Galadriel", n5_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("เราจะสร้างเวทมนตร์แห่งรักขึ้นมาใหม่ด้วยกัน", n5_3A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("แน่ใจแล้วเหรอ? มันย้อนกลับไม่ได้นะ", n5_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+
+        // 5.2C
+        DialogueNode n5_2C = new DialogueNode("Galadriel",
+            "(ก้มหน้าลง) \"ความสุขของข้าคือการได้มองเห็นท่าน... แต่ถ้าข้ากลับไป เราจะไม่ได้พบกันอีก ท่าน... จะไม่รั้งข้าไว้หน่อยเหรอ?\"");
+        n5_2C.imagePath = "image\\Scene\\Galadriel\\Scene5\\(ก้มหน้าลง) ความสุขของข้าคือการได้มองเห็นท่าน... แต่ถ้าข้ากลับไป เราจะไม่ได้พบกันอีก ท่าน... จะไม่รั้งข้าไว้หน่อยเหรอ.png";
+        n5_2C.addChoice("ได้โปรดอยู่กับผมเถอะ ผมรักคุณ", n5_3B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+             .addChoice("ผมเคารพการตัดสินใจของคุณเสมอ", n5_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(0))  
+             .addChoice("ลาก่อนนะ Galadriel", n5_3C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(-15));
+
+        // ROOT — 5.1
+        DialogueNode root = new DialogueNode("Galadriel",
+            "(แสงจากตัวเริ่มจางลงช้าๆ) \"ท่านคะ... ข้าต้องเลือกระหว่างกลับไปเป็นภูติผู้เป็นอมตะ หรือจะเป็นมนุษย์ธรรมดาที่มีเวลาจำกัดเพื่ออยู่กับท่าน...\"");
+        root.imagePath = "image\\Scene\\Galadriel\\Scene5\\(แสงจากตัวเริ่มจางลงช้าๆ) ท่านคะ... ข้าต้องเลือกระหว่างกลับไปเป็นภูติผู้เป็นอมตะ หรือจะเป็นมนุษย์ธรรมดาที่มีเวลาจำกัดเพื่ออยู่กับท่าน....png";
+        root.addChoice("ไม่ว่าคุณจะเป็นอะไร ผมจะรักคุณไม่เปลี่ยน", n5_2A,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+            .addChoice("อย่าทิ้งผมไปเลยนะ Galadriel ผมอยู่ไม่ได้ถ้าไม่มีคุณ", n5_2B,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(5))  
+            .addChoice("คุณควรเลือกสิ่งที่ทำให้คุณมีความสุขที่สุดนะ", n5_2C,
+                () -> mainFrame.getPlayer().getGaladriel().addAffection(3));  
+        return root;
+    }
 }

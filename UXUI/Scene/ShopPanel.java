@@ -1,19 +1,24 @@
 package UXUI.Scene;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import Player.Player;
 import UXUI.DialoguePanel;
 import UXUI.Hovereffect;
 import UXUI.MainFrame;
+import UXUI.PauseMenuPanel;
 import UXUI.StatusBarMenu.GamePanel;
 import UXUI.StatusBarMenu.RoundedPanel;
 import Utility.ConfirmPanel;
 import Utility.GameTime;
 import Utility.Notify;
+import Utility.ScreenFader;
 import Utility.StdAuto;
 import Utility.StatusBar;
 
@@ -24,6 +29,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image; 
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
 
 public class ShopPanel extends JPanel {
     private StdAuto stdScreen;
@@ -35,22 +41,28 @@ public class ShopPanel extends JPanel {
     public static final Color BUY_BUTTON = new Color(90, 50, 30);
     public static final Color BACK_BUTTON = new Color(48, 25, 82);    
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
+    ScreenFader fader = new ScreenFader();
     DialoguePanel dialogueBox;
+    PauseMenuPanel pauseMenu;
 
     private JButton btnchoice1, btnchoice2, btnchoice3, btnchoice4, btnBack, Galadriel;
     private ConfirmPanel dialog;
     private MainFrame mainFrame ;
+    
     
     public ShopPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         stdScreen = new StdAuto();
         stdScreen.setBtnWHG(300, 50, 20, 0); 
         
+        pauseMenu = new PauseMenuPanel(mainFrame);
+
         setLayout(null);
         setBackground(new Color(12, 51, 204));
 
         shopNotify = new Notify(stdScreen.width);
         shopNotify.setBounds(0, 50, stdScreen.width, 50); 
+
         
         updateUI();
     }
@@ -61,6 +73,9 @@ public class ShopPanel extends JPanel {
         
         dialog = new ConfirmPanel(stdScreen.width, stdScreen.height , mainFrame);
         add(dialog);
+
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
 
         // ----------------Status Energy Money Day Time -----------------------------------
         RoundedPanel statusPanel = new RoundedPanel(30, GamePanel.themePink); 
@@ -166,14 +181,21 @@ public class ShopPanel extends JPanel {
         btnBack.setBounds(20, 20, 100, 30);
         
         btnBack.addActionListener(e -> {
-            if(mainFrame.getGamePanel() != null) {
-                mainFrame.getGamePanel().updateUI(); 
-            }
-            mainFrame.showGame();
+            fader.fadeInOut(250, 250, ()->{
+                if(mainFrame.getGamePanel() != null) {
+                    mainFrame.getGamePanel().updateUI(); 
+                }
+                mainFrame.showGame();
+            }, null);
         });
         
         Hovereffect.HoverEffectRounded(btnBack,20, 20, 100, 30, BACK_BUTTON);        
         add(btnBack);   
+
+        CreateESC(); // เรียกใช้แค่ตัวจับปุ่ม
+
+        pauseMenu.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(pauseMenu);
 
         //---------------------------Background หน้าร้าน---------------------------
         JLabel lblMap = new JLabel("");
@@ -183,10 +205,11 @@ public class ShopPanel extends JPanel {
         lblMap.setBounds(0, 0, stdScreen.width, stdScreen.height);
         add(lblMap);
         
-        setComponentZOrder(shopNotify, 0); 
-        setComponentZOrder(dialog, 1);
-        setComponentZOrder(statusPanel, 2);
-        setComponentZOrder(lblMap, getComponentCount() - 1);
+        setComponentZOrder(shopNotify, 0);       // ให้แจ้งเตือนอยู่หน้าสุด
+        setComponentZOrder(pauseMenu, 1);        // 🔥 ให้แผ่น Pause อยู่ชั้นที่ 1 (รองจากแจ้งเตือนนิดเดียว หรือจะให้เป็น 0 แทน Notify เลยก็ได้!)
+        setComponentZOrder(dialog, 2);           // กล่องยืนยันการซื้อ
+        setComponentZOrder(statusPanel, 3);      // แถบสเตตัส
+        setComponentZOrder(lblMap, getComponentCount() - 1); // ภาพพื้นหลังอยู่ล่างสุด
 
         updateEnergyBar();
     }
@@ -281,5 +304,30 @@ public class ShopPanel extends JPanel {
         initComponents(); 
         revalidate(); 
         repaint();    
+    }
+    
+    public void CreateESC() {
+        //---------------------------ESC Event---------------------------------------
+        pauseMenu.setVisible(false); // เริ่มมาให้ซ่อนไว้ก่อน
+
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "smartEsc");
+        this.getActionMap().put("smartEsc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                // 🔥 1. เช็คก่อนว่า "หน้า Option ลอยทับอยู่หรือเปล่า?"
+                if (mainFrame.getOptionPanel() != null && mainFrame.getOptionPanel().isVisible()) {
+                    // ถ้าลอยอยู่ -> ให้กด ESC เพื่อ "ปิดหน้า Option" อย่างเดียว
+                    mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+                    mainFrame.getOptionPanel().setVisible(false); 
+                }
+                // 🔥 2. ถ้า Option ไม่ได้เปิดอยู่ -> ค่อยสลับเปิด/ปิด หน้า Pause ตามปกติ
+                else {
+                    boolean isCurrentlyVisible = pauseMenu.isVisible();
+                    pauseMenu.setVisible(!isCurrentlyVisible);
+                }
+                
+            }
+        });
     }
 }

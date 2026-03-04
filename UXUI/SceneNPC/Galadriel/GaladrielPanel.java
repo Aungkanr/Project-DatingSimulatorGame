@@ -8,13 +8,19 @@ import UXUI.Scene.CreateTemplateScene.SceneOption;
 public class GaladrielPanel extends BaseNPCPanel {
 
     public GaladrielPanel(MainFrame mainFrame) {
-        super(mainFrame, mainFrame.getPlayer().getGaladriel(), "image\\Scene\\Shop\\ร้านดอกไม้ตอนเช้า.png");
+        super(mainFrame, mainFrame.getPlayer().getGaladriel(), "image\\NPCPanel\\Galadriel\\GaladrielPanel.png");
     }
 
     @Override
     public void returnBtn() {
-        mainFrame.createShopPanel();
-        mainFrame.showShop();
+        // --- ใส่ Effect Fade ---
+        Utility.ScreenFader fader = new Utility.ScreenFader();
+        mainFrame.setGlassPane(fader);
+        fader.setVisible(true);
+        fader.fadeInOut(400, 200, () -> {
+            mainFrame.createShopPanel();
+            mainFrame.showShop();
+        }, () -> fader.setVisible(false));
     }
 
     @Override
@@ -32,30 +38,30 @@ public class GaladrielPanel extends BaseNPCPanel {
         CreateTemplateScene scene;
         
         // Logic คะแนน Gift ของ Galadriel
-        if (itemName.equals("Fairy rose")) {
+        if (itemName.equals("Fairy Rose")) {
             targetNPC.addAffection(20); 
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
-                "โอ้... Fairy Rose ขอบใจนะ", 
+                "อะ... ให้ข้าหรอ Fairy rose นี้สวยจัง", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
         } else if (itemName.equals("Tulip") || itemName.equals("Poppy")) {
-            targetNPC.addAffection(10); 
+            targetNPC.addAffection(10); // แก้ไขจาก 1 เป็น 10 ตามเงื่อนไขของคุณ
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
-                "งดงามมาก...", 
+                "ดอกไม้นี้งดงามดีนะข้าจะเก็บมันไว้", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));
         } else {
             targetNPC.addAffection(5); 
             scene = new CreateTemplateScene(
-                "image\\Scene\\LazelScene1\\เขิน.png", 
+                "image\\Scene\\Galadriel\\ShyGaladriel.png", 
                 "Galadriel", 
-                "ขยะ... แต่ข้าจะรับไว้พิจารณา", 
+                "เอ๊ะ ให้ข้าเหรอคะ? ดีใจจังเลย! แค่เป็นของที่ท่านตั้งใจให้ ข้าก็ชอบหมดแหละค่ะ ขอบคุณนะคะ!", 
                 null, 
                 null, 
                 new SceneOption("Continue...", e -> showInteractionMenu()));

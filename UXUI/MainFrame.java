@@ -21,18 +21,22 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import Coop.Network.GameClient;
 import Utility.*;
 
 public class MainFrame extends JFrame {
     private JPanel contentPane;
     private Player player;
     private GameTime gameTime;
-
+    private UXUI.StatusBarMenu.LeaderboardPanel leaderboardPanel;
     private MenuPanel menuPanel;
+    private LobbyPanel lobbyPanel;
     private OptionPanel optionPanel;
+    private CoopMenuPanel coopMenuPanel; // <-- เพิ่มใหม่
     private GamePanel gamePanel;
     private SchoolPanel school;
     private ShopPanel shop;
@@ -54,7 +58,9 @@ public class MainFrame extends JFrame {
     private SpecialSceneGaladrielPanel specialSceneGaladrielPanel; //x
     private SpecialSceneLazelPanel specialSceneLazelPanel; //x
     private SpecialSceneArwenPanel specialSceneArwenPanel; //x
-    
+    private GameClient gameClient;
+    private UXUI.Scene.EndCreditPanel endCreditPanel;
+    private boolean isEndCreditPlayed = false; // ตัวดักว่าเคยเล่นเครดิตไปหรือยัง?
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.uiScale", "1.0");
@@ -71,7 +77,6 @@ public class MainFrame extends JFrame {
     
     public MainFrame() { 
         PreLoad(); // โหลด asset ล่วงหน้า (ถ้ามี) ***ควรอยู่ลำดับเเรกของโค้ดเสมอเพราะต้องโหลดก่อนเข้าเกม***
-
         // 1. โหลดค่ามาตรฐาน
         stdScreen = new StdAuto();
         
@@ -88,27 +93,48 @@ public class MainFrame extends JFrame {
 
         player = new Player(); 
         gameTime = new GameTime();
-        
+        gameClient = new GameClient(this);
         soundManager = new MusicManager();
         sfxManager = new SFXManager();
 
         setLayout(null);
 
+        leaderboardPanel = new UXUI.StatusBarMenu.LeaderboardPanel(this, stdScreen.width, stdScreen.height);
+        this.getLayeredPane().add(leaderboardPanel, JLayeredPane.POPUP_LAYER); 
+
+        
         contentPane = new JPanel();
         contentPane.setLayout(null);
-        // [สำคัญ] บังคับ contentPane ให้เต็มจอ
         contentPane.setBounds(0, 0, stdScreen.width, stdScreen.height);
         setContentPane(contentPane);
+
+        endCreditPanel = new UXUI.Scene.EndCreditPanel(this, stdScreen.width, stdScreen.height);
+        contentPane.add(endCreditPanel);
         
         // --- สร้าง Panel ลูกๆ โดยส่งขนาดที่ถูกต้องไป ---
         menuPanel = new MenuPanel(this); 
         menuPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         contentPane.add(menuPanel);
-        
+
+        //X
+        lobbyPanel = new LobbyPanel(this);
+        lobbyPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        lobbyPanel.setVisible(false);
+        contentPane.add(lobbyPanel);
+
         optionPanel = new OptionPanel(this);
         optionPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
         optionPanel.setVisible(false);
         contentPane.add(optionPanel);
+
+        this.getLayeredPane().add(optionPanel, JLayeredPane.POPUP_LAYER);
+
+        // --- เพิ่ม CoopMenuPanel ---
+        coopMenuPanel = new CoopMenuPanel(this);
+        coopMenuPanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        coopMenuPanel.setVisible(false);
+        contentPane.add(coopMenuPanel);
+        // --------------------------
         
         gamePanel = new GamePanel(this);
         gamePanel.setBounds(0, 0, stdScreen.width, stdScreen.height);
@@ -198,7 +224,7 @@ public class MainFrame extends JFrame {
         if(gamePanel != null) gamePanel.updateUI(); // เผื่ออัปเดตค่าอื่นๆ
     }
     public void showSpecialSceneGaladriel() { 
-        toggleVisibility(specialSceneLazelPanel);
+        toggleVisibility(specialSceneGaladrielPanel);
         if(gamePanel != null) gamePanel.updateUI();
     }
     //=========================================================================================================================================================================================
@@ -291,27 +317,54 @@ public class MainFrame extends JFrame {
     public Utility.SFXManager getSFXManager() {
         return sfxManager;
     }
+
+    public OptionPanel getOptionPanel() { return optionPanel; }
     
     public Clip getClip() { return clip; }
     public void showMenu() { toggleVisibility(menuPanel); }
-    public void showOption() { toggleVisibility(optionPanel); }
-    public void showGame() { toggleVisibility(gamePanel); if(gamePanel!=null) gamePanel.updateUI(); }
+    public void showOption() { optionPanel.setVisible(true); }
+    public void showGame() { 
+        if (endCreditPanel != null && endCreditPanel.isVisible()) {
+            return; 
+        }
+        toggleVisibility(gamePanel); 
+        if(gamePanel!=null) gamePanel.updateUI(); 
+    }
     public void showSchool() { toggleVisibility(school); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showShop() { toggleVisibility(shop); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showHome() { toggleVisibility(home); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showOffice() { toggleVisibility(office); if(gamePanel!=null) gamePanel.updateUI(); }
     public void showNeighbor() { toggleVisibility(neighbor); if(gamePanel!=null) gamePanel.updateUI(); }
+    public void showLobby() { toggleVisibility(lobbyPanel); } 
+    public void showCoopMenu() { toggleVisibility(coopMenuPanel); }
+    public void finishSpecialScene() {
+        if (!isEndCreditPlayed) {
+            isEndCreditPlayed = true; // บันทึกว่าเล่นแล้ว (ครั้งหน้าจะได้ไม่ขึ้นอีก)
+            toggleVisibility(endCreditPanel); // สลับหน้าไปฉายเครดิต
+            endCreditPanel.startCredits();
+        } else {
+            showGame(); // ถ้าเคยฉายเครดิตไปแล้ว ให้ตัดกลับหน้าเกมตามปกติ
+        }
+    }   
 
     // Helper function เพื่อปิด panel อื่นๆ อัตโนมัติ
     private void toggleVisibility(JPanel showPanel) {
+        if (endCreditPanel != null && endCreditPanel.isVisible() && showPanel != endCreditPanel) {
+            return; 
+        }
+
         if(menuPanel != null) menuPanel.setVisible(false);
         if(optionPanel != null) optionPanel.setVisible(false);
+        if(coopMenuPanel != null) coopMenuPanel.setVisible(false); 
         if(gamePanel != null) gamePanel.setVisible(false);
         if(school != null) school.setVisible(false);
         if(shop != null) shop.setVisible(false);
         if(home != null) home.setVisible(false);
         if(office != null) office.setVisible(false);
         if(neighbor != null) neighbor.setVisible(false);
+        if(lobbyPanel != null) lobbyPanel.setVisible(false);
+        if(endCreditPanel != null) endCreditPanel.setVisible(false); 
+
         //Lazel
         if(lazelPanel != null) lazelPanel.setVisible(false); 
         if(specialSceneLazelPanel != null) specialSceneLazelPanel.setVisible(false);
@@ -324,6 +377,7 @@ public class MainFrame extends JFrame {
 
         if(showPanel != null) showPanel.setVisible(true);
     }
+    public UXUI.StatusBarMenu.LeaderboardPanel getLeaderboardPanel() { return leaderboardPanel; }
     //Panel
     public Player getPlayer() { return this.player; }
     public GameTime getGameTime() { return this.gameTime; }
@@ -332,6 +386,7 @@ public class MainFrame extends JFrame {
     public OfficePanel getOfficePanel() {return this.office;}
     public SchoolPanel getSchoolPanel() {return this.school;}
     public NeighBorPanel getNeighBorPanel () {return this.neighbor;}
+    public LobbyPanel getLobbyPanel() { return this.lobbyPanel; }
     //NPC Panel
     public LazelPanel getLazelPanel() { return lazelPanel; }
     public GaladrielPanel getGaladrielPanel() { return galadrielPanel; }
@@ -340,4 +395,6 @@ public class MainFrame extends JFrame {
     public Lazel getLazel() { return this.player.getLazel(); }
     public Galadriel getGaladriel() { return this.player.getGaladriel() ;}
     public Arwen getArwen() { return this.player.getArwen() ;}
+    //
+    public GameClient getGameClient() { return this.gameClient; }   
 }

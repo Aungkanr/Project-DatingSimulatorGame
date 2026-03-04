@@ -1,18 +1,23 @@
 package UXUI.Scene;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import UXUI.DialoguePanel;
 import UXUI.Hovereffect;
 import UXUI.MainFrame;
+import UXUI.PauseMenuPanel;
 import UXUI.StatusBarMenu.GamePanel;
 import UXUI.StatusBarMenu.RoundedPanel;
 import Utility.ConfirmPanel;
 import Utility.GameTime;
 import Utility.Notify;
+import Utility.ScreenFader;
 import Utility.StatusBar;
 import Utility.StdAuto;
 import Player.Player;
@@ -24,6 +29,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
 
 
 public class OfficePanel extends JPanel {
@@ -49,9 +55,13 @@ public class OfficePanel extends JPanel {
     public static final Color BACK_BUTTON = new Color(48, 25, 82);    
     public static final Color btn1 = new Color(55, 55, 55);
     private MainFrame mainFrame;
+    ScreenFader fader = new ScreenFader();
+
+    
 
     int btnY;
     DialoguePanel dialogueBox = new DialoguePanel();
+    PauseMenuPanel pauseMenu;
     GameTime gameTime; 
 
     Utility.CheckImage checkImageUtil = new Utility.CheckImage();
@@ -62,6 +72,8 @@ public class OfficePanel extends JPanel {
         stdScreen = new StdAuto();
         stdScreen.setBtnWHG(250, 50, 20, 0); // ตั้งขนาดปุ่มมาตรฐาน
         
+        pauseMenu = new PauseMenuPanel(mainFrame);
+
         btnY = stdScreen.bottomY;
         realGamePanel = mainFrame.getGamePanel();
         realPlayer = mainFrame.getPlayer();
@@ -76,6 +88,9 @@ public class OfficePanel extends JPanel {
         dialog = new ConfirmPanel(stdScreen.width, stdScreen.height , mainFrame);
         add(dialog);
 
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
+
         setBackground(new Color(12, 51, 204));
 
         shopNotify = new Notify(stdScreen.width);
@@ -85,6 +100,8 @@ public class OfficePanel extends JPanel {
         RoundedPanel statusPanel = new RoundedPanel(30, GamePanel.themePink); 
         statusPanel.setBounds(20, 60, 450, 120); 
         statusPanel.setLayout(null);
+
+  
 
         // Energy
         energyBar = new StatusBar(100, "Energy");
@@ -182,7 +199,7 @@ public class OfficePanel extends JPanel {
         btnBack = createRoundedButton("Back");
         btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnBack.setBounds(20, 20, 100, 30);
-        btnBack.addActionListener(e -> mainFrame.showGame());;
+        btnBack.addActionListener(e -> fader.fadeInOut(250, 250, ()->{mainFrame.showGame();}, null));;
         Hovereffect.HoverEffectRounded(btnBack,20, 20, 100, 30, BACK_BUTTON);        
         add(btnBack);   
 
@@ -194,6 +211,17 @@ public class OfficePanel extends JPanel {
         add(lblMap);
 
         updateEnergyBar();
+
+        CreateESC(); // เรียกใช้แค่ตัวจับปุ่ม
+
+        pauseMenu.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(pauseMenu);
+
+        setComponentZOrder(shopNotify, 0);       // ให้แจ้งเตือนอยู่หน้าสุด
+        setComponentZOrder(pauseMenu, 1);        // 🔥 ให้แผ่น Pause อยู่ชั้นที่ 1 (รองจากแจ้งเตือนนิดเดียว หรือจะให้เป็น 0 แทน Notify เลยก็ได้!)
+        setComponentZOrder(dialog, 2);           // กล่องยืนยันการซื้อ
+        setComponentZOrder(statusPanel, 3);      // แถบสเตตัส
+        setComponentZOrder(lblMap, getComponentCount() - 1); // ภาพพื้นหลังอยู่ล่างสุด
     }
 
     public void Scene() {
@@ -229,6 +257,12 @@ public class OfficePanel extends JPanel {
             })
         );
 
+        CreateESC(); // เรียกใช้แค่ตัวจับปุ่ม
+
+        pauseMenu.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        scene.add(pauseMenu);
+        scene.setComponentZOrder(pauseMenu, 0);
+
         add(scene, java.awt.BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -254,6 +288,12 @@ public class OfficePanel extends JPanel {
             })
         );
 
+        CreateESC(); // เรียกใช้แค่ตัวจับปุ่ม
+
+        pauseMenu.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        scene.add(pauseMenu);
+        scene.setComponentZOrder(pauseMenu, 0);
+
         add(scene, java.awt.BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -262,7 +302,7 @@ public class OfficePanel extends JPanel {
     public void showOfficeScene2_1() {
         this.removeAll();
 
-        
+        CreateESC();
         CreateTemplateScene scene = new CreateTemplateScene(
             "image\\Scene\\Office\\Barad-durWorkWithPerson.png", // ตำเเหน่งของภาพพื้นหลัง
             "Manager", // ชื่อผู้พูด
@@ -280,6 +320,11 @@ public class OfficePanel extends JPanel {
                 Work();
             })
         );
+        CreateESC(); // เรียกใช้แค่ตัวจับปุ่ม
+
+        pauseMenu.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        scene.add(pauseMenu);
+        scene.setComponentZOrder(pauseMenu, 0);
 
         add(scene, java.awt.BorderLayout.CENTER);
         revalidate();
@@ -288,20 +333,46 @@ public class OfficePanel extends JPanel {
 
     public void Work() {
         this.removeAll();
-
         this.setLayout(new java.awt.BorderLayout());
-        CreateTemplateScene scene = new CreateTemplateScene(
-            "image\\Scene\\Office\\Barad-durWorkWithPerson.png", // ตำเเหน่งของภาพพื้นหลัง
-            "Manager", // ชื่อผู้พูด
-            "จงทำงานซะ", // ข้อความที่ต้องการให้แสดงในกล่องข้อความ
-            // diaX, diaY, diaW, diaH, // กำหนดตำแหน่งและขนาดของ Dialogue Box
-            e -> {mainFrame.showGame();}, // ActionListener สำหรับปุ่ม "กลับไปที่เกม" (เมื่อกดปุ่มนี้จะกลับไปที่หน้าจอเกม)
+        CreateESC();
+        // 🔥 1. สร้าง Array มารับค่าชั่วคราวเพื่อหลบ Error ของ Java
+        final CreateTemplateScene[] sceneRef = new CreateTemplateScene[1];
+
+        // 2. สร้าง Scene และเก็บลงใน Array ช่องที่ 0
+        sceneRef[0] = new CreateTemplateScene(
+            "image\\Scene\\Office\\Barad-durWorkWithPerson.png", 
+            "Manager", 
+            "จงทำงานซะ", 
+            e -> {mainFrame.showGame();}, 
             "บิด",
 
             new CreateTemplateScene.SceneOption("work hard", e -> {
-                showMiniGame();
+                if (realPlayer.getEnergy() < 40) {
+                    
+                    // 🔥 3. เรียกใช้ scene ผ่าน array แทน
+                    sceneRef[0].add(shopNotify);
+                    sceneRef[0].setComponentZOrder(shopNotify, 0);
+                    
+                    shopNotify.showNotify("Not Enough Energy to Work", Color.red, 3000);
+                    
+                    sceneRef[0].revalidate();
+                    sceneRef[0].repaint();
+                    
+                } else { 
+                    showMiniGame(); 
+                }
             })
         );
+
+        // 4. ดึงค่ากลับมาใส่ตัวแปร scene แบบปกติ เพื่อแอดเข้าหน้าต่าง
+        CreateTemplateScene scene = sceneRef[0];
+
+        CreateESC(); // เรียกใช้แค่ตัวจับปุ่ม
+
+        pauseMenu.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        scene.add(pauseMenu);
+        scene.setComponentZOrder(pauseMenu, 0);
+        
         add(scene, java.awt.BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -310,7 +381,7 @@ public class OfficePanel extends JPanel {
     public void showMiniGame() {
         this.removeAll();
         this.setLayout(null); // บังคับ null layout ป้องกันบัคตำแหน่งเพี้ยน
-
+        CreateESC();
         BlacksmithMinigame minigame = new BlacksmithMinigame(mainFrame ,this);
         minigame.setBounds(0, 0, stdScreen.width, stdScreen.height); 
 
@@ -435,5 +506,30 @@ public class OfficePanel extends JPanel {
         // [เพิ่มใหม่] อัปเดตไอคอนเวลาทุกครั้งที่เวลาเดิน
         lblTime.setIcon(getTimeIcon(gTime.getTimeString()));
         repaint();
+    }
+
+    public void CreateESC() {
+        //---------------------------ESC Event---------------------------------------
+        pauseMenu.setVisible(false); // เริ่มมาให้ซ่อนไว้ก่อน
+
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "smartEsc");
+        this.getActionMap().put("smartEsc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                // 🔥 1. เช็คก่อนว่า "หน้า Option ลอยทับอยู่หรือเปล่า?"
+                if (mainFrame.getOptionPanel() != null && mainFrame.getOptionPanel().isVisible()) {
+                    // ถ้าลอยอยู่ -> ให้กด ESC เพื่อ "ปิดหน้า Option" อย่างเดียว
+                    mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+                    mainFrame.getOptionPanel().setVisible(false); 
+                }
+                // 🔥 2. ถ้า Option ไม่ได้เปิดอยู่ -> ค่อยสลับเปิด/ปิด หน้า Pause ตามปกติ
+                else {
+                    boolean isCurrentlyVisible = pauseMenu.isVisible();
+                    pauseMenu.setVisible(!isCurrentlyVisible);
+                }
+                
+            }
+        });
     }
 }

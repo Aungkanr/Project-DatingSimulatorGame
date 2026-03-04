@@ -1,15 +1,20 @@
 package UXUI.Scene;
 import UXUI.Hovereffect;
 import UXUI.MainFrame;
+import UXUI.PauseMenuPanel;
 import Utility.GameTime;
+import Utility.ScreenFader;
 import Utility.SleepEffect;
 import Player.Player;
 import Utility.StdAuto;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
 import java.awt.Color;
@@ -25,6 +30,8 @@ public class HomePanel extends JPanel {
     private JButton btnBack; // <--- 2. ตัวแปรปุ่มกลับ (ถ้าต้องการเข้าถึงจากหลายที่)
     public static final Color BACK_BUTTON = new Color(48, 25, 82);  
     public static final Color SLEEP_BTN = new Color(220, 160, 60);
+    ScreenFader fader = new ScreenFader();
+
 
 
     public HomePanel(MainFrame mainFrame) {
@@ -42,13 +49,19 @@ public class HomePanel extends JPanel {
         lblMessage.setBounds(stdScreen.centerX - 100, stdScreen.currentY - 50, stdScreen.buttonWidth + 200, 40);
         add(lblMessage);
 
+        fader.setBounds(0, 0, stdScreen.width, stdScreen.height);
+        add(fader);
+
         // --- สีปุ่ม ----------------------------------------
         btnBack = new JButton("Back");
 
         Hovereffect.HoverEffect(btnBack,20,20,100,30,BACK_BUTTON);
         btnBack.addActionListener(e -> {
-            lblMessage.setText("");
-            mainFrame.showGame();
+            fader.fadeInOut(250, 250, ()->{
+                lblMessage.setText("");
+                mainFrame.showGame();
+            }, null);
+
         });
 
         add(btnBack);
@@ -91,6 +104,33 @@ public class HomePanel extends JPanel {
                 }
             });
         add(btnSleep);
+
+        //---------------------------ESC Event---------------------------------------
+        PauseMenuPanel pauseMenu = new PauseMenuPanel(mainFrame);
+        pauseMenu.setVisible(false); // เริ่มมาให้ซ่อนไว้ก่อน
+        add(pauseMenu);
+        setComponentZOrder(pauseMenu, 0); // ดันให้อยู่หน้าสุดเสมอ จะได้บังทุกอย่างตอนกด ESC
+
+        // ระบบจับปุ่ม ESC (Key Bindings - เสถียรกว่า KeyListener)
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "smartEsc");
+        this.getActionMap().put("smartEsc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                // 🔥 1. เช็คก่อนว่า "หน้า Option ลอยทับอยู่หรือเปล่า?"
+                if (mainFrame.getOptionPanel() != null && mainFrame.getOptionPanel().isVisible()) {
+                    // ถ้าลอยอยู่ -> ให้กด ESC เพื่อ "ปิดหน้า Option" อย่างเดียว
+                    mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+                    mainFrame.getOptionPanel().setVisible(false); 
+                } 
+                // 🔥 2. ถ้า Option ไม่ได้เปิดอยู่ -> ค่อยสลับเปิด/ปิด หน้า Pause ตามปกติ
+                else {
+                    boolean isCurrentlyVisible = pauseMenu.isVisible();
+                    pauseMenu.setVisible(!isCurrentlyVisible);
+                }
+                
+            }
+        });
 
         
         //---------Background-----------------//

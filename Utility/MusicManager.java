@@ -85,6 +85,12 @@ public class MusicManager {
         }
     }
 
+    public void stopMusic() {
+        if (clip != null && clip.isRunning()) {
+            clip.stop();
+        }
+    }
+    
     public void setMute(boolean mute) {
         this.isMuted = mute;
         applyMute();

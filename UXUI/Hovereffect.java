@@ -6,9 +6,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Hovereffect {
-    
-    // แบบเดิม (สี่เหลี่ยม) - เก็บไว้ใช้กับปุ่มอื่น
     public static void HoverEffect(JButton button, int x, int y, int w, int h, Color baseColor) {
+
         Color hoverColor = baseColor.brighter();
         Color borderColor = new Color(255, 215, 0); // สีทอง
 
@@ -23,6 +22,11 @@ public class Hovereffect {
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent evt) {
+                Window window = SwingUtilities.getWindowAncestor(button);
+                if (window instanceof MainFrame) {
+                    ((MainFrame) window).getSFXManager().playSFX("Music\\Valorant - Choose Hover - Gaming Sound Effect Valorant (HD)  Sound Effects_01.wav");
+                }
+
                 int extra = 10;
                 button.setBounds(x - (extra / 2), y - (extra / 2), w + extra, h + extra);
                 button.setBackground(hoverColor);
@@ -38,7 +42,7 @@ public class Hovereffect {
         });
     }
 
-    // --- [เพิ่มใหม่] สำหรับปุ่มมน (Rounded Button) ---
+    // --- สำหรับปุ่มมน (Rounded Button) ---
     public static void HoverEffectRounded(JButton button, int x, int y, int w, int h, Color baseColor) {
         Color hoverColor = baseColor.brighter();
         
@@ -55,6 +59,11 @@ public class Hovereffect {
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent evt) {
+                Window window = SwingUtilities.getWindowAncestor(button);
+                if (window instanceof MainFrame) {
+                    ((MainFrame) window).getSFXManager().playSFX("Music\\Valorant - Choose Hover - Gaming Sound Effect Valorant (HD)  Sound Effects_01.wav");
+                }
+
                 int extra = 10;
                 // ขยายปุ่มตอนเอาเมาส์ชี้
                 button.setBounds(x - (extra / 2), y - (extra / 2), w + extra, h + extra);

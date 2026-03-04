@@ -1,9 +1,9 @@
 package UXUI.SceneNPC.Arwen;
 
 import UXUI.MainFrame;
-import UXUI.SceneNPC.BaseNPCPanel; //Parent class 
-import UXUI.Scene.CreateTemplateScene;
+import UXUI.Scene.CreateTemplateScene; //Parent class
 import UXUI.Scene.CreateTemplateScene.SceneOption;
+import UXUI.SceneNPC.BaseNPCPanel;
 
 public class ArwenPanel extends BaseNPCPanel {
 
@@ -23,9 +23,16 @@ public class ArwenPanel extends BaseNPCPanel {
         }, () -> fader.setVisible(false));
     }
 
-    @Override
+   @Override
     protected void triggerSpecialScene(String text, int sceneLevel) {
-        mainFrame.createSpecialSceneArwenPanel((Relationship.Arwen) targetNPC, text, sceneLevel);
+        String time = mainFrame.getGameTime().getTimeString();
+        if (time.equals("Morning")) {
+            mainFrame.createSpecialSceneArwenPanel(
+                (Relationship.Arwen) targetNPC, text, sceneLevel);
+        } else {
+            Relationship.ArwenEven evenVersion = new Relationship.ArwenEven();
+            mainFrame.createSpecialSceneArwenPanel(evenVersion, text, sceneLevel);
+        }
         mainFrame.showSpecialSceneArwen();
     }
 

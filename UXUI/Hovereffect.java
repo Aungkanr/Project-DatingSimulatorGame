@@ -25,6 +25,7 @@ public class Hovereffect {
                 Window window = SwingUtilities.getWindowAncestor(button);
                 if (window instanceof MainFrame) {
                     ((MainFrame) window).getSFXManager().playSFX("Music\\Valorant - Choose Hover - Gaming Sound Effect Valorant (HD)  Sound Effects_01.wav");
+                    ((MainFrame) window).getSFXManager().setVolume(0.25f);
                 }
 
                 int extra = 10;

@@ -14,12 +14,14 @@ public class SpecialSceneArwenPanel extends JPanel {
     private MainFrame mainFrame;
     private StdAuto stdScreen;
     private JLabel lblBg;
+    private int currentLevel;
 
     private final String bgPath = "image\\Scene\\School\\Angryscene.png";
 
     public SpecialSceneArwenPanel(MainFrame mainFrame, Arwen arwen, String sceneText, int sceneLevel) {
         this.mainFrame = mainFrame;
         this.stdScreen = new StdAuto();
+        this.currentLevel = sceneLevel;
 
         setLayout(null);
         setBackground(Color.BLACK);
@@ -32,8 +34,8 @@ public class SpecialSceneArwenPanel extends JPanel {
     // Core: แสดง node ปัจจุบัน
     // ==========================================
     private void showNode(DialogueNode node) {
+        if (node == null) return;
         removeAll();
-
         // ถ้า node มี imagePath → ใช้รูปนั้น, ถ้าไม่มี → ใช้ default
         String currentBg = (node.imagePath != null) ? node.imagePath : bgPath;
         setupBackground(currentBg);
@@ -53,7 +55,15 @@ public class SpecialSceneArwenPanel extends JPanel {
 
             for (int i = 0; i < node.choices.size(); i++) {
                 final DialogueNode.Choice choice = node.choices.get(i);
-                JButton btn = createChoiceButton(choice.label, i, e -> showNode(choice.next));
+                
+                JButton btn = createChoiceButton(choice.label, i, e -> {
+                    
+                    if (choice.onSelect != null) {
+                        choice.onSelect.run(); 
+                    }
+                    showNode(choice.next);
+                });
+                
                 add(btn);
             }
         }
@@ -68,17 +78,26 @@ public class SpecialSceneArwenPanel extends JPanel {
     // ==========================================
     private void showContinueButton() {
         int btnW = 200;
-        int btnH = 50;
+        int btnH = 30;
         int btnX = (stdScreen.width - btnW) / 2;
-        int btnY = stdScreen.height - 80;
+        int btnY = stdScreen.height - 80 - btnH;
 
         JButton btnContinue = new JButton("Continue...");
         btnContinue.setFont(new Font("Tahoma", Font.BOLD, 16));
         btnContinue.setBounds(btnX, btnY, btnW, btnH);
+        
         btnContinue.addActionListener(e -> {
-            mainFrame.createArwenPanel();
-            mainFrame.showArwen();
+            mainFrame.getSFXManager().playSFX("Music\\Mouse_Click_Sound_Effect_128k.wav");
+
+            if (currentLevel == 5) {
+                mainFrame.finishSpecialScene(); 
+            } 
+            else {
+                mainFrame.createArwenPanel();
+                mainFrame.showArwen();
+            }
         });
+        
         Hovereffect.HoverEffect(btnContinue, btnX, btnY, btnW, btnH, new Color(85, 107, 47));
         add(btnContinue);
     }

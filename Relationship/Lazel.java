@@ -703,7 +703,7 @@ public class Lazel extends NPC {
              .addChoice("ดุจังเลยนะ", endNormal, () -> {
                 mainFrame.getPlayer().getLazel().addAffection(-15);
                 mainFrame.getSoundManager().stopMusic(); 
-                mainFrame.getSoundManager().playMusic("Music\\GoodEndingMusic.wav");
+                mainFrame.getSoundManager().playMusic("Music\\SadEndingMusic.wav");
              });
 
         DialogueNode n5_4C = new DialogueNode("Lazel",
